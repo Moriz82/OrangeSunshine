@@ -1,4 +1,4 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.Proxy;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;

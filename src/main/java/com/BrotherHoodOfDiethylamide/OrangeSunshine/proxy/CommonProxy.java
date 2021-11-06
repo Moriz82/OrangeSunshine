@@ -1,4 +1,4 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.Proxy;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy;
 
 import net.minecraft.item.Item;
 

@@ -1,13 +1,10 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.Proxy.CommonProxy;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TileEntitys.TileEntityCompoundExtractor;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.CommonProxy;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Recipe_init;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +12,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
@@ -37,6 +35,7 @@ public class OrangeSunshine
     public void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
+        registerTileEntities();
     }
 
     @EventHandler
@@ -47,7 +46,12 @@ public class OrangeSunshine
     }
 
     public void addSeeds(){
-        MinecraftForge.addGrassSeed(new ItemStack(Item_init.WEEDSEED), 6);
+        MinecraftForge.addGrassSeed(new ItemStack(Item_init.WEEDSEED), 4);
+        MinecraftForge.addGrassSeed(new ItemStack(Item_init.RYESEED), 6);
+    }
+
+    public void registerTileEntities(){
+        GameRegistry.registerTileEntity(TileEntityCompoundExtractor.class, "orangesunshine:Compoundextractor");
     }
 }
 

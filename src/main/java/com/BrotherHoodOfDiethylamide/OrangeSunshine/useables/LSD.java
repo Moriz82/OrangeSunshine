@@ -1,4 +1,4 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.food;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.useables;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;

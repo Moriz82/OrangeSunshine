@@ -1,4 +1,4 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.items;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.items.seeds;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Block_init;
