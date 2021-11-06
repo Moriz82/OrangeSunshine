@@ -53,7 +53,6 @@ public class OrangeSunshine
 
 class OrangeSunshineTab extends CreativeTabs {
     private final String MODID;
-    private final ItemMap Icon = Items.FILLED_MAP;
 
     public OrangeSunshineTab(int id, String name) {
         super(id, name);
@@ -62,7 +61,7 @@ class OrangeSunshineTab extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack() {
-        return new ItemStack(Icon, 1, 0);
+        return new ItemStack(Item_init.LSD, 1, 0);
     }
     @Override
     public String getTranslatedTabLabel(){
