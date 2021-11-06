@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "orangesunshine",
+  "name": "OrangeSunshine",
+  "description": "Drug mod for 1.12.2 and later inspired by Psychedelicraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Moriz", "Lolrow"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
