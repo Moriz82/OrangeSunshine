@@ -1,5 +1,6 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.FurnaceBlocks;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TileEntitys.TileEntityCompoundExtractor;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.CommonProxy;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
@@ -21,11 +22,11 @@ import org.apache.logging.log4j.Logger;
 public class OrangeSunshine
 {
     public static final String MODID = "orangesunshine";
-    public static final String NAME = "OrangeSunshine";
+    public static final String NAME = "Orange Sunshine";
     public static final String VERSION = "1.0";
     public static final String ClientProxyClass = "com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.ClientProxy";
     public static final String CommonProxyClass = "com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.CommonProxy";
-    public static final CreativeTabs CreativeTab = new OrangeSunshineTab(CreativeTabs.getNextID(), MODID);
+    public static final CreativeTabs CreativeTab = new OrangeSunshineTab(CreativeTabs.getNextID(), NAME);
     private static Logger logger;
 
     @SidedProxy(clientSide = ClientProxyClass, serverSide = CommonProxyClass)
@@ -43,6 +44,7 @@ public class OrangeSunshine
     {
         Recipe_init.init();
         addSeeds();
+        addSmeltables();
     }
 
     public void addSeeds(){
@@ -51,25 +53,32 @@ public class OrangeSunshine
     }
 
     public void registerTileEntities(){
-        GameRegistry.registerTileEntity(TileEntityCompoundExtractor.class, "orangesunshine:Compoundextractor");
+        GameRegistry.registerTileEntity(TileEntityCompoundExtractor.class, "orangesunshine:compoundextractor");
+    }
+
+    public void addSmeltables(){
+        TileEntityCompoundExtractor.smeltables.add(Item_init.RYE);
+        TileEntityCompoundExtractor.smeltables.add(Item_init.LYSERGICACID);
+        TileEntityCompoundExtractor.smeltingOutput.put(Item_init.RYE, Item_init.LSD.getDefaultInstance());
+        TileEntityCompoundExtractor.smeltingOutput.put(Item_init.LYSERGICACID, Item_init.ORANGESUNSHINE.getDefaultInstance());
     }
 }
 
 class OrangeSunshineTab extends CreativeTabs {
-    private final String MODID;
+    private final String name;
 
     public OrangeSunshineTab(int id, String name) {
         super(id, name);
-        MODID = name;
+        this.name = name;
     }
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack() {
-        return new ItemStack(Item_init.LSD, 1, 0);
+        return new ItemStack(Item_init.ORANGESUNSHINE, 1, 0);
     }
     @Override
     public String getTranslatedTabLabel(){
-        return MODID;
+        return name;
     }
     @Override
     public ItemStack getTabIconItem() {

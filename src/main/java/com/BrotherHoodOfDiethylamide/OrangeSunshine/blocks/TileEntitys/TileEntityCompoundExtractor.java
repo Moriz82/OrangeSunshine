@@ -27,6 +27,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CompoundExtractor.FACING;
 
 public class TileEntityCompoundExtractor extends TileEntityLockable implements ITickable, ISidedInventory {
@@ -39,6 +42,9 @@ public class TileEntityCompoundExtractor extends TileEntityLockable implements I
     net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, EnumFacing.UP);
     net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, EnumFacing.DOWN);
     net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, EnumFacing.WEST);
+
+    public static ArrayList<Item> smeltables = new ArrayList<Item>();
+    public static HashMap<Item, ItemStack> smeltingOutput = new HashMap<Item, ItemStack>();
 
     private NonNullList<ItemStack> furnaceItemStacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
     private int furnaceBurnTime;
@@ -161,7 +167,7 @@ public class TileEntityCompoundExtractor extends TileEntityLockable implements I
     }
 
     public String getName() {
-        return this.hasCustomName() ? this.furnaceCustomName : "container.furnace_" + 0;
+        return this.hasCustomName() ? this.furnaceCustomName : "container.compoundextractor";
     }
 
     public boolean hasCustomName() {
@@ -291,30 +297,38 @@ public class TileEntityCompoundExtractor extends TileEntityLockable implements I
         if (((ItemStack) this.furnaceItemStacks.get(0)).isEmpty()) {
             return false;
         } else {
-            ItemStack itemstack = Item_init.LSD.getDefaultInstance();
+            ItemStack itemstack = this.furnaceItemStacks.get(0);
+            ItemStack itemstack1 = this.furnaceItemStacks.get(2);
 
-            if (itemstack.isEmpty()) {
-                return false;
-            } else {
-                ItemStack itemstack1 = this.furnaceItemStacks.get(2);
+            boolean isGood = false;
 
-                if (itemstack1.isEmpty() && itemstack.getDisplayName().equals("Rye")) {
-                    return true;
-                } else if (!itemstack1.isItemEqual(itemstack)) {
-                    return false;
-                } else if (itemstack.getDisplayName().equals("Rye") && itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) {
-                    return true;
-                } else {
-                    return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize() && itemstack.getDisplayName().equals("Rye");
+            for (Item item : smeltables) {
+                if (itemstack.getItem().equals(item)){
+                    isGood = true;
+                    break;
                 }
             }
+
+           if (isGood){
+               if (itemstack1.isEmpty()) {
+                   return true;
+               } else if (!itemstack1.isItemEqual(itemstack)) {
+                   return false;
+               } else if (itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) {
+                   return true;
+               } else {
+                   return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize();
+               }
+           }else{
+               return false;
+           }
         }
     }
 
     public void smeltItem() {
         if (this.canSmelt()) {
             ItemStack itemstack = this.furnaceItemStacks.get(0);
-            ItemStack itemstack1 = Item_init.LSD.getDefaultInstance();
+            ItemStack itemstack1 = smeltingOutput.get(itemstack.getItem());
             ItemStack itemstack2 = this.furnaceItemStacks.get(2);
 
             if (itemstack2.isEmpty()) {

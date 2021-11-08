@@ -1,4 +1,14 @@
 item.weed.name=Weed
 item.weedseed.name=Weed Seed
+
 item.rye.name=Rye
 item.ryeseed.name=Rye Seed
+item.lsd.name=LSD
+item.lysergicacid.name=Lysergic Acid
+item.orangesunshine.name=Orange Sunshine
+
+tile.compoundextractoridle.name=Compound Extractor
+tile.compoundextractoractive.name=Compound Extractor
+container.compoundextractor=Compound Extractor
+
+itemGroup.orangesunshine.name=Orange Sunshine

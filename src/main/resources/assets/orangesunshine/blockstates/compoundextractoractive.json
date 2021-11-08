@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "orangesunshine:extractoractive" },
+    "facing=south": { "model": "orangesunshine:extractoractive", "y": 180 },
+    "facing=west":  { "model": "orangesunshine:extractoractive", "y": 270 },
+    "facing=east":  { "model": "orangesunshine:extractoractive", "y": 90 }
+  }
+}

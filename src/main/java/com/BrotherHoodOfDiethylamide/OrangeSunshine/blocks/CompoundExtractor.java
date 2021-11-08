@@ -2,6 +2,7 @@ package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TileEntitys.TileEntityCompoundExtractor;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Block_init;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -48,6 +49,7 @@ public class CompoundExtractor extends BlockContainer {
         this.setResistance(5f);
         this.setHarvestLevel("pickaxe", 1);
         this.setCreativeTab(OrangeSunshine.CreativeTab);
+        Block_init.BLOCKS.add(this);
     }
 
     public void registerItemModel(Item itemBlock) {

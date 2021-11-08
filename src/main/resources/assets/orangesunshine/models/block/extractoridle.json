@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "orangesunshine:blocks/extractor_front_off",
+    "particle": "orangesunshine:blocks/extractor_front_off"
+  }
+}

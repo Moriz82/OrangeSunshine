@@ -16,6 +16,8 @@ public class Item_init {
     public static final Item WEEDSEED = new WeedSeed("weedseed");
     //-------------------------------- LSD
     public static final Item LSD = new LSD("lsd",0,100, true);
-    public static final Item RYE = new ModItem("rye.json");
+    public static final Item RYE = new ModItem("rye");
     public static final Item RYESEED = new WeedSeed("ryeseed");
+    public static final Item LYSERGICACID = new ModItem("lysergicacid");
+    public static final Item ORANGESUNSHINE = new ModItem("orangesunshine");
 }
