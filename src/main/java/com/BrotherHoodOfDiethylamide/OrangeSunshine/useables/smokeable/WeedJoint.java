@@ -38,7 +38,7 @@ public class WeedJoint extends ItemFood implements IHasModel {
     }
     @Override
     public void registerModels() {
-        ModelResourceLocation[] stages =
+       /* ModelResourceLocation[] stages =
                 {
                         new ModelResourceLocation(getRegistryName(), "inventory"),
                         new ModelResourceLocation(getRegistryName() + "_use", "inventory"),
@@ -53,7 +53,7 @@ public class WeedJoint extends ItemFood implements IHasModel {
             public ModelResourceLocation getModelLocation(ItemStack stack) {
                 return stages[getIsLit()==false? 0 : 1];
             }
-        });
+        });*/
         OrangeSunshine.proxy.registerItemRenderer(this, 0, "inventory");
     }
     @Override

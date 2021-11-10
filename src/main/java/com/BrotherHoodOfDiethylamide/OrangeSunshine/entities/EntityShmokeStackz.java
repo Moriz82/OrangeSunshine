@@ -27,19 +27,6 @@ public class EntityShmokeStackz extends EntityVillager
     }
 
     @Override
-    public VillagerRegistry.VillagerProfession getProfessionForge(){
-        return RegistryHandler.shmokestackz;
-    }
-
-    @Override
-    public IEntityLivingData finalizeMobSpawn(DifficultyInstance p_190672_1_, @Nullable IEntityLivingData p_190672_2_, boolean p_190672_3_) {
-        super.finalizeMobSpawn(p_190672_1_, p_190672_2_, p_190672_3_);
-        p_190672_2_ = super.onInitialSpawn(p_190672_1_, p_190672_2_);
-        this.setProfession(RegistryHandler.shmokestackz);
-        return p_190672_2_;
-    }
-
-    @Override
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
