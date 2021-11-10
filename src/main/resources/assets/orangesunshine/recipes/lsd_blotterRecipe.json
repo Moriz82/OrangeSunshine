@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "bCb",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "orangesunshine:blotter"
+    },
+    "C": {
+      "item": "orangesunshine:lsd"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:lsd_blotter",
+    "count": 8
+  }
+}

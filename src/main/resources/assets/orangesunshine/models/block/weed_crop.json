@@ -1,0 +1,7 @@
+{
+   "parent": "block/cross",
+   "textures": {
+       "cross": "orangesunshine:blocks/weed_crop",
+        "particle": "orangesunshine:blocks/weed_crop"
+   }
+}

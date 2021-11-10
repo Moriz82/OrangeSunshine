@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rrr",
+    "rWr",
+    "rrr"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:potion"
+    },
+    "r": {
+      "item": "orangesunshine:rye"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:lysergic_acid"
+  }
+}
+

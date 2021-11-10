@@ -167,7 +167,7 @@ public class TileEntityCompoundExtractor extends TileEntityLockable implements I
     }
 
     public String getName() {
-        return this.hasCustomName() ? this.furnaceCustomName : "container.compoundextractor";
+        return this.hasCustomName() ? this.furnaceCustomName : "container.compound_extractor";
     }
 
     public boolean hasCustomName() {

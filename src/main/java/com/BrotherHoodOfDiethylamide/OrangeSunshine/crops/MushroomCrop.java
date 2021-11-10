@@ -17,8 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class WeedCrop extends Crop {
-    public WeedCrop(String name)
+public class MushroomCrop extends Crop {
+    public MushroomCrop(String name)
     {
         super();
         this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
@@ -33,12 +33,12 @@ public class WeedCrop extends Crop {
     }
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return(Item_init.WEED);
+        return(Item_init.MUSHROOMCUBENSIS);
     }
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return new ItemStack(Item_init.WEED);
+        return new ItemStack(Item_init.MUSHROOMCUBENSIS);
     }
     public boolean isOpaqueCube()
     {

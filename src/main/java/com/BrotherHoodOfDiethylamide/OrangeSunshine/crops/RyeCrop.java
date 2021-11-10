@@ -29,7 +29,7 @@ public class RyeCrop extends Crop {
         setRegistryName(name);
 
         Block_init.BLOCKS.add(this);
-        Item_init.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+        //Item_init.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {

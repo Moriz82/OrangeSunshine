@@ -1,14 +1,26 @@
+itemGroup.orangesunshine.name=Orange Sunshine
+
+entity.Villager.shmoke_stackz.name=Shmoke Stackz
+entity.Villager.shmoke_stackz_career.name=Shmoke Stackz
+
 item.weed.name=Weed
-item.weedseed.name=Weed Seed
+item.weed_seed.name=Weed Seed
+item.rolling_paper.name=Rolling Paper
+item.weed_joint.name=Weed Joint
 
 item.rye.name=Rye
-item.ryeseed.name=Rye Seed
-item.lsd.name=LSD
-item.lysergicacid.name=Lysergic Acid
-item.orangesunshine.name=Orange Sunshine
+item.rye_seed.name=Rye Seed
+item.lysergic_acid.name=Lysergic Acid
+item.lsd.name=Lysergic Acid Dithylamide
+item.orangesunshine.name=ALD-52
+item.blotter.name=Blotter Paper
+item.lsd_blotter.name=LSD
+item.orangesunshine_blotter.name=OrangeSunshine
 
-tile.compoundextractoridle.name=Compound Extractor
-tile.compoundextractoractive.name=Compound Extractor
-container.compoundextractor=Compound Extractor
+item.mushroom_cubensis.name=Psilocybe Cubensis
+item.mushroom_seed.name=Mushroom Spores
+item.psilocybin.name=Psilocybin
 
-itemGroup.orangesunshine.name=Orange Sunshine
+tile.compound_extractor_idle.name=Compound Extractor
+tile.compound_extractor_active.name=Compound Extractor
+container.compound_extractor=Compound Extractor

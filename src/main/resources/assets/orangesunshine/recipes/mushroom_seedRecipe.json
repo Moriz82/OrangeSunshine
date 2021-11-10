@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":
+  [
+    {
+      "item": "orangesunshine:mushroom_cubensis"
+    }
+  ],
+  "result":
+  {
+    "item": "orangesunshine:mushroom_seed",
+    "count": 4
+  }
+}
