@@ -3,12 +3,12 @@
   "ingredients":
   [
     {
-      "item": "orangesunshine:weed"
+      "item": "orangesunshine:rye"
     }
   ],
   "result":
   {
-    "item": "orangesunshine:weed_seed",
+    "item": "orangesunshine:rye_seed",
     "count": 4
   }
 }
