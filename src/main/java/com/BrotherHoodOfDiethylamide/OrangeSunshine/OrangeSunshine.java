@@ -66,7 +66,6 @@ public class OrangeSunshine
     public void init(FMLInitializationEvent event)
     {
         Recipe_init.init();
-        Entity_init.registerEntities();
         addSeeds();
     }
 
@@ -74,6 +73,7 @@ public class OrangeSunshine
     public void postInit(FMLPostInitializationEvent event)
     {
         setBiomeSpawns();
+        Entity_init.registerEntities();
     }
 
     @EventHandler
@@ -86,14 +86,14 @@ public class OrangeSunshine
 
     public void setBiomeSpawns(){
         for (Biome biome:ForgeRegistries.BIOMES.getValues()) {
-            EntityRegistry.addSpawn(EntityShmokeStackz.class, 6, 5, 15,EnumCreatureType.CREATURE, biome);
+            EntityRegistry.addSpawn(EntityShmokeStackz.class, 10, 5, 15,EnumCreatureType.CREATURE, biome);
         }
     }
 
     public void addSeeds(){
-        MinecraftForge.addGrassSeed(new ItemStack(Item_init.WEEDSEED), 4);
+        MinecraftForge.addGrassSeed(new ItemStack(Item_init.WEEDSEED), 6);
         MinecraftForge.addGrassSeed(new ItemStack(Item_init.RYESEED), 6);
-        MinecraftForge.addGrassSeed(new ItemStack(Item_init.MUSHROOMSEED), 5);
+        MinecraftForge.addGrassSeed(new ItemStack(Item_init.MUSHROOMSEED), 6);
     }
 
     public void registerTileEntities(){
@@ -104,6 +104,7 @@ public class OrangeSunshine
         TileEntityCompoundExtractor.smeltables.add(Item_init.RYE);
         TileEntityCompoundExtractor.smeltables.add(Item_init.LYSERGICACID);
         TileEntityCompoundExtractor.smeltables.add(Item_init.MUSHROOMCUBENSIS);
+        // input and output
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.RYE, Item_init.LSD.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.LYSERGICACID, Item_init.ORANGESUNSHINE.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.MUSHROOMCUBENSIS, Item_init.PSILOCYBIN.getDefaultInstance());

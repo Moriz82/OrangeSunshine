@@ -1,16 +1,16 @@
 [
-{
-  "modid": "orangesunshine",
-  "name": "Orange Sunshine",
-  "description": "Drug mod for 1.12.2 and later inspired by Psychedelicraft",
-  "version": "1.0",
-  "mcversion": "1.12.2",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["Moriz", "Lolrow"],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "orangesunshine",
+    "name": "Orange Sunshine",
+    "description": "Drug mod for 1.12.2 and later inspired by Psychedelicraft",
+    "version": "1.0",
+    "mcversion": "1.12.2",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Moriz", "Lolrow"],
+    "credits": "",
+    "logoFile": "logo.png",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]
