@@ -86,7 +86,7 @@ public class OrangeSunshine
 
     public void setBiomeSpawns(){
         for (Biome biome:ForgeRegistries.BIOMES.getValues()) {
-            EntityRegistry.addSpawn(EntityShmokeStackz.class, 10, 5, 15,EnumCreatureType.CREATURE, biome);
+            EntityRegistry.addSpawn(EntityShmokeStackz.class, 8, 3, 10,EnumCreatureType.CREATURE, biome);
         }
     }
 
