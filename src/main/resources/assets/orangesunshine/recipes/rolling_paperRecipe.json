@@ -3,8 +3,10 @@
   "ingredients":
   [
     {
-      "item": "minecraft:paper",
-      "count": 2
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:paper"
     }
   ],
   "result":

@@ -1,7 +1,9 @@
 itemGroup.orangesunshine.name=Orange Sunshine
 
 entity.shmoke_stackz.name=Shmoke Stackz
+entity.shmokestackz.name=Shmoke Stackz
 entity.Villager.shmoke_stackz.name=Shmoke Stackz
+entity.Villager.Shmoke_Stackz=Shmoke Stackz
 
 item.weed.name=Weed
 item.weed_seed.name=Weed Seed

@@ -31,7 +31,7 @@ public class RegistryHandler {
     @SubscribeEvent
     public static void addProfessions(final RegistryEvent.Register<VillagerRegistry.VillagerProfession> villagerProfessionRegister){
         villagerProfessionRegister.getRegistry().register(shmokestackz);
-        VillagerRegistry.VillagerCareer career = new VillagerRegistry.VillagerCareer(shmokestackz, "Shmoke Stackz");
+        VillagerRegistry.VillagerCareer career = new VillagerRegistry.VillagerCareer(shmokestackz, "Shmoke_Stackz");
         career.addTrade(1, new TradelistShmokeStackz());
         shmokestackz.getId();
     }

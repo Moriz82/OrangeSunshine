@@ -18,6 +18,7 @@ public class Item_init {
 
     //-------------------------------- Weed
     public static final Item WEED = new ModItem("weed");
+    public static final Item WEEDEXTRACT = new ModItem("weed_extract");
     public static final Item WEEDSEED = new WeedSeed("weed_seed");
     public static final Item ROLLINGPAPER = new ModItem("rolling_paper");
     public static final Item WEEDJOINT = new WeedJoint("weed_joint", 0, 100, true);

@@ -78,7 +78,7 @@ public class OrangeSunshine
 
     @EventHandler
     @SideOnly(Side.CLIENT)
-    public void initC(FMLInitializationEvent event)
+    public void clientInit(FMLInitializationEvent event)
     {
         RenderHandler.registerEntityRenders();
         addSmeltables();
@@ -104,10 +104,12 @@ public class OrangeSunshine
         TileEntityCompoundExtractor.smeltables.add(Item_init.RYE);
         TileEntityCompoundExtractor.smeltables.add(Item_init.LYSERGICACID);
         TileEntityCompoundExtractor.smeltables.add(Item_init.MUSHROOMCUBENSIS);
+        TileEntityCompoundExtractor.smeltables.add(Item_init.WEED);
         // input and output
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.RYE, Item_init.LSD.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.LYSERGICACID, Item_init.ORANGESUNSHINE.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.MUSHROOMCUBENSIS, Item_init.PSILOCYBIN.getDefaultInstance());
+        TileEntityCompoundExtractor.smeltingOutput.put(Item_init.WEED, Item_init.WEEDEXTRACT.getDefaultInstance());
     }
 }
 
