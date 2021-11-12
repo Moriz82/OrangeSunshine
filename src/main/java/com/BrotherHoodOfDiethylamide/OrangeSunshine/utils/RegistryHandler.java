@@ -2,6 +2,7 @@ package com.BrotherHoodOfDiethylamide.OrangeSunshine.utils;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.FurnaceBlocks;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.particles.Smoke;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.EntityShmokeStackz;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.registry.StackzProfession;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.tradelists.TradelistShmokeStackz;
@@ -10,14 +11,17 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Entity_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -34,6 +38,22 @@ public class RegistryHandler {
         VillagerRegistry.VillagerCareer career = new VillagerRegistry.VillagerCareer(shmokestackz, "Shmoke_Stackz");
         career.addTrade(1, new TradelistShmokeStackz());
         shmokestackz.getId();
+    }
+
+    public static boolean isSmoke = false;
+    public static EntityLivingBase smokePlayer = null;
+    static int currTick = 0;
+
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event){
+        if (isSmoke && smokePlayer != null){
+            Smoke.doEffect(smokePlayer, smokePlayer.world);
+            currTick++;
+            if (currTick >= 100){
+                isSmoke = false;
+                currTick = 0;
+            }
+        }
     }
 
     @SubscribeEvent

@@ -4,6 +4,7 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.particles.Smoke;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.utils.IHasModel;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.utils.RegistryHandler;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,8 +18,6 @@ import net.minecraftforge.client.model.ModelLoader;
 
 public class WeedJoint extends ItemFood implements IHasModel {
 
-    boolean isLit = false;
-
     public WeedJoint(String name, int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation, isWolfFood);
         setUnlocalizedName(name);
@@ -31,6 +30,7 @@ public class WeedJoint extends ItemFood implements IHasModel {
 
         Item_init.ITEMS.add(this);
     }
+
     @Override
     public EnumAction getItemUseAction(ItemStack par1ItemStack)
     {
@@ -58,7 +58,8 @@ public class WeedJoint extends ItemFood implements IHasModel {
     }
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase player) {
-        Smoke.doEffect(player, player.world);
+        RegistryHandler.isSmoke = true;
+        RegistryHandler.smokePlayer = player;
         if(!worldIn.isRemote) {
             //LSD.addEffect(player);
         }
@@ -69,9 +70,6 @@ public class WeedJoint extends ItemFood implements IHasModel {
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
     {
-        Smoke.doEffect(player, player.world);
-    }
-    public boolean getIsLit(){
-        return isLit;
+       // Smoke.doEffect(player, player.world);
     }
 }

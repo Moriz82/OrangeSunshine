@@ -33,12 +33,12 @@ public class RyeCrop extends Crop {
     }
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return(Item_init.RYE);
+        return(Item_init.RYESEED);
     }
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return new ItemStack(Item_init.RYE);
+        return new ItemStack(Item_init.RYE, 4);
     }
     public boolean isOpaqueCube()
     {

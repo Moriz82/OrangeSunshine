@@ -33,12 +33,12 @@ public class WeedCrop extends Crop {
     }
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return(Item_init.WEED);
+        return(Item_init.WEEDSEED);
     }
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return new ItemStack(Item_init.WEED);
+        return new ItemStack(Item_init.WEED, 4);
     }
     public boolean isOpaqueCube()
     {
