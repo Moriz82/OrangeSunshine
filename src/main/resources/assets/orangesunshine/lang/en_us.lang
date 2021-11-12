@@ -30,3 +30,8 @@ item.psilocybin.name=Psilocybin
 tile.compound_extractor_idle.name=Compound Extractor
 tile.compound_extractor_active.name=Compound Extractor
 container.compound_extractor=Compound Extractor
+
+item.psych_helmet.name=Psych Helmet
+item.psych_chest.name=Psych Chest
+item.psych_legs.name=Psych Legs
+item.psych_boots.name=Psych Boots

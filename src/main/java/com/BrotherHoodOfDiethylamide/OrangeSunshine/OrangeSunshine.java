@@ -115,13 +115,11 @@ public class OrangeSunshine
         TileEntityCompoundExtractor.smeltables.add(Item_init.LYSERGICACID);
         TileEntityCompoundExtractor.smeltables.add(Item_init.MUSHROOMCUBENSIS);
         TileEntityCompoundExtractor.smeltables.add(Item_init.WEED);
-        TileEntityCompoundExtractor.smeltables.add(Item.getItemFromBlock(psychOre));
         // input and output
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.RYE, Item_init.LSD.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.LYSERGICACID, Item_init.ORANGESUNSHINE.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.MUSHROOMCUBENSIS, Item_init.PSILOCYBIN.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.WEED, Item_init.WEEDEXTRACT.getDefaultInstance());
-        TileEntityCompoundExtractor.smeltingOutput.put(Item.getItemFromBlock(psychOre), Item_init.PSYCHINGOT.getDefaultInstance());
     }
 }
 
