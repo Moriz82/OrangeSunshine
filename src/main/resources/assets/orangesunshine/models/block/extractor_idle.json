@@ -1,7 +1,9 @@
 {
-  "parent": "block/cross",
+  "parent": "block/orientable",
+  "ambientocclusion": true,
   "textures": {
-    "cross": "orangesunshine:blocks/extractor_front_off",
-    "particle": "orangesunshine:blocks/extractor_front_off"
+    "top": "orangesunshine:blocks/extractor_top",
+    "front": "orangesunshine:blocks/extractor_front_off",
+    "side": "orangesunshine:blocks/extractor_side"
   }
 }

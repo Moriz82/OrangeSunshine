@@ -82,7 +82,7 @@ public class CompoundExtractor extends BlockContainer {
     }
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(FurnaceBlocks.compoundExtractorIdle);
+        return Item.getItemFromBlock(ComplexBlocks.compoundExtractorIdle);
     }
 
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
@@ -206,7 +206,7 @@ public class CompoundExtractor extends BlockContainer {
     }
 
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        return new ItemStack(FurnaceBlocks.compoundExtractorIdle);
+        return new ItemStack(ComplexBlocks.compoundExtractorIdle);
     }
 
     public EnumBlockRenderType getRenderType(IBlockState state) {

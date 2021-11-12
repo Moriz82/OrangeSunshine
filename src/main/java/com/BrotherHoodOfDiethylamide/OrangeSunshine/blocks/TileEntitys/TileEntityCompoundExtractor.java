@@ -1,9 +1,7 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TileEntitys;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.Containers.ContainerModFurnace;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.FurnaceBlocks;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Block_init;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ComplexBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +11,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
@@ -269,11 +266,11 @@ public class TileEntityCompoundExtractor extends TileEntityLockable implements I
                 keepInventory = true;
 
                 if (flag1) {
-                    world.setBlockState(pos, FurnaceBlocks.compoundExtractorActive.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-                    world.setBlockState(pos, FurnaceBlocks.compoundExtractorActive.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                    world.setBlockState(pos, ComplexBlocks.compoundExtractorActive.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                    world.setBlockState(pos, ComplexBlocks.compoundExtractorActive.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
                 } else {
-                    world.setBlockState(pos, FurnaceBlocks.compoundExtractorIdle.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-                    world.setBlockState(pos, FurnaceBlocks.compoundExtractorIdle.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                    world.setBlockState(pos, ComplexBlocks.compoundExtractorIdle.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                    world.setBlockState(pos, ComplexBlocks.compoundExtractorIdle.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
                 }
 
                 keepInventory = false;

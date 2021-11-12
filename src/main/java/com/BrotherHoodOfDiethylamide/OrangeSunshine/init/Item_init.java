@@ -36,4 +36,6 @@ public class Item_init {
     public static final Item MUSHROOMCUBENSIS = new MushroomCubensis("mushroom_cubensis", 0, 100, true);
     public static final Item MUSHROOMSEED = new MushroomSeed("mushroom_seed");
     public static final Item PSILOCYBIN = new ModItem("psilocybin");
+    //-------------------------------- MISC
+    public static final Item PSYCHINGOT = new ModItem("psych_ingot");
 }

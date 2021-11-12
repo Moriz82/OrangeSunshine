@@ -1,5 +1,8 @@
 itemGroup.orangesunshine.name=Orange Sunshine
 
+tile.psych_ore.name=Psych Ore
+item.psych_ingot.name=Psych Ingot
+
 entity.shmoke_stackz.name=Shmoke Stackz
 entity.shmokestackz.name=Shmoke Stackz
 entity.Villager.shmoke_stackz.name=Shmoke Stackz

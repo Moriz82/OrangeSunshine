@@ -1,5 +1,6 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ComplexBlocks;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TileEntitys.TileEntityCompoundExtractor;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.EntityShmokeStackz;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.tradelists.TradelistShmokeStackz;
@@ -8,10 +9,12 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.CommonProxy;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Recipe_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.utils.RenderHandler;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.world.WorldGenCustomOres;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -37,6 +40,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import static com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ComplexBlocks.psychOre;
+
 @Mod(modid = OrangeSunshine.MODID, name = OrangeSunshine.NAME, version = OrangeSunshine.VERSION)
 @Mod.EventBusSubscriber
 public class OrangeSunshine
@@ -60,6 +65,7 @@ public class OrangeSunshine
     {
         logger = event.getModLog();
         registerTileEntities();
+        worldGen();
     }
 
     @EventHandler
@@ -84,6 +90,10 @@ public class OrangeSunshine
         addSmeltables();
     }
 
+    public static void worldGen(){
+        GameRegistry.registerWorldGenerator(new WorldGenCustomOres(), 0);
+    }
+
     public void setBiomeSpawns(){
         for (Biome biome:ForgeRegistries.BIOMES.getValues()) {
             EntityRegistry.addSpawn(EntityShmokeStackz.class, 8, 3, 10,EnumCreatureType.CREATURE, biome);
@@ -105,11 +115,13 @@ public class OrangeSunshine
         TileEntityCompoundExtractor.smeltables.add(Item_init.LYSERGICACID);
         TileEntityCompoundExtractor.smeltables.add(Item_init.MUSHROOMCUBENSIS);
         TileEntityCompoundExtractor.smeltables.add(Item_init.WEED);
+        TileEntityCompoundExtractor.smeltables.add(Item.getItemFromBlock(psychOre));
         // input and output
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.RYE, Item_init.LSD.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.LYSERGICACID, Item_init.ORANGESUNSHINE.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.MUSHROOMCUBENSIS, Item_init.PSILOCYBIN.getDefaultInstance());
         TileEntityCompoundExtractor.smeltingOutput.put(Item_init.WEED, Item_init.WEEDEXTRACT.getDefaultInstance());
+        TileEntityCompoundExtractor.smeltingOutput.put(Item.getItemFromBlock(psychOre), Item_init.PSYCHINGOT.getDefaultInstance());
     }
 }
 
