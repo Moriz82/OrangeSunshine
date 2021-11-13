@@ -43,13 +43,13 @@ public class Item_init {
     public static final Item MUSHROOMSEED = new MushroomSeed("mushroom_seed");
     public static final Item PSILOCYBIN = new ModItem("psilocybin");
     //-------------------------------- Armour
-    public static final ItemArmor.ArmorMaterial PSYCHARMORMATERIAL = EnumHelper.addArmorMaterial("psych_model", com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine.MODID + ":psych_model", 20, new int[] {7, 8, 8, 9}, 1, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2.0f);
+    public static final ItemArmor.ArmorMaterial PSYCHARMORMATERIAL = EnumHelper.addArmorMaterial("psych_armour_model", com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine.MODID + ":psych_model", 20, new int[] {7, 8, 8, 9}, 1, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2.0f);
     public static final Item PSYCHHELMET = new ArmourModel("psych_helmet", PSYCHARMORMATERIAL, EntityEquipmentSlot.HEAD);
     public static final Item PSYCHCHEST = new ArmourModel("psych_chest", PSYCHARMORMATERIAL, EntityEquipmentSlot.CHEST);
     public static final Item PSYCHLEGS = new ArmourModel("psych_legs", PSYCHARMORMATERIAL, EntityEquipmentSlot.LEGS);
     public static final Item PSYCHBOOTS = new ArmourModel("psych_boots", PSYCHARMORMATERIAL, EntityEquipmentSlot.FEET);
     //-------------------------------- Tools
-    public static final Item.ToolMaterial PSYCHTOOLMATERIAL = EnumHelper.addToolMaterial("copper_tool", 2, 400, 3.0f, 5.0f, 20);
+    public static final Item.ToolMaterial PSYCHTOOLMATERIAL = EnumHelper.addToolMaterial("psych_tool_model", 2, 400, 3.0f, 5.0f, 20);
     public static final Item PSYCHSWORD = new ToolSwordBase("psych_sword", PSYCHTOOLMATERIAL);
     public static final Item PSYCHPIC = new ToolSwordBase("psych_pic", PSYCHTOOLMATERIAL);
     public static final Item PSYCHAXE = new ToolSwordBase("psych_axe", PSYCHTOOLMATERIAL);
