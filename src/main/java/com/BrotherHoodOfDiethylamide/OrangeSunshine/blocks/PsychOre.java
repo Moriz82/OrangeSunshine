@@ -41,7 +41,7 @@ public class PsychOre extends Block {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(ComplexBlocks.compoundExtractorIdle);
+        return Item.getItemFromBlock(ComplexBlocks.psychOre);
     }
 
     @Override

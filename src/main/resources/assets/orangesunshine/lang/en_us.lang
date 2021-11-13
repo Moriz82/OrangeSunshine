@@ -35,3 +35,9 @@ item.psych_helmet.name=Psych Helmet
 item.psych_chest.name=Psych Chest
 item.psych_legs.name=Psych Legs
 item.psych_boots.name=Psych Boots
+
+item.psych_sword.name=Psych Sword
+item.psych_pic.name=Psych Pickaxe
+item.psych_axe.name=Psych Axe
+item.psych_shovel.name=Psych Shovel
+item.psych_hoe.name=Psych Hoe

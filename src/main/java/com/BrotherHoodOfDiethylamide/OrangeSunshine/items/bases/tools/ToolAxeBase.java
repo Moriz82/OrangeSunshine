@@ -24,7 +24,6 @@ public class ToolAxeBase extends ItemTool implements IHasModel
         setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(OrangeSunshine.CreativeTab);
-
         Item_init.ITEMS.add(this);
     }
 
