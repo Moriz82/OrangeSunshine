@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:opium_bottle_3"
+  },
+  "result": "orangesunshine:morphine_bottle",
+  "experience": 0.35,
+  "cookingtime": 200
+}

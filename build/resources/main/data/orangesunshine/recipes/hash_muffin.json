@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "CCC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:cocoa_beans"
+    },
+    "B": {
+      "item": "orangesunshine:dried_cannabis_bud"
+    },
+    "C": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:hash_muffin"
+  }
+}

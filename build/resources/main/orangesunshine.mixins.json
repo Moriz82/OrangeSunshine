@@ -1,0 +1,30 @@
+{
+  "minVersion": "0.8",
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "orangesunshine.refmap.json",
+  "package": "com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin",
+  "mixins": [
+    "MixinLivingEntity"
+  ],
+  "client": [
+    "client.InvokerRenderStateTexture",
+    "client.AccessorRenderTypeBuffer",
+    "client.AccessorRenderTypeState",
+    "client.AccessorShaderGroup",
+    "client.InvokerRenderUtilsOF",
+    "client.InvokerConfigOF",
+    "client.MixinGameRenderer",
+    "client.MixinGlStateManager",
+    "client.MixinLightTexture",
+    "client.MixinMouseHelper",
+    "client.MixinRenderType",
+    "client.MixinRenderTypeBuffer",
+    "client.MixinRenderTypeType",
+    "client.MixinWorldRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.ModCompatMixinPlugin"
+}

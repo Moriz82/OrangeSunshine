@@ -1,0 +1,42 @@
+{
+  "itemGroup.creativetab": "OrangeSunshine",
+
+  "item.orangesunshine.red_shrooms": "Red Shrooms",
+  "item.orangesunshine.dried_red_mushroom": "Dried Red Mushroom",
+  "item.orangesunshine.brown_shrooms": "Brown Shrooms",
+  "item.orangesunshine.dried_brown_mushroom": "Dried Brown Mushroom",
+  "item.orangesunshine.cocaine_rock": "Crack Cocaine",
+  "item.orangesunshine.cocaine_powder": "Powder Cocaine",
+  "item.orangesunshine.cocaine_dust": "Cocaine Dust",
+  "item.orangesunshine.coca_mulch": "Coca Mulch",
+  "item.orangesunshine.coca_leaf": "Coca Leaf",
+  "item.orangesunshine.coca_seeds": "Coca Seeds",
+  "item.orangesunshine.cannabis_joint": "Cannabis Joint",
+  "item.orangesunshine.hash_muffin": "Hash Muffin",
+  "item.orangesunshine.dried_cannabis_leaf": "Dried Cannabis Leaf",
+  "item.orangesunshine.cannabis_leaf": "Cannabis Leaf",
+  "item.orangesunshine.dried_cannabis_bud": "Dried Cannabis Bud",
+  "item.orangesunshine.cannabis_bud": "Cannabis Bud",
+  "item.orangesunshine.cannabis_seeds": "Cannabis Seeds",
+  "item.orangesunshine.syringe": "Empty Syringe",
+  "item.orangesunshine.cocaine_syringe": "Cocaine Syringe",
+  "item.orangesunshine.morphine_syringe": "Morphine Syringe",
+  "item.orangesunshine.coke_cake": "Coke",
+  "item.orangesunshine.cigarette": "Cigarette",
+  "item.orangesunshine.bong": "Bong",
+  "item.orangesunshine.morphine_bottle": "Morphine Bottle",
+  "item.orangesunshine.opium_bottle_0": "Partially Filled Opium Bottle",
+  "item.orangesunshine.opium_bottle_1": "Partially Filled Opium Bottle",
+  "item.orangesunshine.opium_bottle_2": "Partially Filled Opium Bottle",
+  "item.orangesunshine.opium_bottle_3": "Opium Bottle",
+
+  "item.bong_hit": "Bong hit",
+  "item.bong_hit.sub": "Bong hit",
+
+  "block.OrangeSunshine.coca": "Coca",
+  "block.OrangeSunshine.cannabis": "Cannabis",
+  "block.OrangeSunshine.coke_cake": "Coke",
+  "block.OrangeSunshine.cut_poppy": "Cut Poppy",
+
+  "OrangeSunshine.message.glError": "§eOrangeSunshine GL Error§f: %s (%s) at %s"
+}

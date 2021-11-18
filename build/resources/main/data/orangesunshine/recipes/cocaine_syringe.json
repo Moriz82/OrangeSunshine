@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:cocaine_powder"
+    },
+    {
+      "item": "orangesunshine:syringe"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:cocaine_syringe"
+  }
+}

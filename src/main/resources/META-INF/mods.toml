@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="${loader_range}"
+license="All rights reserved"
+
+[[mods]]
+modId = "orangesunshine"
+version = "${file.jarVersion}"
+displayName = "Orange Sunshine"
+authors = "Moriz"
+description = '''
+Minecraft Drugmod
+'''
+
+[[dependencies.OrangeSunshine]]
+    modId = "forge"
+    mandatory = true
+    versionRange = "${forge_range}"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.OrangeSunshine]]
+    modId = "minecraft"
+    mandatory = true
+    versionRange = "${mc_range}"
+    ordering = "NONE"
+    side = "BOTH"

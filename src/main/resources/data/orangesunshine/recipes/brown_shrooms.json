@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "orangesunshine:dried_brown_mushroom"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:brown_shrooms"
+  }
+}

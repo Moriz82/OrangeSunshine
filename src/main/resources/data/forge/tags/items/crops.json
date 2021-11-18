@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:crops/weedbud",
+    "#forge:crops/weedleaf",
+    "#forge:crops/cocaleaf"
+  ]
+}

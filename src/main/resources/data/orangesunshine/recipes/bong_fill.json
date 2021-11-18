@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "orangesunshine:bong" },
+    { "item": "minecraft:water_bucket" }
+  ],
+  "result": {
+    "item": "orangesunshine:bong",
+    "nbt": {
+      "Damage": 0
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "targets": [
+    "bloom",
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "orangesunshine:threshold",
+      "intarget": "minecraft:main",
+      "outtarget": "bloom"
+    },
+    {
+      "name": "orangesunshine:blur",
+      "intarget": "bloom",
+      "outtarget": "swap",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 1.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "name": "orangesunshine:blur",
+      "intarget": "swap",
+      "outtarget": "bloom",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 0.0, 1.0 ]
+        }
+      ]
+    },
+    {
+      "name": "orangesunshine:add",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "auxtargets": [
+        {
+          "name": "OtherSampler",
+          "id": "bloom"
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

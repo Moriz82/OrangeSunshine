@@ -1,0 +1,6 @@
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinMouseHelper accumulatedDX field_198048_m
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinMouseHelper accumulatedDY field_198049_n
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeBuffer lastState field_228459_c_
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeType state field_228668_S_
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinWorldRenderer renderBuffers field_228415_m_
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeBuffer endBatch ()V func_228461_a_

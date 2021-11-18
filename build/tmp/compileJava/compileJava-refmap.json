@@ -1,0 +1,112 @@
+{
+  "mappings": {
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGlStateManager": {
+      "setupOverlayColor": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227739_l_(II)V",
+      "teardownOverlayColor": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227759_t_()V",
+      "_enableLighting": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227716_f_()V",
+      "_fogMode": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227750_p_(I)V",
+      "_disableLighting": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227722_g_()V"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorShaderGroup": {
+      "passes": "field_148031_d:Ljava/util/List;"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGameRenderer": {
+      "bobHurt(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V": "Lnet/minecraft/client/renderer/GameRenderer;func_228380_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeBuffer": {
+      "lastState": "field_228459_c_:Ljava/util/Optional;"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinWorldRenderer": {
+      "Lnet/minecraft/client/world/DimensionRenderInfo;constantAmbientLight()Z": "Lnet/minecraft/client/world/DimensionRenderInfo;func_239217_c_()Z",
+      "Lnet/minecraft/client/renderer/RenderTypeBuffers;outlineBufferSource()Lnet/minecraft/client/renderer/OutlineLayerBuffer;": "Lnet/minecraft/client/renderer/RenderTypeBuffers;func_228490_d_()Lnet/minecraft/client/renderer/OutlineLayerBuffer;",
+      "renderLevel": "Lnet/minecraft/client/renderer/WorldRenderer;func_228426_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;FJZLnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lnet/minecraft/util/math/vector/Matrix4f;)V",
+      "renderChunkLayer": "Lnet/minecraft/client/renderer/WorldRenderer;func_228441_a_(Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/matrix/MatrixStack;DDD)V",
+      "Lnet/minecraft/profiler/IProfiler;popPush(Ljava/lang/String;)V": "Lnet/minecraft/profiler/IProfiler;func_219895_b(Ljava/lang/String;)V",
+      "Lnet/minecraft/profiler/IProfiler;pop()V": "Lnet/minecraft/profiler/IProfiler;func_76319_b()V",
+      "Lnet/minecraft/client/renderer/WorldRenderer;renderHitOutline(Lcom/mojang/blaze3d/matrix/MatrixStack;Lcom/mojang/blaze3d/vertex/IVertexBuilder;Lnet/minecraft/entity/Entity;DDDLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V": "Lnet/minecraft/client/renderer/WorldRenderer;func_228429_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;Lcom/mojang/blaze3d/vertex/IVertexBuilder;Lnet/minecraft/entity/Entity;DDDLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V",
+      "renderEntity": "Lnet/minecraft/client/renderer/WorldRenderer;func_228418_a_(Lnet/minecraft/entity/Entity;DDDFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;)V",
+      "Lnet/minecraft/profiler/IProfiler;push(Ljava/lang/String;)V": "Lnet/minecraft/profiler/IProfiler;func_76320_a(Ljava/lang/String;)V"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeType": {
+      "net.minecraft.client.renderer.RenderType$Type": "net/minecraft/client/renderer/RenderType$Type"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinLightTexture": {
+      "turnOnLightLayer": "Lnet/minecraft/client/renderer/LightTexture;func_205109_c()V",
+      "turnOffLightLayer": "Lnet/minecraft/client/renderer/LightTexture;func_205108_b()V"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeState": {
+      "textureState": "field_228677_a_:Lnet/minecraft/client/renderer/RenderState$TextureState;"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderStateTexture": {
+      "texture": "func_228606_c_()Ljava/util/Optional;"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinMouseHelper": {
+      "turnPlayer()V": "Lnet/minecraft/client/MouseHelper;func_198028_a()V",
+      "Lnet/minecraft/client/MouseHelper;accumulatedDY:D": "Lnet/minecraft/client/MouseHelper;field_198049_n:D",
+      "Lnet/minecraft/client/MouseHelper;accumulatedDX:D": "Lnet/minecraft/client/MouseHelper;field_198048_m:D"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderType": {
+      "end": "Lnet/minecraft/client/renderer/RenderType;func_228631_a_(Lnet/minecraft/client/renderer/BufferBuilder;III)V",
+      "Lnet/minecraft/client/renderer/WorldVertexBufferUploader;end(Lnet/minecraft/client/renderer/BufferBuilder;)V": "Lnet/minecraft/client/renderer/WorldVertexBufferUploader;func_181679_a(Lnet/minecraft/client/renderer/BufferBuilder;)V"
+    },
+    "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/MixinLivingEntity": {
+      "increaseAirSupply": "Lnet/minecraft/entity/LivingEntity;func_207300_l(I)I"
+    }
+  },
+  "data": {
+    "searge": {
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGlStateManager": {
+        "setupOverlayColor": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227739_l_(II)V",
+        "teardownOverlayColor": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227759_t_()V",
+        "_enableLighting": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227716_f_()V",
+        "_fogMode": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227750_p_(I)V",
+        "_disableLighting": "Lcom/mojang/blaze3d/platform/GlStateManager;func_227722_g_()V"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorShaderGroup": {
+        "passes": "field_148031_d:Ljava/util/List;"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGameRenderer": {
+        "bobHurt(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V": "Lnet/minecraft/client/renderer/GameRenderer;func_228380_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeBuffer": {
+        "lastState": "field_228459_c_:Ljava/util/Optional;"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinWorldRenderer": {
+        "Lnet/minecraft/client/world/DimensionRenderInfo;constantAmbientLight()Z": "Lnet/minecraft/client/world/DimensionRenderInfo;func_239217_c_()Z",
+        "Lnet/minecraft/client/renderer/RenderTypeBuffers;outlineBufferSource()Lnet/minecraft/client/renderer/OutlineLayerBuffer;": "Lnet/minecraft/client/renderer/RenderTypeBuffers;func_228490_d_()Lnet/minecraft/client/renderer/OutlineLayerBuffer;",
+        "renderLevel": "Lnet/minecraft/client/renderer/WorldRenderer;func_228426_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;FJZLnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lnet/minecraft/util/math/vector/Matrix4f;)V",
+        "renderChunkLayer": "Lnet/minecraft/client/renderer/WorldRenderer;func_228441_a_(Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/matrix/MatrixStack;DDD)V",
+        "Lnet/minecraft/profiler/IProfiler;popPush(Ljava/lang/String;)V": "Lnet/minecraft/profiler/IProfiler;func_219895_b(Ljava/lang/String;)V",
+        "Lnet/minecraft/profiler/IProfiler;pop()V": "Lnet/minecraft/profiler/IProfiler;func_76319_b()V",
+        "Lnet/minecraft/client/renderer/WorldRenderer;renderHitOutline(Lcom/mojang/blaze3d/matrix/MatrixStack;Lcom/mojang/blaze3d/vertex/IVertexBuilder;Lnet/minecraft/entity/Entity;DDDLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V": "Lnet/minecraft/client/renderer/WorldRenderer;func_228429_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;Lcom/mojang/blaze3d/vertex/IVertexBuilder;Lnet/minecraft/entity/Entity;DDDLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V",
+        "renderEntity": "Lnet/minecraft/client/renderer/WorldRenderer;func_228418_a_(Lnet/minecraft/entity/Entity;DDDFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;)V",
+        "Lnet/minecraft/profiler/IProfiler;push(Ljava/lang/String;)V": "Lnet/minecraft/profiler/IProfiler;func_76320_a(Ljava/lang/String;)V"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeType": {
+        "net.minecraft.client.renderer.RenderType$Type": "net/minecraft/client/renderer/RenderType$Type"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinLightTexture": {
+        "turnOnLightLayer": "Lnet/minecraft/client/renderer/LightTexture;func_205109_c()V",
+        "turnOffLightLayer": "Lnet/minecraft/client/renderer/LightTexture;func_205108_b()V"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeState": {
+        "textureState": "field_228677_a_:Lnet/minecraft/client/renderer/RenderState$TextureState;"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderStateTexture": {
+        "texture": "func_228606_c_()Ljava/util/Optional;"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinMouseHelper": {
+        "turnPlayer()V": "Lnet/minecraft/client/MouseHelper;func_198028_a()V",
+        "Lnet/minecraft/client/MouseHelper;accumulatedDY:D": "Lnet/minecraft/client/MouseHelper;field_198049_n:D",
+        "Lnet/minecraft/client/MouseHelper;accumulatedDX:D": "Lnet/minecraft/client/MouseHelper;field_198048_m:D"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderType": {
+        "end": "Lnet/minecraft/client/renderer/RenderType;func_228631_a_(Lnet/minecraft/client/renderer/BufferBuilder;III)V",
+        "Lnet/minecraft/client/renderer/WorldVertexBufferUploader;end(Lnet/minecraft/client/renderer/BufferBuilder;)V": "Lnet/minecraft/client/renderer/WorldVertexBufferUploader;func_181679_a(Lnet/minecraft/client/renderer/BufferBuilder;)V"
+      },
+      "com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/MixinLivingEntity": {
+        "increaseAirSupply": "Lnet/minecraft/entity/LivingEntity;func_207300_l(I)I"
+      }
+    }
+  }
+}

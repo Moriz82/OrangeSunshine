@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:glass"
+    },
+    "B": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:bong",
+    "nbt": {
+      "Damage": 8
+    }
+  }
+}

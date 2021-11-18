@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "igI"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_nugget"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:syringe"
+  }
+}

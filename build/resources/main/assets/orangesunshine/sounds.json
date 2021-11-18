@@ -1,0 +1,24 @@
+{
+  "item.bong_hit": {
+    "category": "item",
+    "subtitle": "item.bong_hit.sub",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/bong_hit1",
+        "stream": true
+      },
+      {
+        "name": "orangesunshine:item/bong_hit2",
+        "stream": true
+      },
+      {
+        "name": "orangesunshine:item/bong_hit3",
+        "stream": true
+      },
+      {
+        "name": "orangesunshine:item/bong_hit4",
+        "stream": true
+      }
+    ]
+  }
+}

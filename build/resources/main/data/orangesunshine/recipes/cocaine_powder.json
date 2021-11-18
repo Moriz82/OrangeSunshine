@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "orangesunshine:cocaine_dust"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:cocaine_powder"
+  }
+}

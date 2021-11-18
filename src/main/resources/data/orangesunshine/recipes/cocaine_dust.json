@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:coca_mulch"
+  },
+  "result": "orangesunshine:cocaine_dust",
+  "experience": 0.35,
+  "cookingtime": 200
+}

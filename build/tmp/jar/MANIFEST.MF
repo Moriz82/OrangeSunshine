@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: OrangeSunshine
+MixinConfigs: orangesunshine.mixins.json
+Implementation-Version: 1.16.5-0.1
+Specification-Vendor: BrotherHoodOfDiethylamide
+Specification-Title: OrangeSunshine
+Implementation-Timestamp: 2021-11-17T23:53:35-0600
+Specification-Version: 1
+Implementation-Vendor: BrotherHoodOfDiethylamide
+
