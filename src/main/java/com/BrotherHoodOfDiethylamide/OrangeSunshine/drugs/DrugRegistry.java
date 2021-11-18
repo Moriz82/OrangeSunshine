@@ -21,7 +21,7 @@ public class DrugRegistry {
     public static final RegistryObject<Drug> WEED = register("weed", () -> new Weed(new Drug.DrugProperties().adsr(1800F, 0F, 1F, 2400F)));
     public static final RegistryObject<Drug> MORPHINE = register("morphine", () -> new Morphine(new Drug.DrugProperties().adsr(0F, 800F, 0.8F, 200F)));
     public static final RegistryObject<Drug> LSD_BOTTLE = register("lsd_bottle", () -> new RedShrooms(new Drug.DrugProperties().adsr(2400F, 200F, 0.8F, 2400F)));
-    public static final RegistryObject<Drug> LSD_BLOTTER = register("lsd_bottle", () -> new RedShrooms(new Drug.DrugProperties().adsr(2400F, 200F, 0.8F, 2400F)));
+    public static final RegistryObject<Drug> LSD_BLOTTER = register("lsd_blotter", () -> new RedShrooms(new Drug.DrugProperties().adsr(2400F, 200F, 0.8F, 2400F)));
 
 
     public static RegistryObject<Drug> register(String name, Supplier<? extends Drug> supplier) {

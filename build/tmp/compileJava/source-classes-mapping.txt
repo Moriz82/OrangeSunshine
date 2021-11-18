@@ -6,6 +6,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeBuff
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.AccessorRenderTypeBuffer
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CokeCakeBlock.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CokeCakeBlock
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Weed.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Weed
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Depth.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.Depth
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/ShaderRenderer.java
@@ -90,12 +92,12 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/CameraTrembleEffec
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.CameraTrembleEffect
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/ModBlocks.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/WeedBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.WeedBlock
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/MixinLivingEntity.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.MixinLivingEntity
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/EnableLightEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.EnableLightEvent
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CannabisBlock.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CannabisBlock
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Drug.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug$DrugProperties
@@ -106,8 +108,6 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/network/PacketHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.PacketHandler
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/CompostRegistry.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.CompostRegistry
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Cannabis.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Cannabis
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugHandler
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderType.java

@@ -2,15 +2,17 @@
   "itemGroup.creative_tab": "Orange Sunshine",
 
   "item.orangesunshine.red_shrooms": "Red Shrooms",
-  "item.orangesunshine.dried_red_mushroom": "Dried Red Mushroom",
   "item.orangesunshine.brown_shrooms": "Brown Shrooms",
+  "item.orangesunshine.dried_red_mushroom": "Dried Red Mushroom",
   "item.orangesunshine.dried_brown_mushroom": "Dried Brown Mushroom",
+
   "item.orangesunshine.cocaine_rock": "Crack Cocaine",
   "item.orangesunshine.cocaine_powder": "Powder Cocaine",
   "item.orangesunshine.cocaine_dust": "Cocaine Dust",
   "item.orangesunshine.coca_mulch": "Coca Mulch",
   "item.orangesunshine.coca_leaf": "Coca Leaf",
   "item.orangesunshine.coca_seeds": "Coca Seeds",
+
   "item.orangesunshine.weed_joint": "weed Joint",
   "item.orangesunshine.hash_muffin": "Hash Muffin",
   "item.orangesunshine.dried_weed_leaf": "Dried weed Leaf",
@@ -18,6 +20,13 @@
   "item.orangesunshine.dried_weed_bud": "Dried weed Bud",
   "item.orangesunshine.weed_bud": "weed Bud",
   "item.orangesunshine.weed_seeds": "weed Seeds",
+
+  "item.orangesunshine.lsd_bottle":  "LSD Bottle (Lysergic Acid Diethylamide)",
+  "item.orangesunshine.lsd_blotter":  "LSD Blotter",
+
+  "item.orangesunshine.blotter":  "Blotter Paper",
+  "item.orangesunshine.rolling_paper":  "Rolling Paper",
+
   "item.orangesunshine.syringe": "Empty Syringe",
   "item.orangesunshine.cocaine_syringe": "Cocaine Syringe",
   "item.orangesunshine.morphine_syringe": "Morphine Syringe",

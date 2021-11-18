@@ -12,7 +12,6 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
-
 version = "${mc_version}-${mod_version}"
 group = 'com.BrotherHoodOfDiethylamide.OrangeSunshine'
 archivesBaseName = 'OrangeSunshine'
