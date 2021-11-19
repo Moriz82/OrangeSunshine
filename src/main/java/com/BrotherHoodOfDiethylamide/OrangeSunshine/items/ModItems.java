@@ -57,11 +57,11 @@ public class ModItems {
     public static final RegistryObject<Item> PSYCH_ORE = registerBlock("psych_ore", ModBlocks.PSYCH_ORE, 64);
     public static final RegistryObject<Item> PSYCH_INGOT = registerItem("psych_ingot");
     //----------------------------------------------Tools
-    public static final RegistryObject<Item> PSYCH_SWORD = registerItem("psych_sword", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
-    public static final RegistryObject<Item> PSYCH_PIC = registerItem("psych_pic", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.PICKAXE, 10)));
-    public static final RegistryObject<Item> PSYCH_AXE = registerItem("psych_axe", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.AXE, 10)));
-    public static final RegistryObject<Item> PSYCH_SHOVEL = registerItem("psych_shovel", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.SHOVEL, 10)));
-    public static final RegistryObject<Item> PSYCH_HOE = registerItem("psych_hoe", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.HOE, 10)));
+    public static final RegistryObject<Item> PSYCH_SWORD = registerItem("psych_sword", () -> new SwordItem(ModItemTier.PSYCH, 45, 25f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
+    public static final RegistryObject<Item> PSYCH_PIC = registerItem("psych_pic", () -> new PickaxeItem(ModItemTier.PSYCH, 45, 25f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.PICKAXE, 4)));
+    public static final RegistryObject<Item> PSYCH_AXE = registerItem("psych_axe", () -> new AxeItem(ModItemTier.PSYCH, 45, 25f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.AXE, 4)));
+    public static final RegistryObject<Item> PSYCH_SHOVEL = registerItem("psych_shovel", () -> new ShovelItem(ModItemTier.PSYCH, 45, 25f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.SHOVEL, 4)));
+    public static final RegistryObject<Item> PSYCH_HOE = registerItem("psych_hoe", () -> new HoeItem(ModItemTier.PSYCH, 45, 25f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.HOE, 4)));
     //----------------------------------------------Armour
     public static final RegistryObject<Item> PSYCH_HELMET = registerItem("psych_helmet", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.HEAD, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
     public static final RegistryObject<Item> PSYCH_CHEST = registerItem("psych_chest", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));

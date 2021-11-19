@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterial implements IArmorMaterial {
-    PSYCH_ARMOR_MATERIAL("psych", 100, new int[]{25, 25, 25, 25}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 10f, 10f, () -> {
+    PSYCH_ARMOR_MATERIAL("psych", 1000, new int[]{100, 100, 100, 100}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 100f, 100f, () -> {
         return Ingredient.of(ModItems.PSYCH_INGOT.get());
     });
 
@@ -27,16 +27,17 @@ public enum ModArmorMaterial implements IArmorMaterial {
     private final float knockbackResistance;
     private final LazyValue<Ingredient> repairIngredient;
 
-    private ModArmorMaterial(String p_i231593_3_, int p_i231593_4_, int[] p_i231593_5_, int p_i231593_6_, SoundEvent p_i231593_7_, float p_i231593_8_, float p_i231593_9_, Supplier<Ingredient> p_i231593_10_) {
-        this.name = p_i231593_3_;
-        this.durabilityMultiplier = p_i231593_4_;
-        this.slotProtections = p_i231593_5_;
-        this.enchantmentValue = p_i231593_6_;
-        this.sound = p_i231593_7_;
-        this.toughness = p_i231593_8_;
-        this.knockbackResistance = p_i231593_9_;
-        this.repairIngredient = new LazyValue<>(p_i231593_10_);
+    ModArmorMaterial(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+        this.name = name;
+        this.durabilityMultiplier = durabilityMultiplier;
+        this.slotProtections = slotProtections;
+        this.enchantmentValue = enchantmentValue;
+        this.sound = sound;
+        this.toughness = toughness;
+        this.knockbackResistance = knockbackResistance;
+        this.repairIngredient = new LazyValue<>(repairIngredient);
     }
+
     public int getDurabilityForSlot(EquipmentSlotType p_200896_1_) {
         return HEALTH_PER_SLOT[p_200896_1_.getIndex()] * this.durabilityMultiplier;
     }

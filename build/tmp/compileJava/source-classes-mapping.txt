@@ -144,6 +144,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/OverlayEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.OverlayEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/BongItem.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.BongItem
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModItemTier.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItemTier
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderStateTexture.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerRenderStateTexture
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/WaterDistort.java
