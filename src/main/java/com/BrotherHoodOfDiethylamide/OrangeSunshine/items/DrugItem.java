@@ -17,6 +17,7 @@ import net.minecraftforge.fml.RegistryObject;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -50,6 +51,10 @@ public class DrugItem extends Item {
             if (isEdible()) {
                 playerEntity.eat(world, itemStack);
             } else if (!playerEntity.abilities.instabuild) {
+                itemStack.hurt(1, entity.getRandom(), null);
+                //itemStack.shrink(1);
+            }
+            if (itemStack.getDamageValue() >= itemStack.getMaxDamage()){
                 itemStack.shrink(1);
             }
 

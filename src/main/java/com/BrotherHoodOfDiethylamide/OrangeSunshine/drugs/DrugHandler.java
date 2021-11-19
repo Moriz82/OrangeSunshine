@@ -66,7 +66,9 @@ public class DrugHandler {
             if (playerDrugs.getSmokeTicks() > 0) {
                 playerDrugs.setSmokeTicks(playerDrugs.getSmokeTicks() - 1);
                 Vector3d lookVector = player.getLookAngle();
-                serverWorld.sendParticles(ParticleTypes.SMOKE, player.getX(), player.getY() + player.getEyeHeight() - 0.15F, player.getZ(), 0, lookVector.x, lookVector.y, lookVector.z, 0.1);
+                for (int i = 0; i < 10; i++) {
+                    serverWorld.sendParticles(ParticleTypes.SMOKE, player.getX(), player.getY() + player.getEyeHeight() - 0.15F, player.getZ(), 0, lookVector.x, lookVector.y, lookVector.z, 0.1);
+                }
             }
         }
     }

@@ -20,7 +20,7 @@ public class JointItem extends DrugItem {
     @Override
     public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
         if (entity instanceof PlayerEntity) {
-            PlayerProperties.getPlayerDrugs((PlayerEntity) entity).setSmokeTicks(4);
+            PlayerProperties.getPlayerDrugs((PlayerEntity) entity).setSmokeTicks(20);
         }
 
         return super.finishUsingItem(itemStack, world, entity);

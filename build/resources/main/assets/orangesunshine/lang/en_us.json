@@ -13,16 +13,19 @@
   "item.orangesunshine.coca_leaf": "Coca Leaf",
   "item.orangesunshine.coca_seeds": "Coca Seeds",
 
-  "item.orangesunshine.weed_joint": "weed Joint",
+  "item.orangesunshine.weed_joint": "Weed Joint",
   "item.orangesunshine.hash_muffin": "Hash Muffin",
-  "item.orangesunshine.dried_weed_leaf": "Dried weed Leaf",
-  "item.orangesunshine.weed_leaf": "weed Leaf",
-  "item.orangesunshine.dried_weed_bud": "Dried weed Bud",
-  "item.orangesunshine.weed_bud": "weed Bud",
-  "item.orangesunshine.weed_seeds": "weed Seeds",
+  "item.orangesunshine.dried_weed_leaf": "Dried Weed Leaf",
+  "item.orangesunshine.weed_leaf": "Weed Leaf",
+  "item.orangesunshine.dried_weed_bud": "Dried Weed Bud",
+  "item.orangesunshine.weed_bud": "Weed Bud",
+  "item.orangesunshine.weed_seeds": "Weed Seeds",
+  "item.orangesunshine.weed_extract": "Weed Extract",
 
   "item.orangesunshine.lsd_bottle":  "LSD Bottle (Lysergic Acid Diethylamide)",
   "item.orangesunshine.lsd_blotter":  "LSD Blotter",
+  "item.orangesunshine.orangesunshine_bottle":  "OrangeSunshine Bottle (ALD-52)",
+  "item.orangesunshine.orangesunshine_blotter":  "OrangeSunshine Blotter",
 
   "item.orangesunshine.blotter":  "Blotter Paper",
   "item.orangesunshine.rolling_paper":  "Rolling Paper",
@@ -38,6 +41,22 @@
   "item.orangesunshine.opium_bottle_1": "Partially Filled Opium Bottle",
   "item.orangesunshine.opium_bottle_2": "Partially Filled Opium Bottle",
   "item.orangesunshine.opium_bottle_3": "Opium Bottle",
+
+  "item.orangesunshine.psych_ore": "Psych Ore",
+  "block.orangesunshine.psych_ore": "Psych Ore",
+  "item.orangesunshine.psych_ingot": "Psych Ingot",
+
+  "item.orangesunshine.psych_sword": "Psych Sword",
+  "item.orangesunshine.psych_pic": "Psych Pic",
+  "item.orangesunshine.psych_axe": "Psych Axe",
+  "item.orangesunshine.psych_shovel": "Psych Shovel",
+  "item.orangesunshine.psych_hoe": "Psych Hoe",
+
+  "item.orangesunshine.psych_helmet": "Psych Helmet",
+  "item.orangesunshine.psych_chest": "Psych Chestplate",
+  "item.orangesunshine.psych_leggings": "Psych Leggings",
+  "item.orangesunshine.psych_boots": "Psych Sword",
+
 
   "item.bong_hit": "Bong hit",
   "item.bong_hit.sub": "Bong hit",

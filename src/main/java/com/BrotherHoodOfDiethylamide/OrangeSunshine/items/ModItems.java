@@ -5,10 +5,12 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -39,19 +41,38 @@ public class ModItems {
     public static final RegistryObject<Item> DRIED_WEED_BUD = registerItem("dried_weed_bud");
     public static final RegistryObject<Item> WEED_SEEDS = registerBlockNamed("weed_seeds", ModBlocks.WEED_BLOCK);
     public static final RegistryObject<Item> WEED_BUD = registerItem("weed_bud");
+    public static final RegistryObject<Item> WEED_EXTRACT = registerItem("weed_extract");
     //----------------------------------------------LSD
-    public static final RegistryObject<Item> LSD_BOTTLE = registerItem("lsd_bottle", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.LSD_BOTTLE, 300, 1.0F, 99999).food(ModFoods.LSD_BOTTLE).tab(OrangeSunshine.TAB)));
-    public static final RegistryObject<Item> LSD_BLOTTER = registerItem("lsd_blotter", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.LSD_BLOTTER, 1000, 0.48F, 16582).food(ModFoods.LSD_BLOTTER).tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> LSD_BOTTLE = registerItem("lsd_bottle", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.LSD_BOTTLE, 300, 0.70F, 29999).food(ModFoods.LSD_BOTTLE).tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> LSD_BLOTTER = registerItem("lsd_blotter", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.LSD_BLOTTER, 1000, 0.48F, 18888).food(ModFoods.LSD_BLOTTER).tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> ORANGESUNSHINE_BOTTLE = registerItem("orangesunshine_bottle", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.ORANGESUNSHINE_BOTTLE, 300, 0.6F, 19999).food(ModFoods.ORANGESUNSHINE_BOTTLE).tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> ORANGESUNSHINE_BLOTTER = registerItem("orangesunshine_blotter", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.ORANGESUNSHINE_BLOTTER, 1000, 0.48F, 9999).food(ModFoods.ORANGESUNSHINE_BLOTTER).tab(OrangeSunshine.TAB)));
     //----------------------------------------------NIC
     public static final RegistryObject<JointItem> CIGARETTE = registerJoint("cigarette", new DrugChain());
     //----------------------------------------------Crafting
     public static final RegistryObject<Item> BLOTTER = registerItem("blotter");
     public static final RegistryObject<Item> ROLLING_PAPER = registerItem("rolling_paper");
     public static final RegistryObject<Item> EMPTY_SYRINGE = registerItem("syringe", 16);
+    //----------------------------------------------Ore
+    public static final RegistryObject<Item> PSYCH_ORE = registerBlock("psych_ore", ModBlocks.PSYCH_ORE, 64);
+    public static final RegistryObject<Item> PSYCH_INGOT = registerItem("psych_ingot");
+    //----------------------------------------------Tools
+    public static final RegistryObject<Item> PSYCH_SWORD = registerItem("psych_sword", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
+    public static final RegistryObject<Item> PSYCH_PIC = registerItem("psych_pic", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.PICKAXE, 10)));
+    public static final RegistryObject<Item> PSYCH_AXE = registerItem("psych_axe", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.AXE, 10)));
+    public static final RegistryObject<Item> PSYCH_SHOVEL = registerItem("psych_shovel", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.SHOVEL, 10)));
+    public static final RegistryObject<Item> PSYCH_HOE = registerItem("psych_hoe", () -> new SwordItem(ItemTier.NETHERITE, 45, 1f, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000).addToolType(ToolType.HOE, 10)));
+    //----------------------------------------------Armour
+    public static final RegistryObject<Item> PSYCH_HELMET = registerItem("psych_helmet", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.HEAD, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
+    public static final RegistryObject<Item> PSYCH_CHEST = registerItem("psych_chest", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
+    public static final RegistryObject<Item> PSYCH_LEGGINGS = registerItem("psych_leggings", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.LEGS, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
+    public static final RegistryObject<Item> PSYCH_BOOTS = registerItem("psych_boots", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.FEET, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
+
     //----------------------------------------------Extras
     public static final RegistryObject<SyringeItem> COCAINE_SYRINGE = registerSyringe("cocaine_syringe", new DrugChain().add(DrugRegistry.COCAINE, 0, 0.47F, 4800), 0xFFFFFFFF);
     public static final RegistryObject<SyringeItem> MORPHINE_SYRINGE = registerSyringe("morphine_syringe", new DrugChain().add(DrugRegistry.MORPHINE, 0, 0.6F, 4800), 0xFF885038);
     public static final RegistryObject<Item> BONG = registerItem("bong", () -> new BongItem(new Item.Properties().durability(8).setNoRepair().tab(OrangeSunshine.TAB)));
+   // public static final RegistryObject<Item> RIG = registerItem("rig", () -> new BongItem(new Item.Properties().durability(8).setNoRepair().tab(OrangeSunshine.TAB)));
     public static final RegistryObject<Item> MORPHINE_BOTTLE = registerItem("morphine_bottle", () -> new Item(new Item.Properties().stacksTo(16).tab(OrangeSunshine.TAB)) {
         @Override
         public boolean hasContainerItem(ItemStack itemStack) {
@@ -90,7 +111,8 @@ public class ModItems {
         for (DrugEffectProperty property : drugChain.list) {
             itemProperties.addDrug(property.drug, property.delayTicks, property.potencyPercentage, property.duration);
         }
-        return registerItem(name, () -> new JointItem(itemProperties.useAction(UseAction.BOW).stacksTo(16).tab(OrangeSunshine.TAB)));
+        itemProperties.durability(8);
+        return registerItem(name, () -> new JointItem(itemProperties.useAction(UseAction.BOW).tab(OrangeSunshine.TAB)));
     }
     private static <T extends Block> RegistryObject<Item> registerBlock(String name, RegistryObject<T> block) {
         return registerBlock(name, block, 64);

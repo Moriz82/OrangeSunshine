@@ -127,6 +127,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerConfigOF.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerConfigOF
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderTypeTypeExt.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderTypeTypeExt
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModArmorMaterial.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModArmorMaterial
 com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerDrugs.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs
  com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Implementation
