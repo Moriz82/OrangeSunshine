@@ -41,7 +41,7 @@ public class OrangeSunshine {
         @Nonnull
         @Override
         public ItemStack makeIcon() {
-            return ModItems.RED_SHROOMS.get().getDefaultInstance();
+            return ModItems.ORANGESUNSHINE_BLOTTER.get().getDefaultInstance();
         }
     };
 
