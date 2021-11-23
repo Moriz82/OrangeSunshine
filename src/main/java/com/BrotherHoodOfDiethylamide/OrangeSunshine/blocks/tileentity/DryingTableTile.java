@@ -1,5 +1,7 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity;
 
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableContainer;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -23,11 +25,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class DryingTableTile extends TileEntity  {
+public class DryingTableTile extends TileEntity  implements ITickableTileEntity {
 
     private final ItemStackHandler itemHandler = createHandler();
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
-
+    public DryingTableContainer container = null;
+    public int requiredTicks = 1000;
+    public int currTick = 0;
     public DryingTableTile(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
@@ -108,20 +112,44 @@ public class DryingTableTile extends TileEntity  {
         return super.getCapability(cap, side);
     }
 
-   /* @Override
+    @Override
     public void tick() {
-        if (!init) {
-            output.put(ModItems.WEED_BUD.get().getDefaultInstance(), ModItems.DRIED_WEED_BUD.get().getDefaultInstance());
-            output.put(ModItems.BROWN_SHROOMS.get().getDefaultInstance(), ModItems.DRIED_BROWN_MUSHROOM.get().getDefaultInstance());
-            output.put(ModItems.RED_SHROOMS.get().getDefaultInstance(), ModItems.DRIED_RED_MUSHROOM.get().getDefaultInstance());
-            output.put(ModItems.WEED_LEAF.get().getDefaultInstance(), ModItems.DRIED_WEED_LEAF.get().getDefaultInstance());
-            init = true;
-        }
-        if (currTick >= requiredTicks){
-            this.get
-            ItemStack out = output.get();
-        }
+        if (container != null){
+            ItemStack item = null;
+            boolean notGood = true;
+            int amnt = 0;
 
-        currTick++;
-    }*/
+            for (int i = 0; i < 9; i++) {
+                if (!container.slots.get(i).getItem().isEmpty() && item == null) {
+                    notGood = false;
+                    item = container.slots.get(i).getItem();
+                    amnt++;
+                }else if (!container.slots.get(i).getItem().isEmpty()) {
+                    amnt++;
+                    if (item != null && !item.getItem().equals(container.slots.get(i).getItem().getItem())){
+                        notGood = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!notGood && container.slots.get(9).getItem().getCount() < 64){
+                container.isWorking = true;
+                currTick++;
+                if (currTick >= requiredTicks){
+                    currTick=0;
+                    container.slots.get(9).set(new ItemStack(DryingTableContainer.output.get(item.getItem()).getItem(), amnt));
+                    for (int i = 0; i < 9; i++) {
+                        container.slots.get(i).getItem().setCount(0);
+                        container.slots.get(i).setChanged();
+                    }
+                    container.isWorking = false;
+                    container.slots.get(0).setChanged();
+                }
+            }else {
+                container.isWorking = false;
+                container.slots.get(0).setChanged();
+            }
+        }
+    }
 }

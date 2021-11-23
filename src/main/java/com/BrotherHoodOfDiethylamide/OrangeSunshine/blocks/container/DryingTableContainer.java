@@ -1,11 +1,14 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container;
 
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.DryingTableTile;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
 import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
@@ -20,48 +23,48 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 
-public class DryingTableContainer extends Container implements ITickable {
-    private final TileEntity tileEntity;
+public class DryingTableContainer extends Container {
+    private final DryingTableTile tileEntity;
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
-    public int requiredTicks = 1000;
-    public int currTick = 0;
-    private boolean isWorking = false;
-    public static HashMap<ItemStack, ItemStack> output = new HashMap<>();
+    public boolean isWorking = false;
+    public static HashMap<Item, ItemStack> output = new HashMap<>();
 
     public DryingTableContainer(int windowId, World world, BlockPos pos,
                                        PlayerInventory playerInventory, PlayerEntity player) {
         super(ModContainers.DRYING_TABLE_CONTAINER.get(), windowId);
-        this.tileEntity = world.getBlockEntity(pos);
+        this.tileEntity = (DryingTableTile) world.getBlockEntity(pos);
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
+
+        output.put(ModItems.WEED_BUD.get(), ModItems.DRIED_WEED_BUD.get().getDefaultInstance());
+        output.put(ModItems.BROWN_SHROOMS.get(), ModItems.DRIED_BROWN_MUSHROOM.get().getDefaultInstance());
+        output.put(ModItems.RED_SHROOMS.get(), ModItems.DRIED_RED_MUSHROOM.get().getDefaultInstance());
+        output.put(ModItems.WEED_LEAF.get(), ModItems.DRIED_WEED_LEAF.get().getDefaultInstance());
+
+        tileEntity.container = this;
+
+        tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            addSlot(new SlotItemHandler(h, 0, 30, 17));
+            addSlot(new SlotItemHandler(h, 1, 30, 35));
+            addSlot(new SlotItemHandler(h, 2, 30, 53));
+
+            addSlot(new SlotItemHandler(h, 3, 48, 17));
+            addSlot(new SlotItemHandler(h, 4, 48, 35));
+            addSlot(new SlotItemHandler(h, 5, 48, 53));
+
+            addSlot(new SlotItemHandler(h, 6, 66, 17));
+            addSlot(new SlotItemHandler(h, 7, 66, 35));
+            addSlot(new SlotItemHandler(h, 8, 66, 53));
+
+            addSlot(new SlotItemHandler(h, 9, 124, 35));
+        });
+
         layoutPlayerInventorySlots(8, 86);
-
-        output.put(ModItems.WEED_BUD.get().getDefaultInstance(), ModItems.DRIED_WEED_BUD.get().getDefaultInstance());
-        output.put(ModItems.BROWN_SHROOMS.get().getDefaultInstance(), ModItems.DRIED_BROWN_MUSHROOM.get().getDefaultInstance());
-        output.put(ModItems.RED_SHROOMS.get().getDefaultInstance(), ModItems.DRIED_RED_MUSHROOM.get().getDefaultInstance());
-        output.put(ModItems.WEED_LEAF.get().getDefaultInstance(), ModItems.DRIED_WEED_LEAF.get().getDefaultInstance());
-
-        if(tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 30, 17));
-                addSlot(new SlotItemHandler(h, 1, 30, 35));
-                addSlot(new SlotItemHandler(h, 2, 30, 53));
-
-                addSlot(new SlotItemHandler(h, 3, 48, 17));
-                addSlot(new SlotItemHandler(h, 4, 48, 35));
-                addSlot(new SlotItemHandler(h, 5, 48, 53));
-
-                addSlot(new SlotItemHandler(h, 6, 66, 17));
-                addSlot(new SlotItemHandler(h, 7, 66, 35));
-                addSlot(new SlotItemHandler(h, 8, 66, 53));
-
-                addSlot(new SlotItemHandler(h, 9, 124, 35));
-            });
-        }
     }
 
     @Override
@@ -94,10 +97,10 @@ public class DryingTableContainer extends Container implements ITickable {
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
-        addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
+        addSlotBox(playerInventory, 10, leftCol, topRow, 9, 18, 3, 18);
 
         topRow += 58;
-        addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+        addSlotRange(playerInventory, 11, leftCol, topRow, 9, 18);
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -155,31 +158,4 @@ public class DryingTableContainer extends Container implements ITickable {
         return isWorking;
     }
 
-    @Override
-    public void tick() {
-        boolean isEmpty = true;
-        int amnt = 0;
-        for (Slot slot : slots) {
-            if (slot.getItem().getCount() > 0){
-                isEmpty = false;
-                amnt++;
-            }
-        }
-
-        if (!isEmpty && slots.get(9).getItem().getCount() <= 0){
-            isWorking = true;
-            if (currTick >= requiredTicks){
-                ItemStack out = output.get(slots.get(0).getItem());
-                out.setCount(amnt);
-                slots.get(9).set(out);
-                for (int i = 0; i < 9; i++) {
-                    slots.get(i).getItem().setCount(0);
-                }
-            }
-
-            currTick++;
-        }else {
-            currTick = 0;
-        }
-    }
 }

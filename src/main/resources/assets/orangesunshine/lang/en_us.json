@@ -70,10 +70,9 @@
   "item.bong_hit": "Bong hit",
   "item.bong_hit.sub": "Bong hit",
 
-  "block.OrangeSunshine.coca": "Coca",
-  "block.OrangeSunshine.weed": "weed",
-  "block.OrangeSunshine.coke_cake": "Coke",
-  "block.OrangeSunshine.cut_poppy": "Cut Poppy",
+  "block.orangesunshine.coca": "Coca",
+  "block.orangesunshine.weed": "weed",
+  "block.orangesunshine.cut_poppy": "Cut Poppy",
 
-  "OrangeSunshine.message.glError": "§eOrangeSunshine GL Error§f: %s (%s) at %s"
+  "orangesunshine.message.glError": "§eOrangeSunshine GL Error§f: %s (%s) at %s"
 }
