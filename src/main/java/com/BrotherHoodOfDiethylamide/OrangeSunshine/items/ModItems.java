@@ -42,13 +42,17 @@ public class ModItems {
     public static final RegistryObject<Item> WEED_SEEDS = registerBlockNamed("weed_seeds", ModBlocks.WEED_BLOCK);
     public static final RegistryObject<Item> WEED_BUD = registerItem("weed_bud");
     public static final RegistryObject<Item> WEED_EXTRACT = registerItem("weed_extract");
-    //----------------------------------------------LSD
+    //----------------------------------------------Psych's
     public static final RegistryObject<Item> LSD_BOTTLE = registerItem("lsd_bottle", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.LSD_BOTTLE, 300, 0.70F, 29999).food(ModFoods.LSD_BOTTLE).tab(OrangeSunshine.TAB)));
     public static final RegistryObject<Item> LSD_BLOTTER = registerItem("lsd_blotter", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.LSD_BLOTTER, 1000, 0.48F, 18888).food(ModFoods.LSD_BLOTTER).tab(OrangeSunshine.TAB)));
     public static final RegistryObject<Item> ORANGESUNSHINE_BOTTLE = registerItem("orangesunshine_bottle", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.ORANGESUNSHINE_BOTTLE, 300, 0.6F, 19999).food(ModFoods.ORANGESUNSHINE_BOTTLE).tab(OrangeSunshine.TAB)));
     public static final RegistryObject<Item> ORANGESUNSHINE_BLOTTER = registerItem("orangesunshine_blotter", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.ORANGESUNSHINE_BLOTTER, 1000, 0.48F, 9999).food(ModFoods.ORANGESUNSHINE_BLOTTER).tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> DMT = registerItem("dmt", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.DMT, 0, 0.4f, 500).food(ModFoods.DMT).tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> DMT_5_MEO = registerItem("dmt_5_meo", () -> new DrugItem(new DrugItem.Properties().addDrug(DrugRegistry.DMT_5_MEO, 0, 0.6f, 500).food(ModFoods.DMT).tab(OrangeSunshine.TAB)));
     //----------------------------------------------NIC
-    public static final RegistryObject<JointItem> CIGARETTE = registerJoint("cigarette", new DrugChain());
+    public static final RegistryObject<Item> NIC = registerItem("nic");
+    public static final RegistryObject<JointItem> CIGARETTE = registerJoint("cigarette", new DrugChain().add(DrugRegistry.NIC, 2, 0.12F, 1000));
+    public static final RegistryObject<JointItem> SOURIN_AIR = registerJoint("sourin_air", new DrugChain().add(DrugRegistry.NIC, 2, 0.12F, 1000));
     //----------------------------------------------Crafting
     public static final RegistryObject<Item> BLOTTER = registerItem("blotter");
     public static final RegistryObject<Item> ROLLING_PAPER = registerItem("rolling_paper");
@@ -69,10 +73,11 @@ public class ModItems {
     public static final RegistryObject<Item> PSYCH_BOOTS = registerItem("psych_boots", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.FEET, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
 
     //----------------------------------------------Extras
+    public static final RegistryObject<Item> DRYING_TABLE = registerBlock("drying_table", ModBlocks.DRYING_TABLE, 64);
     public static final RegistryObject<SyringeItem> COCAINE_SYRINGE = registerSyringe("cocaine_syringe", new DrugChain().add(DrugRegistry.COCAINE, 0, 0.47F, 4800), 0xFFFFFFFF);
     public static final RegistryObject<SyringeItem> MORPHINE_SYRINGE = registerSyringe("morphine_syringe", new DrugChain().add(DrugRegistry.MORPHINE, 0, 0.6F, 4800), 0xFF885038);
-    public static final RegistryObject<Item> BONG = registerItem("bong", () -> new BongItem(new Item.Properties().durability(8).setNoRepair().tab(OrangeSunshine.TAB)));
-   // public static final RegistryObject<Item> RIG = registerItem("rig", () -> new BongItem(new Item.Properties().durability(8).setNoRepair().tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> BONG = registerItem("bong", () -> new BongItem(new Item.Properties().durability(16).setNoRepair().tab(OrangeSunshine.TAB)));
+    public static final RegistryObject<Item> RIG = registerItem("rig", () -> new RigItem(new Item.Properties().durability(16).setNoRepair().tab(OrangeSunshine.TAB)));
     public static final RegistryObject<Item> MORPHINE_BOTTLE = registerItem("morphine_bottle", () -> new Item(new Item.Properties().stacksTo(16).tab(OrangeSunshine.TAB)) {
         @Override
         public boolean hasContainerItem(ItemStack itemStack) {

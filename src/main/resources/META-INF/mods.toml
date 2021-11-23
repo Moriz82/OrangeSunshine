@@ -10,6 +10,7 @@ authors = "Moriz"
 description = '''
 Minecraft Drugmod
 '''
+logoFile = "logo.png"
 
 [[dependencies.OrangeSunshine]]
     modId = "forge"

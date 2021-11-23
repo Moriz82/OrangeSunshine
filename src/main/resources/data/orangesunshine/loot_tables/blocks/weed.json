@@ -17,13 +17,13 @@
               }
             }
           ],
-          "name": "OrangeSunshine:cannabis_leaf"
+          "name": "OrangeSunshine:weed_leaf"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "OrangeSunshine:cannabis",
+          "block": "OrangeSunshine:weed",
           "properties": {
             "age": "3"
           }
@@ -35,13 +35,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "OrangeSunshine:cannabis_bud"
+          "name": "OrangeSunshine:weed_bud"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "OrangeSunshine:cannabis",
+          "block": "OrangeSunshine:weed",
           "properties": {
             "age": "3"
           }
@@ -69,13 +69,13 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "OrangeSunshine:cannabis",
+                  "block": "OrangeSunshine:weed",
                   "properties": {
                     "height": 0
                   }
                 }
               ],
-              "name": "OrangeSunshine:cannabis_seeds"
+              "name": "OrangeSunshine:weed_seeds"
             },
             {
               "type": "minecraft:item",
@@ -91,7 +91,7 @@
                   ]
                 }
               ],
-              "name": "OrangeSunshine:cannabis_seeds"
+              "name": "OrangeSunshine:weed_seeds"
             }
           ]
         }

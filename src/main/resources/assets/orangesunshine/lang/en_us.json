@@ -12,6 +12,8 @@
   "item.orangesunshine.coca_mulch": "Coca Mulch",
   "item.orangesunshine.coca_leaf": "Coca Leaf",
   "item.orangesunshine.coca_seeds": "Coca Seeds",
+  "item.orangesunshine.coke_cake": "Coke Cake",
+  "block.orangesunshine.coke_cake": "Coke Cake",
 
   "item.orangesunshine.weed_joint": "Weed Joint",
   "item.orangesunshine.hash_muffin": "Hash Muffin",
@@ -26,16 +28,21 @@
   "item.orangesunshine.lsd_blotter":  "LSD Blotter",
   "item.orangesunshine.orangesunshine_bottle":  "OrangeSunshine Bottle (ALD-52)",
   "item.orangesunshine.orangesunshine_blotter":  "OrangeSunshine Blotter",
+  "item.orangesunshine.dmt":  "DMT (N-Dimethyltryptamine)",
+  "item.orangesunshine.dmt_5_meo":  "5-MEO-DMT (5-MEO-Dimethyltryptamine)",
 
   "item.orangesunshine.blotter":  "Blotter Paper",
   "item.orangesunshine.rolling_paper":  "Rolling Paper",
 
+  "item.orangesunshine.nic": "Nicotine",
+  "item.orangesunshine.cigarette": "Cigarette",
+  "item.orangesunshine.sourin_air": "Sourin Air",
+
   "item.orangesunshine.syringe": "Empty Syringe",
   "item.orangesunshine.cocaine_syringe": "Cocaine Syringe",
   "item.orangesunshine.morphine_syringe": "Morphine Syringe",
-  "item.orangesunshine.coke_cake": "Coke",
-  "item.orangesunshine.cigarette": "Cigarette",
   "item.orangesunshine.bong": "Bong",
+  "item.orangesunshine.rig": "Rig",
   "item.orangesunshine.morphine_bottle": "Morphine Bottle",
   "item.orangesunshine.opium_bottle_0": "Partially Filled Opium Bottle",
   "item.orangesunshine.opium_bottle_1": "Partially Filled Opium Bottle",
@@ -57,6 +64,8 @@
   "item.orangesunshine.psych_leggings": "Psych Leggings",
   "item.orangesunshine.psych_boots": "Psych Sword",
 
+  "block.orangesunshine.drying_table": "Drying Table",
+  "screen.orangesunshine.drying_table": "Drying Table",
 
   "item.bong_hit": "Bong hit",
   "item.bong_hit.sub": "Bong hit",

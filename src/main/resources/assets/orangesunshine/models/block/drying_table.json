@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "ambientocclusion": true,
+  "textures": {
+    "top": "orangesunshine:blocks/drying_table_top",
+    "bottom": "orangesunshine:blocks/drying_table_bottom",
+    "side": "orangesunshine:blocks/drying_table_side"
+  }
+}

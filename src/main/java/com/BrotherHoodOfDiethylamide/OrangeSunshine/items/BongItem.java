@@ -1,5 +1,6 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.items;
 
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerProperties;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugInstance;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.sounds.ModSounds;
@@ -62,7 +63,7 @@ public class BongItem extends Item implements IVanishable {
     public ItemStack finishUsingItem(ItemStack itemStack, World world, LivingEntity entity) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) entity;
-
+            PlayerProperties.getPlayerDrugs((PlayerEntity) entity).setSmokeTicks(20);
             ItemStack offhandItem = playerEntity.getItemInHand(Hand.OFF_HAND);
 
             ModItems.DrugChain drugChain = BONGABLES.get(offhandItem.getItem());

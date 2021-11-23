@@ -1,6 +1,9 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableScreen;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.ModContainers;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.ModTileEntities;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerProperties;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.commands.SetDrugCommand;
@@ -10,15 +13,24 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.CompostRegistry;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.network.PacketHandler;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.sounds.ModSounds;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -57,11 +69,12 @@ public class OrangeSunshine {
         BLOCKS.register(modEventBus);
         SOUNDS.register(modEventBus);
         DRUGS.register(modEventBus);
+        ModTileEntities.register(modEventBus);
+        ModContainers.register(modEventBus);
 
         ModItems.init(modEventBus);
         ModBlocks.init();
         ModSounds.init();
-
         PacketHandler.init();
 
         modEventBus.addListener(this::setup);
@@ -81,6 +94,9 @@ public class OrangeSunshine {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ModBlocks.initRenderTypes();
+
+        ScreenManager.register(ModContainers.DRYING_TABLE_CONTAINER.get(),
+                DryingTableScreen::new);
 
         ShaderRenderer.setup();
     }
