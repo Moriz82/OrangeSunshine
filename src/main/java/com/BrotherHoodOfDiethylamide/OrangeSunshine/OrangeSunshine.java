@@ -5,6 +5,7 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TileEntitys.TileEntit
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.EntityShmokeStackz;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.entities.tradelists.TradelistShmokeStackz;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Entity_init;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.*;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.CommonProxy;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Recipe_init;
@@ -28,6 +29,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -46,9 +49,17 @@ import static com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ComplexBlocks.
 @Mod.EventBusSubscriber
 public class OrangeSunshine
 {
+    public static float dofFocalPointNear;
+    public static float dofFocalBlurNear;
+    public static float dofFocalPointFar;
+    public static float dofFocalBlurFar;
+    public static double pauseMenuBlur;
     public static final String MODID = "orangesunshine";
     public static final String NAME = "Orange Sunshine";
+    public static final String filePathTextures = "textures/mod/";
+    public static final String filePathShaders = "shaders/";
     public static final String VERSION = "1.0";
+    public static SimpleNetworkWrapper network;
     public static final String ClientProxyClass = "com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.ClientProxy";
     public static final String CommonProxyClass = "com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy.CommonProxy";
     public static final CreativeTabs CreativeTab = new OrangeSunshineTab(CreativeTabs.getNextID(), NAME);
@@ -73,6 +84,9 @@ public class OrangeSunshine
     {
         Recipe_init.init();
         addSeeds();
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+        DrugRegistry.registerInfluence(DrugInfluence.class, "default");
+        Item_init.init();
     }
 
     @EventHandler
@@ -88,6 +102,31 @@ public class OrangeSunshine
     {
         RenderHandler.registerEntityRenders();
         addSmeltables();
+    }
+    @SideOnly(Side.CLIENT)
+    public void createDrugRenderer(DrugProperties drugProperties)
+    {
+        drugProperties.renderer = new DrugRenderer();
+        PSRenderStates.setShader3DEnabled(true);
+        PSRenderStates.setShader2DEnabled(true);
+        PSRenderStates.sunFlareIntensity = (0.25f);
+        PSRenderStates.doHeatDistortion = (true);
+        PSRenderStates.doWaterDistortion = (true);
+        PSRenderStates.doMotionBlur = (true);
+//        DrugShaderHelper.doShadows = config.get(CATEGORY_VISUAL, "doShadows", true).getBoolean(true);
+        PSRenderStates.doShadows = true;
+
+        dofFocalPointNear = 0.2f;
+        dofFocalPointFar = 128f;
+        dofFocalBlurNear = 0f;
+        dofFocalBlurFar = 0f;
+        DrugProperties.waterOverlayEnabled = (true);
+        DrugProperties.hurtOverlayEnabled = (true);
+        DrugProperties.digitalEffectPixelRescale = new float[]{0.05f, 0.05f};
+        PSRenderStates.disableDepthBuffer = false;
+        PSRenderStates.bypassPingPongBuffer = false;
+        PSRenderStates.renderFakeSkybox = true;
+        pauseMenuBlur = 5f;
     }
 
     public static void worldGen(){

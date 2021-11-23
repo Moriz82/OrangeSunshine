@@ -4,6 +4,9 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.bases.ArmourModel;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.bases.tools.*;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.seeds.MushroomSeed;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.seeds.RyeSeed;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.Drug;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugRegistry;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.useables.compounds.LSD;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.bases.ModItem;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.seeds.WeedSeed;
@@ -39,7 +42,7 @@ public class Item_init {
     public static final Item RYESEED = new RyeSeed("rye_seed");
     public static final Item LYSERGICACID = new ModItem("lysergic_acid");
     //-------------------------------- Shrooms
-    public static final Item MUSHROOMCUBENSIS = new MushroomCubensis("mushroom_cubensis", 0, 100, true);
+    public static final MushroomCubensis MUSHROOMCUBENSIS = new MushroomCubensis(1, 0.0002d,"mushroom_cubensis", 0, 100, true);
     public static final Item MUSHROOMSEED = new MushroomSeed("mushroom_seed");
     public static final Item PSILOCYBIN = new ModItem("psilocybin");
     //-------------------------------- Armour
@@ -57,4 +60,8 @@ public class Item_init {
     public static final Item PSYCHHOE = new ToolHoeBase("psych_hoe", PSYCHTOOLMATERIAL);
     //-------------------------------- MISC
     public static final Item PSYCHINGOT = new ModItem("psych_ingot");
+
+    public static void init(){
+        DrugProperties.drugs.put("regular_shrooms", MUSHROOMCUBENSIS);
+    }
 }

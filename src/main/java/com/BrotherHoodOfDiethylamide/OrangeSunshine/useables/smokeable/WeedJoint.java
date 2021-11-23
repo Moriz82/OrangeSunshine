@@ -1,7 +1,6 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.useables.smokeable;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.particles.Smoke;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.init.Item_init;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.utils.IHasModel;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.utils.RegistryHandler;
