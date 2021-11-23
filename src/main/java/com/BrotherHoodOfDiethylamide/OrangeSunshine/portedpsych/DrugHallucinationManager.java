@@ -1,6 +1,6 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.portedpsych;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.ivtoolkit.math.IvMathHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -49,7 +49,7 @@ public class DrugHallucinationManager
         return base;
     }
 
-    public final List<DrugHallucination> entities = new ArrayList<>();
+    public final List<com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugHallucination> entities = new ArrayList<>();
 
     public final List<HallucinationType> hallucinationTypes = new ArrayList<>();
     public final List<Integer> activeHallucinations = new ArrayList<>();
@@ -60,7 +60,7 @@ public class DrugHallucinationManager
         HallucinationType colorHallucinationType = new HallucinationType()
         {
             @Override
-            public float getDesiredValue(DrugProperties drugProperties)
+            public float getDesiredValue(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties)
             {
                 float val = 0.0f;
                 for (Drug drug : drugProperties.getAllDrugs())
@@ -272,12 +272,12 @@ public class DrugHallucinationManager
         }
     }
 
-    public float getHallucinationStrength(DrugProperties drugProperties, float partialTicks)
+    public float getHallucinationStrength(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return 0.4f * getHallucinationMultiplier(HALLUCATION_ENTITIES) * hallucinationValues.get(HALLUCATION_ENTITIES);
     }
 
-    public float getDesaturation(DrugProperties drugProperties, float partialTicks)
+    public float getDesaturation(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         float value = getHallucinationMultiplier(HALLUCATION_DESATURATION) * hallucinationValues.get(HALLUCATION_DESATURATION);
         for (Drug drug : drugProperties.getAllDrugs())
@@ -285,7 +285,7 @@ public class DrugHallucinationManager
         return value;
     }
 
-    public float getColorIntensification(DrugProperties drugProperties, float partialTicks)
+    public float getColorIntensification(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         float value = getHallucinationMultiplier(HALLUCATION_SUPER_SATURATION) * hallucinationValues.get(HALLUCATION_SUPER_SATURATION);
         for (Drug drug : drugProperties.getAllDrugs())
@@ -293,42 +293,42 @@ public class DrugHallucinationManager
         return value;
     }
 
-    public float getSlowColorRotation(DrugProperties drugProperties, float partialTicks)
+    public float getSlowColorRotation(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_SLOW_COLOR_ROTATION) * hallucinationValues.get(HALLUCATION_SLOW_COLOR_ROTATION);
     }
 
-    public float getQuickColorRotation(DrugProperties drugProperties, float partialTicks)
+    public float getQuickColorRotation(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_QUICK_COLOR_ROTATION) * hallucinationValues.get(HALLUCATION_QUICK_COLOR_ROTATION);
     }
 
-    public float getBigWaveStrength(DrugProperties drugProperties, float partialTicks)
+    public float getBigWaveStrength(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return 0.6f * getHallucinationMultiplier(HALLUCATION_BIG_WAVES) * hallucinationValues.get(HALLUCATION_BIG_WAVES);
     }
 
-    public float getSmallWaveStrength(DrugProperties drugProperties, float partialTicks)
+    public float getSmallWaveStrength(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return 0.5f * getHallucinationMultiplier(HALLUCATION_SMALL_WAVES) * hallucinationValues.get(HALLUCATION_SMALL_WAVES);
     }
 
-    public float getWiggleWaveStrength(DrugProperties drugProperties, float partialTicks)
+    public float getWiggleWaveStrength(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return 0.7f * getHallucinationMultiplier(HALLUCATION_WIGGLE_WAVES) * hallucinationValues.get(HALLUCATION_WIGGLE_WAVES);
     }
 
-    public float getSurfaceFractalStrength(DrugProperties drugProperties, float partialTicks)
+    public float getSurfaceFractalStrength(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_SURFACE_FRACTALS) * hallucinationValues.get(HALLUCATION_SURFACE_FRACTALS);
     }
 
-    public float getDistantWorldDeformationStrength(DrugProperties drugProperties, float partialTicks)
+    public float getDistantWorldDeformationStrength(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float partialTicks)
     {
         return getHallucinationMultiplier(HALLUCATION_DISTANT_WORLD_DEFORMATION) * hallucinationValues.get(HALLUCATION_DISTANT_WORLD_DEFORMATION);
     }
 
-    public void applyPulseColor(DrugProperties drugProperties, float[] pulseColor, float partialTicks)
+    public void applyPulseColor(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float[] pulseColor, float partialTicks)
     {
         float val = getHallucinationMultiplier(HALLUCATION_PULSES) * hallucinationValues.get(HALLUCATION_PULSES);
         pulseColor[0] = currentMindColor[0];
@@ -337,7 +337,7 @@ public class DrugHallucinationManager
         pulseColor[3] = val;
     }
 
-    public void applyColorBloom(DrugProperties drugProperties, float[] bloomColor, float partialTicks)
+    public void applyColorBloom(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float[] bloomColor, float partialTicks)
     {
         for (Drug drug : drugProperties.getAllDrugs())
             drug.applyColorBloom(bloomColor);
@@ -346,7 +346,7 @@ public class DrugHallucinationManager
         mixColorsDynamic(currentMindColor, bloomColor, IvMathHelper.clamp(0.0f, val, 1.0f));
     }
 
-    public void applyContrastColorization(DrugProperties drugProperties, float[] contrastColor, float partialTicks)
+    public void applyContrastColorization(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, float[] contrastColor, float partialTicks)
     {
         for (Drug drug : drugProperties.getAllDrugs())
             drug.applyContrastColorization(contrastColor);

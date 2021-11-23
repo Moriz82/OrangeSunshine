@@ -1,6 +1,6 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.portedpsych;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych;
 
-import ivorius.ivtoolkit.logic.IvChatBot;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.ivtoolkit.logic.IvChatBot;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;

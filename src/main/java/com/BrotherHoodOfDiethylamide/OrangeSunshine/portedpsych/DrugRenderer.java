@@ -1,21 +1,19 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.portedpsych;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych;
 
-import ivorius.ivtoolkit.math.IvMathHelper;
-import ivorius.ivtoolkit.rendering.IvOpenGLHelper;
-import ivorius.psychedelicraft.Psychedelicraft;
-import ivorius.psychedelicraft.client.rendering.shaders.PSRenderStates;
-import ivorius.psychedelicraft.entities.drugs.Drug;
-import ivorius.psychedelicraft.entities.drugs.DrugHallucination;
-import ivorius.psychedelicraft.entities.drugs.DrugProperties;
-import net.minecraft.block.Block;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.ivtoolkit.legacy.rendering.IvOpenGLHelper;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.ivtoolkit.math.IvMathHelper;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
@@ -24,18 +22,20 @@ import javax.annotation.ParametersAreNonnullByDefault;
 /**
  * Created by lukas on 17.02.14.
  */
-public class DrugRenderer implements IDrugRenderer
+public class DrugRenderer implements com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.IDrugRenderer
 {
     public static void renderOverlay(float alpha, int width, int height, ResourceLocation texture, float x0, float y0, float x1, float y1, int offset)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
         bindTexture(texture);
-        Tessellator var8 = Tessellator.instance;
-        var8.startDrawingQuads();
-        var8.addVertexWithUV(-offset, height + offset, -90.0D, x0, y1);
-        var8.addVertexWithUV(width + offset, height + offset, -90.0D, x1, y1);
-        var8.addVertexWithUV(width + offset, -offset, -90.0D, x1, y0);
-        var8.addVertexWithUV(-offset, -offset, -90.0D, x0, y0);
+        Tessellator var8 = new Tessellator(2097152);
+        BufferBuilder bufferBuilder = var8.getBuffer();
+        //var8.startDrawingQuads();
+        bufferBuilder.begin(2, new VertexFormat());
+        var8.getBuffer().addVertexData(new int[]{-offset, height + offset, -90, (int) x0, (int) y1});
+        var8.getBuffer().addVertexData(new int[]{width + offset, height + offset, -90, (int) x1, (int) y1});
+        var8.getBuffer().addVertexData(new int[]{width + offset, -offset, -90, (int) x1, (int) y0});
+        var8.getBuffer().addVertexData(new int[]{-offset, -offset, -90, (int) x0, (int) y0});
         var8.draw();
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
     }
@@ -59,23 +59,23 @@ public class DrugRenderer implements IDrugRenderer
 
     public DrugRenderer()
     {
-        hurtOverlay = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "hurtOverlay.png");
+        hurtOverlay = new ResourceLocation(OrangeSunshine.MODID, OrangeSunshine.filePathTextures + "hurtOverlay.png");
 
         effectLensFlare = new EffectLensFlare();
         effectLensFlare.sunFlareSizes = new float[]{0.15f, 0.24f, 0.12f, 0.036f, 0.06f, 0.048f, 0.006f, 0.012f, 0.5f, 0.09f, 0.036f, 0.09f, 0.06f, 0.05f, 0.6f};
         effectLensFlare.sunFlareInfluences = new float[]{-1.3f, -2.0f, 0.2f, 0.4f, 0.25f, -0.25f, -0.7f, -1.0f, 1.0f, 1.4f, -1.31f, -1.2f, -1.5f, -1.55f, -3.0f};
-        effectLensFlare.sunBlindnessTexture = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "sunBlindness.png");
+        effectLensFlare.sunBlindnessTexture = new ResourceLocation(OrangeSunshine.MODID, OrangeSunshine.filePathTextures + "sunBlindness.png");
         effectLensFlare.sunFlareTextures = new ResourceLocation[effectLensFlare.sunFlareSizes.length];
         for (int i = 0; i < effectLensFlare.sunFlareTextures.length; i++)
         {
-            effectLensFlare.sunFlareTextures[i] = new ResourceLocation(Psychedelicraft.MODID, Psychedelicraft.filePathTextures + "flare" + i + ".png");
+            effectLensFlare.sunFlareTextures[i] = new ResourceLocation(OrangeSunshine.MODID, OrangeSunshine.filePathTextures + "flare" + i + ".png");
         }
     }
 
     @Override
-    public void update(DrugProperties drugProperties, EntityLivingBase entity)
+    public void update(com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties, EntityLivingBase entity)
     {
-        if (DrugProperties.hurtOverlayEnabled)
+        if (com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties.hurtOverlayEnabled)
         {
             experiencedHealth = IvMathHelper.nearValue(experiencedHealth, entity.getHealth(), 0.01f, 0.01f);
         }
@@ -85,11 +85,11 @@ public class DrugRenderer implements IDrugRenderer
             effectLensFlare.updateLensFlares();
         }
 
-        Block bID = ActiveRenderInfo.getBlockAtEntityViewpoint(entity.worldObj, entity, 1.0F);
-        wasInWater = bID.getMaterial() == Material.water;
-        //wasInRain = player.worldObj.getRainStrength(1.0f) > 0.0f && player.worldObj.getPrecipitationHeight(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY)) <= player.posY; //Client can't handle rain
+        IBlockState bID = ActiveRenderInfo.getBlockStateAtEntityViewpoint(entity.world, entity, 1.0F);
+        wasInWater = bID.getMaterial() == Material.WATER;
+        wasInRain = entity.world.getRainStrength(1.0f) > 0.0f && entity.world.getPrecipitationHeight(new BlockPos(entity.getPosition())).getY() <= entity.posY; //Client can't handle rain
 
-        if (DrugProperties.waterOverlayEnabled)
+        if (com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties.waterOverlayEnabled)
         {
             timeScreenWet--;
 
@@ -108,14 +108,14 @@ public class DrugRenderer implements IDrugRenderer
         int playerX = MathHelper.floor(entity.posX);
         int playerY = MathHelper.floor(entity.posY);
         int playerZ = MathHelper.floor(entity.posZ);
-        float newHeat = entity.worldObj.getBiomeGenForCoordsBody(playerX, playerZ).getFloatTemperature(playerX, playerY, playerZ);
+        float newHeat = entity.world.getBiome(new BlockPos(playerX, playerY, playerZ)).getTemperature(new BlockPos(playerX, playerY, playerZ));
 
         this.currentHeat = IvMathHelper.nearValue(currentHeat, newHeat, 0.01f, 0.01f);
     }
 
     @ParametersAreNonnullByDefault
     @Override
-    public void distortScreen(float partialTicks, EntityLivingBase entity, int rendererUpdateCount, DrugProperties drugProperties)
+    public void distortScreen(float partialTicks, EntityLivingBase entity, int rendererUpdateCount, com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties)
     {
         float wobblyness = 0.0f;
         for (Drug drug : drugProperties.getAllDrugs())
@@ -143,7 +143,7 @@ public class DrugRenderer implements IDrugRenderer
         GL11.glTranslatef(shiftX, shiftY, 0.0f);
     }
 
-    public void renderOverlaysBeforeShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties)
+    public void renderOverlaysBeforeShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties)
     {
         IvOpenGLHelper.setUpOpenGLStandard2D(width, height);
 
@@ -156,7 +156,7 @@ public class DrugRenderer implements IDrugRenderer
     }
 
     @Override
-    public void renderOverlaysAfterShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, DrugProperties drugProperties)
+    public void renderOverlaysAfterShaders(float partialTicks, EntityLivingBase entity, int updateCounter, int width, int height, com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties)
     {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -167,7 +167,7 @@ public class DrugRenderer implements IDrugRenderer
         for (Drug drug : drugProperties.getAllDrugs())
             drug.drawOverlays(partialTicks, entity, updateCounter, width, height, drugProperties);
 
-        if (DrugProperties.hurtOverlayEnabled)
+        if (com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties.hurtOverlayEnabled)
         {
             if (entity.hurtTime > 0 || experiencedHealth < 5F)
             {
@@ -185,11 +185,11 @@ public class DrugRenderer implements IDrugRenderer
     }
 
     @Override
-    public void renderAllHallucinations(float par1, DrugProperties drugProperties)
+    public void renderAllHallucinations(float par1, com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties drugProperties)
     {
-        for (DrugHallucination h : drugProperties.hallucinationManager.entities)
+        for (com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugHallucination h : drugProperties.hallucinationManager.entities)
         {
-            h.render(par1, MathHelper.clamp_float(0.0f, drugProperties.hallucinationManager.getHallucinationStrength(drugProperties, par1) * 15.0f, 1.0f));
+            h.render(par1, MathHelper.clamp(0.0f, drugProperties.hallucinationManager.getHallucinationStrength(drugProperties, par1) * 15.0f, 1.0f));
         }
     }
 

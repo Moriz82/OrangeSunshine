@@ -1,8 +1,16 @@
-package com.BrotherHoodOfDiethylamide.OrangeSunshine.effects.portedpsych;
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych;
 
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.ivtoolkit.network.PartialUpdateHandler;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.Drug;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.IDrugRenderer;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import io.netty.buffer.ByteBuf;
-import ivorius.ivtoolkit.network.PacketExtendedEntityPropertiesData;
-import ivorius.ivtoolkit.network.PartialUpdateHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,24 +27,25 @@ import net.minecraftforge.common.util.Constants;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class DrugProperties implements EntityProperty, PartialUpdateHandler
+    public class DrugProperties implements EntityProperty, PartialUpdateHandler
 {
     public static final UUID drugUUID = UUID.fromString("2da054e7-0fe0-4fb4-bf2c-a185a5f72aa1"); // Randomly gen'd
     public static final String EEP_KEY = "DrugHelper";
     public static final String EEP_CMP_KEY = "drugData";
+    public static HashMap<EntityPlayer, DrugProperties> ExtendedProp = new HashMap<>();
 
     public static boolean waterOverlayEnabled;
     public static boolean hurtOverlayEnabled;
     public static float[] digitalEffectPixelRescale;
 
-    private Map<String, Drug> drugs;
+    public static Map<String, Drug> drugs = new HashMap<>();
     public List<DrugInfluence> influences;
 
     public boolean hasChanges;
 
     public IDrugRenderer renderer;
     public DrugMessageDistorter messageDistorter;
-    public DrugHallucinationManager hallucinationManager;
+    public com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugHallucinationManager hallucinationManager;
     public DrugMusicManager musicManager;
 
     public int ticksExisted = 0;
@@ -50,35 +59,31 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
 
     public DrugProperties(EntityLivingBase entity)
     {
-        drugs = new HashMap<>();
         influences = new ArrayList<>();
 
         messageDistorter = new DrugMessageDistorter();
         hallucinationManager = new DrugHallucinationManager();
         musicManager = new DrugMusicManager();
-
-        for (Pair<String, Drug> pair : DrugRegistry.createDrugs(entity))
-            drugs.put(pair.getKey(), pair.getValue());
     }
 
     @Nullable
-    public static DrugProperties getDrugProperties(Entity entity)
+    public static DrugProperties getDrugProperties(EntityPlayer entity)
     {
         if (entity != null)
-            return (DrugProperties) entity.getExtendedProperties(EEP_KEY);
+            return ExtendedProp.get(entity);
 
         return null;
     }
 
-    public static void initInEntity(Entity entity)
+    public static void initInEntity(EntityPlayer entity)
     {
-        if (entity instanceof EntityLivingBase)
+        if (entity != null)
         {
-            entity.registerExtendedProperties(EEP_KEY, new DrugProperties((EntityLivingBase) entity));
+            ExtendedProp.put(entity, new DrugProperties((EntityLivingBase) entity));
             DrugProperties drugProperties = getDrugProperties(entity);
 
             if (drugProperties != null)
-                Psychedelicraft.proxy.createDrugRenderer(drugProperties);
+                OrangeSunshine.instance.createDrugRenderer(drugProperties);
         }
     }
 
@@ -102,7 +107,7 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
     {
         if (!drugs.containsKey(drugName))
         {
-            Psychedelicraft.logger.warn("Tried to add to drug " + drugName);
+            OrangeSunshine.logger.warn("Tried to add to drug " + drugName);
             return;
         }
 
@@ -114,7 +119,7 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
     {
         if (!drugs.containsKey(drugName))
         {
-            Psychedelicraft.logger.warn("Tried to set drug value " + drugName);
+            OrangeSunshine.logger.warn("Tried to set drug value " + drugName);
             return;
         }
 
@@ -184,14 +189,13 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
                     iterator.remove();
             }
         }
-
         for (String key : drugs.keySet())
         {
             Drug drug = drugs.get(key);
             drug.update(entity, this);
         }
 
-        if (entity.worldObj.isRemote)
+        if (entity.world.isRemote)
         {
             hallucinationManager.update(entity, this);
             musicManager.update(entity, this);
@@ -213,8 +217,8 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
                     for (Drug drug : getAllDrugs())
                         speed += drug.heartbeatSpeed();
 
-                    delayUntilHeartbeat = MathHelper.floor_float(35.0f / (speed - 1.0f));
-                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "heartBeat", heartbeatVolume, speed, false);
+                    delayUntilHeartbeat = MathHelper.floor(35.0f / (speed - 1.0f));
+                    //entity.world.playSound(new BlockPos(entity.posX, entity.posY, entity.posZ), OrangeSunshine.MODID+":" + "heartBeat", heartbeatVolume, speed, false);
                 }
             }
 
@@ -231,9 +235,9 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
                     float speed = 1.0f;
                     for (Drug drug : getAllDrugs())
                         speed += drug.breathSpeed();
-                    delayUntilBreath = MathHelper.floor_float(30.0f / speed);
+                    delayUntilBreath = MathHelper.floor(30.0f / speed);
 
-                    entity.worldObj.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", breathVolume, speed * 0.1f + 0.9f + (lastBreathWasIn ? 0.15f : 0.0f), false);
+                   // entity.world.playSound(entity.posX, entity.posY, entity.posZ, Psychedelicraft.modBase + "breath", breathVolume, speed * 0.1f + 0.9f + (lastBreathWasIn ? 0.15f : 0.0f), false);
                 }
             }
 
@@ -254,7 +258,7 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
                     punchChance += drug.randomPunchChance();
 
                 if (random.nextFloat() < punchChance)
-                    entity.swingItem();
+                    entity.swingArm(EnumHand.MAIN_HAND);
             }
         }
 
@@ -262,27 +266,26 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
         {
             timeBreathingSmoke--;
 
-            if (timeBreathingSmoke > 10 && entity.worldObj.isRemote)
+            if (timeBreathingSmoke > 10 && entity.world.isRemote)
             {
-                Vec3 look = entity.getLookVec();
+                Vec3d look = entity.getLookVec();
 
                 if (random.nextInt(2) == 0)
                 {
                     float s = random.nextFloat() * 0.05f + 0.1f;
-                    Psychedelicraft.proxy.spawnColoredParticle(entity, breathSmokeColor, look, s, 1.0f);
+                    //entity.world.spawnParticle (entity, breathSmokeColor, look, s, 1.0f);
                 }
                 if (random.nextInt(5) == 0)
                 {
                     float s = random.nextFloat() * 0.05f + 0.1f;
-                    Psychedelicraft.proxy.spawnColoredParticle(entity, breathSmokeColor, look, s, 2.5f);
+                    //OrangeSunshine.proxy.spawnColoredParticle(entity, breathSmokeColor, look, s, 2.5f);
                 }
             }
         }
 
-        if (renderer != null && entity.worldObj.isRemote)
-            renderer.update(this, entity);
+        renderer.update(this, entity);
 
-        changeDrugModifierMultiply(entity, SharedMonsterAttributes.movementSpeed, getSpeedModifier(entity));
+        changeDrugModifierMultiply(entity, SharedMonsterAttributes.MOVEMENT_SPEED, getSpeedModifier(entity));
 
         ticksExisted++;
 
@@ -290,8 +293,9 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
         {
             hasChanges = false;
 
-            if (!entity.worldObj.isRemote)
-                PSNetworkHelperServer.sendEEPUpdatePacket(entity, EEP_KEY, "DrugData", Psychedelicraft.network);
+            if (!entity.world.isRemote) {
+                  PSNetworkHelperServer.sendEEPUpdatePacket(entity, EEP_KEY, "DrugData", OrangeSunshine.network);
+            }
         }
     }
 
@@ -400,11 +404,11 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
         return modifier;
     }
 
-    public EntityPlayer.EnumStatus getDrugSleepStatus()
+    public EntityPlayer.SleepResult getDrugSleepStatus()
     {
         for (Drug drug : getAllDrugs())
         {
-            EntityPlayer.EnumStatus status = drug.getSleepStatus();
+            EntityPlayer.SleepResult status = drug.getSleepStatus();
             if (status != null)
                 return status;
         }
@@ -434,7 +438,7 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
 
     public void changeDrugModifier(EntityLivingBase entity, IAttribute attribute, double value, int mode)
     {
-        IAttributeInstance speedInstance = entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+        IAttributeInstance speedInstance = entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
         AttributeModifier oldModifier = speedInstance.getModifier(DrugProperties.drugUUID);
 
         if (oldModifier != null)
@@ -446,19 +450,19 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
 
     // IExtendedEntityProperties
 
-    @Override
+   // @Override
     public void saveNBTData(NBTTagCompound compound)
     {
         compound.setTag(EEP_CMP_KEY, createNBTTagCompound());
     }
 
-    @Override
+   // @Override
     public void loadNBTData(NBTTagCompound compound)
     {
         readFromNBT(compound.getCompoundTag(EEP_CMP_KEY), true);
     }
 
-    @Override
+    //@Override
     public void init(Entity entity, World world)
     {
 
@@ -467,15 +471,13 @@ public class DrugProperties implements EntityProperty, PartialUpdateHandler
     @Override
     public void writeUpdateData(ByteBuf buffer, String context, Object... params)
     {
-        if ("DrugData".equals(context))
-            ByteBufUtils.writeTag(buffer, createNBTTagCompound());
+        ByteBufUtils.writeTag(buffer, createNBTTagCompound());
     }
 
     @Override
     public void readUpdateData(ByteBuf buffer, String context)
     {
-        if ("DrugData".equals(context))
-            readFromNBT(ByteBufUtils.readTag(buffer), true);
+        readFromNBT(ByteBufUtils.readTag(buffer), true);
     }
 
     @Override
