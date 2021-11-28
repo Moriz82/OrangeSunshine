@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:campfire_cooking",
-  "ingredient": {
-    "item": "orangesunshine:weed_leaf"
-  },
-  "result": "orangesunshine:dried_weed_leaf",
-  "experience": 0.35,
-  "cookingtime": 600
-}

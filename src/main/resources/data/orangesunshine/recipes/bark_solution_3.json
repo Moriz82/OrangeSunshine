@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:bark_solution_2"
+    },
+    {
+      "item": "orangesunshine:strainer"
+    },
+    {
+      "item": "minecraft:bottle"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:bark_solution_3"
+  }
+}

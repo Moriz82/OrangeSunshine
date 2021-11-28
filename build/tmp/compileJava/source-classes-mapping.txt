@@ -8,38 +8,17 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeBuff
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.AccessorRenderTypeBuffer
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CokeCakeBlock.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CokeCakeBlock
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Weed.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Weed
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Depth.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.Depth
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/ShaderRenderer.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer$EventHandler
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/TallCropsBlock.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.TallCropsBlock
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderUtil.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderUtil
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinMouseHelper.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinMouseHelper
-com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/SetCameraEvent.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.SetCameraEvent
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Morphine.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Morphine
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DMTEffect.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DMTEffect
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderUtilsOF.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerRenderUtilsOF
 com/BrotherHoodOfDiethylamide/OrangeSunshine/OrangeSunshine.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine
  com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine$1
-com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/RenderEvent.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$Phase
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderBlockEntityEvent
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderBlockOutlineEvent
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderEntityEvent
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderParticlesEvent
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderTerrainEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorShaderGroup.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.AccessorShaderGroup
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Color.java
@@ -50,51 +29,23 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/commands/DrugArgument.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.commands.DrugArgument
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/IncreaseAirSupplyEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.IncreaseAirSupplyEvent
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/WorldShader.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.WorldShader
-com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/EnableLightMapEvent.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.EnableLightMapEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/screen/DryingTableScreen.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.DryingTableScreen
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/DryingTableTile.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.DryingTableTile
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.DryingTableTile$1
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CutPoppyBlock.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CutPoppyBlock
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/RedShrooms.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.RedShrooms
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeState.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.AccessorRenderTypeState
 com/BrotherHoodOfDiethylamide/OrangeSunshine/commands/SetDrugCommand.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.commands.SetDrugCommand
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/BrownShrooms.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.BrownShrooms
-com/BrotherHoodOfDiethylamide/OrangeSunshine/worldgen/WorldGen.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.worldgen.WorldGen
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/DryingTableBlock.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.DryingTableBlock
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.DryingTableBlock$1
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugEffects.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects$DrugEffect
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects$FloatDrugEffect
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/WorldShaderUniform.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.WorldShaderUniform
 com/BrotherHoodOfDiethylamide/OrangeSunshine/network/DrugCapSync.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.DrugCapSync
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/WorldShaderDefault.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.WorldShaderDefault
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeBuffer.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinRenderTypeBuffer
-com/BrotherHoodOfDiethylamide/OrangeSunshine/worldgen/ModConfiguredFeatures.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.worldgen.ModConfiguredFeatures
- com.BrotherHoodOfDiethylamide.OrangeSunshine.worldgen.ModConfiguredFeatures$RegistrationHandler
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinWorldRenderer.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinWorldRenderer
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/container/DryingTableContainer.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableContainer
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGlStateManager.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinGlStateManager
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/container/DryingTableScreen.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableScreen
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/ModCompatMixinPlugin.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.ModCompatMixinPlugin
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModItems.java
@@ -102,80 +53,40 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModItems.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems$1
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems$DrugChain
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems$DrugEffectProperty
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/CameraTrembleEffect.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.CameraTrembleEffect
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/ModBlocks.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/WeedBlock.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.WeedBlock
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/MixinLivingEntity.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.MixinLivingEntity
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/EnableLightEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.EnableLightEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Drug.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug$DrugProperties
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug$Envelope
-com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModFoods.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModFoods
 com/BrotherHoodOfDiethylamide/OrangeSunshine/network/PacketHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.PacketHandler
-com/BrotherHoodOfDiethylamide/OrangeSunshine/items/CompostRegistry.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.CompostRegistry
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugHandler
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderType.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinRenderType
 com/BrotherHoodOfDiethylamide/OrangeSunshine/network/ActiveDrugCapSync.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.ActiveDrugCapSync
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/GlobalUniforms.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.GlobalUniforms
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.GlobalUniforms$EventHandler
-com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerProperties.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerProperties
 com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/IPlayerDrugs.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.IPlayerDrugs
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/EventHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.EventHandler
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerConfigOF.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerConfigOF
-com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderTypeTypeExt.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderTypeTypeExt
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModArmorMaterial.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModArmorMaterial
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/RigItem.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.RigItem
-com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerDrugs.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs
- com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Implementation
- com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Provider
- com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Storage
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGameRenderer.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinGameRenderer
-com/BrotherHoodOfDiethylamide/OrangeSunshine/items/DrugItem.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.DrugItem
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.DrugItem$DrugEffectProperties
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.DrugItem$Properties
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/OverlayEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.OverlayEvent
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/LSDEffect.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.LSDEffect
-com/BrotherHoodOfDiethylamide/OrangeSunshine/items/BongItem.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.BongItem
-com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModItemTier.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItemTier
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/CactusDrugEffect.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.CactusDrugEffect
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderStateTexture.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerRenderStateTexture
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/WaterDistort.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.WaterDistort
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeType.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinRenderTypeType
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/SyringeItem.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.SyringeItem
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.SyringeItem$Color
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.SyringeItem$Properties
-com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/BobHurtEvent.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.BobHurtEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/sounds/ModSounds.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.sounds.ModSounds
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Cocaine.java
@@ -184,10 +95,6 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/PostS
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.PostShader
 com/BrotherHoodOfDiethylamide/OrangeSunshine/network/IMessage.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.IMessage
-com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinLightTexture.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinLightTexture
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/ModTileEntities.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.ModTileEntities
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Kaleidoscope.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.Kaleidoscope
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/PostShaders.java
@@ -200,18 +107,125 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/MouseSmootherEffec
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.MouseSmootherEffect
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.MouseSmootherEffect$1
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.MouseSmootherEffect$Smoother
-com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/FogModeEvent.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.FogModeEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Bloom.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.Bloom
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/NicEffect.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.NicEffect
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/JointItem.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.JointItem
-com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugInstance.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugInstance
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Bumpy.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.Bumpy
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Weed.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Weed
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/ShaderRenderer.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer$EventHandler
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderUtil.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderUtil
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/container/FridgeContainer.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.FridgeContainer
+com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/SetCameraEvent.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.SetCameraEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Morphine.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Morphine
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderUtilsOF.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerRenderUtilsOF
+com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/RenderEvent.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$Phase
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderBlockEntityEvent
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderBlockOutlineEvent
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderEntityEvent
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderParticlesEvent
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.RenderEvent$RenderTerrainEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/WorldShader.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.WorldShader
+com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/EnableLightMapEvent.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.EnableLightMapEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/RedShrooms.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.RedShrooms
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/screen/FridgeScreen.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.FridgeScreen
+com/BrotherHoodOfDiethylamide/OrangeSunshine/worldgen/WorldGen.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.worldgen.WorldGen
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/DryingTableBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.DryingTableBlock
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.DryingTableBlock$1
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/FridgeBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.FridgeBlock
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.FridgeBlock$1
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugEffects.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects$DrugEffect
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects$FloatDrugEffect
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/WorldShaderUniform.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.WorldShaderUniform
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/WorldShaderDefault.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.WorldShaderDefault
+com/BrotherHoodOfDiethylamide/OrangeSunshine/worldgen/ModConfiguredFeatures.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.worldgen.ModConfiguredFeatures
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.worldgen.ModConfiguredFeatures$RegistrationHandler
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinWorldRenderer.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinWorldRenderer
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/container/DryingTableContainer.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableContainer
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinGlStateManager.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinGlStateManager
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/CameraTrembleEffect.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.CameraTrembleEffect
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/ModBlocks.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/WeedBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.WeedBlock
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/MixinLivingEntity.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.MixinLivingEntity
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModFoods.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModFoods
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/CompostRegistry.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.CompostRegistry
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderType.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinRenderType
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/GlobalUniforms.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.GlobalUniforms
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.GlobalUniforms$EventHandler
+com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerProperties.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerProperties
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerConfigOF.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerConfigOF
+com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderTypeTypeExt.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderTypeTypeExt
+com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerDrugs.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Implementation
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Provider
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerDrugs$Storage
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/DrugItem.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.DrugItem
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.DrugItem$DrugEffectProperties
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.DrugItem$Properties
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/LSDEffect.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.LSDEffect
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/BongItem.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.BongItem
+com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModItemTier.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItemTier
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeType.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinRenderTypeType
+com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/BobHurtEvent.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.BobHurtEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinLightTexture.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinLightTexture
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/ModTileEntities.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.ModTileEntities
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/PartyEffect.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.PartyEffect
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/FridgeTile.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.FridgeTile
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.FridgeTile$1
+com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/FogModeEvent.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.FogModeEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugInstance.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugInstance
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/BongRegistry.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.BongRegistry
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/DrugRenderer.java

@@ -1,7 +1,7 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableContainer;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.FridgeContainer;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -24,20 +24,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-public class DryingTableTile extends TileEntity  implements ITickableTileEntity {
+public class FridgeTile extends TileEntity implements ITickableTileEntity {
 
     private final ItemStackHandler itemHandler = createHandler();
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
-    public DryingTableContainer container = null;
+    public FridgeContainer container = null;
     public int requiredTicks = 1000;
     public int currTick = 0;
-    public DryingTableTile(TileEntityType<?> tileEntityTypeIn) {
+    public FridgeTile(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
 
-    public DryingTableTile() {
-        this(ModTileEntities.DRYING_TABLE_TILE.get());
+    public FridgeTile() {
+        this(ModTileEntities.FRIDGE_TILE.get());
     }
 
 
@@ -114,7 +113,7 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
 
     @Override
     public void tick() {
-        if (container != null && container.isSunny()){
+        if (container != null){
             ItemStack item = null;
             boolean notGood = true;
             int amnt = 0;
@@ -138,7 +137,7 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
                 currTick++;
                 if (currTick >= requiredTicks){
                     currTick=0;
-                    container.slots.get(9).set(new ItemStack(DryingTableContainer.output.get(item.getItem()).getItem(), amnt));
+                    container.slots.get(9).set(new ItemStack(FridgeContainer.output.get(item.getItem()).getItem(), amnt));
                     for (int i = 0; i < 9; i++) {
                         container.slots.get(i).getItem().setCount(0);
                         container.slots.get(i).setChanged();

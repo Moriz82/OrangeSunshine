@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:de_ionized_water"
+    },
+    {
+      "item": "orangesunshine:vinegar"
+    },
+    {
+      "item": "orangesunshine:root_bark"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:bark_solution_1"
+  }
+}

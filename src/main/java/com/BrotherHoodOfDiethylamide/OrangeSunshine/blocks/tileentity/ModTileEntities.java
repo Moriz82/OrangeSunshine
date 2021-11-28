@@ -17,6 +17,10 @@ public class ModTileEntities {
             TILE_ENTITIES.register("drying_table_tile", () -> TileEntityType.Builder.of(
                     DryingTableTile::new, ModBlocks.DRYING_TABLE.get()).build(null));
 
+    public static RegistryObject<TileEntityType<FridgeTile>> FRIDGE_TILE =
+            TILE_ENTITIES.register("fridge_tile", () -> TileEntityType.Builder.of(
+                    FridgeTile::new, ModBlocks.FRIDGE.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);
     }

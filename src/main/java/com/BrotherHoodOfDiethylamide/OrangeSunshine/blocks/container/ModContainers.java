@@ -23,6 +23,14 @@ public class ModContainers {
                 return new DryingTableContainer(windowId, world, pos, inv, inv.player);
             })));
 
+    public static final RegistryObject<ContainerType<FridgeContainer>> FRIDGE_CONTAINER
+            = CONTAINERS.register("fridge_container",
+            () -> IForgeContainerType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                World world = inv.player.getCommandSenderWorld();
+                return new FridgeContainer(windowId, world, pos, inv, inv.player);
+            })));
+
 
     public static void register(IEventBus eventBus) {
         CONTAINERS.register(eventBus);

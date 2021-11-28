@@ -1,7 +1,7 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.DryingTableTile;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.FridgeTile;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,24 +29,23 @@ import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 
-public class DryingTableContainer extends Container {
-    private final DryingTableTile tileEntity;
+
+public class FridgeContainer extends Container {
+    private final FridgeTile tileEntity;
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
     public boolean isWorking = false;
     public static HashMap<Item, ItemStack> output = new HashMap<>();
 
-    public DryingTableContainer(int windowId, World world, BlockPos pos,
-                                       PlayerInventory playerInventory, PlayerEntity player) {
-        super(ModContainers.DRYING_TABLE_CONTAINER.get(), windowId);
-        this.tileEntity = (DryingTableTile) world.getBlockEntity(pos);
+    public FridgeContainer(int windowId, World world, BlockPos pos,
+                                PlayerInventory playerInventory, PlayerEntity player) {
+        super(ModContainers.FRIDGE_CONTAINER.get(), windowId);
+        this.tileEntity = (FridgeTile) world.getBlockEntity(pos);
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
-        output.put(ModItems.WEED_BUD.get(), ModItems.DRIED_WEED_BUD.get().getDefaultInstance());
-        output.put(ModItems.BROWN_SHROOMS.get(), ModItems.DRIED_BROWN_MUSHROOM.get().getDefaultInstance());
-        output.put(ModItems.RED_SHROOMS.get(), ModItems.DRIED_RED_MUSHROOM.get().getDefaultInstance());
-        output.put(ModItems.WEED_LEAF.get(), ModItems.DRIED_WEED_LEAF.get().getDefaultInstance());
+        output.put(ModItems.BARK_SOLUTION_3.get(), ModItems.BARK_SOLUTION_4.get().getDefaultInstance());
+        output.put(ModItems.BARK_SOLUTION_5.get(), ModItems.DMT.get().getDefaultInstance());
 
         tileEntity.container = this;
 
@@ -74,10 +73,6 @@ public class DryingTableContainer extends Container {
         return true;
     }
 
-    public boolean isSunny(){
-        World world = playerEntity.getCommandSenderWorld();
-        return world.isDay() && !world.isRaining() && world.getLightEmission(this.tileEntity.getBlockPos()) >= 5;
-    }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
         for (int i = 0; i < amount; i++) {
