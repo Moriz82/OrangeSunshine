@@ -3,6 +3,7 @@ package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.DryingTableScreen;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.ModContainers;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.FridgeScreen;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.ModTileEntities;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerProperties;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer;
@@ -86,8 +87,8 @@ public class OrangeSunshine {
     private void doClientStuff(final FMLClientSetupEvent event) {
         ModBlocks.initRenderTypes();
 
-        ScreenManager.register(ModContainers.DRYING_TABLE_CONTAINER.get(),
-                DryingTableScreen::new);
+        ScreenManager.register(ModContainers.DRYING_TABLE_CONTAINER.get(), DryingTableScreen::new);
+        ScreenManager.register(ModContainers.FRIDGE_CONTAINER.get(), FridgeScreen::new);
 
         ShaderRenderer.setup();
     }

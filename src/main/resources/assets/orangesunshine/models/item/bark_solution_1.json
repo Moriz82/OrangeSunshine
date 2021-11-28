@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "orangesunshine:item/bark_solution_1"
+  }
+}

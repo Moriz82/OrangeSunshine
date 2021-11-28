@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "orangesunshine:rig" },
+    { "item": "minecraft:water_bucket" }
+  ],
+  "result": {
+    "item": "orangesunshine:rig",
+    "nbt": {
+      "Damage": 0
+    }
+  }
+}

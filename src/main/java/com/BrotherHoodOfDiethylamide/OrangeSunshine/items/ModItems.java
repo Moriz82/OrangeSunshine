@@ -81,7 +81,7 @@ public class ModItems {
     public static final RegistryObject<Item> WEED_SEEDS = registerBlockNamed("weed_seeds", ModBlocks.WEED_BLOCK);
     public static final RegistryObject<Item> COKE_CAKE = registerBlock("coke_cake", ModBlocks.COKE_CAKE_BLOCK, 1);
     public static final RegistryObject<Item> DRYING_TABLE = registerBlock("drying_table", ModBlocks.DRYING_TABLE, 1);
-    public static final RegistryObject<Item> FRIDGE = registerBlock("fridge", ModBlocks.DRYING_TABLE, 1);
+    public static final RegistryObject<Item> FRIDGE = registerBlock("fridge", ModBlocks.FRIDGE, 1);
     //---------------------------------------------- Syringes / Glassware
     public static final RegistryObject<SyringeItem> COCAINE_SYRINGE = registerSyringe("cocaine_syringe", new DrugChain().add(DrugRegistry.COCAINE, 0, 0.47F, 4800), 0xFFFFFFFF);
     public static final RegistryObject<SyringeItem> MORPHINE_SYRINGE = registerSyringe("morphine_syringe", new DrugChain().add(DrugRegistry.MORPHINE, 0, 0.6F, 4800), 0xFF885038);
