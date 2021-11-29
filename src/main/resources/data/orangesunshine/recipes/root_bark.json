@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:oak_log"
+      "tag": "minecraft:logs"
     },
     {
-      "item": "minecraft:oak_log"
+      "tag": "minecraft:logs"
     },
     {
-      "item": "minecraft:oak_log"
+      "tag": "minecraft:logs"
     },
     {
-      "item": "minecraft:oak_log"
+      "tag": "minecraft:logs"
     }
   ],
   "result": {

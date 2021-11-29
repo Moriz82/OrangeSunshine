@@ -17,8 +17,9 @@ public class PartyEffect extends Drug {
     public void renderTick(DrugEffects drugEffects, float effect) {
         drugEffects.CAMERA_TREMBLE.addValue(effect*0.5F);
         drugEffects.WIGGLE_WAVES.addValue(effect*0.4F);
+        drugEffects.BRIGHTNESS.addValue(effect*0.2F);
         drugEffects.SATURATION.addValue(effect*5.0F);
-        drugEffects.HUE_AMPLITUDE.addValue(effect*0.8F);
+        drugEffects.HUE_AMPLITUDE.addValue(effect*2.8F);
         drugEffects.WORLD_DEFORMATION.addValue(effect*0.8F);
         if (effect > 0.5F) {
             float f = effect - 0.5F;

@@ -63,10 +63,8 @@ public class FridgeTile extends TileEntity implements ITickableTileEntity {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 List<Item> slot0 = new ArrayList<>(Arrays.asList(
-                        ModItems.WEED_BUD.get(),
-                        ModItems.RED_SHROOMS.get(),
-                        ModItems.BROWN_SHROOMS.get(),
-                        ModItems.WEED_LEAF.get()
+                        ModItems.BARK_SOLUTION_3.get(),
+                        ModItems.BARK_SOLUTION_5.get()
                 ));
                 switch (slot) {
                     case 0:
@@ -133,7 +131,7 @@ public class FridgeTile extends TileEntity implements ITickableTileEntity {
             }
 
             if (!notGood && container.slots.get(9).getItem().getCount() < 64){
-                container.isWorking = true;
+                container.isWorking = (double) currTick/requiredTicks;
                 currTick++;
                 if (currTick >= requiredTicks){
                     currTick=0;
@@ -142,11 +140,11 @@ public class FridgeTile extends TileEntity implements ITickableTileEntity {
                         container.slots.get(i).getItem().setCount(0);
                         container.slots.get(i).setChanged();
                     }
-                    container.isWorking = false;
+                    container.isWorking = 0.0;
                     container.slots.get(0).setChanged();
                 }
             }else {
-                container.isWorking = false;
+                container.isWorking = 0.0;
                 container.slots.get(0).setChanged();
             }
         }

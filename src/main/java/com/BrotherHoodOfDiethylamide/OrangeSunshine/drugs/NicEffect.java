@@ -12,6 +12,6 @@ public class NicEffect  extends Drug {
         drugEffects.SATURATION.addValue(effect*0.1F);
         drugEffects.HUE_AMPLITUDE.addValue(effect*0.1F);
         drugEffects.CAMERA_TREMBLE.addValue(effect*0.1F);
-        drugEffects.BRIGHTNESS.addValue(effect*0.5F);
+        drugEffects.BRIGHTNESS.addValue(effect*0.2F);
     }
 }

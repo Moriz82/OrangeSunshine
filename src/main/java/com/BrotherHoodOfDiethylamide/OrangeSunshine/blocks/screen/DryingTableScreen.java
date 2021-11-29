@@ -35,7 +35,7 @@ public class DryingTableScreen extends ContainerScreen<DryingTableContainer> {
         if (this.getMenu().isSunny())
             this.blit(matrixStack, i+149, j+6, 177, 21, 20, 20);
 
-        if (this.getMenu().isWorking())
-            this.blit(matrixStack, i+90, j+35, 177, 42, 23, 15);
+        if (this.getMenu().isWorking() > 0.0)
+            this.blit(matrixStack, i+90, j+35, 177, 42, (int) (23*this.getMenu().isWorking), 15);
     }
 }

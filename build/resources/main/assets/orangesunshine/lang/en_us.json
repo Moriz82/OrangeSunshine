@@ -30,6 +30,7 @@
   "item.orangesunshine.orangesunshine_bottle":  "OrangeSunshine Bottle (ALD-52)",
   "item.orangesunshine.orangesunshine_blotter":  "OrangeSunshine Blotter",
   "item.orangesunshine.dmt":  "DMT (N-Dimethyltryptamine)",
+  "item.orangesunshine.dmt_5_meo":  "DMT-5-MEO (5-MEO-Dimethyltryptamine)",
   "item.orangesunshine.ayahuasca":  "Ayahuasca",
   "item.orangesunshine.peyote":  "Peyote",
   "item.orangesunshine.san_pedro":  "San Pedro",
@@ -92,7 +93,7 @@
   "item.bong_hit.sub": "Bong hit",
 
   "block.orangesunshine.coca": "Coca",
-  "block.orangesunshine.weed": "weed",
+  "block.orangesunshine.weed": "Weed",
   "block.orangesunshine.cut_poppy": "Cut Poppy",
 
   "orangesunshine.message.glError": "§eOrangeSunshine GL Error§f: %s (%s) at %s"

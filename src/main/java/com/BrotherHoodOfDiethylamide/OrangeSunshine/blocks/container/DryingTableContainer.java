@@ -33,7 +33,7 @@ public class DryingTableContainer extends Container {
     private final DryingTableTile tileEntity;
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
-    public boolean isWorking = false;
+    public double isWorking = 0.0;
     public static HashMap<Item, ItemStack> output = new HashMap<>();
 
     public DryingTableContainer(int windowId, World world, BlockPos pos,
@@ -76,7 +76,7 @@ public class DryingTableContainer extends Container {
 
     public boolean isSunny(){
         World world = playerEntity.getCommandSenderWorld();
-        return world.isDay() && !world.isRaining() && world.getLightEmission(this.tileEntity.getBlockPos()) >= 5;
+        return world.isDay() && !world.isRaining();
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
@@ -99,10 +99,10 @@ public class DryingTableContainer extends Container {
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
-        addSlotBox(playerInventory, 10, leftCol, topRow, 9, 18, 3, 18);
+        addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
 
         topRow += 58;
-        addSlotRange(playerInventory, 11, leftCol, topRow, 9, 18);
+        addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -117,7 +117,7 @@ public class DryingTableContainer extends Container {
     private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
     private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
-    private static final int VANILLA_FIRST_SLOT_INDEX = 9;
+    private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
@@ -156,7 +156,7 @@ public class DryingTableContainer extends Container {
         return copyOfSourceStack;
     }
 
-    public boolean isWorking(){
+    public double isWorking(){
         return isWorking;
     }
 

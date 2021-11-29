@@ -134,7 +134,7 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
             }
 
             if (!notGood && container.slots.get(9).getItem().getCount() < 64){
-                container.isWorking = true;
+                container.isWorking = currTick/requiredTicks;
                 currTick++;
                 if (currTick >= requiredTicks){
                     currTick=0;
@@ -143,11 +143,11 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
                         container.slots.get(i).getItem().setCount(0);
                         container.slots.get(i).setChanged();
                     }
-                    container.isWorking = false;
+                    container.isWorking = 0.0;
                     container.slots.get(0).setChanged();
                 }
             }else {
-                container.isWorking = false;
+                container.isWorking = 0.0;
                 container.slots.get(0).setChanged();
             }
         }

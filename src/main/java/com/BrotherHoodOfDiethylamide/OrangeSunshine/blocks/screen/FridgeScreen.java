@@ -32,7 +32,7 @@ public class FridgeScreen extends ContainerScreen<FridgeContainer> {
         int j = this.getGuiTop();
         this.blit(matrixStack, i, j, 0, 0, this.getXSize(), this.getYSize());
 
-        if (this.getMenu().isWorking())
-            this.blit(matrixStack, i+90, j+35, 177, 42, 23, 15);
+        if (this.getMenu().isWorking() > 0.0)
+            this.blit(matrixStack, i+90, j+35, 177, 42, (int) (23*this.getMenu().isWorking()), 15);
     }
 }

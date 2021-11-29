@@ -5,6 +5,6 @@
     "top": "orangesunshine:block/fridge_top",
     "bottom": "orangesunshine:block/fridge_bottom",
     "side": "orangesunshine:block/fridge_side",
-    "front": "orangesunshine:block/fridge_side"
+    "front": "orangesunshine:block/fridge_front"
   }
 }

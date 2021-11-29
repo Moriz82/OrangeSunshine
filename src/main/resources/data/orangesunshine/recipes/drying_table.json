@@ -2,18 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "AAA",
-    " B ",
-    " B "
+    "ABA",
+    "AAA"
   ],
   "key": {
     "A": {
-      "item": "orangesunshine:psych_ingot"
+      "tag": "minecraft:planks"
     },
     "B": {
-      "item": "minecraft:stick"
+      "item": "minecraft:daylight_detector"
     }
   },
   "result": {
-    "item": "orangesunshine:psych_pic"
+    "item": "orangesunshine:drying_table"
   }
 }
