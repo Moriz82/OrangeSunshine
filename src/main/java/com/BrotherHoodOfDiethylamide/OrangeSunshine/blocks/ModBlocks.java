@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final RegistryObject<TallCropsBlock> COCA_BLOCK = register("coca", () -> new TallCropsBlock(AbstractBlock.Properties.of(Material.PLANT).instabreak().noCollission().randomTicks().sound(SoundType.CROP)));
     public static final RegistryObject<TallCropsBlock> WEED_BLOCK = register("weed", () -> new WeedBlock(AbstractBlock.Properties.of(Material.PLANT).instabreak().noCollission().randomTicks().sound(SoundType.CROP)));
+    public static final RegistryObject<TallCropsBlock> PEYOTE_BLOCK = register("peyote", () -> new PeyoteBlock(AbstractBlock.Properties.of(Material.PLANT).instabreak().noCollission().randomTicks().sound(SoundType.CROP)));
     public static final RegistryObject<CokeCakeBlock> COKE_CAKE_BLOCK = register("coke_cake", () -> new CokeCakeBlock(AbstractBlock.Properties.of(Material.CAKE).strength(0.5F).sound(SoundType.WOOL)));
     public static final RegistryObject<CutPoppyBlock> CUT_POPPY_BLOCK = register("cut_poppy", () -> new CutPoppyBlock(AbstractBlock.Properties.of(Material.PLANT).instabreak().noCollission().randomTicks().sound(SoundType.GRASS)));
     public static final RegistryObject<OreBlock> PSYCH_ORE = register("psych_ore", () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(5f,5f).harvestTool(ToolType.PICKAXE).harvestLevel(3).sound(SoundType.STONE).requiresCorrectToolForDrops().randomTicks()));

@@ -66,7 +66,7 @@ public class DryingTableContainer extends Container {
             addSlot(new SlotItemHandler(h, 9, 124, 35));
         });
 
-        layoutPlayerInventorySlots(8, 86);
+        layoutPlayerInventorySlots(8, 82);
     }
 
     @Override

@@ -134,7 +134,7 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
             }
 
             if (!notGood && container.slots.get(9).getItem().getCount() < 64){
-                container.isWorking = currTick/requiredTicks;
+                container.isWorking = (double) currTick / requiredTicks;
                 currTick++;
                 if (currTick >= requiredTicks){
                     currTick=0;

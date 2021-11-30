@@ -6,6 +6,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/BufferDrawEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.BufferDrawEvent$Pre
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeBuffer.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.AccessorRenderTypeBuffer
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/PeyoteBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.PeyoteBlock
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CokeCakeBlock.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CokeCakeBlock
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Depth.java
