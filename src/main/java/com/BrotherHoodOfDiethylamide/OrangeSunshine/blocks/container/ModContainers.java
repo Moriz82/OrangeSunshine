@@ -31,6 +31,22 @@ public class ModContainers {
                 return new FridgeContainer(windowId, world, pos, inv, inv.player);
             })));
 
+    public static final RegistryObject<ContainerType<CompoundCompressorContainer>> COMPOUND_COMPRESSOR_CONTAINER
+            = CONTAINERS.register("compound_compressor_container",
+            () -> IForgeContainerType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                World world = inv.player.getCommandSenderWorld();
+                return new CompoundCompressorContainer(windowId, world, pos, inv, inv.player);
+            })));
+
+    public static final RegistryObject<ContainerType<CompoundExtractorContainer>> COMPOUND_EXTRACTOR_CONTAINER
+            = CONTAINERS.register("compound_extractor_container",
+            () -> IForgeContainerType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                World world = inv.player.getCommandSenderWorld();
+                return new CompoundExtractorContainer(windowId, world, pos, inv, inv.player);
+            })));
+
 
     public static void register(IEventBus eventBus) {
         CONTAINERS.register(eventBus);

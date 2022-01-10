@@ -6,8 +6,6 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/BufferDrawEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.BufferDrawEvent$Pre
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/AccessorRenderTypeBuffer.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.AccessorRenderTypeBuffer
-com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/PeyoteBlock.java
- com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.PeyoteBlock
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CokeCakeBlock.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CokeCakeBlock
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Depth.java
@@ -29,6 +27,9 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderType
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderTypeBufferExt
 com/BrotherHoodOfDiethylamide/OrangeSunshine/commands/DrugArgument.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.commands.DrugArgument
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/CompoundCompressorTile.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.CompoundCompressorTile
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.CompoundCompressorTile$1
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/IncreaseAirSupplyEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.IncreaseAirSupplyEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/screen/DryingTableScreen.java
@@ -44,6 +45,9 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/commands/SetDrugCommand.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.commands.SetDrugCommand
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/BrownShrooms.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.BrownShrooms
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CompoundExtractorBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CompoundExtractorBlock
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CompoundExtractorBlock$1
 com/BrotherHoodOfDiethylamide/OrangeSunshine/network/DrugCapSync.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.DrugCapSync
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeBuffer.java
@@ -55,6 +59,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModItems.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems$1
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems$DrugChain
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems$DrugEffectProperty
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/container/CompoundExtractorContainer.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.CompoundExtractorContainer
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/EnableLightEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.EnableLightEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Drug.java
@@ -67,6 +73,9 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/DrugHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugHandler
 com/BrotherHoodOfDiethylamide/OrangeSunshine/network/ActiveDrugCapSync.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.network.ActiveDrugCapSync
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/CompoundCompressorBlock.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CompoundCompressorBlock
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.CompoundCompressorBlock$1
 com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/IPlayerDrugs.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.IPlayerDrugs
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/EventHandler.java
@@ -81,6 +90,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/OverlayEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.OverlayEvent
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/CactusDrugEffect.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.CactusDrugEffect
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/screen/CompoundCompressorScreen.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.CompoundCompressorScreen
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerRenderStateTexture.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerRenderStateTexture
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/WaterDistort.java
@@ -117,6 +128,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/items/JointItem.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.JointItem
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/post/Bumpy.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.post.Bumpy
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/container/CompoundCompressorContainer.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.CompoundCompressorContainer
 com/BrotherHoodOfDiethylamide/OrangeSunshine/drugs/Weed.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Weed
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/ShaderRenderer.java
@@ -194,6 +207,8 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerProperties.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerProperties
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/InvokerConfigOF.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.InvokerConfigOF
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/screen/CompoundExtractorScreen.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.CompoundExtractorScreen
 com/BrotherHoodOfDiethylamide/OrangeSunshine/client/rendering/shaders/RenderTypeTypeExt.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.RenderTypeTypeExt
 com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/PlayerDrugs.java
@@ -215,6 +230,9 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinRenderTypeType.ja
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinRenderTypeType
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/hooks/BobHurtEvent.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.hooks.BobHurtEvent
+com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/CompoundExtractorTile.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.CompoundExtractorTile
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity.CompoundExtractorTile$1
 com/BrotherHoodOfDiethylamide/OrangeSunshine/mixin/client/MixinLightTexture.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.mixin.client.MixinLightTexture
 com/BrotherHoodOfDiethylamide/OrangeSunshine/blocks/tileentity/ModTileEntities.java

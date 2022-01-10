@@ -82,6 +82,8 @@ public class ModItems {
     public static final RegistryObject<Item> COKE_CAKE = registerBlock("coke_cake", ModBlocks.COKE_CAKE_BLOCK, 1);
     public static final RegistryObject<Item> DRYING_TABLE = registerBlock("drying_table", ModBlocks.DRYING_TABLE, 1);
     public static final RegistryObject<Item> FRIDGE = registerBlock("fridge", ModBlocks.FRIDGE, 1);
+    public static final RegistryObject<Item> COMPOUND_EXTRACTOR = registerBlock("compound_extractor", ModBlocks.COMPOUND_EXTRACTOR, 1);
+    public static final RegistryObject<Item> COMPOUND_COMPRESSOR = registerBlock("compound_compressor", ModBlocks.COMPOUND_COMPRESSOR, 1);
     //---------------------------------------------- Syringes / Glassware
     public static final RegistryObject<SyringeItem> COCAINE_SYRINGE = registerSyringe("cocaine_syringe", new DrugChain().add(DrugRegistry.COCAINE, 0, 0.47F, 4800), 0xFFFFFFFF);
     public static final RegistryObject<SyringeItem> MORPHINE_SYRINGE = registerSyringe("morphine_syringe", new DrugChain().add(DrugRegistry.MORPHINE, 0, 0.6F, 4800), 0xFF885038);
@@ -101,6 +103,11 @@ public class ModItems {
     public static final RegistryObject<Item> BARK_SOLUTION_3 = registerItem("bark_solution_3");
     public static final RegistryObject<Item> BARK_SOLUTION_4 = registerItem("bark_solution_4");
     public static final RegistryObject<Item> BARK_SOLUTION_5 = registerItem("bark_solution_5");
+    public static final RegistryObject<Item> ERGOTAMINE = registerItem("ergotamine");
+    public static final RegistryObject<Item> ERGOROT_INFECTED_WHEAT = registerItem("ergorot_infected_wheat");
+    public static final RegistryObject<Item> LYSERGIC_ACID = registerItem("lysergic_acid");
+    public static final RegistryObject<Item> AMMONIA = registerItem("ammonia");
+    public static final RegistryObject<Item> DIETHYLAMINE = registerItem("diethylamine");
     //----------------------------------------------Ore
     public static final RegistryObject<Item> PSYCH_ORE = registerBlock("psych_ore", ModBlocks.PSYCH_ORE, 64);
     public static final RegistryObject<Item> PSYCH_INGOT = registerItem("psych_ingot");
@@ -115,7 +122,6 @@ public class ModItems {
     public static final RegistryObject<Item> PSYCH_CHEST = registerItem("psych_chest", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
     public static final RegistryObject<Item> PSYCH_LEGGINGS = registerItem("psych_leggings", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.LEGS, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
     public static final RegistryObject<Item> PSYCH_BOOTS = registerItem("psych_boots", () -> new ArmorItem(ModArmorMaterial.PSYCH_ARMOR_MATERIAL, EquipmentSlotType.FEET, new Item.Properties().tab(OrangeSunshine.TAB).fireResistant().defaultDurability(10000)));
-
     //----------------------------------------------Utils
     private static RegistryObject<DrugItem> registerDrug(String name, DrugChain drugChain) {
         return registerDrug(name, drugChain, UseAction.EAT, 64);

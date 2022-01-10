@@ -1,6 +1,8 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.CompoundCompressorContainer;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.CompoundCompressorScreen;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.DryingTableScreen;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.ModContainers;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.FridgeScreen;
@@ -89,6 +91,7 @@ public class OrangeSunshine {
 
         ScreenManager.register(ModContainers.DRYING_TABLE_CONTAINER.get(), DryingTableScreen::new);
         ScreenManager.register(ModContainers.FRIDGE_CONTAINER.get(), FridgeScreen::new);
+        ScreenManager.register(ModContainers.COMPOUND_COMPRESSOR_CONTAINER.get(), CompoundCompressorScreen::new);
 
         ShaderRenderer.setup();
     }

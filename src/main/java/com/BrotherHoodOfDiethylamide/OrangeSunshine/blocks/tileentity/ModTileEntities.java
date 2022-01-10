@@ -21,6 +21,14 @@ public class ModTileEntities {
             TILE_ENTITIES.register("fridge_tile", () -> TileEntityType.Builder.of(
                     FridgeTile::new, ModBlocks.FRIDGE.get()).build(null));
 
+    public static RegistryObject<TileEntityType<CompoundCompressorTile>> COMPOUND_COMPRESSOR_TILE =
+            TILE_ENTITIES.register("compound_compressor_tile", () -> TileEntityType.Builder.of(
+                    CompoundCompressorTile::new, ModBlocks.COMPOUND_COMPRESSOR.get()).build(null));
+
+    public static RegistryObject<TileEntityType<CompoundExtractorTile>> COMPOUND_EXTRACTOR_TILE =
+            TILE_ENTITIES.register("compound_extractor_tile", () -> TileEntityType.Builder.of(
+                    CompoundExtractorTile::new, ModBlocks.COMPOUND_EXTRACTOR.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);
     }

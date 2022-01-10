@@ -54,6 +54,12 @@
   "item.orangesunshine.bark_solution_4":  "Bark Solution 4",
   "item.orangesunshine.bark_solution_5":  "Bark Solution 5",
 
+  "item.orangesunshine.ergotamine": "Ergotamine",
+  "item.orangesunshine.ergorot_infected_wheat": "Ergorot Infected Wheat",
+  "item.orangesunshine.lysergic_acid":"Lysergic Acid",
+  "item.orangesunshine.ammonia":"Ammonia",
+  "item.orangesunshine.diethylamine":"Diethylamine",
+
   "item.orangesunshine.nic": "Nicotine",
   "item.orangesunshine.cigarette": "Cigarette",
   "item.orangesunshine.sourin_air": "Sourin Air",
@@ -88,6 +94,8 @@
   "screen.orangesunshine.drying_table": "Drying Table",
   "block.orangesunshine.fridge": "Fridge",
   "screen.orangesunshine.fridge": "Fridge",
+  "block.orangesunshine.compound_compressor": "Fridge",
+  "screen.orangesunshine.compound_compressor": "Fridge",
 
   "item.bong_hit": "Bong hit",
   "item.bong_hit.sub": "Bong hit",

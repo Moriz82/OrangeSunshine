@@ -30,7 +30,7 @@ Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\org.apache.logging.
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\net.sf.jopt-simple\jopt-simple\5.0.4\4fdac2fbe92dfad86aa6e9301736f6b4342a3f5c\jopt-simple-5.0.4.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\org.spongepowered\mixin\0.8.2\1cf212283d26f706fd3074318870bebd14d2a9ed\mixin-0.8.2.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\nashorn-core-compat\15.1.1.1\1817deb38a5a8811148dca0d23161d92bdbd6184\nashorn-core-compat-15.1.1.1.jar
-Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\com.mojang\patchy\1.2.3\e3107ca512d704a434076a153a6e1149e3787275\patchy-1.2.3.jar
+Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\com.mojang\patchy\1.3.9\eb8bb7b66fa0e2152b1b40b3856e82f7619439ee\patchy-1.3.9.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\oshi-project\oshi-core\1.1\9ddf7b048a8d701be231c0f4f95fd986198fd2d8\oshi-core-1.1.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\net.java.dev.jna\jna\4.4.0\cb208278274bf12ebdb56c61bd7407e6f774d65a\jna-4.4.0.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\net.java.dev.jna\platform\3.4.0\e3f70017be8100d3d6923f50b3d2ee17714e9c13\platform-3.4.0.jar
