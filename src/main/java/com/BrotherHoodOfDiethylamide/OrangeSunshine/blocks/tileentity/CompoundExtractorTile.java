@@ -18,9 +18,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class CompoundExtractorTile extends TileEntity implements ITickableTileEntity {
 
@@ -60,10 +62,8 @@ public class CompoundExtractorTile extends TileEntity implements ITickableTileEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                List<Item> slot0 = new ArrayList<>(Arrays.asList(
-                        ModItems.BARK_SOLUTION_3.get(),
-                        ModItems.BARK_SOLUTION_5.get()
-                ));
+                List<Item> slot0 = new ArrayList<>(CompoundExtractorContainer.output.keySet());
+
                 switch (slot) {
                     case 0:
                     case 1:

@@ -1,7 +1,7 @@
 Args: "--in-jar", "C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\libs\OrangeSunshine-1.16.5-0.1.jar", "--out-jar", "C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\reobfJar\output.jar", "--srg-in", "C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\createMcpToSrg\output.tsrg", "--srg-in", "C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\tmp\compileJava\compileJava-mappings.tsrg", "--live"
 Classpath: C:\Users\willi\.gradle\caches\forge_gradle\maven_downloader\net\md-5\SpecialSource\1.9.0\SpecialSource-1.9.0-shaded.jar
-Classpath: C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4_mapped_official_1.16.5\forge-1.16.5-36.1.4_mapped_official_1.16.5-recomp.jar
-Classpath: C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4_mapped_official_1.16.5\forge-1.16.5-36.1.4_mapped_official_1.16.5-launcher.jar
+Classpath: C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4_mapped_official_1.16.5\forge-1.16.5-36.1.4_mapped_official_1.16.5.jar
+Classpath: C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4_mapped_official_1.16.5\forge-1.16.5-36.1.4_mapped_official_1.16.5-launcher.jar
 Classpath: C:\Users\willi\.gradle\caches\forge_gradle\minecraft_repo\versions\1.16.5\client-extra.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.1\f7be08ec23c21485b9b5a1cf1654c2ec8c58168d\jsr305-3.0.1.jar
 Classpath: C:\Users\willi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mergetool\1.0.9\d1e1ba354a40b5703340b5cb02fdca489cff3646\mergetool-1.0.9-api.jar

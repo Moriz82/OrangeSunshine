@@ -1,0 +1,10 @@
+{
+  "parent": "block/orientable",
+  "ambientocclusion": true,
+  "textures": {
+    "top": "orangesunshine:block/compound_extractor_top",
+    "bottom": "orangesunshine:block/compound_extractor_bottom",
+    "side": "orangesunshine:block/compound_extractor_side",
+    "front": "orangesunshine:block/compound_extractor_front"
+  }
+}

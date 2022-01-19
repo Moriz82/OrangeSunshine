@@ -3,6 +3,7 @@ package com.BrotherHoodOfDiethylamide.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.CompoundCompressorContainer;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.CompoundCompressorScreen;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.CompoundExtractorScreen;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.DryingTableScreen;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.ModContainers;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.screen.FridgeScreen;
@@ -11,6 +12,7 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.PlayerPropertie
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.client.rendering.shaders.ShaderRenderer;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.commands.SetDrugCommand;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.entity.ModVillagers;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.BongRegistry;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.CompostRegistry;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
@@ -39,7 +41,9 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
-@Mod(OrangeSunshine.MOD_ID)
+import static com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine.MOD_ID;
+
+@Mod(MOD_ID)
 public class OrangeSunshine {
     public static final String MOD_ID = "orangesunshine";
     public static final Logger LOGGER = LogManager.getLogger();
@@ -65,6 +69,8 @@ public class OrangeSunshine {
         DRUGS.register(modEventBus);
         ModTileEntities.register(modEventBus);
         ModContainers.register(modEventBus);
+        ModVillagers.VILLAGER_PROFESSIONS.register(modEventBus);
+        ModVillagers.POINT_OF_INTEREST_TYPES.register(modEventBus);
 
         ModItems.init(modEventBus);
         ModBlocks.init();
@@ -84,6 +90,11 @@ public class OrangeSunshine {
         CompostRegistry.register();
         BongRegistry.register();
         SetDrugCommand.registerSerializer();
+        ModVillagers.fillShmokeStackzTrades();
+        ModVillagers.fillDrFleurTrades();
+        /*event.enqueueWork(() -> {
+
+        });*/
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -92,6 +103,7 @@ public class OrangeSunshine {
         ScreenManager.register(ModContainers.DRYING_TABLE_CONTAINER.get(), DryingTableScreen::new);
         ScreenManager.register(ModContainers.FRIDGE_CONTAINER.get(), FridgeScreen::new);
         ScreenManager.register(ModContainers.COMPOUND_COMPRESSOR_CONTAINER.get(), CompoundCompressorScreen::new);
+        ScreenManager.register(ModContainers.COMPOUND_EXTRACTOR_CONTAINER.get(), CompoundExtractorScreen::new);
 
         ShaderRenderer.setup();
     }
@@ -107,3 +119,4 @@ public class OrangeSunshine {
         SetDrugCommand.register(event.getServer().getCommands().getDispatcher());
     }
 }
+

@@ -60,10 +60,12 @@ public class CompoundCompressorTile extends TileEntity implements ITickableTileE
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                List<Item> slot0 = new ArrayList<>(Arrays.asList(
-                        ModItems.BARK_SOLUTION_3.get(),
-                        ModItems.BARK_SOLUTION_5.get()
-                ));
+                List<Item> slot0 = new ArrayList<>();
+
+                for (List<Item> list : CompoundCompressorContainer.outputMultiKeys) {
+                    slot0.addAll(list);
+                }
+
                 switch (slot) {
                     case 0:
                     case 1:

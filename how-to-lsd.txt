@@ -1,5 +1,5 @@
 ergorot infected wheat in compound extractor -> Ergotamine
-water, Ergotamine, strainer -> Lysergic acid
+de-ionized-water, Ergotamine, strainer -> Lysergic acid
 deionized water, vinegar in compound compressor -> Ammonia
 Iron, ammonia incompound compressor -> Diethylamine
 Diethylamine with Lysergic acid in compound compressor -> LSD BOTTLE

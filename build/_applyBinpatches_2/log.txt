@@ -1,15 +1,15 @@
-Args: "--clean", "C:\Users\willi\.gradle\caches\forge_gradle\mcp_repo\net\minecraft\joined\1.16.5-20210115.111550\joined-1.16.5-20210115.111550-srg.jar", "--output", "C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatched.jar", "--apply", "C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatches.lzma"
+Args: "--clean", "C:\Users\willi\.gradle\caches\forge_gradle\mcp_repo\net\minecraft\joined\1.16.5-20210115.111550\joined-1.16.5-20210115.111550-srg.jar", "--output", "C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatched.jar", "--apply", "C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatches.lzma"
 Classpath: C:\Users\willi\.gradle\caches\forge_gradle\maven_downloader\net\minecraftforge\binarypatcher\1.0.12\binarypatcher-1.0.12-fatjar.jar
 WorkDir: C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\_applyBinpatches_2
 Main: net.minecraftforge.binarypatcher.ConsoleTool
 ====================================
 Applying: 
   Clean:     C:\Users\willi\.gradle\caches\forge_gradle\mcp_repo\net\minecraft\joined\1.16.5-20210115.111550\joined-1.16.5-20210115.111550-srg.jar
-  Output:    C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatched.jar
+  Output:    C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatched.jar
   KeepData:  false
   Unpatched: false
-  Patches:   C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatches.lzma
-Loading patches file: C:\Users\willi\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatches.lzma
+  Patches:   C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatches.lzma
+Loading patches file: C:\Users\willi\IdeaProjects\OrangeSunshine-1.16.5\build\fg_cache\net\minecraftforge\forge\1.16.5-36.1.4\forge-1.16.5-36.1.4-binpatches.lzma
   Reading patch com.mojang.blaze3d.platform.GlStateManager$1.binpatch
     Checksum: 37bccb56 Exists: true
   Reading patch com.mojang.blaze3d.platform.GlStateManager$AlphaState.binpatch

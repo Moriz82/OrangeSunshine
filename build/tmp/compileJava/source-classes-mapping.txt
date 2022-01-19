@@ -80,6 +80,10 @@ com/BrotherHoodOfDiethylamide/OrangeSunshine/capabilities/IPlayerDrugs.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.capabilities.IPlayerDrugs
 com/BrotherHoodOfDiethylamide/OrangeSunshine/events/EventHandler.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.events.EventHandler
+com/BrotherHoodOfDiethylamide/OrangeSunshine/entity/ModVillagers.java
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.entity.ModVillagers
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.entity.ModVillagers$MultiEmeraldsForItemTrade
+ com.BrotherHoodOfDiethylamide.OrangeSunshine.entity.ModVillagers$MultiItemForEmeraldsTrade
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/ModArmorMaterial.java
  com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModArmorMaterial
 com/BrotherHoodOfDiethylamide/OrangeSunshine/items/RigItem.java

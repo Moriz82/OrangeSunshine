@@ -94,8 +94,10 @@
   "screen.orangesunshine.drying_table": "Drying Table",
   "block.orangesunshine.fridge": "Fridge",
   "screen.orangesunshine.fridge": "Fridge",
-  "block.orangesunshine.compound_compressor": "Fridge",
-  "screen.orangesunshine.compound_compressor": "Fridge",
+  "block.orangesunshine.compound_compressor": "Compound Compressor",
+  "screen.orangesunshine.compound_compressor": "Compound Compressor",
+  "block.orangesunshine.compound_extractor": "Compound Extractor",
+  "screen.orangesunshine.compound_extractor": "Compound Extractor",
 
   "item.bong_hit": "Bong hit",
   "item.bong_hit.sub": "Bong hit",
@@ -103,6 +105,9 @@
   "block.orangesunshine.coca": "Coca",
   "block.orangesunshine.weed": "Weed",
   "block.orangesunshine.cut_poppy": "Cut Poppy",
+
+  "entity.minecraft.villager.orangesunshine.shmokestackz": "ShmokeStackz",
+  "entity.minecraft.villager.orangesunshine.dr_fleur": "Dr.Fleur",
 
   "orangesunshine.message.glError": "§eOrangeSunshine GL Error§f: %s (%s) at %s"
 }
