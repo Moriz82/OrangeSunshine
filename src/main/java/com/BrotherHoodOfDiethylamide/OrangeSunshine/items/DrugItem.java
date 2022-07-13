@@ -38,7 +38,7 @@ public class DrugItem extends Item {
             if (properties.drug.isPresent()) {
                 Drug.addDrug(playerEntity, new DrugInstance(properties.drug.get(), properties.delayTick, properties.potencyPercentage, properties.duration));
             } else {
-                OrangeSunshine.LOGGER.error("{} is not in the drug registry!", properties.drug.toString());
+                //OrangeSunshine.LOGGER.error("{} is not in the drug registry!", properties.drug.toString());
             }
         }
     }

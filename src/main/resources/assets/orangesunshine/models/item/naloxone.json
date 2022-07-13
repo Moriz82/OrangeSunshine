@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "orangesunshine:item/syringe_overlay_naloxone",
+    "layer1": "orangesunshine:item/syringe"
+  }
+}

@@ -48,7 +48,7 @@ public class TallCropsBlock extends CropsBlock {
             int age = getAge(blockState);
             int height = getHeight(blockState);
             if (age < getMaxAge()) {
-                float f = getGrowthSpeed(this, world, blockPos);
+                float f = getGrowthSpeed(this, world, blockPos) * 5;
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, blockPos, blockState, random.nextInt((int)(25.0F / f) + 1) == 0)) {
                     world.setBlock(blockPos, blockState.setValue(getAgeProperty(), age + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, blockPos, blockState);
@@ -100,7 +100,7 @@ public class TallCropsBlock extends CropsBlock {
 
     @Override
     protected int getBonemealAgeIncrease(World world) {
-        return super.getBonemealAgeIncrease(world)/3;
+        return super.getBonemealAgeIncrease(world);
     }
 
     @Override

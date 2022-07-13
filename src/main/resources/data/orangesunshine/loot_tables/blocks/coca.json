@@ -2,10 +2,11 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "orangesunshine:coca_leaf",
           "functions": [
             {
               "function": "minecraft:apply_bonus",
@@ -16,7 +17,72 @@
                 "probability": 0.5714286
               }
             }
-          ],
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:coca",
+          "properties": {
+            "age": "3"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:coca_leaf"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:coca",
+          "properties": {
+            "age": "1"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:coca_leaf"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:coca_leaf"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:coca",
+          "properties": {
+            "age": "2"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:coca_leaf"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:coca_leaf"
+        },
+        {
+          "type": "minecraft:item",
           "name": "orangesunshine:coca_leaf"
         }
       ],
@@ -31,26 +97,27 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:alternatives",
           "children": [
             {
               "type": "minecraft:item",
+              "name": "orangesunshine:coca_seeds",
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
                   "block": "orangesunshine:coca",
                   "properties": {
-                    "height": 0
+                    "age": "0"
                   }
                 }
-              ],
-              "name": "orangesunshine:coca_seeds"
+              ]
             },
             {
               "type": "minecraft:item",
+              "name": "orangesunshine:coca_seeds",
               "conditions": [
                 {
                   "condition": "minecraft:table_bonus",
@@ -59,11 +126,10 @@
                     0.25,
                     0.33,
                     0.5,
-                    1.0
+                    1
                   ]
                 }
-              ],
-              "name": "orangesunshine:coca_seeds"
+              ]
             }
           ]
         }

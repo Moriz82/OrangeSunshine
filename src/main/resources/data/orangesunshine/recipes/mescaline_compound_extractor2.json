@@ -1,0 +1,12 @@
+{
+  "type" : "orangesunshine:compound_extractor_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:san_pedro"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:mescaline"
+  }
+}

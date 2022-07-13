@@ -2,8 +2,12 @@ package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.tileentity;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.container.DryingTableContainer;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.recipes.DryingTableRecipe;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.recipes.FridgeRecipe;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.recipes.ModRecipeTypes;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.items.ModItems;
 import net.minecraft.block.BlockState;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -63,30 +67,26 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                List<Item> slot0 = new ArrayList<>(Arrays.asList(
-                        ModItems.WEED_BUD.get(),
-                        ModItems.RED_SHROOMS.get(),
-                        ModItems.BROWN_SHROOMS.get(),
-                        ModItems.WEED_LEAF.get()
-                ));
-                switch (slot) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        return  slot0.contains(stack.getItem());
-                    default:
-                        return true;
+                if (slot == 9 ) {
+                    List<DryingTableRecipe> recipes =  level.getRecipeManager()
+                            .getAllRecipesFor (ModRecipeTypes.DRYING_TABLE_RECIPE);
+
+                    List<ItemStack> outputs = new ArrayList<>();
+
+                    for (DryingTableRecipe recipe: recipes) {
+                        if (ItemStack.isSame(recipe.getResultItem(), stack)){
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
+                return true;
             }
 
             @Override
             public int getSlotLimit(int slot) {
+                if (slot == 9) {return 64;}
                 return 1;
             }
 
@@ -112,44 +112,78 @@ public class DryingTableTile extends TileEntity  implements ITickableTileEntity 
         return super.getCapability(cap, side);
     }
 
-    @Override
-    public void tick() {
-        if (container != null && container.isSunny()){
-            ItemStack item = null;
-            boolean notGood = true;
-            int amnt = 0;
+    public void craft(){
 
-            for (int i = 0; i < 9; i++) {
-                if (!container.slots.get(i).getItem().isEmpty() && item == null) {
-                    notGood = false;
-                    item = container.slots.get(i).getItem();
-                    amnt++;
-                }else if (!container.slots.get(i).getItem().isEmpty()) {
-                    amnt++;
-                    if (item != null && !item.getItem().equals(container.slots.get(i).getItem().getItem())){
-                        notGood = true;
-                        break;
-                    }
-                }
+        if (container.slots.get(9).getItem().getCount() >= 64) {return;}
+
+        if (!container.isSunny()){return;}
+
+        Inventory inv = new Inventory(9);
+        for (int i = 0; i < 9; i++) {
+            if (!container.slots.get(i).getItem().getDisplayName().getString().equals("[Air]")) {
+                inv.setItem(i, container.slots.get(i).getItem());
             }
+        }
 
-            if (!notGood && container.slots.get(9).getItem().getCount() < 64){
+        List<DryingTableRecipe> recipes =  level.getRecipeManager()
+                .getAllRecipesFor (ModRecipeTypes.DRYING_TABLE_RECIPE);
+
+
+        for (DryingTableRecipe recipe : recipes) {
+
+            if (recipe.matches(inv, level)) {
                 container.isWorking = (double) currTick / requiredTicks;
                 currTick++;
-                if (currTick >= requiredTicks){
-                    currTick=0;
-                    container.slots.get(9).set(new ItemStack(DryingTableContainer.output.get(item.getItem()).getItem(), amnt));
-                    for (int i = 0; i < 9; i++) {
-                        container.slots.get(i).getItem().setCount(0);
-                        container.slots.get(i).setChanged();
-                    }
+
+                if (currTick >= requiredTicks) {
+                    currTick = 0;
+                    ItemStack output = recipe.getResultItem();
                     container.isWorking = 0.0;
-                    container.slots.get(0).setChanged();
+                    craftTheItem(output);
                 }
-            }else {
-                container.isWorking = 0.0;
-                container.slots.get(0).setChanged();
+                return;
             }
+        }
+
+        container.isWorking = 0.0;
+    }
+
+    private void craftTheItem(ItemStack output) {
+        int count = 1;
+        ItemStack stack = new ItemStack(Items.AIR);
+        int num = 0;
+        for (int i = 1; i < 9; i++) {
+            if (!container.slots.isEmpty() && !container.slots.get(i).getItem().getDisplayName().getString().equals("[Air]")){
+                stack = container.slots.get(i).getItem();
+                num = i;
+                break;
+            }
+        }
+
+        for (int i = 1; i < 9; i++) {
+            if (num != i && (!container.slots.isEmpty() && !container.slots.get(i).getItem().getDisplayName().getString().equals("[Air]")) &&
+                    ItemStack.isSame(stack, container.slots.get(i).getItem())){
+                count++;
+            }
+        }
+
+        itemHandler.extractItem(0, 1, false);
+        itemHandler.extractItem(1, 1, false);
+        itemHandler.extractItem(2, 1, false);
+        itemHandler.extractItem(3, 1, false);
+        itemHandler.extractItem(4, 1, false);
+        itemHandler.extractItem(5, 1, false);
+        itemHandler.extractItem(6, 1, false);
+        itemHandler.extractItem(7, 1, false);
+        itemHandler.extractItem(8, 1, false);
+
+        itemHandler.insertItem(9, new ItemStack(output.getItem(), count), false);
+    }
+
+    @Override
+    public void tick() {
+        if (container != null) {
+            craft();
         }
     }
 }

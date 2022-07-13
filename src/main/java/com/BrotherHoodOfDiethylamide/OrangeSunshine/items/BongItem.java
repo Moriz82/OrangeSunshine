@@ -49,6 +49,7 @@ public class BongItem extends Item implements IVanishable {
             if (!offhandItem.isEmpty()) {
                 if (BONGABLES.containsKey(offhandItem.getItem())) {
                     playerEntity.startUsingItem(hand);
+                    playerEntity.getCommandSenderWorld().playSound((PlayerEntity) playerEntity, playerEntity.blockPosition(), ModSounds.BONG_HIT.get(), SoundCategory.PLAYERS, 1F, 1F);
                     return ActionResult.consume(itemStack);
                 } else {
                     return ActionResult.fail(itemStack);
@@ -76,7 +77,7 @@ public class BongItem extends Item implements IVanishable {
                 offhandItem.shrink(1);
             }
 
-            world.playSound(playerEntity, playerEntity.blockPosition(), ModSounds.BONG_HIT.get(), SoundCategory.PLAYERS, 1F, 1F);
+            world.playSound(playerEntity, playerEntity.blockPosition(), ModSounds.JOINT_EXHALE.get(), SoundCategory.PLAYERS, 1F, 1F);
         }
 
         return itemStack;

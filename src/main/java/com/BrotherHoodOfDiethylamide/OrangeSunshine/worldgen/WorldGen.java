@@ -15,12 +15,28 @@ import net.minecraftforge.fml.common.Mod;
 public class WorldGen {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBiomeLoad(BiomeLoadingEvent event) {
+
+        ModOreGeneration.generateOres(event);
+
         Biome.Category category = event.getCategory();
 
-        if (category == Biome.Category.JUNGLE) {
-            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.COCA));
-        } else if (category == Biome.Category.SAVANNA) {
+        if (category.equals(Biome.Category.JUNGLE)){
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.AYAHUASCA));
+        } else {
+
+
             event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.WEED));
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.COCA));
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.TOBACCO));
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.BROWN_SHROOMS_BLOCK));
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.RED_SHROOMS_BLOCK));
+
+            if (category.equals(Biome.Category.DESERT) || category.equals(Biome.Category.BEACH)){
+                event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.PEYOTE));
+                event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, getFeature(ModConfiguredFeatures.SAN_PEDRO));
+            }
+
+
         }
     }
 

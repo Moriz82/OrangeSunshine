@@ -20,5 +20,25 @@
         "stream": true
       }
     ]
+  },
+  "item.joint_inhale": {
+    "category": "item",
+    "subtitle": "item.joint_inhale.sub",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/joint_inhale",
+        "stream": true
+      }
+    ]
+  },
+  "item.joint_exhale": {
+    "category": "item",
+    "subtitle": "item.joint_exhale.sub",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/joint_exhale",
+        "stream": true
+      }
+    ]
   }
 }

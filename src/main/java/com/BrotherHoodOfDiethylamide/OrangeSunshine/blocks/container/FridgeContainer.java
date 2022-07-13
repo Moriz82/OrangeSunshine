@@ -35,7 +35,6 @@ public class FridgeContainer extends Container {
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
     public double isWorking = 0.0;
-    public static HashMap<Item, ItemStack> output = new HashMap<>();
 
     public FridgeContainer(int windowId, World world, BlockPos pos,
                                 PlayerInventory playerInventory, PlayerEntity player) {
@@ -44,8 +43,6 @@ public class FridgeContainer extends Container {
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
-        output.put(ModItems.BARK_SOLUTION_3.get(), ModItems.BARK_SOLUTION_4.get().getDefaultInstance());
-        output.put(ModItems.BARK_SOLUTION_5.get(), ModItems.DMT.get().getDefaultInstance());
 
         tileEntity.container = this;
 

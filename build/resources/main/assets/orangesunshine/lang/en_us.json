@@ -3,8 +3,10 @@
 
   "item.orangesunshine.red_shrooms": "Red Shrooms",
   "item.orangesunshine.brown_shrooms": "Brown Shrooms",
-  "item.orangesunshine.dried_red_mushroom": "Dried Red Mushroom",
-  "item.orangesunshine.dried_brown_mushroom": "Dried Brown Mushroom",
+  "item.orangesunshine.dried_red_shrooms": "Dried Red Mushroom",
+  "item.orangesunshine.dried_brown_shrooms": "Dried Brown Mushroom",
+  "block.orangesunshine.brown_shrooms": "Brown Shrooms",
+  "block.orangesunshine.red_shrooms": "Red Shrooms",
 
   "item.orangesunshine.cocaine_rock": "Crack Cocaine",
   "item.orangesunshine.cocaine_powder": "Powder Cocaine",
@@ -33,7 +35,9 @@
   "item.orangesunshine.dmt_5_meo":  "DMT-5-MEO (5-MEO-Dimethyltryptamine)",
   "item.orangesunshine.ayahuasca":  "Ayahuasca",
   "item.orangesunshine.peyote":  "Peyote",
+  "item.orangesunshine.peyote_seeds":  "Peyote Seeds",
   "item.orangesunshine.san_pedro":  "San Pedro",
+  "item.orangesunshine.san_pedro_seeds":  "San Pedro Seeds",
   "item.orangesunshine.mescaline":  "Mescaline",
 
   "item.orangesunshine.mdma":  "MDMA",
@@ -60,6 +64,7 @@
   "item.orangesunshine.ammonia":"Ammonia",
   "item.orangesunshine.diethylamine":"Diethylamine",
 
+  "item.orangesunshine.tobacco_seeds": "Tobacco Seeds",
   "item.orangesunshine.nic": "Nicotine",
   "item.orangesunshine.cigarette": "Cigarette",
   "item.orangesunshine.sourin_air": "Sourin Air",
@@ -101,9 +106,20 @@
 
   "item.bong_hit": "Bong hit",
   "item.bong_hit.sub": "Bong hit",
+  "item.orangesunshine.cigar" : "Cigar",
+  "item.orangesunshine.smoking_pipe" : "Smoking Pipe",
+
+  "item.orangesunshine.naloxone" : "Narcan (naloxone)",
+  "item.orangesunshine.furosemide" : "Lasix (furosemide)",
 
   "block.orangesunshine.coca": "Coca",
   "block.orangesunshine.weed": "Weed",
+  "block.orangesunshine.tobacco": "Tobacco",
+  "item.orangesunshine.tobacco": "Tobacco",
+  "item.orangesunshine.dried_tobacco": "Dried Tobacco",
+  "block.orangesunshine.peyote_plant":  "Peyote Seeds",
+  "item.orangesunshine.san_pedro_plant":  "San Pedro Seeds",
+  "block.orangesunshine.san_pedro_plant":  "San Pedro Seeds",
   "block.orangesunshine.cut_poppy": "Cut Poppy",
 
   "entity.minecraft.villager.orangesunshine.shmokestackz": "ShmokeStackz",

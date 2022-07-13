@@ -34,7 +34,6 @@ public class DryingTableContainer extends Container {
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
     public double isWorking = 0.0;
-    public static HashMap<Item, ItemStack> output = new HashMap<>();
 
     public DryingTableContainer(int windowId, World world, BlockPos pos,
                                        PlayerInventory playerInventory, PlayerEntity player) {
@@ -42,11 +41,6 @@ public class DryingTableContainer extends Container {
         this.tileEntity = (DryingTableTile) world.getBlockEntity(pos);
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-
-        output.put(ModItems.WEED_BUD.get(), ModItems.DRIED_WEED_BUD.get().getDefaultInstance());
-        output.put(ModItems.BROWN_SHROOMS.get(), ModItems.DRIED_BROWN_MUSHROOM.get().getDefaultInstance());
-        output.put(ModItems.RED_SHROOMS.get(), ModItems.DRIED_RED_MUSHROOM.get().getDefaultInstance());
-        output.put(ModItems.WEED_LEAF.get(), ModItems.DRIED_WEED_LEAF.get().getDefaultInstance());
 
         tileEntity.container = this;
 

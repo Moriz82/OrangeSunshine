@@ -1,0 +1,12 @@
+{
+  "type" : "orangesunshine:compound_extractor_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:ergorot_infected_wheat"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:ergotamine"
+  }
+}

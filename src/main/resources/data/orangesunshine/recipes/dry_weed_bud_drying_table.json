@@ -1,0 +1,12 @@
+{
+  "type" : "orangesunshine:drying_table_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:weed_bud"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:dried_weed_bud"
+  }
+}

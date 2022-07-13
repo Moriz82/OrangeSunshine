@@ -24,8 +24,6 @@ public class CompoundExtractorContainer extends Container {
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
     public double isWorking = 0.0;
-    public static HashMap<Item, ItemStack> output = new HashMap<>();
-    public static HashMap<Item[], ItemStack> outputMulti = new HashMap<>();
 
     public CompoundExtractorContainer(int windowId, World world, BlockPos pos,
 									  PlayerInventory playerInventory, PlayerEntity player) {
@@ -33,8 +31,6 @@ public class CompoundExtractorContainer extends Container {
         this.tileEntity = (CompoundExtractorTile) world.getBlockEntity(pos);
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-
-        output.put(ModItems.ERGOROT_INFECTED_WHEAT.get(), ModItems.ERGOTAMINE.get().getDefaultInstance());
 
         tileEntity.container = this;
 

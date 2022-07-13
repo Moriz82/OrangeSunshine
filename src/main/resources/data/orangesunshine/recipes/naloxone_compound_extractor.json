@@ -1,0 +1,15 @@
+{
+  "type" : "orangesunshine:compound_extractor_crafting",
+  "size" : 2,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:opium_bottle_3"
+    },
+    {
+      "item" : "orangesunshine:syringe"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:naloxone"
+  }
+}

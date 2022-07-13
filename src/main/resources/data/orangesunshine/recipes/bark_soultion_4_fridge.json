@@ -1,0 +1,12 @@
+{
+  "type" : "orangesunshine:fridge_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:bark_solution_3"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:bark_solution_4"
+  }
+}

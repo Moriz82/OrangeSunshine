@@ -31,7 +31,7 @@ public class PartyEffect extends Drug {
     @Override
     public void effectTick(PlayerEntity player, DrugEffects drugEffects, float effect) {
         player.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 35, 0, true, true));
-        if (effect == 1F) drugEffects.DROWN_RATE.addValue(3F);
+        if (effect == 4F) drugEffects.DROWN_RATE.addValue(3F);
     }
 }
 

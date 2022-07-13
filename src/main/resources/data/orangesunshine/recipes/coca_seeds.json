@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:coca_leaf"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:coca_seeds",
+    "count": 4
+  }
+}

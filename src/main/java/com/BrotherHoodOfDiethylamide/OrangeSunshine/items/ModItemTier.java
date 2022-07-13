@@ -8,7 +8,7 @@ import net.minecraft.util.LazyValue;
 import java.util.function.Supplier;
 
 public enum ModItemTier implements IItemTier {
-    PSYCH(4, 10000, 20.0F, 50.0F, 15, () -> {
+    PSYCH(4, 10000, 10.0F, 20.0F, 15, () -> {
         return Ingredient.of(ModItems.PSYCH_INGOT.get());
     });
 

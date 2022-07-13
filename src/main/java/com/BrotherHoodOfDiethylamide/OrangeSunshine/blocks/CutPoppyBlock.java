@@ -49,7 +49,7 @@ public class CutPoppyBlock extends CropsBlock {
 
     @Override
     protected int getBonemealAgeIncrease(World world) {
-        return super.getBonemealAgeIncrease(world)/3;
+        return super.getBonemealAgeIncrease(world);
     }
 
     @Override

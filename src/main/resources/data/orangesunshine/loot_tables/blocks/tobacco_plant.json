@@ -1,0 +1,147 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco",
+          "functions": [
+            {
+              "function": "minecraft:apply_bonus",
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:binomial_with_bonus_count",
+              "parameters": {
+                "extra": 2,
+                "probability": 0.5714286
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:tobacco_plant",
+          "properties": {
+            "age": "3"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:tobacco_plant",
+          "properties": {
+            "age": "1"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:tobacco_plant",
+          "properties": {
+            "age": "2"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "orangesunshine:tobacco"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "orangesunshine:tobacco_plant",
+          "properties": {
+            "age": "3"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "orangesunshine:tobacco_seeds"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "orangesunshine:tobacco_seeds",
+              "conditions": [
+                {
+                  "condition": "minecraft:table_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "chances": [
+                    0.25,
+                    0.33,
+                    0.5,
+                    1
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ]
+}

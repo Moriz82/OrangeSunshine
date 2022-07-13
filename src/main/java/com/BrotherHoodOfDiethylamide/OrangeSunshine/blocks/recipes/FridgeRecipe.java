@@ -1,0 +1,127 @@
+package com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.recipes;
+
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapedRecipe;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.JSONUtils;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FridgeRecipe implements IFridgeRecipe {
+
+	private final ResourceLocation id;
+	private final ItemStack output;
+	private final NonNullList<Ingredient> recipeItems;
+
+	public FridgeRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+		this.id = id;
+		this.output = output;
+		this.recipeItems = recipeItems;
+	}
+
+	@Override
+	public boolean matches(IInventory inv, World worldIn) {
+		List<String> invList = new ArrayList<>();
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			invList.add(inv.getItem(i).getDisplayName().getString());
+		}
+
+		List<String> items = new ArrayList<>();
+
+		for (Ingredient ingredient : recipeItems) {
+			items.add(ingredient.getItems()[0].getDisplayName().getString());
+		}
+
+		if (invList.containsAll(items)){
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public NonNullList<Ingredient> getIngredients(){
+		return recipeItems;
+	}
+
+	@Override
+	public ItemStack assemble(IInventory p_77572_1_) {
+		return null;
+	}
+
+	@Override
+	public ItemStack getResultItem() {
+		return output;
+	}
+
+	@Override
+	public ResourceLocation getId() {
+		return id;
+	}
+
+	public ItemStack getIcon() {
+		return new ItemStack(ModBlocks.FRIDGE.get());
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer() {
+		return ModRecipeTypes.FRIDGE_SERIALIZER.get();
+	}
+
+	public static class FridgeRecipeType implements IRecipeType<FridgeRecipe> {
+		@Override
+		public String toString(){
+			return FridgeRecipe.TYPE_ID.toString();
+		}
+	}
+
+	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<FridgeRecipe>{
+
+		@Override
+		public FridgeRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			ItemStack output = ShapedRecipe.itemFromJson (JSONUtils.getAsJsonObject(json, "output"));
+
+			JsonArray ingredients = JSONUtils.getAsJsonArray(json, "ingredients");
+			NonNullList<Ingredient> inputs = NonNullList.withSize(JSONUtils.getAsInt(json, "size"), Ingredient.EMPTY);
+			for (int i = 0; i < inputs.size(); i++) {
+				inputs.set(i, Ingredient.fromJson (ingredients.get(i)));
+			}
+
+			return new FridgeRecipe(recipeId, output, inputs);
+		}
+
+		@Nullable
+		@Override
+		public FridgeRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			NonNullList<Ingredient> inputs = NonNullList.withSize(JSONUtils.getAsInt(JSONUtils.parse(buffer.toString()), "size"), Ingredient.EMPTY);
+			for (int i = 0; i < inputs.size(); i++) {
+				inputs.set(i, Ingredient.fromNetwork (buffer));
+			}
+
+			ItemStack output = buffer.readItem();
+			return new FridgeRecipe(recipeId, output, inputs);
+		}
+
+		@Override
+		public void toNetwork(PacketBuffer buffer, FridgeRecipe recipe) {
+			buffer.writeInt(recipe.getIngredients().size());
+			for (Ingredient ing : recipe.getIngredients()) {
+				ing.toNetwork (buffer);
+			}
+			buffer.writeItemStack(recipe.getResultItem(), false);
+		}
+	}
+}

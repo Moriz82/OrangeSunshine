@@ -28,9 +28,6 @@ public class CompoundCompressorContainer extends Container {
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
     public double isWorking = 0.0;
-    public static HashMap<Item, ItemStack> output = new HashMap<>();
-    public static HashMap<List<Item>, ItemStack> outputMulti = new HashMap<>();
-    public static List<List<Item>> outputMultiKeys = new ArrayList<>();
 
     public CompoundCompressorContainer(int windowId, World world, BlockPos pos,
 									   PlayerInventory playerInventory, PlayerEntity player) {
@@ -39,30 +36,6 @@ public class CompoundCompressorContainer extends Container {
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
-
-        outputMulti.put(
-                Arrays.asList(ModItems.DE_IONIZED_WATER.get(), ModItems.VINEGAR.get()),
-                ModItems.AMMONIA.get().getDefaultInstance()
-        );outputMultiKeys.add(Arrays.asList(
-                ModItems.DE_IONIZED_WATER.get(),
-                ModItems.VINEGAR.get()
-        ));
-
-        outputMulti.put(
-                Arrays.asList(ModItems.AMMONIA.get(), Items.IRON_INGOT),
-                ModItems.DIETHYLAMINE.get().getDefaultInstance()
-        );outputMultiKeys.add(Arrays.asList(
-                ModItems.AMMONIA.get(),
-                Items.IRON_INGOT
-        ));
-
-        outputMulti.put(
-                Arrays.asList(ModItems.DIETHYLAMINE.get(), ModItems.LYSERGIC_ACID.get()),
-                ModItems.LSD_BOTTLE.get().getDefaultInstance()
-        );outputMultiKeys.add(Arrays.asList(
-                ModItems.DIETHYLAMINE.get(),
-                ModItems.LYSERGIC_ACID.get()
-        ));
 
         tileEntity.container = this;
 

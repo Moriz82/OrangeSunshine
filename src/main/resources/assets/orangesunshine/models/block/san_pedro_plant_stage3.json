@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "orangesunshine:block/san_pedro_plant_stage3"
+  }
+}

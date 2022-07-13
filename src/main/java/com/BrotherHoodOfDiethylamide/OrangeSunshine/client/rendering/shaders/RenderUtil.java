@@ -51,10 +51,10 @@ public class RenderUtil {
             String e = getGlErrorString(i);
             if ((System.currentTimeMillis() - lastErrorTime) > 10000L) {
                 lastErrorTime = System.currentTimeMillis();
-                OrangeSunshine.LOGGER.error("OpenGL error: {} ({}) at: {}", e, i, location);
+                //OrangeSunshine.LOGGER.error("OpenGL error: {} ({}) at: {}", e, i, location);
 
-                String chatMessage = I18n.get("OrangeSunshine.message.glError", e, i, location);
-                Minecraft.getInstance().gui.getChat().addMessage(new StringTextComponent(chatMessage));
+               // String chatMessage = I18n.get("OrangeSunshine.message.glError", e, i, location);
+               // Minecraft.getInstance().gui.getChat().addMessage(new StringTextComponent(chatMessage));
             }
         }
     }

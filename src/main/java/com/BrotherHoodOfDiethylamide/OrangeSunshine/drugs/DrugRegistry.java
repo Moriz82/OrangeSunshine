@@ -28,7 +28,7 @@ public class DrugRegistry {
     public static final RegistryObject<Drug> DMT_5_MEO = register("dmt_5_meo", () -> new DMTEffect(new Drug.DrugProperties().adsr(2400F, 200F, 6.0F, 3000F)));
     public static final RegistryObject<Drug> CACTUS_DRUG = register("peyote", () -> new CactusDrugEffect(new Drug.DrugProperties().adsr(3000F, 400F, 0.6F, 2200F)));
     public static final RegistryObject<Drug> NIC = register("nic", () -> new NicEffect(new Drug.DrugProperties().adsr(150F, 10F, 0.2F, 1000F)));
-    public static final RegistryObject<Drug> PARTY = register("mdma", () -> new Morphine(new Drug.DrugProperties().adsr(500F, 200F, 0.8F, 2500F)));
+    public static final RegistryObject<Drug> PARTY = register("mdma", () -> new PartyEffect(new Drug.DrugProperties().adsr(500F, 200F, 0.8F, 2500F)));
 
     public static RegistryObject<Drug> register(String name, Supplier<? extends Drug> supplier) {
         return OrangeSunshine.DRUGS.register(name, supplier);

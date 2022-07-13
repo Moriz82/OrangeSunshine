@@ -19,6 +19,19 @@ archivesBaseName = 'OrangeSunshine'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
+repositories {
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+}
+
 minecraft {
     mappings channel: "${mappings_channel}", version: "${mappings_version}"
 
@@ -90,6 +103,9 @@ mixin {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.152:api")
+    // at runtime, use the full JEI jar
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.152")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
