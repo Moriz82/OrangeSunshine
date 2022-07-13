@@ -106,7 +106,7 @@ public class CompoundExtractorRecipe implements ICompoundExtractorRecipe {
 		@Nullable
 		@Override
 		public CompoundExtractorRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
-			NonNullList<Ingredient> inputs = NonNullList.withSize(JSONUtils.getAsInt(JSONUtils.parse(buffer.toString()), "size"), Ingredient.EMPTY);
+			NonNullList<Ingredient> inputs = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
 			for (int i = 0; i < inputs.size(); i++) {
 				inputs.set(i, Ingredient.fromNetwork (buffer));
 			}

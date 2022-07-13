@@ -23,6 +23,7 @@ import com.BrotherHoodOfDiethylamide.OrangeSunshine.sounds.ModSounds;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.*;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -31,6 +32,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -40,10 +42,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -92,7 +91,7 @@ public class OrangeSunshine {
         ModSounds.init();
         PacketHandler.init();
 
-        ModRecipeTypes.register(modEventBus);
+        ModRecipeTypes.register(modEventBus); // issue line
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::enqueueIMC);
@@ -130,7 +129,6 @@ public class OrangeSunshine {
 
     private void processIMC(final InterModProcessEvent event) {
     }
-
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         SetDrugCommand.register(event.getServer().getCommands().getDispatcher());
