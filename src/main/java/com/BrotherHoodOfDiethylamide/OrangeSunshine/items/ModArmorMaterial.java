@@ -13,9 +13,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterial implements IArmorMaterial {
-    PSYCH_ARMOR_MATERIAL("psych", 500, new int[]{50, 50, 50, 50}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 50f, 100f, () -> {
-        return Ingredient.of(ModItems.PSYCH_INGOT.get());
-    });
+    PSYCH_ARMOR_MATERIAL("psych", 100, new int[]{3, 6, 8, 3}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.5f, 0.2f, ()
+            -> Ingredient.of(ModItems.PSYCH_INGOT.get()));
 
     private static final int[] HEALTH_PER_SLOT = new int[]{10, 11, 12, 9};
     private final String name;
