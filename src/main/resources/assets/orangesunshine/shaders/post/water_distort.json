@@ -1,0 +1,26 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "orangesunshine:distort_flow",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "auxtargets": [
+        {
+          "name": "DistortSampler",
+          "id": "orangesunshine:water_distort",
+          "width": 256,
+          "height": 256,
+          "bilinear": true
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

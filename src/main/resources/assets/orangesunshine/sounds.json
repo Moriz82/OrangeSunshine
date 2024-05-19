@@ -1,0 +1,44 @@
+{
+  "item.bong_hit": {
+    "category": "item",
+    "subtitle": "item.bong_hit.sub",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/bong_hit1",
+        "stream": true
+      },
+      {
+        "name": "orangesunshine:item/bong_hit2",
+        "stream": true
+      },
+      {
+        "name": "orangesunshine:item/bong_hit3",
+        "stream": true
+      },
+      {
+        "name": "orangesunshine:item/bong_hit4",
+        "stream": true
+      }
+    ]
+  },
+  "item.joint_inhale": {
+    "category": "item",
+    "subtitle": "item.joint_inhale.sub",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/joint_inhale",
+        "stream": true
+      }
+    ]
+  },
+  "item.joint_exhale": {
+    "category": "item",
+    "subtitle": "item.joint_exhale.sub",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/joint_exhale",
+        "stream": true
+      }
+    ]
+  }
+}

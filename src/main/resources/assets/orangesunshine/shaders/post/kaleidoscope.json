@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "orangesunshine:kaleidoscope2",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    },
+    {
+      "name": "orangesunshine:kaleidoscope",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

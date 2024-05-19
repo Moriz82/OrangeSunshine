@@ -1,0 +1,28 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "orangesunshine:world",
+  "fragment": "orangesunshine:world",
+  "attributes": [],
+  "samplers": [
+    { "name": "texture" },
+    { "name": "overlay" },
+    { "name": "lightMap" }
+  ],
+  "uniforms": [
+    { "name": "modelViewMat",         "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "modelViewInverseMat",  "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "overlayEnabled",       "type": "int",       "count": 1,  "values": [ 0 ] },
+    { "name": "lightmapEnabled",      "type": "int",       "count": 1,  "values": [ 1 ]},
+    { "name": "lightEnabled",         "type": "int",       "count": 1,  "values": [ 1 ]},
+    { "name": "fogMode",              "type": "int",       "count": 1,  "values": [ 9729 ]},
+    { "name": "timePassed",           "type": "float",     "count": 1,  "values": [ 0.0 ]},
+    { "name": "smallWaves",           "type": "float",     "count": 1,  "values": [ 0.0 ]},
+    { "name": "bigWaves",             "type": "float",     "count": 1,  "values": [ 0.0 ]},
+    { "name": "wiggleWaves",          "type": "float",     "count": 1,  "values": [ 0.0 ]},
+    { "name": "distantWorldDeformation","type": "float",   "count": 1,  "values": [ 0.0 ]}
+  ]
+}

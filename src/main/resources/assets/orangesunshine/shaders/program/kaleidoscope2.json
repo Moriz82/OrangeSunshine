@@ -1,0 +1,23 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "blit",
+  "fragment": "orangesunshine:kaleidoscope2",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": [
+    { "name": "ProjMat",    "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "OutSize",    "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "Scale",      "type": "float",     "count": 1,  "values": [ 1.1 ] },
+    { "name": "Shift",      "type": "float",     "count": 1,  "values": [ 0.8 ] },
+    { "name": "TimePassed", "type": "float",     "count": 1,  "values": [ 0.0 ] },
+    { "name": "TimePassedSin", "type": "float",  "count": 1,  "values": [ 0.0 ] },
+    { "name": "Intensity",  "type": "float",     "count": 1,  "values": [ 13.0 ] },
+    { "name": "Extend",     "type": "float",     "count": 1,  "values": [ 0.0 ] }
+  ]
+}
