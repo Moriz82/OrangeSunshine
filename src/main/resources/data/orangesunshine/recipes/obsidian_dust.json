@@ -1,0 +1,7 @@
+{
+  "type": "orangesunshine:shapeless_fluid",
+  "ingredients": [
+    { "item": "orangesunshine:obsidian_bottle" }
+  ],
+  "result": { "item": "orangesunshine:obsidian_dust" }
+}

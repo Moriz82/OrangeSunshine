@@ -1,0 +1,8 @@
+{
+  "type": "orangesunshine:shapeless_fluid",
+  "ingredients": [
+    { "item": "orangesunshine:filled_glass_bottle", "fluid": "minecraft:lava" },
+    { "item": "minecraft:water_bucket" }
+  ],
+  "result": { "item": "orangesunshine:obsidian_bottle" }
+}

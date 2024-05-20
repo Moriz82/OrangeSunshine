@@ -1,0 +1,34 @@
+{
+  "values": [
+    {
+      "id": "orangesunshine:wooden_mug",
+      "height": 0.25,
+      "fluid_origin": 0.5
+    },
+    {
+      "id": "orangesunshine:stone_cup",
+      "height": 0.25,
+      "fluid_origin": 0.5
+    },
+    {
+      "id": "orangesunshine:shot_glass",
+      "height": 0.2,
+      "fluid_origin": 0.5
+    },
+    {
+      "id": "orangesunshine:glass_chalice",
+      "height": 0.4,
+      "fluid_origin": 3.5
+    },
+    {
+      "id": "orangesunshine:bottle",
+      "height": 0.5,
+      "fluid_origin": 0.5
+    },
+    {
+      "id": "orangesunshine:molotov_cocktail",
+      "height": 0.5,
+      "fluid_origin": 0.5
+    }
+  ]
+}

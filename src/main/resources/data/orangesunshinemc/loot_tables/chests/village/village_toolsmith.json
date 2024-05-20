@@ -1,0 +1,148 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "orangesunshine:wooden_mug",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 16.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "orangesunshine:cigarette",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "orangesunshine:cigar",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "orangesunshine:joint",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "tag": "{ \"fluid\": { \"id\": \"orangesunshine:coffee\", \"level\": 500 } }",
+              "function": "minecraft:set_nbt"
+            }
+          ],
+          "name": "orangesunshine:wooden_mug",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "tag": "{ \"fluid\": { \"id\": \"orangesunshine:peyote_juice\", \"level\": 50 } }",
+              "function": "minecraft:set_nbt"
+            }
+          ],
+          "name": "orangesunshine:stone_cup",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "tag": "{ \"fluid\": { \"id\": \"orangesunshine:cocaine\", \"level\": 10 } }",
+              "function": "minecraft:set_nbt"
+            }
+          ],
+          "name": "orangesunshine:syringe",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "tag": "{ \"fluid\": { \"id\": \"orangesunshine:caffeine\", \"level\": 10 } }",
+              "function": "minecraft:set_nbt"
+            }
+          ],
+          "name": "orangesunshine:syringe",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "orangesunshine:hash_muffin",
+          "weight": 1
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 8.0,
+        "min": 3.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/stone_cup",
+        "layer1": "orangesunshine:item/stone_cup_liquid"
+    }
+}

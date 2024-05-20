@@ -1,0 +1,14 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "tag": "orangesunshine:morning_glories" },
+    { "tag": "orangesunshine:morning_glories" },
+    { "tag": "orangesunshine:morning_glories" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:morning_glory_extract",
+    "level": 500
+  }
+}

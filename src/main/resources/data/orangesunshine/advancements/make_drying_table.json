@@ -1,0 +1,31 @@
+{
+  "parent": "orangesunshine:root",
+  "display": {
+    "icon": {
+      "item": "orangesunshine:drying_table"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.make_drying_table.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.make_drying_table.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_the_thing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "tag": "orangesunshine:drying_tables" }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_thing" ]
+  ]
+}

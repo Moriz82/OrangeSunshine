@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:drying",
+  "cookingtime": 100,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "minecraft:red_mushroom"
+  },
+  "result": {
+    "item": "orangesunshine:red_magic_mushrooms",
+    "count": 3
+  }
+}

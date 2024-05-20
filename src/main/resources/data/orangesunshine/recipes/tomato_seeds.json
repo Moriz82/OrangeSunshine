@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "orangesunshine:tomato" }
+  ],
+  "result": {
+    "item": "orangesunshine:tomato_seeds",
+    "count": 6
+  }
+}

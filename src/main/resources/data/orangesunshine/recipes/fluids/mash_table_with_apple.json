@@ -1,0 +1,20 @@
+{
+  "type": "orangesunshine:mashing",
+  "stew_time": 0,
+  "base_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    { "tag": "c:apples" },
+    { "tag": "c:apples" },
+    { "tag": "c:apples" },
+    { "tag": "c:apples" },
+    { "tag": "c:apples" },
+    { "tag": "c:apples" },
+    { "tag": "c:apples" },
+    { "tag": "c:apples" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:apple"
+  }
+}

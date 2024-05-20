@@ -1,0 +1,13 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:suitable_hot_drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:coffee_beans" },
+    { "item": "orangesunshine:coffee_beans" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:coffee",
+    "level": 500
+  }
+}

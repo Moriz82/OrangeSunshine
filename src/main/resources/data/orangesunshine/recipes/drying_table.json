@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#R#"
+  ],
+  "key": {
+    "#": { "tag": "minecraft:planks" },
+    "R": { "item": "minecraft:redstone" }
+  },
+  "result": {
+    "item": "orangesunshine:drying_table"
+  }
+}

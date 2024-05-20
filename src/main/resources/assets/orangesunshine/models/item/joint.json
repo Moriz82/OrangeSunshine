@@ -1,0 +1,14 @@
+{
+    "parent": "orangesunshine:item/smoking_pipe",
+    "textures": {
+        "layer0": "orangesunshine:item/joint"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:using": 1
+            },
+            "model": "orangesunshine:item/joint_using"
+        }
+    ]
+}

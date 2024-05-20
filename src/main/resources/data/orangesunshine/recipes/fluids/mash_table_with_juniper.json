@@ -1,0 +1,20 @@
+{
+  "type": "orangesunshine:mashing",
+  "stew_time": 0,
+  "base_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    { "item": "orangesunshine:juniper_berries" },
+    { "item": "orangesunshine:juniper_berries" },
+    { "item": "orangesunshine:juniper_berries" },
+    { "item": "orangesunshine:juniper_berries" },
+    { "item": "minecraft:sugar" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "item": "minecraft:wheat" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:juniper"
+  }
+}

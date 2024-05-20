@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drug_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:cocaine_powder" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:cocaine",
+    "level": 500
+  }
+}

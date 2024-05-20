@@ -1,0 +1,14 @@
+{
+    "parent": "item/goat_horn",
+    "textures": {
+        "layer0": "orangesunshine:item/smoking_pipe"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:using": 1
+            },
+            "model": "orangesunshine:item/smoking_pipe_using"
+        }
+    ]
+}

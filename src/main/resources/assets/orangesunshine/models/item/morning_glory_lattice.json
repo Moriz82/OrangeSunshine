@@ -1,0 +1,23 @@
+{
+    "parent": "orangesunshine:item/morning_glory_lattice_0",
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:age": 0.1
+            },
+            "model": "orangesunshine:item/morning_glory_lattice_1"
+        },
+        {
+            "predicate": {
+                "orangesunshine:age": 0.2
+            },
+            "model": "orangesunshine:item/morning_glory_lattice_2"
+        },
+        {
+            "predicate": {
+                "orangesunshine:age": 0.3
+            },
+            "model": "orangesunshine:item/morning_glory_lattice_3"
+        }
+    ]
+}

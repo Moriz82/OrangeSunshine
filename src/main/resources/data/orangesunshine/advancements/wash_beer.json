@@ -1,0 +1,30 @@
+{
+  "parent": "orangesunshine:hop_cones",
+  "display": {
+    "icon": {
+      "item": "minecraft:wheat"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.wash_beer.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.wash_beer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "mashed_item": {
+      "trigger": "orangesunshine:mashed_item",
+      "conditions": {
+        "fluid": "orangesunshine:wheat",
+        "fermentation": 2
+      }
+    }
+  },
+  "requirements": [
+    [ "mashed_item" ]
+  ]
+}

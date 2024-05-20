@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drug_recepticals" },
+  "ingredients": [
+    { "item": "orangesunshine:coffee_beans" },
+    { "item": "orangesunshine:coffee_beans" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:caffeine",
+    "level": 500
+  }
+}

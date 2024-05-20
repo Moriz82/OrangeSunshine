@@ -1,0 +1,38 @@
+{
+  "parent": "orangesunshine:wash_grapes",
+  "display": {
+    "icon": {
+      "item": "orangesunshine:wooden_mug",
+      "tag": {
+        "fluid": {
+          "id": "orangesunshine:red_grapes",
+          "fermentation": 1,
+          "maturation": 7
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.drink_brandy.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.drink_brandy.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "drank_brandy": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "nbt": "{\"fluid\": { \"id\": \"orangesunshine:red_grapes\", \"fermentation\": 1, \"maturation\": 7 } }"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [ "drank_brandy" ]
+  ]
+}

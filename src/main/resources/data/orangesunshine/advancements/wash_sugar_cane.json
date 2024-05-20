@@ -1,0 +1,30 @@
+{
+  "parent": "orangesunshine:make_mash_tub",
+  "display": {
+    "icon": {
+      "item": "minecraft:sugar_cane"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.wash_sugar_cane.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.wash_sugar_cane.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "mashed_item": {
+      "trigger": "orangesunshine:mashed_item",
+      "conditions": {
+        "fluid": "orangesunshine:sugar_cane",
+        "fermentation": 2
+      }
+    }
+  },
+  "requirements": [
+    [ "mashed_item" ]
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "orangesunshine:village/desert/decor",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "feature": "orangesunshine:agave_patch_unchecked",
+        "projection": "terrain_matching"
+      },
+      "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "feature": "orangesunshine:peyote_patch_unchecked",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    }
+  ]
+}

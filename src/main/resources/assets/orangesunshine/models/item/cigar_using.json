@@ -1,0 +1,6 @@
+{
+    "parent": "orangesunshine:item/joint_using",
+    "textures": {
+        "layer0": "orangesunshine:item/cigar_using"
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "orangesunshine:make_mash_tub",
+  "display": {
+    "icon": {
+      "item": "orangesunshine:hop_cones"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.hop_cones.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.hop_cones.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_the_thing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": [ "orangesunshine:hop_cones" ] }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_thing" ]
+  ]
+}

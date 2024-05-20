@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "orangesunshine:drying_table",
+    "#orangesunshine:barrels",
+    "orangesunshine:mash_tub",
+    "orangesunshine:mash_tub_edge",
+    "orangesunshine:distillery",
+    "orangesunshine:flask"
+  ]
+}

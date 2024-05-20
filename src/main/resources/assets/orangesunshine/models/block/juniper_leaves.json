@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "orangesunshine:block/juniper_leaves"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:agave",
+    "level": 100
+  }
+}

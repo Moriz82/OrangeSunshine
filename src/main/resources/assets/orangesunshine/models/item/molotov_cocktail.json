@@ -1,0 +1,23 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/molotov_cocktail",
+        "layer1": "orangesunshine:item/molotov_cocktail_overlay",
+        "layer2": "orangesunshine:item/molotov_cocktail_overlay"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:filled": 1,
+                "orangesunshine:flying": 0
+            },
+            "model": "orangesunshine:item/molotov_cocktail_filled"
+        },
+        {
+            "predicate": {
+                "orangesunshine:flying": 1
+            },
+            "model": "orangesunshine:item/thrown_molotov_cocktail"
+        }
+    ]
+}

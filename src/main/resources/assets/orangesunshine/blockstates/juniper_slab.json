@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "orangesunshine:block/juniper_slab"
+    },
+    "type=double": {
+      "model": "orangesunshine:block/juniper_planks"
+    },
+    "type=top": {
+      "model": "orangesunshine:block/juniper_slab_top"
+    }
+  }
+}

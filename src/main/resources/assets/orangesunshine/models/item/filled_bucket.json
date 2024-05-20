@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/bucket",
+    "textures": {
+        "layer1": "orangesunshine:item/bucket_liquid"
+    }
+}

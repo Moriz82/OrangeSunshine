@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drug_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:lava_bucket" },
+    { "item": "orangesunshine:obsidian_dust" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:bath_salts",
+    "level": 500
+  }
+}

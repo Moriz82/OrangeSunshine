@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/harmonium",
+        "layer1": "orangesunshine:item/harmonium_glowstone"
+    }
+}

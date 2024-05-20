@@ -1,0 +1,20 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/paper_bag"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:filled": 0.5
+            },
+            "model": "orangesunshine:item/paper_bag_filled"
+        },
+        {
+            "predicate": {
+                "orangesunshine:filled": 1
+            },
+            "model": "orangesunshine:item/paper_bag_overflowing"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "orangesunshine:mashing",
+  "stew_time": 0,
+  "base_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "orangesunshine:hop_cones" },
+    { "item": "orangesunshine:hop_cones" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:wheat_hop"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:belladonna_seeds" },
+    { "item": "orangesunshine:belladonna_seeds" },
+    { "item": "orangesunshine:belladonna_seeds" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:belladonna_extract",
+    "level": 500
+  }
+}

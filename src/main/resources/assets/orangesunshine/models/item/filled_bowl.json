@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/bowl",
+    "textures": {
+        "layer1": "orangesunshine:item/bowl_liquid"
+    }
+}

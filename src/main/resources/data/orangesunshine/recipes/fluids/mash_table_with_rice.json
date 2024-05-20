@@ -1,0 +1,19 @@
+{
+  "type": "orangesunshine:mashing",
+  "stew_time": 0,
+  "base_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    { "tag": "c:rice" },
+    { "tag": "c:rice" },
+    { "tag": "c:rice" },
+    { "tag": "c:rice" },
+    { "tag": "c:rice" },
+    { "tag": "c:rice" },
+    { "tag": "c:rice" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:rice"
+  }
+}

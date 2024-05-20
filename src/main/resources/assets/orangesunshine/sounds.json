@@ -1,0 +1,46 @@
+{
+  "entity.player.heartbeat": {
+    "category": "player",
+    "sounds": [
+      "orangesunshine:heart_beat"
+    ]
+  },
+  "entity.player.breath": {
+    "category": "player",
+    "sounds": [
+      "orangesunshine:breath"
+    ]
+  },
+  "block.rift_jar.toggle": {
+    "category": "block",
+    "subtitle": "subtitle.orangesunshine.rift_jar_toggles",
+    "sounds": [
+      "minecraft:block/end_portal/eyeplace1",
+      "minecraft:block/end_portal/eyeplace2",
+      "minecraft:block/end_portal/eyeplace3"
+    ]
+  },
+  "block.rift_jar.open": {
+    "category": "block",
+    "subtitle": "subtitle.orangesunshine.rift_jar_open",
+    "sounds": [
+      "orangesunshine:rift_jar/jar_open"
+    ]
+  },
+  "block.rift_jar.close": {
+    "category": "block",
+    "subtitle": "subtitle.orangesunshine.rift_jar_close",
+    "sounds": [
+      "orangesunshine:rift_jar/jar_open"
+    ]
+  },
+  "drug.generic": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "orangesunshine:drugs/generic",
+        "stream": true
+      }
+    ]
+  }
+}

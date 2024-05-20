@@ -1,0 +1,7 @@
+{   "parent": "orangesunshine:block/drying_table",
+  "textures": {
+    "bottom": "orangesunshine:block/iron_drying_table_bottom",
+    "side": "orangesunshine:block/iron_drying_table",
+    "top": "orangesunshine:block/iron_drying_table_top"
+  }
+}

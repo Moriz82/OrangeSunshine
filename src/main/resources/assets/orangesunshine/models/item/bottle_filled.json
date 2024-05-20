@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/bottle",
+        "layer1": "orangesunshine:item/bottle_liquid",
+        "layer2": "orangesunshine:item/bottle_overlay"
+    }
+}

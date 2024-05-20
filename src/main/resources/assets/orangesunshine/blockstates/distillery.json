@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "orangesunshine:block/distillery_disconnected"
+    },
+    "facing=down": {
+      "model": "orangesunshine:block/distillery_disconnected"
+    },
+    "facing=east": {
+      "model": "orangesunshine:block/distillery_connected",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "orangesunshine:block/distillery_connected",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "orangesunshine:block/distillery_connected"
+    },
+    "facing=west": {
+      "model": "orangesunshine:block/distillery_connected",
+      "y": 90
+    }
+  }
+}

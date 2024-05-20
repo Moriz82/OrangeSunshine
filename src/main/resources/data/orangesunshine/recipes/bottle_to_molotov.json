@@ -1,0 +1,10 @@
+{
+  "type": "orangesunshine:change_receptical",
+  "ingredients": [
+    { "item": "orangesunshine:bottle" },
+    { "tag": "minecraft:wool" }
+  ],
+  "result": {
+    "item": "orangesunshine:molotov_cocktail"
+  }
+}

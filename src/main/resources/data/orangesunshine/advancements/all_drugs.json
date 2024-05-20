@@ -1,0 +1,49 @@
+{
+  "parent": "orangesunshine:root",
+  "display": {
+    "icon": {
+      "item": "orangesunshine:jolly_rancher"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.all_drugs.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.all_drugs.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 1000
+  },
+  "criteria": {
+    "have_all_effects": {
+      "trigger": "orangesunshine:drug_effects_changed",
+      "conditions": {
+        "drugs": [
+          "orangesunshine:alcohol",
+          "orangesunshine:cannabis",
+          "orangesunshine:brown_shrooms",
+          "orangesunshine:red_shrooms",
+          "orangesunshine:tobacco",
+          "orangesunshine:coccaine",
+          "orangesunshine:caffeine",
+          "orangesunshine:sugar",
+          "orangesunshine:bath_salts",
+          "orangesunshine:lsd",
+          "orangesunshine:kava",
+          "orangesunshine:warmth",
+          "orangesunshine:peyote",
+          "orangesunshine:zero",
+          "orangesunshine:power",
+          "orangesunshine:harmonium"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "have_all_effects" ]
+  ]
+}

@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/syringe"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:filled": 1
+            },
+            "model": "orangesunshine:item/syringe_filled"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "orangesunshine:item/smoking_pipe",
+    "textures": {
+        "layer0": "orangesunshine:item/bong_filled"
+    }
+}

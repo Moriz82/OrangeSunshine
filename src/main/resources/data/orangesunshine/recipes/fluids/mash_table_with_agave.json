@@ -1,0 +1,19 @@
+{
+  "type": "orangesunshine:mashing",
+  "stew_time": 0,
+  "base_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" },
+    { "item": "orangesunshine:agave_leaf" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:agave"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": { "item": "minecraft:glass" }
+  },
+  "result": {
+    "item": "orangesunshine:shot_glass"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:jimsonweed_seeds" },
+    { "item": "orangesunshine:jimsonweed_seeds" },
+    { "item": "orangesunshine:jimsonweed_seeds" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:jimsonweed_extract",
+    "level": 500
+  }
+}

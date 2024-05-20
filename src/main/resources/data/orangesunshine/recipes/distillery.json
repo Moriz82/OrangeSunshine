@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "D "
+  ],
+  "key": {
+    "#": { "item": "minecraft:copper_ingot" },
+    "D": { "item": "orangesunshine:flask" }
+  },
+  "result": {
+    "item": "orangesunshine:distillery"
+  }
+}

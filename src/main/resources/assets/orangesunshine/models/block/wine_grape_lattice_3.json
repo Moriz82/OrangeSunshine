@@ -1,0 +1,6 @@
+{
+  "parent": "orangesunshine:block/wine_grape_lattice_0",
+  "textures": {
+    "grapes": "orangesunshine:block/wine_grape_lattice_3"
+  }
+}

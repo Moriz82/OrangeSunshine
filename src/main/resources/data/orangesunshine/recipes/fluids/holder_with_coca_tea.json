@@ -1,0 +1,13 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:coca_leaves" },
+    { "item": "orangesunshine:coca_leaves" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:coca_tea",
+    "level": 500
+  }
+}

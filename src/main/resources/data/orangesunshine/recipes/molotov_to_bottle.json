@@ -1,0 +1,9 @@
+{
+  "type": "orangesunshine:change_receptical",
+  "ingredients": [
+    { "item": "orangesunshine:molotov_cocktail" }
+  ],
+  "result": {
+    "item": "orangesunshine:bottle"
+  }
+}

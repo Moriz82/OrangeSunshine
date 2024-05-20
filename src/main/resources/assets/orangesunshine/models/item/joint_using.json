@@ -1,0 +1,6 @@
+{
+    "parent": "orangesunshine:item/smoking_pipe_using",
+    "textures": {
+        "layer0": "orangesunshine:item/joint_using"
+    }
+}

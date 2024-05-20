@@ -1,0 +1,20 @@
+{
+  "type": "orangesunshine:mashing",
+  "stew_time": 0,
+  "base_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" },
+    { "tag": "orangesunshine:grapes" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:red_grapes"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "O-O",
+    "GO ",
+    "OIO"
+  ],
+  "key": {
+    "O": { "item": "minecraft:glass" },
+    "-": { "tag": "minecraft:planks" },
+    "G": { "item": "minecraft:gold_ingot" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "result": {
+    "item": "orangesunshine:rift_jar"
+  }
+}

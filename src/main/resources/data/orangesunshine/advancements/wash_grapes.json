@@ -1,0 +1,30 @@
+{
+  "parent": "orangesunshine:grapes",
+  "display": {
+    "icon": {
+      "item": "orangesunshine:wine_grapes"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.wash_grapes.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.wash_grapes.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "mashed_item": {
+      "trigger": "orangesunshine:mashed_item",
+      "conditions": {
+        "fluid": "orangesunshine:red_grapes",
+        "fermentation": 0
+      }
+    }
+  },
+  "requirements": [
+    [ "mashed_item" ]
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:drying",
+  "cookingtime": 100,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "orangesunshine:belladonna_leaf"
+  },
+  "result": {
+    "item": "orangesunshine:dried_belladonna_leaf",
+    "count": 3
+  }
+}

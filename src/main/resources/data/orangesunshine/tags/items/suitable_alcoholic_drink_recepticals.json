@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "orangesunshine:shot_glass",
+    "orangesunshine:glass_chalice",
+    "orangesunshine:wooden_mug",
+    "orangesunshine:filled_bucket",
+    "orangesunshine:filled_bowl",
+    "orangesunshine:filled_glass_bottle",
+    "#orangesunshine:bottles"
+  ]
+}

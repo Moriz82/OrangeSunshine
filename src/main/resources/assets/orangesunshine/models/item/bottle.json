@@ -1,0 +1,16 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/bottle",
+        "layer1": "orangesunshine:item/bottle_overlay",
+        "layer2": "orangesunshine:item/bottle_overlay"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:filled": 1
+            },
+            "model": "orangesunshine:item/bottle_filled"
+        }
+    ]
+}

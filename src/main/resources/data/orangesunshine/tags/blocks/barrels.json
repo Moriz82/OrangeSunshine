@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "orangesunshine:oak_barrel",
+    "orangesunshine:spruce_barrel",
+    "orangesunshine:birch_barrel",
+    "orangesunshine:jungle_barrel",
+    "orangesunshine:acacia_barrel",
+    "orangesunshine:dark_oak_barrel"
+  ]
+}

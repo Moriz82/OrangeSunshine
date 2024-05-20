@@ -1,0 +1,16 @@
+{
+  "type": "orangesunshine:smelting_receptical",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "input": {
+    "fluid": "orangesunshine:coffee"
+  },
+  "result": {
+    "attributes": {
+      "temperature": {
+         "type": "add",
+         "value": 1
+      }
+    }
+  }
+}

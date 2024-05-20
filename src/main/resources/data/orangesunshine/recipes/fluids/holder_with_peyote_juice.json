@@ -1,0 +1,13 @@
+{
+  "type": "orangesunshine:fill_receptical",
+  "receptical": { "tag": "orangesunshine:drink_recepticals" },
+  "ingredients": [
+    { "item": "minecraft:water_bucket" },
+    { "item": "orangesunshine:dried_peyote" },
+    { "item": "orangesunshine:dried_peyote" }
+  ],
+  "result": {
+    "fluid": "orangesunshine:peyote_juice",
+    "level": 500
+  }
+}

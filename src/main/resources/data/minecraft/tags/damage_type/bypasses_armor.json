@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "orangesunshine:alcohol_poisoning",
+    "orangesunshine:respiratory_failure",
+    "orangesunshine:stroke",
+    "orangesunshine:heart_failure",
+    "orangesunshine:heart_attack",
+    "orangesunshine:kidney_failure",
+    "orangesunshine:in_sleep",
+    "orangesunshine:over_eating",
+    "orangesunshine:molotov",
+    "orangesunshine:self_molotov"
+  ]
+}

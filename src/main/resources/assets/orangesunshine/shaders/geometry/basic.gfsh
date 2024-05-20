@@ -1,0 +1,30 @@
+
+uniform float PS_WorldTicks;
+uniform vec4 PS_Pulses;
+
+ps_in float vertexDistance;
+ps_in vec4 vertexColor;
+
+ps_out vec4 fragColor;
+
+void main() {
+  i_parent_shaders_main();
+
+  float worldTicks = PS_WorldTicks;
+
+  float fogFragCoord = vertexDistance;
+  float unusedbecausemacisgarbage = vertexColor.r;
+
+  vec3 outcolor = fragColor.rgb;
+  vec4 pulses = PS_Pulses;
+
+  if (pulses.a > 0.0) {
+    float pulseA = (sin((fogFragCoord - worldTicks) / 5.0) - 0.4) * pulses.a;
+
+    if (pulseA > 0.0) {
+      outcolor = mix(outcolor, (outcolor + 1.0) * pulses.rgb, pulseA);
+    }
+
+    fragColor = vec4(outcolor, fragColor.a);
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:drying",
+  "cookingtime": 100,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "orangesunshine:cannabis_buds"
+  },
+  "result": {
+    "item": "orangesunshine:dried_cannabis_buds",
+    "count": 3
+  }
+}

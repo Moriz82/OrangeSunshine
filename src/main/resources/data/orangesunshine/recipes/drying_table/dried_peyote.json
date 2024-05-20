@@ -1,0 +1,12 @@
+{
+  "type": "orangesunshine:drying",
+  "cookingtime": 100,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "orangesunshine:peyote"
+  },
+  "result": {
+    "item": "orangesunshine:dried_peyote",
+    "count": 3
+  }
+}

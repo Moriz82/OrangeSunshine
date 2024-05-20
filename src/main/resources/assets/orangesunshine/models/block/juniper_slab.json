@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "orangesunshine:block/juniper_planks",
+    "side": "orangesunshine:block/juniper_planks",
+    "top": "orangesunshine:block/juniper_planks"
+  }
+}

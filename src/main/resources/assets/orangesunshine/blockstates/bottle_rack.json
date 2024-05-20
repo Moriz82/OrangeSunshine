@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "orangesunshine:block/bottle_rack"
+    },
+    "facing=east": {
+      "model": "orangesunshine:block/bottle_rack",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "orangesunshine:block/bottle_rack",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "orangesunshine:block/bottle_rack",
+      "y": 270
+    }
+  }
+}

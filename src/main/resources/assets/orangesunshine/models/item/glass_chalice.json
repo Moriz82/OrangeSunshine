@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "orangesunshine:item/glass_chalice"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:filled": 1
+            },
+            "model": "orangesunshine:item/glass_chalice_filled"
+        }
+    ]
+}

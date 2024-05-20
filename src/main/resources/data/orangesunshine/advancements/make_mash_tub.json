@@ -1,0 +1,31 @@
+{
+  "parent": "orangesunshine:root",
+  "display": {
+    "icon": {
+      "item": "orangesunshine:mash_tub"
+    },
+    "title": {
+      "translate": "advancements.orangesunshine.make_mash_tub.title"
+    },
+    "description": {
+      "translate": "advancements.orangesunshine.make_mash_tub.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_the_thing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": [ "orangesunshine:mash_tub" ] }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [ "has_the_thing" ]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 100,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "orangesunshine:coffea_cherries"
+  },
+  "result": "orangesunshine:coffee_beans"
+}

@@ -1,0 +1,50 @@
+{
+    "parent": "orangesunshine:item/joint",
+    "textures": {
+        "layer0": "orangesunshine:item/cigar"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "orangesunshine:using": 1, "damage": 0
+            },
+            "model": "orangesunshine:item/cigar_using"
+        },
+        {
+            "predicate": {
+                "orangesunshine:using": 0, "damage": 0.33
+            },
+            "model": "orangesunshine:item/cigar_1"
+        },
+        {
+            "predicate": {
+                "orangesunshine:using": 1, "damage": 0.33
+            },
+            "model": "orangesunshine:item/cigar_using_1"
+        },
+        {
+            "predicate": {
+                "orangesunshine:using": 0, "damage": 0.66
+            },
+            "model": "orangesunshine:item/cigar_2"
+        },
+        {
+            "predicate": {
+                "orangesunshine:using": 1, "damage": 0.66
+            },
+            "model": "orangesunshine:item/cigar_using_2"
+        },
+        {
+            "predicate": {
+                "orangesunshine:using": 0, "damage": 1
+            },
+            "model": "orangesunshine:item/cigar_3"
+        },
+        {
+            "predicate": {
+                "orangesunshine:using": 1, "damage": 1
+            },
+            "model": "orangesunshine:item/cigar_using_3"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "orangesunshine:block/stripped_juniper_log"
+  }
+}
