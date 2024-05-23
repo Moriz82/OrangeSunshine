@@ -43,7 +43,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
             .addShader("underwater_distortion", UniformBinding.start()
                     .program("heat_distortion", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
                         float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getWaterDistortion();
-                        float peyote = ShaderContext.drug(DrugType.PEYOTE);
+                        float peyote = ShaderContext.drug(DrugType.PEYOTE) + ShaderContext.drug(DrugType.LSD);
 
                         if (peyote <= 0 && (strength <= 0 || !OrangeSunshineClient.getConfig().visual.doWaterDistortion)) {
                             return;

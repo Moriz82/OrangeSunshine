@@ -38,7 +38,7 @@ public class LsdDrug extends SimpleDrug {
         super.update(drugProperties);
     }
 
-    @Override
+    /*@Override
     public float handTrembleStrength() {
         return MathUtils.inverseLerp((float) getActiveValue(), 0.6F, 1);
     }
@@ -46,7 +46,7 @@ public class LsdDrug extends SimpleDrug {
     @Override
     public float viewTrembleStrength() {
         return MathUtils.inverseLerp((float) getActiveValue(), 0.8F, 1);
-    }
+    }*/
 
     @Override
     public float speedModifier() {
@@ -58,6 +58,7 @@ public class LsdDrug extends SimpleDrug {
         return 1 + (float) getActiveValue() * 0.1F;
     }
 
+
     @Override
     public float soundVolumeModifier() {
         float strength = (MathHelper.clamp(getTicksActive(), 50, 250) - 50) / 200F;
@@ -66,7 +67,7 @@ public class LsdDrug extends SimpleDrug {
 
     @Override
     public float colorHallucinationStrength() {
-        return (float) Math.max(0, getActiveValue() - 0.6F) * 2.8F;
+        return (float) getActiveValue() * 0.2F;
     }
 
     @Override
@@ -76,12 +77,12 @@ public class LsdDrug extends SimpleDrug {
 
     @Override
     public float bloomHallucinationStrength() {
-        return (float) getActiveValue() * 0.12F;
+        return MathUtils.inverseLerp((float)getActiveValue(), 0, 0.01F) * .5F;
     }
 
     @Override
     public float superSaturationHallucinationStrength() {
-        return (float)getActiveValue() * 0.8F;
+        return (float)getActiveValue() * 0.125F;
     }
 
     @Override
@@ -89,11 +90,11 @@ public class LsdDrug extends SimpleDrug {
         return (float)getActiveValue() * 0.2F;
     }
 
-    @Override
+    /*@Override
     public float weightlessness() {
         if (getActiveValue() > 0.6F) {
             return (float) getActiveValue() * 0.8F;
         }
         return (float) getActiveValue() * 0.2F;
-    }
+    }*/
 }

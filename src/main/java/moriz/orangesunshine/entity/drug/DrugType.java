@@ -32,10 +32,11 @@ public record DrugType (Identifier id, Function<DrugType, Drug> constructor) {
     public static final DrugType SUGAR = register("sugar", type -> new CaffeineDrug(type, 1, 0.0002d, 0));
     public static final DrugType BATH_SALTS = register("bath_salts", type -> new BathSaltsDrug(1, 0.00012d));
     public static final DrugType SLEEP_DEPRIVATION = register("sleep_deprivation", type -> new SleepDeprivationDrug());
-    public static final DrugType LSD = register("lsd", type -> new LsdDrug(type, 1, 0.0003d, false));
+    public static final DrugType LSD = register("lsd", type -> new LsdDrug(type, 1, 0.00009d, false));
     public static final DrugType ATROPINE = register("atropine", type -> new LsdDrug(type, 1, 0.0003d, true));
     public static final DrugType KAVA = register("kava", type -> new AlcoholDrug(type, 1, 0.0002d));
     public static final DrugType WARMTH = register("warmth", type -> new WarmthDrug(1, 0.004d));
+
     public static final DrugType PEYOTE = register("peyote", type -> new PeyoteDrug(1, 0.0002d));
     public static final DrugType ZERO = register("zero", type -> new SimpleDrug(type, 1, 0.0001d));
     public static final DrugType POWER = register("power", type -> new PowerDrug(0.95, 0.0001d));

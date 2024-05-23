@@ -165,7 +165,8 @@ public class HallucinationManager {
     }
 
     public float getSurfaceShatteringStrength(float tickDelta) {
-        return properties.getDrugValue(DrugType.LSD) * 0.06F;
+        //return properties.getDrugValue(DrugType.LSD) * 0.06F;
+        return 0;
     }
 
     public float[] getPulseColor(float tickDelta) {

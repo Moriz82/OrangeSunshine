@@ -164,7 +164,7 @@ public interface PSItems {
     ));
     Item LSD_BLOTTER = register("lsd_blotter", new EdibleItem(
             new Settings().food(EdibleItem.NON_FILLING_EDIBLE),
-            new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.004, 0.2F)
+            new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.004, 0.25F)
     ));
     Item ORANGESUNSINE_BLOTTER = register("orangesunshine_blotter", new EdibleItem(
             new Settings().food(EdibleItem.NON_FILLING_EDIBLE),

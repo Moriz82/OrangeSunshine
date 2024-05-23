@@ -39,4 +39,14 @@ public class RedShroomsDrug extends SimpleDrug {
     public float hungerSuppression() {
         return (float)getActiveValue() * 0.1F;
     }
+
+    @Override
+    public float bloomHallucinationStrength() {
+        return (float) getActiveValue() * 0.35F;
+    }
+
+    @Override
+    public float superSaturationHallucinationStrength() {
+        return (float)getActiveValue() * 0.7F;
+    }
 }
