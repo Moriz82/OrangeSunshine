@@ -6,4 +6,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'orangesunshine'
+rootProject.name = 'OrangeSunshine'

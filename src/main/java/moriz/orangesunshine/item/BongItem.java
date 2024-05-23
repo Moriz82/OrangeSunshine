@@ -48,12 +48,10 @@ public class BongItem extends Item {
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
         DrugProperties.of(entity).ifPresent(drugProperties -> {
             getUsedConsumable(drugProperties.asEntity()).ifPresent(consumable -> {
-                PlayerInventory inventory = drugProperties.asEntity().getInventory();
-                int slot = inventory.indexOf(consumable.getKey());
-                inventory.removeStack(slot, 1);
-                drugProperties.addAll(consumable.getValue().drugInfluences().apply(consumable.getKey()));
+                consumable.getLeft().decrement(1);
+                drugProperties.addAll(consumable.getRight().drugInfluences().apply(consumable.getLeft()));
                 stack.damage(1, drugProperties.asEntity(), p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-                drugProperties.startBreathingSmoke(10 + world.random.nextInt(10), consumable.getValue().smokeColor);
+                drugProperties.startBreathingSmoke(10 + world.random.nextInt(10), consumable.getRight().smokeColor);
             });
         });
 
@@ -72,31 +70,28 @@ public class BongItem extends Item {
         return TypedActionResult.fail(stack);
     }
 
-    public Optional<Map.Entry<ItemStack, Consumable>> getUsedConsumable(LivingEntity entity) {
+    public Optional<Pair<ItemStack, Consumable>> getUsedConsumable(LivingEntity entity) {
         if (!(entity instanceof PlayerEntity)) {
             return Optional.empty();
         }
-
-        return RecipeUtils.stacks(((PlayerEntity)entity)
-                .getInventory())
-                .flatMap(stack -> consumables.stream()
-                    .filter(consumable -> ItemStack.areItemsEqual(stack, consumable.consumedItem))
-                    .limit(1)
-                    .map(c -> Map.entry(stack, c)))
-                .findFirst();
+        if (entity.getOffHandStack().isEmpty()) {
+            return Optional.empty();
+        }
+        for (Consumable consumable : consumables) {
+            if (ItemStack.areItemsEqual(entity.getOffHandStack(), consumable.consumedItem)) {
+                return Optional.of(new Pair<>(entity.getOffHandStack(), consumable));
+            }
+        }
+        return Optional.empty();
     }
 
     public boolean hasUsableConsumable(LivingEntity entity) {
         if (!(entity instanceof PlayerEntity)) {
             return false;
         }
-
-        PlayerInventory inventory = ((PlayerEntity)entity).getInventory();
-        for (int i = 0; i < inventory.size(); i++) {
-            for (Consumable consumable : consumables) {
-                if (ItemStack.areItemsEqual(inventory.getStack(i), consumable.consumedItem)) {
-                    return true;
-                }
+        for (Consumable consumable : consumables) {
+            if (ItemStack.areItemsEqual(entity.getOffHandStack(), consumable.consumedItem)) {
+                return true;
             }
         }
         return false;

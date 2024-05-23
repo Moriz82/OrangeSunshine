@@ -67,10 +67,6 @@ dependencies {
     modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
     modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
     modCompileOnly "dev.emi:emi-fabric:${project.emi_version}"
-
-    modCompileOnly("com.github.Moriz82:ChemLib-Fabric:1.20.4-1.0.1")
-    modLocalRuntime"com.github.Moriz82:ChemLib-Fabric:1.20.4-1.0.1"
-    modImplementation 'com.github.Moriz82:ChemLib-Fabric:1.20.4-1.0.1'
 }
 
 processResources {
@@ -90,3 +86,6 @@ tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
+fabricApi {
+    configureDataGeneration()
+}

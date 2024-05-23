@@ -122,7 +122,42 @@
   "item.orangesunshine.lsa_blotter": "LSA Blotter",
   "item.orangesunshine.lsd_blotter": "LSD Blotter (LSD-25)",
   "item.orangesunshine.orangesunshine_blotter": "OrangeSunshine Blotter (ALD52)",
-  "item.orangesunshine.lsa_blotter": "LSA Blotter",
+  "item.orangesunshine.blotter": "Blotter Paper",
+  "item.orangesunshine.rolling_paper": "Rolling Paper",
+  "item.orangesunshine.naloxone": "Narcan (naloxone)",
+
+  "item.orangesunshine.eth_hcl": "Ethanol HCL Solution",
+
+  "item.orangesunshine.defat_ergot": "Defatted Ergot Solution",
+  "item.orangesunshine.ergot_alkaloids": "Ergot Alkaloids Solution",
+  "item.orangesunshine.neutral_ergot_alkaloids": "Neutral Ergot Alkaloids Solution",
+  "item.orangesunshine.ergopeptines": "Ergopeptines Solutions",
+  "item.orangesunshine.ergopeptine_crystals": "Ergopeptine Crystals",
+  "item.orangesunshine.dissolved_ergopeptines": "Dissolved Ergopeptines Solution",
+  "item.orangesunshine.dissolved_ergopeptines_acid": "Dissolved Ergopeptines Acid Solution",
+
+  "item.orangesunshine.lysergic_acid": "Lysergic Acid",
+
+  "item.orangesunshine.lsd25": "Lysergic Acid Diethylamide (LSD25)",
+  "item.orangesunshine.ald52": "1-acetyl-LSD (ALD52)",
+
+  "item.orangesunshine.ergot": "Ergot Fungus",
+  "item.orangesunshine.ergot_powder": "Ergot Fungus Powder",
+
+  "item.orangesunshine.sulfur": "Sulfur",
+  "item.orangesunshine.sulfur_powder": "Sulfur Powder",
+  "item.orangesunshine.salt": "Salt",
+  "item.orangesunshine.salt_powder": "Salt Powder",
+  "item.orangesunshine.manganese_dioxide": "Manganese Dioxide",
+  "item.orangesunshine.manganese_dioxide_powder": "Manganese Dioxide Powder",
+  "item.orangesunshine.phosphorus": "Phosphorus",
+
+  "block.orangesunshine.sulfur_ore": "Sulfur Ore",
+  "block.orangesunshine.salt_deposit": "Salt Deposit",
+  "block.orangesunshine.pyrolusite": "Pyrolusite",
+  "block.orangesunshine.phosphorus_ore": "Phosphorus Ore",
+
+  "block.orangesunshine.mortar_pestle": "Mortar and Pestle",
 
   "block.orangesunshine.peyote": "Peyote",
   "block.orangesunshine.hop": "Hops",

@@ -52,6 +52,7 @@ public interface PSRenderers {
         BlockEntityRendererFactories.register(PSBlockEntities.BARREL, BarrelBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(PSBlockEntities.DRYING_TABLE, DryingTableBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(PSBlockEntities.RIFT_JAR, RiftJarBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(PSBlockEntities.MIXING_TABLE_BLOCK_ENTITY, MixingTableEntityRenderer::new);
         BlockEntityRendererFactories.register(PSBlockEntities.BOTTLE_RACK, BottleRackBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(PSBlockEntities.PEYOTE, PeyoteBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(PSBlockEntities.PLACED_DRINK, DrinksBlockEntityRenderer::new);

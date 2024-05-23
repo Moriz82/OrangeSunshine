@@ -17,6 +17,9 @@
   "accessWidener": "orangesunshine.aw",
   "environment": "*",
   "entrypoints": {
+    "fabric-datagen": [
+      "moriz.orangesunshine.datagen.DataGenerators"
+    ],
     "main": [
       "moriz.orangesunshine.OrangeSunshine"
     ],

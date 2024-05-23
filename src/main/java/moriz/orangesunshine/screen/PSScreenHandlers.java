@@ -31,6 +31,13 @@ public interface PSScreenHandlers {
     ScreenHandlerType<FluidContraptionScreenHandler<MashTubBlockEntity>> MASH_TUB = register("mash_tub", new ExtendedScreenHandlerType<>(
             (sync, inventory, buf) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.MASH_TUB, sync, inventory, buf)
     ));
+    public static final ScreenHandlerType<MortarPestleScreenHandler> MORTAR_PESTLE =
+            Registry.register(Registries.SCREEN_HANDLER, OrangeSunshine.id("mortar_pestle"),
+                    new ExtendedScreenHandlerType<>(MortarPestleScreenHandler::new));
+
+    public static final ScreenHandlerType<MixingTableScreenHandler> MIXING_TABLE =
+            Registry.register(Registries.SCREEN_HANDLER, OrangeSunshine.id("mixing_table"),
+                    new ExtendedScreenHandlerType<>(MixingTableScreenHandler::new));
 
     static <T extends ScreenHandler> ScreenHandlerType<T> register(String name, ScreenHandlerType<T> type) {
         return Registry.register(Registries.SCREEN_HANDLER, OrangeSunshine.id(name), type);

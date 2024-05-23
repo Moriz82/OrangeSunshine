@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "orangesunshine:item/compound_vial_layer_0",
+    "layer1": "orangesunshine:item/compound_vial_layer_1"
+  }
+}

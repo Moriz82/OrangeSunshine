@@ -15,5 +15,7 @@ public interface PSScreens {
         HandledScreens.register(PSScreenHandlers.DISTILLERY, DistilleryScreen::new);
         HandledScreens.register(PSScreenHandlers.FLASK, FlaskScreen<FlaskBlockEntity>::new);
         HandledScreens.register(PSScreenHandlers.MASH_TUB, MushTubScreen::new);
+        HandledScreens.register(PSScreenHandlers.MORTAR_PESTLE, MortarPestleScreen::new);
+        HandledScreens.register(PSScreenHandlers.MIXING_TABLE, MixingTableScreen::new);
     }
 }

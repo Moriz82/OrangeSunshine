@@ -1,10 +1,11 @@
 package moriz.orangesunshine.block.entity;
 
+import com.ibm.icu.impl.number.MixedUnitLongNameHandler;
 import moriz.orangesunshine.OrangeSunshine;
-import moriz.orangesunshine.block.*;
 import moriz.orangesunshine.block.MashTubWallBlock;
 import moriz.orangesunshine.block.PSBlocks;
 import moriz.orangesunshine.block.PlacedDrinksBlock;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.BlockEntityType.Builder;
@@ -26,6 +27,16 @@ public interface PSBlockEntities {
             PSBlocks.ACACIA_BARREL, PSBlocks.DARK_OAK_BARREL
     ));
     BlockEntityType<PlacedDrinksBlock.Data> PLACED_DRINK = create("placed_drink", BlockEntityType.Builder.create(PlacedDrinksBlock.Data::new, PSBlocks.PLACED_DRINK));
+
+    public static final BlockEntityType<MortarPestleBlockEntity> MORTAR_PESTLE_BLOCK_ENTITY =
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, OrangeSunshine.id("mortar_pestle"),
+                    FabricBlockEntityTypeBuilder.create(MortarPestleBlockEntity::new,
+                            PSBlocks.MORTAR_PESTLE).build());
+
+    public static final BlockEntityType<MixingTableBlockEntity> MIXING_TABLE_BLOCK_ENTITY =
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, OrangeSunshine.id("mixing_table"),
+                    FabricBlockEntityTypeBuilder.create(MixingTableBlockEntity::new,
+                            PSBlocks.MIXING_TABLE).build());
 
     static <T extends BlockEntity> BlockEntityType<T> create(String id, Builder<T> builder) {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, OrangeSunshine.id(id), builder.build(null));

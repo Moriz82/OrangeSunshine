@@ -24,6 +24,12 @@ public interface PSRecipes {
     RecipeType<DryingRecipe> DRYING_TYPE = RecipeType.register("orangesunshine:drying");
     RecipeSerializer<DryingRecipe> DRYING = RecipeSerializer.register("orangesunshine:drying", new DryingRecipe.Serializer(200));
 
+    RecipeType<MortarPestleRecipe> MORTAR_PESTLE_TYPE = RecipeType.register("orangesunshine:mortar_pestle_recipe");
+    RecipeSerializer<MortarPestleRecipe> MORTAR_PESTLE = RecipeSerializer.register("orangesunshine:mortar_pestle_recipe", new MortarPestleRecipe.Serializer());
+
+    RecipeType<MortarPestleRecipe> MIXING_TABLE_TYPE = RecipeType.register("orangesunshine:mixing");
+    RecipeSerializer<MortarPestleRecipe> MIXING_TABLE = RecipeSerializer.register("orangesunshine:mixing", new MortarPestleRecipe.Serializer());
+
     static void bootstrap() {
         LootTableEvents.MODIFY.register((res, manager, id, supplier, setter) -> {
             if (!"minecraft".contentEquals(id.getNamespace())) {

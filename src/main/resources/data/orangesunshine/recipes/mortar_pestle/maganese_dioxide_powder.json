@@ -1,0 +1,11 @@
+{
+  "type": "orangesunshine:mortar_pestle_recipe",
+  "ingredients": [
+    {
+      "item": "orangesunshine:manganese_dioxide"
+    }
+  ],
+  "output": {
+    "item": "orangesunshine:manganese_dioxide_powder"
+  }
+}

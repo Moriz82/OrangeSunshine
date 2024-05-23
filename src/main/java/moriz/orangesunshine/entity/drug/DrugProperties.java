@@ -191,7 +191,7 @@ public class DrugProperties implements NbtSerialisable {
         }
 
         if (entity.getActiveItem().isOf(PSItems.BONG) && entity.getWorld().random.nextInt(3) == 0) {
-            entity.playSound(SoundEvents.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1, 1);
+            entity.playSound(PSSounds.BONG_HIT, 1, 1);
         }
 
         drugs.values().forEach(drug -> drug.update(this));
@@ -226,13 +226,17 @@ public class DrugProperties implements NbtSerialisable {
                 Vec3d look = entity.getRotationVec(1);
 
                 if (random.nextInt(2) == 0) {
-                    float s = random.nextFloat() * 0.05f + 0.1f;
-                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 1.0f);
+                    float s = random.nextFloat() * 0.05f + 0.2f;
+                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 6.0f);
+                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 6.0f);
+                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 6.0f);
                 }
 
                 if (random.nextInt(5) == 0) {
                     float s = random.nextFloat() * 0.05f + 0.1f;
-                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 2.5f);
+                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 10.5f);
+                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 10.5f);
+                    ParticleHelper.spawnColoredParticle(entity, breathSmokeColor, look, s, 10.5f);
                 }
             }
         }

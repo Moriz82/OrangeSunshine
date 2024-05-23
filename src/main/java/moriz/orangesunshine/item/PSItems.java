@@ -9,15 +9,21 @@ import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.block.PSBlocks;
 import moriz.orangesunshine.block.entity.DistilleryBlockEntity;
 import moriz.orangesunshine.block.entity.FlaskBlockEntity;
+import moriz.orangesunshine.chemistry.CompoundItem;
+import moriz.orangesunshine.chemistry.MatterState;
+import moriz.orangesunshine.chemistry.MixtureItem;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.fluid.ConsumableFluid;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.util.MathUtils;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.UseAction;
 import org.joml.Vector3f;
 
 import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
 import com.terraformersmc.terraform.boat.api.item.TerraformBoatItemHelper;
-
 import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
 import moriz.orangesunshine.entity.drug.influence.HarmoniumDrugInfluence;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -26,6 +32,8 @@ import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+
+import java.util.Map;
 
 /**
  * Created by lukas on 25.04.14.
@@ -62,6 +70,8 @@ public interface PSItems {
 
     ////////////////////////// LSD / LSA /////////////////////////////
     Item MORNING_GLORY = register("morning_glory");
+    Item ERGOT = register("ergot");
+    Item ERGOT_POWDER = register("ergot_powder");
     Item MORNING_GLORY_SEEDS = register("morning_glory_seeds", new AliasedBlockItem(PSBlocks.MORNING_GLORY, new Settings()));
 
     ////////////////////////// HOP /////////////////////////////
@@ -136,10 +146,14 @@ public interface PSItems {
 
     ////////////////////////// OTHER /////////////////////////////
     HarmoniumItem HARMONIUM = register("harmonium", new HarmoniumItem(new Settings()));
+    Item BLOTTER = register("blotter");
+    Item ROLLING_PAPER = register("rolling_paper");
     Item JOLLY_RANCHER = register("jolly_rancher", new EdibleItem(
             new Settings().food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.SUGAR, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.05f)
     ));
+
+    Item NALOXONE = register("naloxone", new DrugClearItem(new Settings().food(EdibleItem.NON_FILLING_EDIBLE), UseAction.BOW, 1));
 
     //</editor-fold>
 
@@ -156,6 +170,81 @@ public interface PSItems {
             new Settings().food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.006, 0.4F)
     ));
+
+
+    //</editor-fold>
+
+    //<editor-fold desc="CHEMISTRY COMPOUNDS / SOLUTIONS">
+
+    CompoundItem LSD25 = registerCompound(new CompoundItem("lsd25", MatterState.VIAL,
+            Map.of(
+                    "C",20,
+                    "H", 25,
+                    "N",3,
+                    "O",1
+            ),
+            "FFA021BF"));
+    CompoundItem ALD52 = registerCompound(new CompoundItem("ald52", MatterState.VIAL,
+            Map.of(
+                    "C",22,
+                    "H", 27,
+                    "N",3,
+                    "O",2
+            ),
+            "fa8405"));
+    CompoundItem LYSERGIC_ACID = registerCompound(new CompoundItem("lysergic_acid", MatterState.VIAL,
+            Map.of(
+                    "C",16,
+                    "H", 16,
+                    "N",2,
+                    "O",2
+            ),
+            "e802e0"));
+
+    MixtureItem ETH_HCL = registerMixture(new MixtureItem("eth_hcl", MatterState.BEAKER,
+            Map.of(
+                    "Ethanol",1,
+                    "HCL", 1
+            ), "9c938a"));
+    MixtureItem DEFAT_ERGOT = registerMixture(new MixtureItem("defat_ergot", MatterState.BEAKER,
+            Map.of(
+                    "Ergot",1,
+                    "Ethanol HCL", 1
+            ), "524940"));
+    MixtureItem ERGOT_ALKALOIDS = registerMixture(new MixtureItem("ergot_alkaloids", MatterState.BEAKER,
+            Map.of(
+                    "Ergot Alkaloids",1,
+                    "Ethanol HCL", 1
+            ),
+            "453627"));
+    MixtureItem NEUTRAL_ERGOT_ALKALOIDS = registerMixture(new MixtureItem("neutral_ergot_alkaloids", MatterState.BEAKER,
+            Map.of(
+                    "Ergot Alkaloids",1,
+                    "Ethanol HCL", 1,
+                    "NaOH", 1
+            ),
+            "99a140"));
+    MixtureItem ERGOPEPTINES = registerMixture(new MixtureItem("ergopeptines", MatterState.BEAKER,
+            Map.of(
+                    "Ergopeptines",1,
+                    "Ethanol HCL", 1,
+                    "NaOH", 1
+            ),
+            "f5df87"));
+    Item ERGOPEPTINE_CRYSTALS = register("ergopeptine_crystals");
+    MixtureItem DISSOLVED_ERGOPEPTINES = registerMixture(new MixtureItem("dissolved_ergopeptines", MatterState.BEAKER,
+            Map.of(
+                    "Ergopeptines",1,
+                    "water", 1,
+                    "Sulfuric Acid", 1
+            ),
+            "806a13"));
+    MixtureItem DISSOLVED_ERGOPEPTINES_ACID = registerMixture(new MixtureItem("dissolved_ergopeptines_acid", MatterState.BEAKER,
+            Map.of(
+                    "Ergopeptines",1,
+                    "Sulfuric Acid", 1
+            ),
+            "e8ba02"));
     //</editor-fold>
 
     //<editor-fold desc="DRINKING CONTAINERS">
@@ -279,6 +368,14 @@ public interface PSItems {
     //</editor-fold>
 
     //<editor-fold desc="MISC">
+
+    Item SULFUR = register("sulfur");
+    Item SULFUR_POWDER = register("sulfur_powder");
+    Item SALT = register("salt");
+    Item SALT_POWDER = register("salt_powder");
+    Item MANGANESE_DIOXIDE = register("manganese_dioxide");
+    Item MANGANESE_DIOXIDE_POWDER = register("manganese_dioxide_powder");
+    Item PHOSPHORUS = register("phosphorus");
     RiftJarItem RIFT_JAR = register("rift_jar", new RiftJarItem(PSBlocks.RIFT_JAR, new Settings()));
 
     DrinkableItem FILLED_GLASS_BOTTLE = register("filled_glass_bottle", new ProxyDrinkableItem(Items.GLASS_BOTTLE, new Settings(), FluidVolumes.GLASS_BOTTLE, ConsumableFluid.ConsumptionType.DRINK));
@@ -304,6 +401,19 @@ public interface PSItems {
     static <T extends Item> T register(String name, T item) {
         return Registry.register(Registries.ITEM, OrangeSunshine.id(name), item);
     }
+
+    static CompoundItem registerCompound(CompoundItem item){
+        register(item.getChemicalName(), item);
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {ColorProviderRegistry.ITEM.register(item::getColor, item);}
+        return item;
+    }
+
+    static MixtureItem registerMixture(MixtureItem item){
+        register(item.getChemicalName(), item);
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {ColorProviderRegistry.ITEM.register(item::getColor, item);}
+        return item;
+    }
+
 
     static void bootstrap() {
         FuelRegistry.INSTANCE.add(LATTICE, 700);

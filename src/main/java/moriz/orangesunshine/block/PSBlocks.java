@@ -10,6 +10,8 @@ import moriz.orangesunshine.block.entity.BlockEntityTypeSupportHelper;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
 import moriz.orangesunshine.item.PSItems;
 import moriz.orangesunshine.world.gen.PSSaplingGenerators;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
@@ -17,6 +19,8 @@ import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -32,6 +36,14 @@ public interface PSBlocks {
             .breakInstantly().nonOpaque().suffocates(BlockConstructionUtils::never).blockVision(BlockConstructionUtils::never)
             .pistonBehavior(PistonBehavior.DESTROY)
     ));
+
+    Block MORTAR_PESTLE = registerBlock("mortar_pestle", new MortarPestleBlock(FabricBlockSettings.copyOf(Blocks.STONE).nonOpaque()));
+    Block MIXING_TABLE = registerBlock("mixing_table", new MixingTableBlock(Settings.create().sounds(BlockSoundGroup.COPPER).nonOpaque().hardness(1).pistonBehavior(PistonBehavior.BLOCK)));
+
+    Block SULFUR_ORE = register("sulfur_ore", new Block(FabricBlockSettings.copyOf(Blocks.COAL_ORE).sounds(BlockSoundGroup.STONE)));
+    Block SALT_DEPOSIT = register("salt_deposit", new Block(FabricBlockSettings.copyOf(Blocks.COAL_ORE).sounds(BlockSoundGroup.STONE)));
+    Block PYROLUSITE = register("pyrolusite", new Block(FabricBlockSettings.copyOf(Blocks.COAL_ORE).sounds(BlockSoundGroup.STONE)));
+    Block PHOSPHORUS_ORE = register("phosphorus_ore", new Block(FabricBlockSettings.copyOf(Blocks.COAL_ORE).sounds(BlockSoundGroup.STONE)));
 
     Block OAK_BARREL = register("oak_barrel", BlockConstructionUtils.barrel(MapColor.OAK_TAN));
     Block SPRUCE_BARREL = register("spruce_barrel", BlockConstructionUtils.barrel(MapColor.SPRUCE_BROWN));
@@ -128,6 +140,16 @@ public interface PSBlocks {
 
     static <T extends Block> T register(String name, T block) {
         return Registry.register(Registries.BLOCK, OrangeSunshine.id(name), block);
+    }
+
+    private static Block registerBlock(String name, Block block) {
+        registerBlockItem(name, block);
+        return Registry.register(Registries.BLOCK, OrangeSunshine.id(name), block);
+    }
+
+    private static Item registerBlockItem(String name, Block block) {
+        return Registry.register(Registries.ITEM, OrangeSunshine.id(name),
+                new BlockItem(block, new FabricItemSettings()));
     }
 
     static void bootstrap() {

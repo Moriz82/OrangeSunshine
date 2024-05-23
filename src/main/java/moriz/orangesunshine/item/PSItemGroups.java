@@ -6,6 +6,7 @@
 package moriz.orangesunshine.item;
 
 import moriz.orangesunshine.OrangeSunshine;
+import moriz.orangesunshine.block.PSBlocks;
 import moriz.orangesunshine.fluid.ChemicalExtractFluid;
 import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.SimpleFluid;
@@ -58,6 +59,10 @@ public interface PSItemGroups {
                 entries.add(PSItems.CIGARETTE);
                 entries.add(PSItems.CIGAR);
                 entries.add(PSItems.JOINT);
+                entries.add(PSItems.BLOTTER);
+                entries.add(PSItems.ROLLING_PAPER);
+                entries.add(PSItems.JOLLY_RANCHER);
+                entries.add(PSItems.NALOXONE);
 
                 entries.add(PSItems.BONG);
                 entries.add(PSItems.SYRINGE);
@@ -81,9 +86,37 @@ public interface PSItemGroups {
 
                 entries.add(PSItems.MORNING_GLORY);
                 entries.add(PSItems.MORNING_GLORY_SEEDS);
+                entries.add(PSItems.ERGOT);
+                entries.add(PSItems.ERGOT_POWDER);
+
+                entries.add(PSItems.SULFUR);
+                entries.add(PSItems.SULFUR_POWDER);
+                entries.add(PSItems.SALT);
+                entries.add(PSItems.SALT_POWDER);
+                entries.add(PSItems.MANGANESE_DIOXIDE);
+                entries.add(PSItems.MANGANESE_DIOXIDE_POWDER);
+                entries.add(PSItems.PHOSPHORUS);
+
                 entries.add(PSItems.LSA_BLOTTER);
                 entries.add(PSItems.LSD_BLOTTER);
                 entries.add(PSItems.ORANGESUNSINE_BLOTTER);
+
+                entries.add(PSItems.ETH_HCL);
+                entries.add(PSBlocks.MORTAR_PESTLE);
+                entries.add(PSBlocks.MIXING_TABLE);
+
+                entries.add(PSItems.DEFAT_ERGOT);
+                entries.add(PSItems.ERGOT_ALKALOIDS);
+                entries.add(PSItems.NEUTRAL_ERGOT_ALKALOIDS);
+                entries.add(PSItems.ERGOPEPTINES);
+                entries.add(PSItems.ERGOPEPTINE_CRYSTALS);
+                entries.add(PSItems.DISSOLVED_ERGOPEPTINES);
+                entries.add(PSItems.DISSOLVED_ERGOPEPTINES_ACID);
+
+                entries.add(PSItems.LYSERGIC_ACID);
+
+                entries.add(PSItems.LSD25);
+                entries.add(PSItems.ALD52);
 
                 entries.add(PSItems.JIMSONWEED_SEEDS);
                 entries.add(PSItems.JIMSONWEED_SEED_POD);

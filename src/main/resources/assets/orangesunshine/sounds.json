@@ -11,6 +11,26 @@
       "orangesunshine:breath"
     ]
   },
+  "entity.player.bong_hit": {
+    "category": "player",
+    "sounds": [
+      "orangesunshine:bong_hit1",
+      "orangesunshine:bong_hit2",
+      "orangesunshine:bong_hit3"
+    ]
+  },
+  "entity.player.joint_inhale": {
+    "category": "player",
+    "sounds": [
+      "orangesunshine:joint_inhale"
+    ]
+  },
+  "entity.player.joint_exhale": {
+    "category": "player",
+    "sounds": [
+      "orangesunshine:joint_exhale"
+    ]
+  },
   "block.rift_jar.toggle": {
     "category": "block",
     "subtitle": "subtitle.orangesunshine.rift_jar_toggles",
