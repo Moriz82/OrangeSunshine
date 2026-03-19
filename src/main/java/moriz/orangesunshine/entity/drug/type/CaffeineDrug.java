@@ -9,14 +9,14 @@ import java.util.Optional;
 
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
 
 /**
  * Created by lukas on 01.11.14.
  */
 public class CaffeineDrug extends SimpleDrug {
-    static final Optional<Text> SLEEP_STATUS = Optional.of(Text.translatable("orangesunshine.sleep.fail.insomnia"));
+    static final Optional<Component> SLEEP_STATUS = Optional.of(Component.translatable("orangesunshine.sleep.fail.insomnia"));
 
     private final float breathVolumeMultiplier;
 
@@ -66,7 +66,7 @@ public class CaffeineDrug extends SimpleDrug {
     }
 
     @Override
-    public Optional<Text> trySleep(BlockPos pos) {
+    public Optional<Component> trySleep(BlockPos pos) {
         return getActiveValue() > 0.1
                 ? SLEEP_STATUS
                 : Optional.empty();

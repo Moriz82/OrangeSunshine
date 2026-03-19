@@ -3,9 +3,9 @@ package moriz.orangesunshine.client.render.effect;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public class CompoundScreenEffect implements ScreenEffect {
 
@@ -41,7 +41,7 @@ public class CompoundScreenEffect implements ScreenEffect {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
         effects.forEach(effect -> {
             if (effect.shouldApply(client.getTickDelta())) {
                 effect.render(matrices, vertices, screenWidth, screenHeight, ticks, pingPong);

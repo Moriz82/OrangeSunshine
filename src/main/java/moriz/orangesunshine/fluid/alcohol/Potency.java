@@ -2,8 +2,8 @@ package moriz.orangesunshine.fluid.alcohol;
 
 import java.util.Locale;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 public enum Potency {
     WATERY,
@@ -15,15 +15,15 @@ public enum Potency {
     private static final Potency[] VALUES = values();
 
     public Potency applyState(int distillation, int fermentation, int maturation) {
-        int potency = (int)MathHelper.clamp(
-            (distillation / 16F) - ((fermentation / 16F) / 3F) + ((maturation / 16F) / 2F) + ordinal(), 0, VALUES.length
+        int potency = (int)Mth.clamp(
+            (distillation / 16F) - ((fermentation / 16F) / 3F) + ((maturation / 16F) / 2F) + ordinal(), 0, VALUES.length - 1
         ) % VALUES.length;
         return VALUES[potency];
     }
 
-    private final Text name = Text.translatable("orangesunshine.alcohol.potency." + name().toLowerCase(Locale.ROOT));
+    private final Component name = Component.translatable("orangesunshine.alcohol.potency." + name().toLowerCase(Locale.ROOT));
 
-    public Text getName() {
+    public Component getName() {
         return name;
     }
 }

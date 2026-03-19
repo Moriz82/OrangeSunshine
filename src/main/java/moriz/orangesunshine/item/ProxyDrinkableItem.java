@@ -5,21 +5,21 @@
 
 package moriz.orangesunshine.item;
 
-import moriz.orangesunshine.fluid.*;
 import moriz.orangesunshine.fluid.ConsumableFluid;
 import moriz.orangesunshine.fluid.SimpleFluid;
-import net.minecraft.item.*;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Created by Sollace on Jan 1 2023
  */
 public class ProxyDrinkableItem extends DrinkableItem {
-
+    private static final int DEFAULT_USE_TIME = 32;
     private final Item basis;
 
-    public ProxyDrinkableItem(Item basis, Settings settings, int capacity, ConsumableFluid.ConsumptionType consumptionType) {
-        super(settings.recipeRemainder(basis), capacity, capacity, DEFAULT_MAX_USE_TIME, consumptionType);
+    public ProxyDrinkableItem(Item basis, Item.Properties settings, int capacity, ConsumableFluid.ConsumptionType consumptionType) {
+        super(settings.craftRemainder(basis), capacity, capacity, DEFAULT_USE_TIME, consumptionType);
         this.basis = basis;
     }
 
@@ -29,11 +29,14 @@ public class ProxyDrinkableItem extends DrinkableItem {
     }
 
     @Override
-    public Text getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         SimpleFluid fluid = getFluid(stack);
 
         if (!fluid.isEmpty()) {
-            return Text.translatable("%s %s", fluid.getName(stack), basis.getName(stack));
+            return Component.empty()
+                    .append(fluid.getName(stack))
+                    .append(Component.literal(" "))
+                    .append(basis.getName(stack));
         }
 
         return basis.getName(stack);

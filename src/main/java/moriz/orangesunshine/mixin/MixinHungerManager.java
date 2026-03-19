@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import moriz.orangesunshine.entity.drug.GluttonyManager;
 import moriz.orangesunshine.entity.drug.LockableHungerManager;
-import net.minecraft.entity.player.HungerManager;
+import net.minecraft.world.food.FoodData;
 
-@Mixin(HungerManager.class)
+@Mixin(FoodData.class)
 abstract class MixinHungerManager implements LockableHungerManager, GluttonyManager {
     @Shadow
     private int foodLevel;
@@ -24,14 +24,14 @@ abstract class MixinHungerManager implements LockableHungerManager, GluttonyMana
 
     private float overeating;
 
-    @Inject(method = "add(IF)V", at = @At("HEAD"))
+    @Inject(method = "eat(IF)V", at = @At("HEAD"))
     private void onAdd(int food, float saturationModifier, CallbackInfo info) {
         if (lockedState != null && !lockedState.full() && foodLevel + food > 20) {
             overeating += food / 8F;
         }
     }
 
-    @Inject(method = "isNotFull()Z", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "needsFood()Z", at = @At("HEAD"), cancellable = true)
     private void onIsNotFull(CallbackInfoReturnable<Boolean> info) {
         if (lockedState != null) {
             info.setReturnValue(!lockedState.full());
@@ -52,7 +52,7 @@ abstract class MixinHungerManager implements LockableHungerManager, GluttonyMana
         }
     }
 
-    @Inject(method = { "setFoodLevel(I)V", "setSaturationLevel(F)V" }, at = @At("HEAD"), cancellable = true)
+    @Inject(method = { "setFoodLevel(I)V", "setSaturation(F)V" }, at = @At("HEAD"), cancellable = true)
     private void onSetFoodOrSaturationLevel(CallbackInfo info) {
         if (lockedState != null) {
             info.cancel(); // XXX: Can't really handle sets whilst the food is locked
@@ -81,7 +81,7 @@ abstract class MixinHungerManager implements LockableHungerManager, GluttonyMana
     }
 
     @Override
-    public HungerManager getHungerManager() {
-        return (HungerManager)(Object)this;
+    public FoodData getHungerManager() {
+        return (FoodData)(Object)this;
     }
 }

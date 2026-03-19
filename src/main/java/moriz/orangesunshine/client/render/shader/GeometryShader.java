@@ -11,16 +11,16 @@ import moriz.orangesunshine.OrangeSunshine;
 import org.apache.commons.io.IOUtils;
 import moriz.orangesunshine.client.render.RenderPhase;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gl.*;
 import net.minecraft.client.gl.ShaderStage.Type;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.resource.*;
 import net.minecraft.screen.PlayerScreenHandler;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
 public class GeometryShader {
     private static final String GEO_DIRECTORY = "shaders/geometry/";
@@ -59,7 +59,7 @@ public class GeometryShader {
 
     public void addUniforms(ShaderProgramSetupView program, Consumer<GlUniform> register) {
         register.accept(new BoundUniform("PS_SurfaceFractalStrength", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
-            uniform.set(isEnabled() ? MathHelper.clamp(ShaderContext.hallucinations().getSurfaceFractalStrength(ShaderContext.tickDelta()), 0, 1) : 0);
+            uniform.set(isEnabled() ? Mth.clamp(ShaderContext.hallucinations().getSurfaceFractalStrength(ShaderContext.tickDelta()), 0, 1) : 0);
         }));
         register.accept(new BoundUniform("PS_Pulses", GlUniform.getTypeIndex("float") + 3, 4, program, uniform -> {
             uniform.set(isEnabled() ? ShaderContext.hallucinations().getPulseColor(ShaderContext.tickDelta()) : new float[4]);

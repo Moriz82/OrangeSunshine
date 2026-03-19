@@ -5,9 +5,9 @@ import moriz.orangesunshine.entity.drug.*;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 
 /**
  * Created by lukas on 22.11.14.
@@ -31,7 +31,7 @@ public class DrugMusicManager {
     }
 
     public void update() {
-        PlayerEntity entity = properties.asEntity();
+        Player entity = properties.asEntity();
 
         if (delayUntilHeartbeat > 0) {
             delayUntilHeartbeat--;
@@ -52,11 +52,11 @@ public class DrugMusicManager {
             if (heartbeatVolume > 0) {
                 float speed = properties.getModifier(Drug.HEART_BEAT_SPEED);
 
-                delayUntilHeartbeat = speed <= 1 ? 1 : MathHelper.floor(35F / (speed - 1F));
+                delayUntilHeartbeat = speed <= 1 ? 1 : Mth.floor(35F / (speed - 1F));
                 targetHeartbeatPulseStrength = 1;
-                entity.getWorld().playSound(entity.getX(), entity.getY(), entity.getZ(),
+                entity.level().playSound(entity, entity.getX(), entity.getY(), entity.getZ(),
                         PSSounds.ENTITY_PLAYER_HEARTBEAT,
-                        SoundCategory.AMBIENT, heartbeatVolume, speed, false);
+                        SoundSource.AMBIENT, heartbeatVolume, speed);
             }
         }
 
@@ -66,8 +66,8 @@ public class DrugMusicManager {
             float breathVolume = properties.getModifier(Drug.BREATH_VOLUME);
             if (breathVolume > 0) {
                 float speed = properties.getModifier(Drug.BREATH_SPEED);
-                delayUntilBreath = MathHelper.floor(30F / speed);
-                entity.getWorld().playSoundFromEntity(entity, entity, PSSounds.ENTITY_PLAYER_BREATH, SoundCategory.PLAYERS,
+                delayUntilBreath = Mth.floor(30F / speed);
+                entity.level().playSound(entity, entity, PSSounds.ENTITY_PLAYER_BREATH, SoundSource.PLAYERS,
                         breathVolume,
                         speed * 0.05F + 0.9F + (lastBreathWasIn ? 0.15F : 0)
                 );
@@ -76,6 +76,6 @@ public class DrugMusicManager {
     }
 
     public float getHeartbeatPulseStrength(float delta) {
-        return MathHelper.lerp(delta, prevHeartbeatPulseStrength, heartbeatPulseStrength);
+        return Mth.lerp(delta, prevHeartbeatPulseStrength, heartbeatPulseStrength);
     }
 }

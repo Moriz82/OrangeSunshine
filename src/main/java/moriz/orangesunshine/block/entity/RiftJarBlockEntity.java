@@ -13,13 +13,17 @@ import moriz.orangesunshine.entity.PSEntities;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.*;
-import net.minecraft.world.World.ExplosionSourceType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class RiftJarBlockEntity extends SyncedBlockEntity {
     public float currentRiftFraction;
@@ -48,7 +52,7 @@ public class RiftJarBlockEntity extends SyncedBlockEntity {
         ticksAliveVisual++;
     }
 
-    public void tick(ServerWorld world) {
+    public void tick(ServerLevel world) {
         tickAnimation();
 
 //        if (!world.isClient)
@@ -81,14 +85,14 @@ public class RiftJarBlockEntity extends SyncedBlockEntity {
             if (fractionOpen > 0) {
                 float minus = Math.min(0.0004f * fractionOpen * currentRiftFraction + 0.0004f, currentRiftFraction);
 
-                BlockPos pos = getPos();
-                Vec3d center = pos.toCenterPos();
-                world.getEntitiesByClass(LivingEntity.class, new Box(
+                BlockPos pos = getBlockPos();
+                Vec3 center = Vec3.atCenterOf(pos);
+                world.getEntitiesOfClass(LivingEntity.class, new AABB(
                         pos.getX() - 5, pos.getY() - 5, pos.getZ() - 2,
                         pos.getX() + 6, pos.getY() + 6, pos.getZ() + 6
-                    ), EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR
+                    ), entity -> entity.isAlive() && (!(entity instanceof Player player) || (!player.isCreative() && !player.isSpectator()))
                 ).stream().flatMap(DrugProperties::stream).forEach(drugProperties -> {
-                    double effect = (5 - drugProperties.asEntity().getPos().distanceTo(center)) * 0.2F * minus;
+                    double effect = (5 - drugProperties.asEntity().position().distanceTo(center)) * 0.2F * minus;
                     drugProperties.addToDrug(DrugType.ZERO, effect * 5);
                     drugProperties.addToDrug(DrugType.POWER, effect * 35);
                 });
@@ -103,32 +107,30 @@ public class RiftJarBlockEntity extends SyncedBlockEntity {
             jarBroken = true;
 
             releaseRift();
-            world.breakBlock(pos, false);
-            Vec3d explosionPosition = getPos().toCenterPos();
-            world.createExplosion(null, explosionPosition.x, explosionPosition.y, explosionPosition.z, 1, false, ExplosionSourceType.BLOCK);
+            world.destroyBlock(getBlockPos(), false);
+            Vec3 explosionPosition = Vec3.atCenterOf(getBlockPos());
+            world.explode(null, explosionPosition.x, explosionPosition.y, explosionPosition.z, 1, false, Level.ExplosionInteraction.BLOCK);
         }
     }
 
     public JarRiftConnection createAndGetRiftConnection(RealityRiftEntity rift) {
-        return riftConnections.computeIfAbsent(rift.getUuid(), id -> new JarRiftConnection(rift));
+        return riftConnections.computeIfAbsent(rift.getUUID(), id -> new JarRiftConnection(rift));
     }
 
     public boolean toggleRiftJarOpen() {
-        if (!world.isClient) {
+        if (level instanceof ServerLevel world) {
             isOpening = !isOpening;
-
-            markDirty();
-            ((ServerWorld)world).getChunkManager().markForUpdate(getPos());
+            setChanged();
+            world.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
         return isOpening;
     }
 
     public void toggleSuckingRifts() {
-        if (!world.isClient) {
+        if (level instanceof ServerLevel world) {
             suckingRifts = !suckingRifts;
-
-            markDirty();
-            ((ServerWorld)world).getChunkManager().markForUpdate(getPos());
+            setChanged();
+            world.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
     }
 
@@ -142,11 +144,13 @@ public class RiftJarBlockEntity extends SyncedBlockEntity {
 
             if (rifts.size() > 0) {
                 rifts.get(0).addToRift(currentRiftFraction);
-            } else if (!world.isClient) {
-                RealityRiftEntity rift = PSEntities.REALITY_RIFT.create(world);
-                rift.setPosition(getPos().toCenterPos().add(5, 3, 0.5));
-                rift.setRiftSize(currentRiftFraction);
-                world.spawnEntity(rift);
+            } else if (level instanceof ServerLevel world) {
+                RealityRiftEntity rift = PSEntities.REALITY_RIFT.create(world, EntitySpawnReason.TRIGGERED);
+                if (rift != null) {
+                    rift.setPos(Vec3.atCenterOf(getBlockPos()).add(5, 3, 0.5));
+                    rift.setRiftSize(currentRiftFraction);
+                    world.addFreshEntity(rift);
+                }
             }
 
             currentRiftFraction = 0.0f;
@@ -154,16 +158,19 @@ public class RiftJarBlockEntity extends SyncedBlockEntity {
     }
 
     public List<RealityRiftEntity> getAffectedRifts() {
-        BlockPos pos = getPos();
-        return world.getEntitiesByClass(RealityRiftEntity.class, new Box(
+        if (level == null) {
+            return List.of();
+        }
+        BlockPos pos = getBlockPos();
+        return level.getEntitiesOfClass(RealityRiftEntity.class, new AABB(
                 pos.getX() - 2.0f, pos.getY() + 0.0f, pos.getZ() - 2.0f,
                 pos.getX() + 3.0f, pos.getY() + 10, pos.getZ() + 3
-            ), EntityPredicates.VALID_ENTITY
+            ), RealityRiftEntity::isAlive
         );
     }
 
     @Override
-    public void writeNbt(NbtCompound compound) {
+    protected void writeNbt(CompoundTag compound) {
         compound.putFloat("currentRiftFraction", currentRiftFraction);
         compound.putBoolean("isOpening", isOpening);
         compound.putFloat("fractionOpen", fractionOpen);
@@ -173,25 +180,25 @@ public class RiftJarBlockEntity extends SyncedBlockEntity {
     }
 
     @Override
-    public void readNbt(NbtCompound compound) {
-        currentRiftFraction = compound.getFloat("currentRiftFraction");
-        isOpening = compound.getBoolean("isOpening");
-        fractionOpen = compound.getFloat("fractionOpen");
-        jarBroken = compound.getBoolean("jarBroken");
-        suckingRifts = compound.getBoolean("suckingRifts");
-        fractionHandleUp = compound.getFloat("fractionHandleUp");
+    protected void readNbt(CompoundTag compound) {
+        currentRiftFraction = compound.getFloatOr("currentRiftFraction", 0);
+        isOpening = compound.getBooleanOr("isOpening", false);
+        fractionOpen = compound.getFloatOr("fractionOpen", 0);
+        jarBroken = compound.getBooleanOr("jarBroken", false);
+        suckingRifts = compound.getBooleanOr("suckingRifts", true);
+        fractionHandleUp = compound.getFloatOr("fractionHandleUp", 0);
     }
 
     public static class JarRiftConnection {
         public final UUID riftID;
-        public final Vec3d position;
+        public final Vec3 position;
 
         public Bezier bezier;
         public float fractionUp;
 
         public JarRiftConnection(RealityRiftEntity rift) {
-            riftID = rift.getUuid();
-            position = rift.getEyePos();
+            riftID = rift.getUUID();
+            position = rift.getEyePosition();
         }
     }
 }

@@ -1,29 +1,28 @@
 package moriz.orangesunshine.screen;
 
 import moriz.orangesunshine.block.entity.DryingTableBlockEntity;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
 * Created by lukas on 08.11.14.
 */
-public class DryingTableScreenHandler extends ScreenHandler {
-    private final Inventory inventory;
+public class DryingTableScreenHandler extends AbstractContainerMenu {
+    private final DryingTableBlockEntity blockEntity;
 
-    private final PropertyDelegate properties;
+    private final ContainerData properties;
 
-    public DryingTableScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buffer) {
-        this(syncId, inventory, (DryingTableBlockEntity)inventory.player.getWorld().getBlockEntity(buffer.readBlockPos()));
+    public DryingTableScreenHandler(int syncId, Inventory inventory, PSScreenHandlers.BlockPosData data) {
+        this(syncId, inventory, (DryingTableBlockEntity)inventory.player.level().getBlockEntity(data.pos()));
     }
 
-    public DryingTableScreenHandler(int syncId, PlayerInventory inventory, DryingTableBlockEntity container) {
+    public DryingTableScreenHandler(int syncId, Inventory inventory, DryingTableBlockEntity container) {
         super(PSScreenHandlers.DRYING_TABLE, syncId);
-        this.inventory = inventory;
+        this.blockEntity = container;
         this.properties = container.propertyDelegate;
 
         addSlot(new SlotDryingTableResult(inventory.player, container, 0, 124, 35));
@@ -46,7 +45,7 @@ public class DryingTableScreenHandler extends ScreenHandler {
             this.addSlot(new Slot(inventory, var3, 8 + var3 * 18, 142));
         }
 
-        this.addProperties(properties);
+        this.addDataSlots(properties);
     }
 
     public float getHeatRatio() {
@@ -58,49 +57,49 @@ public class DryingTableScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return inventory.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return blockEntity.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack originalStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
 
-        if (slot.hasStack()) {
-            ItemStack stack = slot.getStack();
+        if (slot.hasItem()) {
+            ItemStack stack = slot.getItem();
             originalStack = stack.copy();
 
             if (index < 10) {
-                if (!insertItem(stack, 10, 46, false)) {
+                if (!moveItemStackTo(stack, 10, 46, false)) {
                     return ItemStack.EMPTY;
                 }
 
-                slot.onQuickTransfer(stack, originalStack);
+                slot.onQuickCraft(stack, originalStack);
             } else if (index >= 10 && index < 37) {
-                if (!insertItem(stack, 37, 46, false)) {
+                if (!moveItemStackTo(stack, 37, 46, false)) {
                     return ItemStack.EMPTY;
                 }
             }
             else if (index >= 37 && index < 46) {
-                if (!insertItem(stack, 10, 37, false)) {
+                if (!moveItemStackTo(stack, 10, 37, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!insertItem(stack, 10, 37, false)) {
+            } else if (!moveItemStackTo(stack, 10, 37, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (stack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot.setChanged();
             }
 
             if (stack.getCount() == originalStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTakeItem(player, originalStack);
+            slot.onTake(player, originalStack);
         }
 
         return originalStack;

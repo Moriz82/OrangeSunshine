@@ -7,10 +7,10 @@ package moriz.orangesunshine.fluid;
 
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.MutableFluidContainer;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A fluid that is possible to be consumed.
@@ -46,8 +46,8 @@ public interface ConsumableFluid {
                     MutableFluidContainer mutable = container.toMutable(stack);
                     MutableFluidContainer drained = mutable.drain(maxConsumed);
                     consumable.consume(drained.asStack(), entity, type);
-                    if (entity instanceof ServerPlayerEntity player) {
-                        Criteria.CONSUME_ITEM.trigger(player, stack);
+                    if (entity instanceof ServerPlayer player) {
+                        CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
                     }
                     return consumeItem ? mutable.asStack() : stack;
                 }

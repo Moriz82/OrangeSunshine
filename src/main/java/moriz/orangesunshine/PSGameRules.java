@@ -1,10 +1,13 @@
 package moriz.orangesunshine;
 
-import net.minecraft.world.GameRules;
-import net.minecraft.world.GameRules.BooleanRule;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleBuilder;
+import net.minecraft.world.level.gamerules.GameRule;
+import net.minecraft.world.level.gamerules.GameRuleCategory;
 
 public interface PSGameRules {
-    GameRules.Key<BooleanRule> DO_SLEEP_DEPRIVATION = GameRules.register("doSleepDeprivation", GameRules.Category.SPAWNING, BooleanRule.create(false));
+    GameRule<Boolean> DO_SLEEP_DEPRIVATION = GameRuleBuilder.forBoolean(false)
+            .category(GameRuleCategory.SPAWNING)
+            .buildAndRegister(OrangeSunshine.id("do_sleep_deprivation"));
 
     static void bootstrap() { }
 }

@@ -9,8 +9,8 @@ import java.util.*;
 import java.util.function.*;
 
 import moriz.orangesunshine.util.NbtSerialisable;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
 
 public interface Drug extends NbtSerialisable {
     AggregateModifier SPEED = AggregateModifier.create(1, Drug::speedModifier, AggregateModifier.Combiner.MUL);
@@ -69,7 +69,7 @@ public interface Drug extends NbtSerialisable {
     boolean isLocked();
 
 
-    Optional<Text> trySleep(BlockPos pos);
+    Optional<Component> trySleep(BlockPos pos);
 
     void applyContrastColorization(float[] rgba);
 

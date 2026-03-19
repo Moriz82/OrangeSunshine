@@ -2,16 +2,17 @@ package moriz.orangesunshine.fluid;
 
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.item.PSItems;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import java.util.function.Consumer;
+
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Created by lukas on 25.11.14.
  */
 public class AgaveFluid extends AlcoholicFluid {
 
-    public AgaveFluid(Identifier id, Settings settings) {
+    public AgaveFluid(Identifier id, moriz.orangesunshine.fluid.AlcoholicFluid.Settings settings) {
         super(id, settings);
     }
 

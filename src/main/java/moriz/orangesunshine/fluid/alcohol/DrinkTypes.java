@@ -1,7 +1,7 @@
 package moriz.orangesunshine.fluid.alcohol;
 
 import moriz.orangesunshine.fluid.AlcoholicFluid;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,7 +43,7 @@ public interface DrinkTypes {
     }
 
     default Iterable<State> generateStateTable() {
-        final int max = 2 * 3 * 16 * 16;
+        final int max = 2 * 17 * 17 * 3;
         Set<String> previouslyReturned = new HashSet<>();
 
         return () -> {
@@ -57,26 +57,19 @@ public interface DrinkTypes {
                 @Override
                 protected State computeNext() {
                     if (variants().isEmpty()) {
-                        endOfData();
-                        return null;
+                        return endOfData();
                     }
 
-                    while (true) {
-                        int i = index;
-                        index++;
+                    while (index < max) {
+                        int i = index++;
 
                         boolean vinegar = i % 2 == 1;
                         i /= 2;
                         int distillation = i % 17;
-                        i /= 16;
+                        i /= 17;
                         int maturation = i % 17;
-                        i /= 16;
+                        i /= 17;
                         int fermentation = i % 3;
-
-                        if (i > max) {
-                            endOfData();
-                            return null;
-                        }
 
                         Entry match = findMatch(distillation, maturation, fermentation, vinegar);
 
@@ -84,6 +77,8 @@ public interface DrinkTypes {
                             return new State(distillation, maturation, fermentation, vinegar, match);
                         }
                     }
+
+                    return endOfData();
                 }
 
                 private Entry findMatch(int distillation, int maturation, int fermentation, boolean vinegar) {

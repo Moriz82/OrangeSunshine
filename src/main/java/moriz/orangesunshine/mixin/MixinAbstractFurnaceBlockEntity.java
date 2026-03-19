@@ -6,22 +6,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 abstract class MixinAbstractFurnaceBlockEntity {
-    @Inject(method = "tick", at = @At(
+    @Inject(method = "serverTick", at = @At(
             value = "INVOKE",
-            target = "net/minecraft/item/ItemStack.decrement(I)V"
+            target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"
         )
     )
-    private static void onTick(World world, BlockPos pos, BlockState state,
+    private static void onTick(ServerLevel world, BlockPos pos, BlockState state,
             AbstractFurnaceBlockEntity blockEntity, CallbackInfo info) {
-        ItemStack fuel = blockEntity.getStack(1);
+        ItemStack fuel = blockEntity.getItem(1);
         if (fuel.getItem() instanceof SmokeableItem smokeable) {
             smokeable.onIncinerated(fuel, world, pos, blockEntity);
         }

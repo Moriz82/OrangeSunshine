@@ -1,23 +1,31 @@
 package moriz.orangesunshine.fluid.container;
 
+import java.util.function.Consumer;
+
 import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.ItemLike;
 
 /**
  * @author Sollace
  * @since 1 Jan 2023
  */
-public interface FluidContainer extends ItemConvertible {
+public interface FluidContainer extends ItemLike {
     FluidContainer UNLIMITED = new FluidContainer() {
         @Override
         public Item asItem() {
             return Items.STONE;
         }
+
         @Override
         public int getMaxCapacity() {
             return Integer.MAX_VALUE;
@@ -65,7 +73,7 @@ public interface FluidContainer extends ItemConvertible {
     }
 
     default MutableFluidContainer toMutable(ItemStack stack) {
-        return new MutableFluidContainer(this, getFluid(stack), getLevel(stack), getFluidAttributesTag(stack, true), stack.getNbt());
+        return new MutableFluidContainer(this, getFluid(stack), getLevel(stack), getFluidAttributesTag(stack), getCustomData(stack));
     }
 
     default int getMaxCapacity(ItemStack stack) {
@@ -77,50 +85,69 @@ public interface FluidContainer extends ItemConvertible {
     }
 
     default ItemStack getDefaultStack(SimpleFluid fluid) {
-        Item bucketItem = this != UNLIMITED || !fluid.isCustomFluid() ? asItem() : of(fluid.getPhysical().getStandingFluid().getBucketItem()).asItem();
-        return of(bucketItem).toMutable(bucketItem.getDefaultStack())
+        Item bucketItem = this != UNLIMITED || !fluid.isCustomFluid() ? asItem() : of(fluid.getPhysical().getStandingFluid().getBucket()).asItem();
+        return of(bucketItem).toMutable(bucketItem.getDefaultInstance())
                 .withFluid(fluid)
                 .withLevel(getMaxCapacity())
                 .asStack();
     }
 
     default SimpleFluid getFluid(ItemStack stack) {
-        if (!(stack.getNbt() != null && stack.getNbt().contains("fluid", NbtElement.COMPOUND_TYPE)) || getLevel(stack) == 0) {
+        CompoundTag fluidTag = getFluidTag(stack);
+        if (getLevel(stack) == 0) {
             return PSFluids.EMPTY;
         }
-        return SimpleFluid.byId(Identifier.tryParse(stack.getSubNbt("fluid").getString("id")));
+        return SimpleFluid.byId(Identifier.tryParse(fluidTag.getStringOr("id", "")));
     }
 
     default int getLevel(ItemStack stack) {
-        return stack.getNbt() != null
-                && stack.getNbt().contains("fluid", NbtElement.COMPOUND_TYPE)
-                && stack.getSubNbt("fluid").contains("id")
-                && !SimpleFluid.byId(Identifier.tryParse(stack.getSubNbt("fluid").getString("id"))).isEmpty() ? stack.getSubNbt("fluid").getInt("level") : 0;
+        CompoundTag fluidTag = getFluidTag(stack);
+        return fluidTag.contains("id")
+                && !SimpleFluid.byId(Identifier.tryParse(fluidTag.getStringOr("id", ""))).isEmpty()
+                ? fluidTag.getIntOr("level", 0)
+                : 0;
     }
 
-    NbtCompound EMPTY_NBT = new NbtCompound();
+    CompoundTag EMPTY_NBT = new CompoundTag();
 
-    static NbtCompound getFluidAttributesTag(ItemStack stack, boolean readOnly) {
-        NbtCompound fluidTag = getFluidTag(stack, readOnly);
-        if (!readOnly) {
-            if (!fluidTag.contains("attributes", NbtElement.COMPOUND_TYPE)) {
-                fluidTag.put("attributes", new NbtCompound());
-            }
-        }
-        if (fluidTag.contains("attributes", NbtElement.COMPOUND_TYPE)) {
-            return fluidTag.getCompound("attributes");
-        }
-        return EMPTY_NBT;
+    static CompoundTag getCustomData(ItemStack stack) {
+        return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     }
 
-    static NbtCompound getFluidTag(ItemStack stack, boolean readOnly) {
-        if (!readOnly) {
-            return stack.getOrCreateSubNbt("fluid");
+    static CompoundTag getFluidAttributesTag(ItemStack stack) {
+        return getFluidTag(stack).getCompoundOrEmpty("attributes");
+    }
+
+    static CompoundTag getFluidTag(ItemStack stack) {
+        return getCustomData(stack).getCompoundOrEmpty("fluid");
+    }
+
+    static void updateFluidAttributes(ItemStack stack, Consumer<CompoundTag> consumer) {
+        updateFluidTag(stack, fluidTag -> {
+            CompoundTag attributes = fluidTag.contains("attributes")
+                    ? fluidTag.getCompoundOrEmpty("attributes")
+                    : new CompoundTag();
+            consumer.accept(attributes);
+            fluidTag.put("attributes", attributes);
+        });
+    }
+
+    static void updateFluidTag(ItemStack stack, Consumer<CompoundTag> consumer) {
+        CompoundTag customData = getCustomData(stack);
+        CompoundTag fluidTag = customData.contains("fluid")
+                ? customData.getCompoundOrEmpty("fluid")
+                : new CompoundTag();
+        consumer.accept(fluidTag);
+        if (fluidTag.isEmpty()) {
+            customData.remove("fluid");
+        } else {
+            customData.put("fluid", fluidTag);
         }
 
-        if (stack.hasNbt() && stack.getNbt().contains("fluid", NbtElement.COMPOUND_TYPE)) {
-            return stack.getSubNbt("fluid");
+        if (customData.isEmpty()) {
+            stack.remove(DataComponents.CUSTOM_DATA);
+        } else {
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(customData));
         }
-        return EMPTY_NBT;
     }
 }

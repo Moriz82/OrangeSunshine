@@ -4,7 +4,7 @@ import java.util.function.IntConsumer;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * @author Sollace

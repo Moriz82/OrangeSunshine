@@ -16,11 +16,11 @@ import moriz.orangesunshine.client.OrangeSunshineClient;
 import moriz.orangesunshine.client.render.DrugRenderer;
 import moriz.orangesunshine.client.render.GLStateProxy;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.SynchronousResourceReloader;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 
 public class ShaderLoader implements SynchronousResourceReloader, IdentifiableResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -105,7 +105,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
                         setter.set("pixelSize", 1F / screenWidth, 1F / screenHeight);
                         setter.set("hBlur", hBlur);
                         setter.set("vBlur", vBlur);
-                        setter.set("repeats", MathHelper.ceil(Math.max(hBlur, vBlur)));
+                        setter.set("repeats", Mth.ceil(Math.max(hBlur, vBlur)));
                         pass.run();
                     }))
             .addShader("depth_of_field", UniformBinding.start()
@@ -131,9 +131,9 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
 
                         float maxDof = Math.max(focalBlurFar, focalBlurNear);
 
-                        for (int n = 0; n < MathHelper.ceil(maxDof); n++) {
-                            float curBlurNear = MathHelper.clamp(focalBlurNear - n, 0, 1);
-                            float curBlurFar = MathHelper.clamp(focalBlurFar - n, 0, 1);
+                        for (int n = 0; n < Mth.ceil(maxDof); n++) {
+                            float curBlurNear = Mth.clamp(focalBlurNear - n, 0, 1);
+                            float curBlurFar = Mth.clamp(focalBlurFar - n, 0, 1);
 
                             if (curBlurNear > 0.0f || curBlurFar > 0.0f) {
                                 setter.set("focalBlurNear", curBlurNear);
@@ -152,7 +152,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
                     .program("ps_bloom", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
                         float bloom = ShaderContext.hallucinations().getBloom(tickDelta);
                         setter.set("pixelSize", 1F / screenWidth * 2F, 1F / screenHeight * 2F);
-                        for (int n = 0; n < MathHelper.ceil(bloom); n++) {
+                        for (int n = 0; n < Mth.ceil(bloom); n++) {
                             setter.set("totalAlpha", Math.min(1, bloom - n));
                             for (int i = 0; i < 2; i++) {
                                 setter.set("vertical", i);
@@ -170,7 +170,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
                         setter.set("bloomColor", color[0], color[1], color[2]);
                         setter.set("pixelSize", 1F / screenWidth, 1F / screenHeight);
 
-                        for (int n = 0; n < MathHelper.ceil(color[3]); n++) {
+                        for (int n = 0; n < Mth.ceil(color[3]); n++) {
                             setter.set("totalAlpha", Math.max(1, color[3] - n));
                             for (int i = 0; i < 2; i++) {
                                 setter.set("vertical", i);
@@ -187,7 +187,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
                         }
 
                         setter.set("totalAlpha", strength);
-                        setter.set("distance", MathHelper.sin(ShaderContext.ticks() / 20F) * 0.05f * strength);
+                        setter.set("distance", Mth.sin(ShaderContext.ticks() / 20F) * 0.05f * strength);
                         setter.set("stretch", 1 + strength);
                         pass.run();
                     }))

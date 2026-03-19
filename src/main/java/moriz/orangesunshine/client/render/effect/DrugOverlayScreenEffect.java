@@ -6,9 +6,9 @@ import moriz.orangesunshine.entity.drug.*;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.entity.Entity;
 
 public abstract class DrugOverlayScreenEffect<D extends Drug> implements ScreenEffect {
@@ -31,7 +31,7 @@ public abstract class DrugOverlayScreenEffect<D extends Drug> implements ScreenE
 
     @SuppressWarnings("unchecked")
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
         DrugProperties properties = DrugProperties.of(MinecraftClient.getInstance().player);
         matrices.push();
         RenderSystem.enableBlend();
@@ -43,7 +43,7 @@ public abstract class DrugOverlayScreenEffect<D extends Drug> implements ScreenE
         matrices.pop();
     }
 
-    protected abstract void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenheight, float ticks, DrugProperties properties, D drug);
+    protected abstract void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenheight, float ticks, DrugProperties properties, D drug);
 
     @Override
     public void close() throws Exception {

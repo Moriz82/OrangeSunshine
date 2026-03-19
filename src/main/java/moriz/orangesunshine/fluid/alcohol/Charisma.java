@@ -2,7 +2,7 @@ package moriz.orangesunshine.fluid.alcohol;
 
 import java.util.Locale;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public enum Charisma {
     PLAIN,
@@ -39,9 +39,9 @@ public enum Charisma {
         return competator > opponent1 && competator > opponent2;
     }
 
-    private final Text name = Text.translatable("orangesunshine.alcohol.charisma." + name().toLowerCase(Locale.ROOT));
+    private final Component name = Component.translatable("orangesunshine.alcohol.charisma." + name().toLowerCase(Locale.ROOT));
 
-    public Text getName() {
+    public Component getName() {
         return name;
     }
 }

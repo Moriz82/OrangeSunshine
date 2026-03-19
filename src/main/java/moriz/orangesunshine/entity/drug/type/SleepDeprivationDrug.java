@@ -9,7 +9,8 @@ import moriz.orangesunshine.PSGameRules;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 
 /**
  * Created by Sollace on April 19 2023.
@@ -37,7 +38,8 @@ public class SleepDeprivationDrug extends SimpleDrug {
         if (caffiene > 0.1F) {
             setDesiredValue(0);
         } else {
-            if (drugProperties.asEntity().getWorld().getGameRules().getBoolean(PSGameRules.DO_SLEEP_DEPRIVATION)) {
+            if (drugProperties.asEntity().level() instanceof ServerLevel serverLevel
+                    && serverLevel.getGameRules().get(PSGameRules.DO_SLEEP_DEPRIVATION)) {
                 setDesiredValue(getDesiredValue() + (INCREASE_PER_TICKS / 3));
             }
         }
@@ -108,13 +110,13 @@ public class SleepDeprivationDrug extends SimpleDrug {
     }
 
     @Override
-    public void fromNbt(NbtCompound compound) {
+    public void fromNbt(CompoundTag compound) {
         super.fromNbt(compound);
-        storedEnergy = compound.getFloat("storedEnergy");
+        storedEnergy = compound.getFloatOr("storedEnergy", 0);
     }
 
     @Override
-    public void toNbt(NbtCompound compound) {
+    public void toNbt(CompoundTag compound) {
         super.toNbt(compound);
         compound.putFloat("storedEnergy", storedEnergy);
     }

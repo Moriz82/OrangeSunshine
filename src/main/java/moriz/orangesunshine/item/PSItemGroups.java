@@ -11,194 +11,192 @@ import moriz.orangesunshine.fluid.ChemicalExtractFluid;
 import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.FluidContainer;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.item.*;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * @author Sollace
  * @since 1 Jan 2023
  */
 public interface PSItemGroups {
-    RegistryKey<ItemGroup> GENERAL = register("general", FabricItemGroup.builder()
-            .icon(PSItems.CANNABIS_LEAF::getDefaultStack)
-            .entries((context, entries) -> {
-                entries.add(PSItems.DRYING_TABLE);
-                entries.add(PSItems.IRON_DRYING_TABLE);
-                entries.add(PSItems.FLASK);
-                entries.add(PSItems.DISTILLERY);
-                entries.add(PSItems.BOTTLE_RACK);
-                entries.add(PSItems.MASH_TUB);
+    ResourceKey<CreativeModeTab> GENERAL = register("general", CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+            .icon(PSItems.CANNABIS_LEAF::getDefaultInstance)
+            .displayItems((context, entries) -> {
+                entries.accept(PSItems.DRYING_TABLE);
+                entries.accept(PSItems.IRON_DRYING_TABLE);
+                entries.accept(PSItems.FLASK);
+                entries.accept(PSItems.DISTILLERY);
+                entries.accept(PSItems.BOTTLE_RACK);
+                entries.accept(PSItems.MASH_TUB);
 
-                entries.add(PSItems.OAK_BARREL);
-                entries.add(PSItems.BIRCH_BARREL);
-                entries.add(PSItems.SPRUCE_BARREL);
-                entries.add(PSItems.ACACIA_BARREL);
-                entries.add(PSItems.JUNGLE_BARREL);
-                entries.add(PSItems.DARK_OAK_BARREL);
+                entries.accept(PSItems.OAK_BARREL);
+                entries.accept(PSItems.BIRCH_BARREL);
+                entries.accept(PSItems.SPRUCE_BARREL);
+                entries.accept(PSItems.ACACIA_BARREL);
+                entries.accept(PSItems.JUNGLE_BARREL);
+                entries.accept(PSItems.DARK_OAK_BARREL);
 
                 if (OrangeSunshine.getConfig().balancing.enableRiftJars) {
-                    entries.add(RiftJarItem.createFilledRiftJar(0.0F, PSItems.RIFT_JAR));
-                    entries.add(RiftJarItem.createFilledRiftJar(0.25F, PSItems.RIFT_JAR));
-                    entries.add(RiftJarItem.createFilledRiftJar(0.55F, PSItems.RIFT_JAR));
-                    entries.add(RiftJarItem.createFilledRiftJar(0.75F, PSItems.RIFT_JAR));
-                    entries.add(RiftJarItem.createFilledRiftJar(0.9F, PSItems.RIFT_JAR));
+                    entries.accept(RiftJarItem.createFilledRiftJar(0.0F, PSItems.RIFT_JAR));
+                    entries.accept(RiftJarItem.createFilledRiftJar(0.25F, PSItems.RIFT_JAR));
+                    entries.accept(RiftJarItem.createFilledRiftJar(0.55F, PSItems.RIFT_JAR));
+                    entries.accept(RiftJarItem.createFilledRiftJar(0.75F, PSItems.RIFT_JAR));
+                    entries.accept(RiftJarItem.createFilledRiftJar(0.9F, PSItems.RIFT_JAR));
                 }
 
-                entries.add(PSItems.TRAY);
-                entries.add(PSItems.BUNSEN_BURNER);
+                entries.accept(PSItems.TRAY);
+                entries.accept(PSItems.BUNSEN_BURNER);
 
-                entries.add(PSItems.SMOKING_PIPE);
-                entries.add(PSItems.CIGARETTE);
-                entries.add(PSItems.CIGAR);
-                entries.add(PSItems.JOINT);
-                entries.add(PSItems.BLOTTER);
-                entries.add(PSItems.ROLLING_PAPER);
-                entries.add(PSItems.JOLLY_RANCHER);
-                entries.add(PSItems.NALOXONE);
+                entries.accept(PSItems.SMOKING_PIPE);
+                entries.accept(PSItems.CIGARETTE);
+                entries.accept(PSItems.CIGAR);
+                entries.accept(PSItems.JOINT);
+                entries.accept(PSItems.BLOTTER);
+                entries.accept(PSItems.ROLLING_PAPER);
+                entries.accept(PSItems.JOLLY_RANCHER);
+                entries.accept(PSItems.NALOXONE);
 
-                entries.add(PSItems.BONG);
-                entries.add(PSItems.SYRINGE);
-                entries.add(PSItems.SYRINGE.getDefaultStack(PSFluids.COCAINE));
-                entries.add(PSItems.SYRINGE.getDefaultStack(PSFluids.CAFFEINE));
-                entries.add(PSItems.SYRINGE.getDefaultStack(PSFluids.BATH_SALTS));
-                entries.add(ChemicalExtractFluid.DISTILLATION.set(PSItems.SYRINGE.getDefaultStack(PSFluids.MORNING_GLORY_EXTRACT), 2));
+                entries.accept(PSItems.BONG);
+                entries.accept(PSItems.SYRINGE);
+                entries.accept(PSItems.SYRINGE.getDefaultStack(PSFluids.COCAINE));
+                entries.accept(PSItems.SYRINGE.getDefaultStack(PSFluids.CAFFEINE));
+                entries.accept(PSItems.SYRINGE.getDefaultStack(PSFluids.BATH_SALTS));
+                entries.accept(ChemicalExtractFluid.DISTILLATION.set(PSItems.SYRINGE.getDefaultStack(PSFluids.MORNING_GLORY_EXTRACT), 2));
 
-                entries.add(PSItems.COFFEA_CHERRIES);
-                entries.add(PSItems.COFFEE_BEANS);
+                entries.accept(PSItems.COFFEA_CHERRIES);
+                entries.accept(PSItems.COFFEE_BEANS);
 
-                entries.add(PSItems.TOMATO_LEAF);
-                entries.add(PSItems.TOMATO_SEEDS);
-                entries.add(PSItems.TOMATO);
+                entries.accept(PSItems.TOMATO_LEAF);
+                entries.accept(PSItems.TOMATO_SEEDS);
+                entries.accept(PSItems.TOMATO);
 
-                entries.add(PSItems.OBSIDIAN_BOTTLE);
-                entries.add(PSItems.OBSIDIAN_DUST);
+                entries.accept(PSItems.OBSIDIAN_BOTTLE);
+                entries.accept(PSItems.OBSIDIAN_DUST);
 
-               // entries.add(PSItems.KAVA_SEEDS);
-               // entries.add(PSItems.KAVA_ROOT);
+               // entries.accept(PSItems.KAVA_SEEDS);
+               // entries.accept(PSItems.KAVA_ROOT);
 
-                entries.add(PSItems.MORNING_GLORY);
-                entries.add(PSItems.MORNING_GLORY_SEEDS);
-                entries.add(PSItems.ERGOT);
-                entries.add(PSItems.ERGOT_POWDER);
+                entries.accept(PSItems.MORNING_GLORY);
+                entries.accept(PSItems.MORNING_GLORY_SEEDS);
+                entries.accept(PSItems.ERGOT);
+                entries.accept(PSItems.ERGOT_POWDER);
 
-                entries.add(PSItems.SULFUR);
-                entries.add(PSItems.SULFUR_POWDER);
-                entries.add(PSItems.SALT);
-                entries.add(PSItems.SALT_POWDER);
-                entries.add(PSItems.MANGANESE_DIOXIDE);
-                entries.add(PSItems.MANGANESE_DIOXIDE_POWDER);
-                entries.add(PSItems.PHOSPHORUS);
+                entries.accept(PSItems.SULFUR);
+                entries.accept(PSItems.SULFUR_POWDER);
+                entries.accept(PSItems.SALT);
+                entries.accept(PSItems.SALT_POWDER);
+                entries.accept(PSItems.MANGANESE_DIOXIDE);
+                entries.accept(PSItems.MANGANESE_DIOXIDE_POWDER);
+                entries.accept(PSItems.PHOSPHORUS);
 
-                entries.add(PSItems.LSA_BLOTTER);
-                entries.add(PSItems.LSD_BLOTTER);
-                entries.add(PSItems.ORANGESUNSINE_BLOTTER);
+                entries.accept(PSItems.LSA_BLOTTER);
+                entries.accept(PSItems.LSD_BLOTTER);
+                entries.accept(PSItems.ORANGESUNSINE_BLOTTER);
 
-                entries.add(PSItems.ETH_HCL);
-                entries.add(PSBlocks.MORTAR_PESTLE);
-                entries.add(PSBlocks.MIXING_TABLE);
+                entries.accept(PSItems.ETH_HCL);
+                entries.accept(PSBlocks.MORTAR_PESTLE);
+                entries.accept(PSBlocks.MIXING_TABLE);
 
-                entries.add(PSItems.DEFAT_ERGOT);
-                entries.add(PSItems.ERGOT_ALKALOIDS);
-                entries.add(PSItems.NEUTRAL_ERGOT_ALKALOIDS);
-                entries.add(PSItems.ERGOPEPTINES);
-                entries.add(PSItems.ERGOPEPTINE_CRYSTALS);
-                entries.add(PSItems.DISSOLVED_ERGOPEPTINES);
-                entries.add(PSItems.DISSOLVED_ERGOPEPTINES_ACID);
+                entries.accept(PSItems.DEFAT_ERGOT);
+                entries.accept(PSItems.ERGOT_ALKALOIDS);
+                entries.accept(PSItems.NEUTRAL_ERGOT_ALKALOIDS);
+                entries.accept(PSItems.ERGOPEPTINES);
+                entries.accept(PSItems.ERGOPEPTINE_CRYSTALS);
+                entries.accept(PSItems.DISSOLVED_ERGOPEPTINES);
+                entries.accept(PSItems.DISSOLVED_ERGOPEPTINES_ACID);
 
-                entries.add(PSItems.LYSERGIC_ACID);
+                entries.accept(PSItems.LYSERGIC_ACID);
 
-                entries.add(PSItems.LSD25);
-                entries.add(PSItems.ALD52);
+                entries.accept(PSItems.LSD25);
+                entries.accept(PSItems.ALD52);
 
-                entries.add(PSItems.JIMSONWEED_SEEDS);
-                entries.add(PSItems.JIMSONWEED_SEED_POD);
-                entries.add(PSItems.JIMSONWEED_LEAF);
-                entries.add(PSItems.DRIED_JIMSONWEED_LEAF);
+                entries.accept(PSItems.JIMSONWEED_SEEDS);
+                entries.accept(PSItems.JIMSONWEED_SEED_POD);
+                entries.accept(PSItems.JIMSONWEED_LEAF);
+                entries.accept(PSItems.DRIED_JIMSONWEED_LEAF);
 
-                entries.add(PSItems.BELLADONNA_SEEDS);
-                entries.add(PSItems.BELLADONNA_BERRIES);
-                entries.add(PSItems.BELLADONNA_LEAF);
-                entries.add(PSItems.DRIED_BELLADONNA_LEAF);
+                entries.accept(PSItems.BELLADONNA_SEEDS);
+                entries.accept(PSItems.BELLADONNA_BERRIES);
+                entries.accept(PSItems.BELLADONNA_LEAF);
+                entries.accept(PSItems.DRIED_BELLADONNA_LEAF);
 
-                entries.add(PSItems.TOBACCO_SEEDS);
-                entries.add(PSItems.TOBACCO_LEAVES);
-                entries.add(PSItems.DRIED_TOBACCO);
+                entries.accept(PSItems.TOBACCO_SEEDS);
+                entries.accept(PSItems.TOBACCO_LEAVES);
+                entries.accept(PSItems.DRIED_TOBACCO);
 
-                entries.add(PSItems.COCA_SEEDS);
-                entries.add(PSItems.COCA_LEAVES);
-                entries.add(PSItems.DRIED_COCA_LEAVES);
-                entries.add(PSItems.COCAINE_POWDER);
+                entries.accept(PSItems.COCA_SEEDS);
+                entries.accept(PSItems.COCA_LEAVES);
+                entries.accept(PSItems.DRIED_COCA_LEAVES);
+                entries.accept(PSItems.COCAINE_POWDER);
 
-                entries.add(PSItems.AGAVE_LEAF);
-                entries.add(PSItems.PEYOTE);
-                entries.add(PSItems.DRIED_PEYOTE);
-                entries.add(PSItems.PEYOTE_JOINT);
+                entries.accept(PSItems.AGAVE_LEAF);
+                entries.accept(PSItems.PEYOTE);
+                entries.accept(PSItems.DRIED_PEYOTE);
+                entries.accept(PSItems.PEYOTE_JOINT);
 
-                entries.add(PSItems.HOP_SEEDS);
-                entries.add(PSItems.HOP_CONES);
+                entries.accept(PSItems.HOP_SEEDS);
+                entries.accept(PSItems.HOP_CONES);
 
-                entries.add(PSItems.CANNABIS_SEEDS);
-                entries.add(PSItems.CANNABIS_LEAF);
-                entries.add(PSItems.DRIED_CANNABIS_LEAF);
-                entries.add(PSItems.CANNABIS_BUDS);
-                entries.add(PSItems.DRIED_CANNABIS_BUDS);
+                entries.accept(PSItems.CANNABIS_SEEDS);
+                entries.accept(PSItems.CANNABIS_LEAF);
+                entries.accept(PSItems.DRIED_CANNABIS_LEAF);
+                entries.accept(PSItems.CANNABIS_BUDS);
+                entries.accept(PSItems.DRIED_CANNABIS_BUDS);
 
-                entries.add(PSItems.HASH_MUFFIN);
+                entries.accept(PSItems.HASH_MUFFIN);
 
-                entries.add(PSItems.BROWN_MAGIC_MUSHROOMS);
-                entries.add(PSItems.RED_MAGIC_MUSHROOMS);
+                entries.accept(PSItems.BROWN_MAGIC_MUSHROOMS);
+                entries.accept(PSItems.RED_MAGIC_MUSHROOMS);
 
-                entries.add(PSItems.LATTICE);
-                entries.add(PSItems.WINE_GRAPES);
+                entries.accept(PSItems.LATTICE);
+                entries.accept(PSItems.WINE_GRAPES);
 
-                entries.add(PSItems.JUNIPER_LEAVES);
-                entries.add(PSItems.FRUITING_JUNIPER_LEAVES);
-                entries.add(PSItems.JUNIPER_LOG);
-                entries.add(PSItems.JUNIPER_WOOD);
-                entries.add(PSItems.STRIPPED_JUNIPER_LOG);
-                entries.add(PSItems.STRIPPED_JUNIPER_WOOD);
-                entries.add(PSItems.JUNIPER_SAPLING);
-                entries.add(PSItems.JUNIPER_BERRIES);
+                entries.accept(PSItems.JUNIPER_LEAVES);
+                entries.accept(PSItems.FRUITING_JUNIPER_LEAVES);
+                entries.accept(PSItems.JUNIPER_LOG);
+                entries.accept(PSItems.JUNIPER_WOOD);
+                entries.accept(PSItems.STRIPPED_JUNIPER_LOG);
+                entries.accept(PSItems.STRIPPED_JUNIPER_WOOD);
+                entries.accept(PSItems.JUNIPER_SAPLING);
+                entries.accept(PSItems.JUNIPER_BERRIES);
 
-                entries.add(PSItems.JUNIPER_PLANKS);
-                entries.add(PSItems.JUNIPER_STAIRS);
-                entries.add(PSItems.JUNIPER_SIGN);
-                entries.add(PSItems.JUNIPER_DOOR);
-                entries.add(PSItems.JUNIPER_HANGING_SIGN);
-                entries.add(PSItems.JUNIPER_PRESSURE_PLATE);
-                entries.add(PSItems.JUNIPER_FENCE);
-                entries.add(PSItems.JUNIPER_TRAPDOOR);
-                entries.add(PSItems.JUNIPER_FENCE_GATE);
-                entries.add(PSItems.JUNIPER_BUTTON);
-                entries.add(PSItems.JUNIPER_SLAB);
-                entries.add(PSItems.JUNIPER_BOAT);
-                entries.add(PSItems.JUNIPER_CHEST_BOAT);
+                entries.accept(PSItems.JUNIPER_PLANKS);
+                entries.accept(PSItems.JUNIPER_STAIRS);
+                entries.accept(PSItems.JUNIPER_SIGN);
+                entries.accept(PSItems.JUNIPER_DOOR);
+                entries.accept(PSItems.JUNIPER_HANGING_SIGN);
+                entries.accept(PSItems.JUNIPER_PRESSURE_PLATE);
+                entries.accept(PSItems.JUNIPER_FENCE);
+                entries.accept(PSItems.JUNIPER_TRAPDOOR);
+                entries.accept(PSItems.JUNIPER_FENCE_GATE);
+                entries.accept(PSItems.JUNIPER_BUTTON);
+                entries.accept(PSItems.JUNIPER_SLAB);
+                entries.accept(PSItems.JUNIPER_BOAT);
+                entries.accept(PSItems.JUNIPER_CHEST_BOAT);
 
-                entries.add(PSItems.PAPER_BAG);
+                entries.accept(PSItems.PAPER_BAG);
 
                 if (OrangeSunshine.getConfig().balancing.enableHarmonium) {
                     for (DyeColor dye : DyeColor.values()) {
-                        float[] color = dye.getColorComponents();
-                        ItemStack harmonium = PSItems.HARMONIUM.getDefaultStack();
-                        PSItems.HARMONIUM.setColor(harmonium, MathHelper.packRgb(color[0], color[1], color[2]));
-                        entries.add(harmonium);
+                        ItemStack harmonium = PSItems.HARMONIUM.getDefaultInstance();
+                        PSItems.HARMONIUM.setColor(harmonium, dye.getTextureDiffuseColor());
+                        entries.accept(harmonium);
                     }
                 }
             }));
-    RegistryKey<ItemGroup> DRINKS = register("drinks", FabricItemGroup.builder()
-            .icon(PSItems.OAK_BARREL::getDefaultStack)
-            .entries((context, entries) -> {
+    ResourceKey<CreativeModeTab> DRINKS = register("drinks", CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
+            .icon(PSItems.OAK_BARREL::getDefaultInstance)
+            .displayItems((context, entries) -> {
                 appendAllFluids(PSItems.STONE_CUP, entries);
-                entries.add(PSItems.SHOT_GLASS);
-                PSFluids.AGAVE.getDefaultStacks(PSItems.SHOT_GLASS, entries::add);
+                entries.accept(PSItems.SHOT_GLASS);
+                PSFluids.AGAVE.getDefaultStacks(PSItems.SHOT_GLASS, entries::accept);
                 appendAllFluids(PSItems.WOODEN_MUG, entries);
                 appendAllFluids(PSItems.GLASS_CHALICE, entries);
                 appendAllFluids(PSItems.BOTTLE, entries);
@@ -206,26 +204,26 @@ public interface PSItemGroups {
                 appendAllFluids(PSItems.FILLED_BOWL, entries);
                 appendAllFluids(PSItems.FILLED_GLASS_BOTTLE, entries);
             }));
-    RegistryKey<ItemGroup> WEAPONS = register("weapons", FabricItemGroup.builder()
-            .icon(PSItems.MOLOTOV_COCKTAIL::getDefaultStack)
-            .entries((context, entries) -> {
+    ResourceKey<CreativeModeTab> WEAPONS = register("weapons", CreativeModeTab.builder(CreativeModeTab.Row.TOP, 2)
+            .icon(PSItems.MOLOTOV_COCKTAIL::getDefaultInstance)
+            .displayItems((context, entries) -> {
                 if (!OrangeSunshine.getConfig().balancing.disableMolotovs) {
                     appendAllFluids(PSItems.MOLOTOV_COCKTAIL, entries);
                 }
             }));
 
-    private static void appendAllFluids(FluidContainer item, ItemGroup.Entries entries) {
+    private static void appendAllFluids(FluidContainer item, CreativeModeTab.Output entries) {
         SimpleFluid.all().forEach(fluid -> {
             if (fluid.isSuitableContainer(item)) {
-                fluid.getDefaultStacks(item, entries::add);
+                fluid.getDefaultStacks(item, entries::accept);
             }
         });
     }
 
-    static RegistryKey<ItemGroup> register(String name, ItemGroup.Builder builder) {
-        RegistryKey<ItemGroup> key = RegistryKey.of(RegistryKeys.ITEM_GROUP, OrangeSunshine.id(name));
-        Registry.register(Registries.ITEM_GROUP, key.getValue(), builder
-                .displayName(Text.translatable(Util.createTranslationKey("itemGroup", key.getValue())))
+    static ResourceKey<CreativeModeTab> register(String name, CreativeModeTab.Builder builder) {
+        ResourceKey<CreativeModeTab> key = ResourceKey.create(Registries.CREATIVE_MODE_TAB, OrangeSunshine.id(name));
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, key.identifier(), builder
+                .title(Component.translatable(Util.makeDescriptionId("itemGroup", key.identifier())))
                 .build()
         );
         return key;

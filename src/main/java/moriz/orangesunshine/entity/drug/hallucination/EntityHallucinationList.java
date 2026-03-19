@@ -7,8 +7,8 @@ import moriz.orangesunshine.entity.drug.DrugProperties;
 import org.jetbrains.annotations.Nullable;
 
 import moriz.orangesunshine.entity.drug.*;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 
 public class EntityHallucinationList implements Iterable<Hallucination> {
     private final List<Hallucination> entities = new ArrayList<>();
@@ -69,14 +69,14 @@ public class EntityHallucinationList implements Iterable<Hallucination> {
 
     public float getForcedAlpha(float tickDelta) {
         float ticks = manager.getProperties().getAge() + tickDelta;
-        float percent = MathHelper.lerp(tickDelta, prevForcedTicks, forcedTicks) / 400F;
+        float percent = Mth.lerp(tickDelta, prevForcedTicks, forcedTicks) / 400F;
         if (percent <= 0.01F) {
             return 0;
         }
 
-        float baseAlpha = Math.abs(Math.min(MathHelper.sin(percent * MathHelper.HALF_PI * 2F) * 2, 1));
+        float baseAlpha = Math.abs(Math.min(Mth.sin(percent * Mth.HALF_PI * 2F) * 2, 1));
         if (percent < 0.1F) {
-            baseAlpha += 0.5F + MathHelper.sin(ticks / 3F) / 2F;
+            baseAlpha += 0.5F + Mth.sin(ticks / 3F) / 2F;
             baseAlpha /= 2F;
         }
 
@@ -84,7 +84,7 @@ public class EntityHallucinationList implements Iterable<Hallucination> {
     }
 
     public void spawnHallucination() {
-        if (getProperties().asEntity().getWorld().isClient) {
+        if (getProperties().asEntity().level().isClientSide()) {
             EntityHallucinationType.getCandidates(this).findFirst().ifPresent(type -> addHallucination(type, false));
         }
     }

@@ -7,7 +7,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.text.*;
-
 import com.minelittlepony.common.client.gui.GameGui;
 import com.minelittlepony.common.client.gui.IField.IChangeCallback;
 import com.minelittlepony.common.client.gui.ScrollContainer;

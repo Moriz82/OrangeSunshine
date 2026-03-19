@@ -15,9 +15,9 @@ import moriz.orangesunshine.block.BarrelBlock;
 import moriz.orangesunshine.block.entity.BarrelBlockEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.MathHelper;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.util.Mth;
 
 /**
  * Updated by Sollace on 6 Jan 2023
@@ -61,7 +61,7 @@ public class BarrelModel extends Model {
                 .uv(7, 50).cuboid(-0.5F, 5.2F, -9.5F, 1, 2, 1, Dilation.NONE)
                 .uv(0, 50).cuboid(-0.5F, 6, -8.5F, 1, 1, 2, Dilation.NONE), ModelTransform.pivot(0, -6.5F, 7));
 
-        ModelPartData legs = root.addChild("rack", ModelPartBuilder.create(), ModelTransform.of(0, 3F, 0, 0, 0, MathHelper.PI));
+        ModelPartData legs = root.addChild("rack", ModelPartBuilder.create(), ModelTransform.of(0, 3F, 0, 0, 0, Mth.PI));
         legs.addChild("back_legs", ModelPartBuilder.create().uv(94, 19).cuboid(-5, -2, -1, 10, 4, 2, Dilation.NONE), ModelTransform.of(0, 1.5969F, 5.9183F, 0.1487F, 0, 0));
         legs.addChild("crossbeam", ModelPartBuilder.create().uv(94, 0).cuboid(-1, 1, -5, 2, 1, 10, Dilation.NONE), ModelTransform.NONE);
         legs.addChild("front_legs", ModelPartBuilder.create().uv(94, 12).cuboid(-5, -2, -1, 10, 4, 2, Dilation.NONE), ModelTransform.of(0, 1.7332F, -5.7591F, -0.1487F, 0, 0));
@@ -70,7 +70,7 @@ public class BarrelModel extends Model {
 
     public void setRotationAngles(BarrelBlockEntity entity) {
         tapHandle.yaw = entity.tapRotation;
-        barrel.pitch = entity.getCachedState().get(BarrelBlock.FACING).getAxis() == Axis.Y ? MathHelper.HALF_PI : 0;
+        barrel.pitch = entity.getCachedState().get(BarrelBlock.FACING).getAxis() == Axis.Y ? Mth.HALF_PI : 0;
         barrel.pivotY = 9 - 2 * barrel.pitch;
         tap.roll = 0;//MinecraftClient.getInstance().player.age;
         tap.visible = barrel.pitch == 0 && entity.getCachedState().get(BarrelBlock.TAPPED);
@@ -79,7 +79,7 @@ public class BarrelModel extends Model {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float r, float g, float b, float a) {
+    public void render(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float r, float g, float b, float a) {
         tree.render(matrices, vertices, light, overlay);
     }
 }

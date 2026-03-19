@@ -1,0 +1,84 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+}
+
+configurations.configureEach {
+    if (name in ['forgeRuntimeLibrary', 'runtimeClasspath', 'developmentForge']) {
+        exclude group: 'net.fabricmc', module: 'fabric-log4j-util'
+    }
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-freetype:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-glfw:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-jemalloc:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-openal:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-opengl:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-stb:3.3.3"
+    forgeRuntimeLibrary "org.lwjgl:lwjgl-tinyfd:3.3.3"
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
+    shadowCommon(project(path: ':common', configuration: 'transformProductionForge')) { transitive = false }
+}
+
+def forgeBaseLwjglJars = providers.provider {
+    configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.findAll {
+        it.moduleVersion.id.group == 'org.lwjgl' && !it.file.name.contains('-natives-')
+    }.collect { it.file }
+}
+
+tasks.matching { it.name in ['runClient', 'runServer'] }.configureEach {
+    classpath = classpath.filter { it.name != 'fabric-log4j-util-1.0.2.jar' }
+    classpath += files(forgeBaseLwjglJars)
+}
+
+processResources {
+    inputs.properties([
+        version: project.version,
+        minecraft_version: rootProject.minecraft_version,
+        forge_loader_version_range: rootProject.forge_loader_version_range
+    ])
+
+    filesMatching('META-INF/mods.toml') {
+        expand([
+            version: project.version,
+            mod_id: rootProject.mod_id,
+            mod_name: rootProject.mod_name,
+            mod_description: rootProject.mod_description,
+            mod_authors: rootProject.mod_authors,
+            mod_license: rootProject.mod_license,
+            mod_homepage: rootProject.mod_homepage,
+            mod_issues: rootProject.mod_issues,
+            minecraft_version: rootProject.minecraft_version,
+            forge_loader_version_range: rootProject.forge_loader_version_range
+        ])
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set('dev-shadow')
+}
+
+remapJar {
+    dependsOn shadowJar
+    inputFile.set(shadowJar.archiveFile)
+    archiveClassifier.set('forge')
+}
+
+jar {
+    archiveClassifier.set('dev')
+}

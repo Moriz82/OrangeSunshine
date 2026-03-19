@@ -3,14 +3,14 @@ package moriz.orangesunshine.fluid.alcohol;
 import java.util.function.Predicate;
 
 import moriz.orangesunshine.fluid.AlcoholicFluid;
-import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.predicate.NumberRange.IntRange;
+import net.minecraft.advancements.criterion.MinMaxBounds.Ints;
+import net.minecraft.util.TriState;
+import net.minecraft.world.item.ItemStack;
 
 public record StatePredicate (
-        IntRange fermentationRange,
-        IntRange maturationRange,
-        IntRange distillationRange,
+        Ints fermentationRange,
+        Ints maturationRange,
+        Ints distillationRange,
         TriState vinegar
 ) implements Predicate<ItemStack> {
     public static final StatePredicate ANY_DISTILLED = StatePredicate.builder().distilled().build();
@@ -23,8 +23,8 @@ public record StatePredicate (
         StatePredicate VINEGAR = StatePredicate.builder().vinegar().build();
         StatePredicate DISTILLED = StatePredicate.builder().distilled().build();
         StatePredicate MATURED = StatePredicate.builder().matured().build();
-        StatePredicate FERMENTED_1 = StatePredicate.builder().fermentation(IntRange.exactly(1)).build();
-        StatePredicate FERMENTED_2 = StatePredicate.builder().fermentation(IntRange.atLeast(2)).build();
+        StatePredicate FERMENTED_1 = StatePredicate.builder().fermentation(Ints.exactly(1)).build();
+        StatePredicate FERMENTED_2 = StatePredicate.builder().fermentation(Ints.atLeast(2)).build();
     }
 
     @Override
@@ -38,10 +38,10 @@ public record StatePredicate (
     }
 
     public boolean test(int fermentation, int distillation, int maturation, boolean vinegar) {
-        return fermentationRange.test(fermentation)
-                && distillationRange.test(distillation)
-                && maturationRange.test(maturation)
-                && this.vinegar.orElse(vinegar) == vinegar;
+        return fermentationRange.matches(fermentation)
+                && distillationRange.matches(distillation)
+                && maturationRange.matches(maturation)
+                && this.vinegar.toBoolean(vinegar) == vinegar;
     }
 
     public static StatePredicate.Builder builder() {
@@ -49,9 +49,9 @@ public record StatePredicate (
     }
 
     public static class Builder {
-        private IntRange fermentationRange = IntRange.ANY;
-        private IntRange maturationRange = IntRange.ANY;
-        private IntRange distillationRange = IntRange.ANY;
+        private Ints fermentationRange = Ints.ANY;
+        private Ints maturationRange = Ints.ANY;
+        private Ints distillationRange = Ints.ANY;
         private TriState vinegar = TriState.FALSE;
 
         public StatePredicate.Builder vinegar() {
@@ -63,43 +63,43 @@ public record StatePredicate (
             return this;
         }
 
-        public StatePredicate.Builder fermentation(IntRange range) {
+        public StatePredicate.Builder fermentation(Ints range) {
             fermentationRange = range;
             return this;
         }
 
         public StatePredicate.Builder fermented() {
-            return fermentation(IntRange.atLeast(1));
+            return fermentation(Ints.atLeast(1));
         }
 
         public StatePredicate.Builder unfermented() {
-            return fermentation(IntRange.exactly(0));
+            return fermentation(Ints.exactly(0));
         }
 
-        public StatePredicate.Builder maturation(IntRange range) {
+        public StatePredicate.Builder maturation(Ints range) {
             maturationRange = range;
             return this;
         }
 
         public StatePredicate.Builder matured() {
-            return maturation(IntRange.atLeast(1));
+            return maturation(Ints.atLeast(1));
         }
 
         public StatePredicate.Builder unmatured() {
-            return maturation(IntRange.exactly(0));
+            return maturation(Ints.exactly(0));
         }
 
-        public StatePredicate.Builder distillation(IntRange range) {
+        public StatePredicate.Builder distillation(Ints range) {
             distillationRange = range;
             return this;
         }
 
         public StatePredicate.Builder distilled() {
-            return distillation(IntRange.atLeast(1));
+            return distillation(Ints.atLeast(1));
         }
 
         public StatePredicate.Builder undistilled() {
-            return distillation(IntRange.exactly(0));
+            return distillation(Ints.exactly(0));
         }
 
         public StatePredicate build() {

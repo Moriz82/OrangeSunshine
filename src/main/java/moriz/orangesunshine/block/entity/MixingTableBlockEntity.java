@@ -2,153 +2,158 @@ package moriz.orangesunshine.block.entity;
 
 import moriz.orangesunshine.recipe.MixingTableRecipe;
 import moriz.orangesunshine.screen.MixingTableScreenHandler;
+import moriz.orangesunshine.screen.PSScreenHandlers;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
 import java.util.Optional;
 
-public class MixingTableBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory  {
-
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
+public class MixingTableBlockEntity extends SyncedBlockEntity
+        implements ExtendedScreenHandlerFactory<PSScreenHandlers.BlockPosData>, ImplementedInventory {
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
-    protected final PropertyDelegate propertyDelegate;
-    private int progress = 0;
+    private final NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+    protected final ContainerData propertyDelegate = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> progress;
+                case 1 -> maxProgress;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+                case 0 -> progress = value;
+                case 1 -> maxProgress = value;
+                default -> {
+                }
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
+    private int progress;
     private int maxProgress = 72;
 
     public MixingTableBlockEntity(BlockPos pos, BlockState state) {
         super(PSBlockEntities.MIXING_TABLE_BLOCK_ENTITY, pos, state);
-        this.propertyDelegate = new PropertyDelegate() {
-            @Override
-            public int get(int index) {
-                return switch (index) {
-                    case 0 -> MixingTableBlockEntity.this.progress;
-                    case 1 -> MixingTableBlockEntity.this.maxProgress;
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int index, int value) {
-                switch (index) {
-                    case 0 -> MixingTableBlockEntity.this.progress = value;
-                    case 1 -> MixingTableBlockEntity.this.maxProgress = value;
-                }
-            }
-
-            @Override
-            public int size() {
-                return 2;
-            }
-        };
     }
 
     public ItemStack getRenderStack() {
-        if(this.getStack(OUTPUT_SLOT).isEmpty()) {
-            return this.getStack(INPUT_SLOT);
-        } else {
-            return this.getStack(OUTPUT_SLOT);
+        return getItem(OUTPUT_SLOT).isEmpty() ? getItem(INPUT_SLOT) : getItem(OUTPUT_SLOT);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 
     @Override
-    public void markDirty() {
-        world.updateListeners(pos, getCachedState(), getCachedState(), 3);
-        super.markDirty();
+    public PSScreenHandlers.BlockPosData getScreenOpeningData(ServerPlayer player) {
+        return new PSScreenHandlers.BlockPosData(getBlockPos());
     }
 
     @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeBlockPos(this.pos);
+    public Component getDisplayName() {
+        return Component.literal("Mixing Table");
     }
 
     @Override
-    public Text getDisplayName() {
-        return Text.literal("Mixing Table");
-    }
-
-    @Override
-    public DefaultedList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return inventory;
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, inventory);
-        nbt.putInt("mixing_table.progress", progress);
+    protected void writeNbt(CompoundTag compound) {
+        super.writeNbt(compound);
+        compound.store("items", ItemStack.OPTIONAL_CODEC.listOf(), List.copyOf(inventory));
+        compound.putInt("mixing_table.progress", progress);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        Inventories.readNbt(nbt, inventory);
-        progress = nbt.getInt("mixing_table.progress");
+    protected void readNbt(CompoundTag compound) {
+        super.readNbt(compound);
+        List<ItemStack> items = compound.read("items", ItemStack.OPTIONAL_CODEC.listOf()).orElse(List.of());
+        for (int i = 0; i < inventory.size(); i++) {
+            inventory.set(i, i < items.size() ? items.get(i) : ItemStack.EMPTY);
+        }
+        progress = compound.getIntOr("mixing_table.progress", 0);
     }
 
-    @Nullable
     @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new MixingTableScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
+    public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory, Player player) {
+        return new MixingTableScreenHandler(syncId, playerInventory, this, propertyDelegate);
     }
 
-    public void tick(World world, BlockPos pos, BlockState state) {
-        if(world.isClient()) {
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
+    }
+
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide()) {
             return;
         }
 
-        if(isOutputSlotEmptyOrReceivable()) {
-            if(this.hasRecipe()) {
-                this.increaseCraftProgress();
-                markDirty(world, pos, state);
+        if (isOutputSlotEmptyOrReceivable()) {
+            if (hasRecipe(level)) {
+                increaseCraftProgress();
+                setChanged();
 
-                if(hasCraftingFinished()) {
-                    this.craftItem();
-                    this.resetProgress();
+                if (hasCraftingFinished()) {
+                    craftItem(level);
+                    resetProgress();
                 }
             } else {
-                this.resetProgress();
+                resetProgress();
             }
         } else {
-            this.resetProgress();
-            markDirty(world, pos, state);
+            resetProgress();
+            setChanged();
         }
     }
 
     private void resetProgress() {
-        this.progress = 0;
+        progress = 0;
     }
 
-    private void craftItem() {
-        Optional<RecipeEntry<MixingTableRecipe>> recipe = getCurrentRecipe();
+    private void craftItem(Level level) {
+        Optional<RecipeHolder<MixingTableRecipe>> recipe = getCurrentRecipe(level);
+        if (recipe.isEmpty()) {
+            return;
+        }
 
-        this.removeStack(INPUT_SLOT, 1);
-
-        this.setStack(OUTPUT_SLOT, new ItemStack(recipe.get().value().getResult(null).getItem(),
-                getStack(OUTPUT_SLOT).getCount() + recipe.get().value().getResult(null).getCount()));
+        ItemStack result = recipe.get().value().assemble(new SingleRecipeInput(getItem(INPUT_SLOT)), level.registryAccess());
+        removeItem(INPUT_SLOT, 1);
+        setItem(OUTPUT_SLOT, result.copyWithCount(getItem(OUTPUT_SLOT).getCount() + result.getCount()));
     }
 
     private boolean hasCraftingFinished() {
@@ -159,42 +164,31 @@ public class MixingTableBlockEntity extends BlockEntity implements ExtendedScree
         progress++;
     }
 
-    private boolean hasRecipe() {
-        Optional<RecipeEntry<MixingTableRecipe>> recipe = getCurrentRecipe();
-
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(recipe.get().value().getResult(null))
-                && canInsertItemIntoOutputSlot(recipe.get().value().getResult(null).getItem());
-    }
-
-    private Optional<RecipeEntry<MixingTableRecipe>> getCurrentRecipe() {
-        SimpleInventory inv = new SimpleInventory(this.size());
-        for(int i = 0; i < this.size(); i++) {
-            inv.setStack(i, this.getStack(i));
+    private boolean hasRecipe(Level level) {
+        Optional<RecipeHolder<MixingTableRecipe>> recipe = getCurrentRecipe(level);
+        if (recipe.isEmpty()) {
+            return false;
         }
 
-        return getWorld().getRecipeManager().getFirstMatch(MixingTableRecipe.Type.INSTANCE, inv, getWorld());
+        ItemStack result = recipe.get().value().assemble(new SingleRecipeInput(getItem(INPUT_SLOT)), level.registryAccess());
+        return canInsertAmountIntoOutputSlot(result) && canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    private Optional<RecipeHolder<MixingTableRecipe>> getCurrentRecipe(Level level) {
+        return level.getServer().getRecipeManager().getRecipeFor(MixingTableRecipe.Type.INSTANCE,
+                new SingleRecipeInput(getItem(INPUT_SLOT)), level);
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.getStack(OUTPUT_SLOT).getItem() == item || this.getStack(OUTPUT_SLOT).isEmpty();
+        return getItem(OUTPUT_SLOT).isEmpty() || getItem(OUTPUT_SLOT).is(item);
     }
 
     private boolean canInsertAmountIntoOutputSlot(ItemStack result) {
-        return this.getStack(OUTPUT_SLOT).getCount() + result.getCount() <= getStack(OUTPUT_SLOT).getMaxCount();
+        return getItem(OUTPUT_SLOT).getCount() + result.getCount() <= getItem(OUTPUT_SLOT).getMaxStackSize();
     }
 
     private boolean isOutputSlotEmptyOrReceivable() {
-        return this.getStack(OUTPUT_SLOT).isEmpty() || this.getStack(OUTPUT_SLOT).getCount() < this.getStack(OUTPUT_SLOT).getMaxCount();
-    }
-
-    @Nullable
-    @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
-    }
-
-    @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+        return getItem(OUTPUT_SLOT).isEmpty()
+                || getItem(OUTPUT_SLOT).getCount() < getItem(OUTPUT_SLOT).getMaxStackSize();
     }
 }

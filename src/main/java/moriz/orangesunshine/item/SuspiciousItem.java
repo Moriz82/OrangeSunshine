@@ -1,26 +1,25 @@
 package moriz.orangesunshine.item;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import moriz.orangesunshine.OrangeSunshine;
-import org.jetbrains.annotations.Nullable;
-
 import moriz.orangesunshine.entity.drug.DrugProperties;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.Nullable;
 
 public class SuspiciousItem extends Item {
 
-    private final ItemConvertible hallucinatedFormSupplier;
+    private final ItemLike hallucinatedFormSupplier;
 
-    public static ItemConvertible createForms(ItemConvertible... items) {
-        Random rng = Random.create();
+    public static ItemLike createForms(ItemLike... items) {
+        RandomSource rng = RandomSource.create();
         return () -> {
             return items[rng.nextInt(items.length)].asItem();
         };
@@ -29,7 +28,7 @@ public class SuspiciousItem extends Item {
     @Nullable
     private Item chosenItem;
 
-    public SuspiciousItem(Settings settings, ItemConvertible hallucinatedFormSupplier) {
+    public SuspiciousItem(Item.Properties settings, ItemLike hallucinatedFormSupplier) {
         super(settings);
         this.hallucinatedFormSupplier = hallucinatedFormSupplier;
     }
@@ -46,19 +45,13 @@ public class SuspiciousItem extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        getHallucinatedItem().ifPresent(item -> {
-            item.appendTooltip(item.getDefaultStack(), world, tooltip, context);
-        });
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
+        getHallucinatedItem().ifPresent(item ->
+                item.getDefaultInstance().addDetailsToTooltip(context, display, null, flag, consumer));
     }
 
     @Override
-    public Text getName() {
-        return getHallucinatedItem().map(Item::getName).orElseGet(super::getName);
-    }
-
-    @Override
-    public Text getName(ItemStack stack) {
-        return getHallucinatedItem().map(i -> i.getName(stack)).orElseGet(() -> super.getName(stack));
+    public Component getName(ItemStack stack) {
+        return getHallucinatedItem().map(i -> i.getName(i.getDefaultInstance())).orElseGet(() -> super.getName(stack));
     }
 }

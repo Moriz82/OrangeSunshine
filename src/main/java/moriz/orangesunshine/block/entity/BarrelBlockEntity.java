@@ -5,15 +5,15 @@
 
 package moriz.orangesunshine.block.entity;
 
-import moriz.orangesunshine.fluid.*;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.fluid.Processable;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class BarrelBlockEntity extends FluidProcessingBlockEntity {
 
@@ -27,8 +27,8 @@ public class BarrelBlockEntity extends FluidProcessingBlockEntity {
     }
 
     @Override
-    public void tick(ServerWorld world) {
-        super.tick(world);
+    public void tick(ServerLevel level) {
+        super.tick(level);
         tickAnimations();
     }
 
@@ -37,30 +37,30 @@ public class BarrelBlockEntity extends FluidProcessingBlockEntity {
             timeLeftTapOpen--;
         }
 
-        if (timeLeftTapOpen > 0 && tapRotation < MathHelper.HALF_PI) {
-            tapRotation += MathHelper.PI * 0.1F;
+        if (timeLeftTapOpen > 0 && tapRotation < Mth.HALF_PI) {
+            tapRotation += Mth.PI * 0.1F;
         }
 
         if (timeLeftTapOpen == 0 && tapRotation > 0) {
-            tapRotation -= MathHelper.PI * 0.1F;
+            tapRotation -= Mth.PI * 0.1F;
         }
 
-        if (timeLeftTapOpen > 0 && timeLeftTapOpen % 5 == 0) {
-            world.playSound(null, getPos(), SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 0.025F, 0.5F);
+        if (timeLeftTapOpen > 0 && timeLeftTapOpen % 5 == 0 && getLevel() != null) {
+            getLevel().playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.025F, 0.5F);
         }
     }
 
     @Override
-    public void writeNbt(NbtCompound compound) {
+    protected void writeNbt(CompoundTag compound) {
         super.writeNbt(compound);
         compound.putInt("timeLeftTapOpen", timeLeftTapOpen);
         compound.putFloat("tapRotation", tapRotation);
     }
 
     @Override
-    public void readNbt(NbtCompound compound) {
+    protected void readNbt(CompoundTag compound) {
         super.readNbt(compound);
-        timeLeftTapOpen = compound.getInt("timeLeftTapOpen");
-        tapRotation = compound.getFloat("tapRotation");
+        timeLeftTapOpen = compound.getIntOr("timeLeftTapOpen", 0);
+        tapRotation = compound.getFloatOr("tapRotation", 0);
     }
 }

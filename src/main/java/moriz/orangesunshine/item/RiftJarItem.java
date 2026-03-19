@@ -5,54 +5,58 @@
 
 package moriz.orangesunshine.item;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import moriz.orangesunshine.block.entity.RiftJarBlockEntity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.function.Consumer;
 
 public class RiftJarItem extends BlockItem {
+    public RiftJarItem(Block block, Item.Properties settings) {
+        super(block, settings);
+    }
+
     public static ItemStack createFilledRiftJar(float riftFraction, Item item) {
-        ItemStack stack = item.getDefaultStack();
+        ItemStack stack = item.getDefaultInstance();
         if (riftFraction > 0) {
-            stack.getOrCreateNbt().putFloat("riftFraction", riftFraction);
+            CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.putFloat("riftFraction", riftFraction));
         }
         return stack;
     }
 
-    public RiftJarItem(Block block, Settings settings) {
-        super(block, settings);
-    }
-
     @Override
-    protected boolean postPlacement(BlockPos pos, World world, @Nullable PlayerEntity player, ItemStack stack, BlockState state) {
-        BlockEntity be = world.getBlockEntity(pos);
-        if (be instanceof RiftJarBlockEntity jar) {
+    protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player, ItemStack stack, BlockState state) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof RiftJarBlockEntity jar) {
             jar.currentRiftFraction = getRiftFraction(stack);
         }
-        return super.postPlacement(pos, world, player, stack, state);
+        return super.updateCustomBlockEntityTag(pos, level, player, stack, state);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, consumer, flag);
         float fillAmount = getRiftFraction(stack);
-        tooltip.add(Text.translatable(getTranslationKey() + "." + getUnlocalizedFractionName(fillAmount)).formatted(Formatting.GRAY));
+        consumer.accept(Component.translatable(getDescriptionId() + "." + getUnlocalizedFractionName(fillAmount)).withStyle(ChatFormatting.GRAY));
     }
 
-    public float getRiftFraction(ItemStack itemStack) {
-        return itemStack.hasNbt() ? itemStack.getNbt().getFloat("riftFraction") : 0;
+    public float getRiftFraction(ItemStack stack) {
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        return tag.getFloatOr("riftFraction", 0);
     }
 
     private static String getUnlocalizedFractionName(float fraction) {

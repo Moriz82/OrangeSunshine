@@ -20,12 +20,8 @@ import moriz.orangesunshine.particle.PSParticles;
 import moriz.orangesunshine.recipe.PSRecipes;
 import moriz.orangesunshine.screen.PSScreenHandlers;
 import moriz.orangesunshine.world.gen.PSWorldGen;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.HitResult;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -33,8 +29,9 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class OrangeSunshine implements ModInitializer {
+public class OrangeSunshine {
     public static final Logger LOGGER = LogManager.getLogger();
+    private static boolean initialized;
 
     private static final Supplier<JsonConfig.Loader<PSConfig>> CONFIG_LOADER = JsonConfig.create("orangesunshine.json", PSConfig::new);
 
@@ -58,21 +55,14 @@ public class OrangeSunshine implements ModInitializer {
     }
 
     public static Identifier id(String name) {
-        return new Identifier("orangesunshine", name);
+        return Identifier.fromNamespaceAndPath("orangesunshine", name);
     }
 
-    @Override
-    public void onInitialize() {
-        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
-            DrugProperties.of(player).sendCapabilities();
-        });
-        ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
-            DrugProperties.of(newPlayer).copyFrom(DrugProperties.of(oldPlayer), alive);
-        });
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            DrugProperties.of(handler.player).sendCapabilities();
-        });
-
+    public static void init() {
+        if (initialized) {
+            return;
+        }
+        initialized = true;
         PSBlocks.bootstrap();
         PSItems.bootstrap();
         PSTags.bootstrap();

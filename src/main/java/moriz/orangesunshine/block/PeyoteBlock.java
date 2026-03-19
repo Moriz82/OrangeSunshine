@@ -7,41 +7,46 @@ package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
 
-import moriz.orangesunshine.block.entity.PSBlockEntities;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
+import moriz.orangesunshine.block.entity.PeyoteBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PeyoteBlock extends SucculentPlantBlock implements BlockEntityProvider {
-    public static final MapCodec<PeyoteBlock> CODEC = createCodec(PeyoteBlock::new);
-    public static final IntProperty AGE = Properties.AGE_3;
-    public static final int MAX_AGE = Properties.AGE_3_MAX;
+public class PeyoteBlock extends SucculentPlantBlock implements EntityBlock {
+    public static final MapCodec<PeyoteBlock> CODEC = simpleCodec(PeyoteBlock::new);
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
+    public static final int MAX_AGE = 3;
     private static final VoxelShape[] SHAPES = {
-            createCuboidShape(6, 0, 6, 10, 4, 10),
-            createCuboidShape(5, 0, 5, 11, 4, 11),
-            createCuboidShape(4, 0, 4, 12, 4, 12),
-            createCuboidShape(3, 0, 3, 13, 4, 13)
+            Block.box(6, 0, 6, 10, 4, 10),
+            Block.box(5, 0, 5, 11, 4, 11),
+            Block.box(4, 0, 4, 12, 4, 12),
+            Block.box(3, 0, 3, 13, 4, 13)
     };
 
-    public PeyoteBlock(Settings settings) {
+    public PeyoteBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends PeyoteBlock> getCodec() {
-        return CODEC;
+    @SuppressWarnings("unchecked")
+    public MapCodec<BushBlock> codec() {
+        return (MapCodec<BushBlock>)(MapCodec<?>)CODEC;
     }
 
     @Override
-    public VoxelShape[] getShapes() {
+    protected VoxelShape[] getShapes() {
         return SHAPES;
     }
 
     @Override
-    protected IntProperty getAgeProperty() {
+    protected IntegerProperty getAgeProperty() {
         return AGE;
     }
 
@@ -52,11 +57,11 @@ public class PeyoteBlock extends SucculentPlantBlock implements BlockEntityProvi
 
     @Override
     protected int getGrowthRate(BlockState state) {
-        return state.get(getAgeProperty()) < getMaxAge() ? 20 : 120;
+        return state.getValue(getAgeProperty()) < getMaxAge() ? 20 : 120;
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return PSBlockEntities.PEYOTE.instantiate(pos, state);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new PeyoteBlockEntity(pos, state);
     }
 }

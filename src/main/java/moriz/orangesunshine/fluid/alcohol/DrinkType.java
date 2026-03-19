@@ -3,8 +3,8 @@ package moriz.orangesunshine.fluid.alcohol;
 import java.util.Optional;
 
 import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public record DrinkType(String drinkName, String symbolName, Optional<String> variant, Optional<DrugInfluence> extraDrug, FluidAppearance appearance) {
     public static final DrinkType TEA = of("tea").withAppearance(FluidAppearance.TEA);
@@ -62,11 +62,11 @@ public record DrinkType(String drinkName, String symbolName, Optional<String> va
         return variant.map(v -> v + drinkName).orElse(drinkName);
     }
 
-    public Text getName(Text fluidName) {
-        Text name = Text.translatable("orangesunshine.alcohol.drink." + drinkName, fluidName);
+    public Component getName(Component fluidName) {
+        Component name = Component.translatable("orangesunshine.alcohol.drink." + drinkName, fluidName);
 
         if (variant.isPresent()) {
-            return Text.translatable("orangesunshine.alcohol.drink.variant." + variant.get(), name);
+            return Component.translatable("orangesunshine.alcohol.drink.variant." + variant.get(), name);
         }
         return name;
     }

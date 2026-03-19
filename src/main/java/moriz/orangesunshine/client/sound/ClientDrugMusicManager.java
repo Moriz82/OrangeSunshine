@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import moriz.orangesunshine.client.OrangeSunshineClient;
 import moriz.orangesunshine.entity.drug.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.sound.WeightedSoundSet;
 import net.minecraft.registry.Registries;

@@ -19,12 +19,12 @@ import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import moriz.orangesunshine.client.OrangeSunshineClient;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.SimpleFramebuffer;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 /**
  * Created by lukas on 21.02.14.
@@ -52,7 +52,7 @@ public class MotionBlurScreenEffect implements ScreenEffect {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
 
         if (motionBlur > 0) {
             if (textures != null && textures.sizeChanged(screenWidth, screenHeight)) {

@@ -6,26 +6,26 @@
 package moriz.orangesunshine.screen;
 
 import moriz.orangesunshine.fluid.container.Resovoir;
-import org.jetbrains.annotations.Nullable;
 
 import moriz.orangesunshine.block.entity.FlaskBlockEntity;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.*;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Created by lukas on 26.10.14.
  * Updated by Sollace on 3 Jan 2023
  */
-public class FluidContraptionScreenHandler<T extends FlaskBlockEntity> extends ScreenHandler {
+public class FluidContraptionScreenHandler<T extends FlaskBlockEntity> extends AbstractContainerMenu {
 
     static final int INVENTORY_START = 2;
-    static final int INVENTORY_END = 28;
-    static final int HOTBAR_START = INVENTORY_END + 1;
+    static final int INVENTORY_END = 29;
+    static final int HOTBAR_START = INVENTORY_END;
     static final int HOTBAR_END = HOTBAR_START + 9;
 
     private final Resovoir tank;
@@ -33,11 +33,11 @@ public class FluidContraptionScreenHandler<T extends FlaskBlockEntity> extends S
     private final T blockEntity;
 
     @SuppressWarnings("unchecked")
-    public FluidContraptionScreenHandler(ScreenHandlerType<? extends FluidContraptionScreenHandler<T>> type, int syncId, PlayerInventory inventory, PacketByteBuf buffer) {
-        this(type, syncId, inventory, (T)inventory.player.getWorld().getBlockEntity(buffer.readBlockPos()), buffer.readEnumConstant(Direction.class));
+    public FluidContraptionScreenHandler(MenuType<? extends FluidContraptionScreenHandler<T>> type, int syncId, Inventory inventory, PSScreenHandlers.BlockSideData data) {
+        this(type, syncId, inventory, (T)inventory.player.level().getBlockEntity(data.pos()), data.direction());
     }
 
-    public FluidContraptionScreenHandler(ScreenHandlerType<? extends FluidContraptionScreenHandler<T>> type, int syncId, PlayerInventory inventory, T blockEntity, Direction direction) {
+    public FluidContraptionScreenHandler(MenuType<? extends FluidContraptionScreenHandler<T>> type, int syncId, Inventory inventory, T blockEntity, Direction direction) {
         super(type, syncId);
         this.tank = blockEntity.getTank(direction);
         this.blockEntity = blockEntity;
@@ -54,7 +54,7 @@ public class FluidContraptionScreenHandler<T extends FlaskBlockEntity> extends S
             addSlot(new Slot(inventory, x, 8 + x * 18, 142));
         }
 
-        addProperties(blockEntity.propertyDelegate);
+        addDataSlots(blockEntity.propertyDelegate);
     }
 
     public Resovoir getTank() {
@@ -66,98 +66,85 @@ public class FluidContraptionScreenHandler<T extends FlaskBlockEntity> extends S
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return tank.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return tank.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int index) {
-        @Nullable
+    public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
 
-        if (slot == null || !slot.hasStack()) {
+        if (!slot.hasItem()) {
             return ItemStack.EMPTY;
         }
 
-        ItemStack stack = slot.getStack();
+        ItemStack stack = slot.getItem();
         ItemStack originalStack = stack.copy();
 
         if (index < INVENTORY_START) {
-            if (!insertItem(stack, HOTBAR_START, HOTBAR_END, true)
-                    && !insertItem(stack, INVENTORY_START, INVENTORY_END, false)) {
+            if (!moveItemStackTo(stack, HOTBAR_START, HOTBAR_END, true)
+                    && !moveItemStackTo(stack, INVENTORY_START, HOTBAR_END, false)) {
                 return ItemStack.EMPTY;
             }
-            slot.onQuickTransfer(stack, originalStack);
-        } if (index < HOTBAR_START) {
+            slot.onQuickCraft(stack, originalStack);
+        } else if (index < HOTBAR_START) {
             if (!insertStack(stack, 0) && !insertStack(stack, 1)
-                    && !insertItem(stack, HOTBAR_START, HOTBAR_END, false)) {
+                    && !moveItemStackTo(stack, HOTBAR_START, HOTBAR_END, false)) {
                 return ItemStack.EMPTY;
             }
-            slot.onQuickTransfer(stack, originalStack);
+            slot.onQuickCraft(stack, originalStack);
         } else {
             if (!insertStack(stack, 0)
                     && !insertStack(stack, 1)
-                    && !insertItem(stack, INVENTORY_START, INVENTORY_END, false)
-                    && !insertItem(stack, HOTBAR_START, Math.min(index - 1, HOTBAR_END), false)
-                    && !insertItem(stack, Math.max(index + 1, HOTBAR_START), HOTBAR_END, false)) {
+                    && !moveItemStackTo(stack, INVENTORY_START, INVENTORY_END, false)
+                    && !moveItemStackTo(stack, HOTBAR_START, Math.min(index, HOTBAR_END), false)
+                    && !moveItemStackTo(stack, Math.max(index + 1, HOTBAR_START), HOTBAR_END, false)) {
                 return ItemStack.EMPTY;
             }
-            slot.onQuickTransfer(stack, originalStack);
+            slot.onQuickCraft(stack, originalStack);
         }
 
         if (stack.isEmpty()) {
-            slot.setStack(ItemStack.EMPTY);
+            slot.set(ItemStack.EMPTY);
         } else {
-            slot.markDirty();
+            slot.setChanged();
         }
 
         if (stack.getCount() == originalStack.getCount()) {
             return ItemStack.EMPTY;
         }
 
-        slot.onTakeItem(player, stack);
+        slot.onTake(player, stack);
 
         return originalStack;
     }
 
     private boolean insertStack(ItemStack stack, int slotIndex) {
-        @Nullable
         Slot slot = slots.get(slotIndex);
-        if (slot == null) {
-            return false;
-        }
-        ItemStack currentStack = slot.getStack();
-        if (!currentStack.isEmpty() || !slot.canInsert(stack)) {
+        ItemStack currentStack = slot.getItem();
+        if (!currentStack.isEmpty() || !slot.mayPlace(stack)) {
             return false;
         }
 
-        slot.setStack(stack.split(Math.min(stack.getCount(), slot.getMaxItemCount(stack))));
-        slot.markDirty();
+        slot.set(stack.split(Math.min(stack.getCount(), slot.getMaxStackSize(stack))));
+        slot.setChanged();
         return true;
     }
 
     final class InputSlot extends Slot {
-        public InputSlot(Inventory inventory, int slot, int x, int y) {
+        public InputSlot(Container inventory, int slot, int x, int y) {
             super(inventory, slot, x, y);
         }
 
         @Override
-        public ItemStack takeStack(int amount) {
-            ItemStack stack = super.takeStack(amount);
-            blockEntity.onContentsExternallyChanged(getIndex());
-            return stack;
+        public void setChanged() {
+            super.setChanged();
+            blockEntity.onContentsExternallyChanged(getContainerSlot());
         }
 
         @Override
-        public ItemStack insertStack(ItemStack stack, int count) {
-            ItemStack removed = super.insertStack(stack, count);
-            blockEntity.onContentsExternallyChanged(getIndex());
-            return removed;
-        }
-
-        @Override
-        public boolean canInsert(ItemStack stack) {
-            return inventory.isValid(getIndex(), stack);
+        public boolean mayPlace(ItemStack stack) {
+            return container.canPlaceItem(getContainerSlot(), stack);
         }
     }
 

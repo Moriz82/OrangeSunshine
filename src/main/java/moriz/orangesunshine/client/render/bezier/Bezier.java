@@ -2,7 +2,7 @@ package moriz.orangesunshine.client.render.bezier;
 
 import org.joml.Vector3d;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public interface Bezier {
     static Bezier spiral(double horizontalScale, double verticalScale, double spirals, double maxHeight, double fontSize, double textScale) {
@@ -36,7 +36,7 @@ public interface Bezier {
                 for (int nodeIndex = 0; nodeIndex < Path.UNIT_VECTORS.length; nodeIndex++) {
                     double h1 = h0 + (radius / spirals) * 0.25 * nodeIndex;
                     if (h1 <= radius) {
-                        double d = MathHelper.cos((float) (h1 / radius - 0.5) * MathHelper.PI);
+                        double d = Mth.cos((float)(h1 / radius - 0.5) * Mth.PI);
                         consumer.accept(
                                 Path.UNIT_VECTORS[nodeIndex][0].mul(d, h1, d, new Vector3d()).add(0, centerYShift, 0),
                                 Path.UNIT_VECTORS[nodeIndex][1].mul(0.5, new Vector3d()).mul(d, 0, d),

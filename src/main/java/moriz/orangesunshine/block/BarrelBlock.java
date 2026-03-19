@@ -7,132 +7,138 @@ package moriz.orangesunshine.block;
 
 import java.util.Map;
 
+import com.mojang.serialization.MapCodec;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import org.jetbrains.annotations.Nullable;
-
-import com.mojang.serialization.MapCodec;
 import moriz.orangesunshine.block.entity.BarrelBlockEntity;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
 import moriz.orangesunshine.fluid.*;
 import moriz.orangesunshine.screen.FluidContraptionScreenHandler;
 import moriz.orangesunshine.screen.PSScreenHandlers;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BarrelBlock extends BlockWithFluid<BarrelBlockEntity> {
-    public static final MapCodec<BarrelBlock> CODEC = createCodec(BarrelBlock::new);
+    public static final MapCodec<BarrelBlock> CODEC = simpleCodec(BarrelBlock::new);
     public static final int MAX_TAP_AMOUNT = FluidVolumes.BUCKET;
-    public static final DirectionProperty FACING = Properties.HOPPER_FACING;
-    public static final BooleanProperty TAPPED = BooleanProperty.of("tapped");
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING_HOPPER;
+    public static final BooleanProperty TAPPED = BooleanProperty.create("tapped");
 
-    private static final Map<Axis, VoxelShape> STANDING_SHAPES = Map.of(
-        Axis.X, VoxelShapes.union(
-            createCuboidShape(0, 5, 2, 16, 13, 14),
-            createCuboidShape(0, 3, 4, 16, 15, 12)
+    private static final Map<Direction.Axis, VoxelShape> STANDING_SHAPES = Map.of(
+        Direction.Axis.X, Shapes.or(
+            net.minecraft.world.level.block.Block.box(0, 5, 2, 16, 13, 14),
+            net.minecraft.world.level.block.Block.box(0, 3, 4, 16, 15, 12)
         ),
-        Axis.Y, VoxelShapes.union(
-            createCuboidShape(2, 0, 4, 14, 16, 12),
-            createCuboidShape(4, 0, 2, 12, 16, 14)
+        Direction.Axis.Y, Shapes.or(
+            net.minecraft.world.level.block.Block.box(2, 0, 4, 14, 16, 12),
+            net.minecraft.world.level.block.Block.box(4, 0, 2, 12, 16, 14)
         ),
-        Axis.Z, VoxelShapes.union(
-            createCuboidShape(2, 5, 0, 14, 13, 16),
-            createCuboidShape(4, 3, 0, 12, 15, 16)
+        Direction.Axis.Z, Shapes.or(
+            net.minecraft.world.level.block.Block.box(2, 5, 0, 14, 13, 16),
+            net.minecraft.world.level.block.Block.box(4, 3, 0, 12, 15, 16)
         )
     );
 
-    public BarrelBlock(Settings settings) {
-        super(settings.nonOpaque());
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(TAPPED, true));
+    public BarrelBlock(BlockBehaviour.Properties settings) {
+        super(settings.noOcclusion());
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(TAPPED, true));
     }
 
     @Override
-    protected MapCodec<? extends BarrelBlock> getCodec() {
+    public MapCodec<? extends BarrelBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(FACING, TAPPED);
     }
 
     @Override
-    @Deprecated
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.INVISIBLE;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return STANDING_SHAPES.get(state.get(FACING).getAxis());
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return STANDING_SHAPES.get(state.getValue(FACING).getAxis());
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(FACING)));
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction side = ctx.getPlayerLookDirection().getOpposite();
-        return getDefaultState().with(FACING, side.getAxis() == Axis.Y ? Direction.DOWN : side);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Direction side = ctx.getNearestLookingDirection().getOpposite();
+        return defaultBlockState().setValue(FACING, side.getAxis() == Direction.Axis.Y ? Direction.DOWN : side);
     }
 
     @Override
-    protected ActionResult onInteract(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BarrelBlockEntity blockEntity) {
-        if (!state.get(TAPPED) || state.get(FACING).getAxis() == Axis.Y) {
-            return ActionResult.FAIL;
+    protected InteractionResult onInteract(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BarrelBlockEntity blockEntity) {
+        if (!state.getValue(TAPPED) || state.getValue(FACING).getAxis() == Direction.Axis.Y) {
+            return InteractionResult.FAIL;
         }
 
-        ItemStack stack = player.getStackInHand(hand);
+        ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() instanceof FluidContainer container) {
 
             if (container.getLevel(stack) < container.getMaxCapacity(stack)) {
 
                 Resovoir tank = blockEntity.getTank(Direction.DOWN);
                 if (tank.getLevel() > 0 && tank.getFluidType().isSuitableContainer(container)) {
-                    if (!world.isClient) {
+                    if (!world.isClientSide()) {
                         if (stack.getCount() > 1) {
-                            player.getInventory().offerOrDrop(tank.drain(MAX_TAP_AMOUNT, stack.split(1)));
+                            player.getInventory().placeItemBackInInventory(tank.drain(MAX_TAP_AMOUNT, stack.split(1)));
                         } else {
-                            player.setStackInHand(hand, tank.drain(MAX_TAP_AMOUNT, stack.split(1)));
+                            player.setItemInHand(hand, tank.drain(MAX_TAP_AMOUNT, stack.split(1)));
                         }
 
                         blockEntity.timeLeftTapOpen = 20;
                         blockEntity.markForUpdate();
+                        return InteractionResult.SUCCESS_SERVER;
                     }
 
-                    return ActionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
 
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -141,13 +147,13 @@ public class BarrelBlock extends BlockWithFluid<BarrelBlockEntity> {
     }
 
     @Override
-    protected ScreenHandlerType<FluidContraptionScreenHandler<BarrelBlockEntity>> getScreenHandlerType() {
+    protected MenuType<FluidContraptionScreenHandler<BarrelBlockEntity>> getScreenHandlerType() {
         return PSScreenHandlers.BARREL;
     }
 
     @Override
     @Nullable
-    public <Q extends BlockEntity> BlockEntityTicker<Q> getTicker(World world, BlockState state, BlockEntityType<Q> type) {
-        return world.isClient ? validateTicker(type, getBlockEntityType(), (w, p, s, entity) -> entity.tickAnimations()) : super.getTicker(world, state, type);
+    public <Q extends BlockEntity> BlockEntityTicker<Q> getTicker(Level world, BlockState state, BlockEntityType<Q> type) {
+        return world.isClientSide() ? createTickerHelper(type, getBlockEntityType(), (w, p, s, entity) -> entity.tickAnimations()) : super.getTicker(world, state, type);
     }
 }

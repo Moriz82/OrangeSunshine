@@ -2,7 +2,7 @@ package moriz.orangesunshine.fluid.alcohol;
 
 import java.util.Locale;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public enum Maturity {
     YOUNG,
@@ -18,9 +18,9 @@ public enum Maturity {
         return STAGES[(maturation / (STAGES.length - 1)) % STAGES.length];
     }
 
-    private final Text name = Text.translatable("orangesunshine.alcohol.maturity." + name().toLowerCase(Locale.ROOT));
+    private final Component name = Component.translatable("orangesunshine.alcohol.maturity." + name().toLowerCase(Locale.ROOT));
 
-    public Text getName() {
+    public Component getName() {
         return name;
     }
 }

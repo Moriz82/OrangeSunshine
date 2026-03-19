@@ -5,13 +5,13 @@
 
 package moriz.orangesunshine.client.render.blocks;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.RotationAxis;
 
 import moriz.orangesunshine.block.entity.DryingTableBlockEntity;
@@ -29,7 +29,7 @@ public class DryingTableBlockEntityRenderer implements BlockEntityRenderer<Dryin
     }
 
     @Override
-    public void render(DryingTableBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(DryingTableBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         matrices.push();
         matrices.translate(0, 0.75f, 0);
 

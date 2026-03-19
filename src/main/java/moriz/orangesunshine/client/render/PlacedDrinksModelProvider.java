@@ -21,27 +21,27 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.Contex
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.minecraft.block.StainedGlassPaneBlock;
 import net.minecraft.block.TransparentBlock;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypes;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeableItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 
 public class PlacedDrinksModelProvider
         implements PreparableModelLoadingPlugin<Map<Identifier, PlacedDrinksModelProvider.Entry>>,
@@ -106,7 +106,7 @@ public class PlacedDrinksModelProvider
         return Optional.ofNullable(entries.get(Registries.ITEM.getId(item)));
     }
 
-    public void renderDrink(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void renderDrink(ItemStack stack, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
 
         int dyeColor = stack.getItem() instanceof DyeableItem dyeable ? dyeable.getColor(stack) : 0xFFFFFF;
 
@@ -124,7 +124,7 @@ public class PlacedDrinksModelProvider
         }
     }
 
-    public void renderDrinkModel(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay, int color, ModelIdentifier modelId) {
+    public void renderDrinkModel(ItemStack stack, PoseStack matrices, MultiBufferSource vertices, int light, int overlay, int color, ModelIdentifier modelId) {
         ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
 
         BakedModel model = renderer.getModels().getModelManager().getModel(modelId);
@@ -135,7 +135,7 @@ public class PlacedDrinksModelProvider
         renderBakedItemModel(model, matrices, vertices.getBuffer(renderLayer), light, overlay, color);
     }
 
-    private void renderBakedItemModel(BakedModel model, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+    private void renderBakedItemModel(BakedModel model, PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         for (Direction direction : Direction.values()) {
             RNG.setSeed(SEED);
             renderBakedItemQuads(matrices, vertices, model.getQuads(null, direction, RNG), light, overlay, color);
@@ -144,8 +144,8 @@ public class PlacedDrinksModelProvider
         renderBakedItemQuads(matrices, vertices, model.getQuads(null, null, RNG), light, overlay, color);
     }
 
-    private void renderBakedItemQuads(MatrixStack matrices, VertexConsumer vertices, List<BakedQuad> quads, int light, int overlay, int color) {
-        MatrixStack.Entry entry = matrices.peek();
+    private void renderBakedItemQuads(PoseStack matrices, VertexConsumer vertices, List<BakedQuad> quads, int light, int overlay, int color) {
+        PoseStack.Entry entry = matrices.peek();
         for (BakedQuad bakedQuad : quads) {
             vertices.quad(entry, bakedQuad, MathUtils.r(color), MathUtils.g(color), MathUtils.b(color), light, overlay);
         }

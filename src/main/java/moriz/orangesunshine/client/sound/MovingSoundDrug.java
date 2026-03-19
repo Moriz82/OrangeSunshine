@@ -9,8 +9,8 @@ import moriz.orangesunshine.util.MathUtils;
 import net.minecraft.client.sound.MovingSoundInstance;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 22.11.14.
@@ -38,7 +38,7 @@ public class MovingSoundDrug extends MovingSoundInstance {
     public void tick() {
         volume = getTargetVolume();
 
-        if (MathHelper.approximatelyEquals(volume, 0) || properties.asEntity().isRemoved()) {
+        if (Mth.approximatelyEquals(volume, 0) || properties.asEntity().isRemoved()) {
             setDone();
             return;
         }
@@ -57,6 +57,6 @@ public class MovingSoundDrug extends MovingSoundInstance {
         if (activeValue <= ClientDrugMusicManager.PLAY_THRESHOLD) {
             return 0;
         }
-        return MathUtils.inverseLerp(MathHelper.clamp((float)activeValue, 0, 1), 0, 0.4F);
+        return MathUtils.inverseLerp(Mth.clamp((float)activeValue, 0, 1), 0, 0.4F);
     }
 }

@@ -10,10 +10,10 @@ import moriz.orangesunshine.advancement.PSCriteria;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 01.11.14.
@@ -43,26 +43,26 @@ public class AlcoholDrug extends SimpleDrug {
         super.update(drugProperties);
 
         if (getActiveValue() > 0) {
-            PlayerEntity entity = drugProperties.asEntity();
-            Random random = entity.getRandom();
+            Player entity = drugProperties.asEntity();
+            RandomSource random = entity.getRandom();
 
             double activeValue = getActiveValue();
 
-            if ((entity.age % 20) == 0) {
+            if ((entity.tickCount % 20) == 0) {
                 double damageChance = (activeValue - 0.9F) * 2;
 
-                if (entity.age % 20 == 0 && random.nextFloat() < damageChance) {
-                    entity.damage(PSDamageTypes.create(entity.getWorld(), PSDamageTypes.ALCOHOL_POSIONING), (int) ((activeValue - 0.9f) * 50.0f + 4.0f));
+                if (entity.tickCount % 20 == 0 && random.nextFloat() < damageChance) {
+                    entity.hurt(PSDamageTypes.create(entity.level(), PSDamageTypes.ALCOHOL_POSIONING), (int)((activeValue - 0.9f) * 50.0f + 4.0f));
                 }
             }
 
             double motionEffect = Math.min(activeValue, 0.8);
 
-            rotateEntityPitch(entity, MathHelper.sin(entity.age / 600F * (float) Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
-            rotateEntityYaw(entity, MathHelper.cos(entity.age / 500F * (float) Math.PI) / 1.3F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityPitch(entity, Mth.sin(entity.tickCount / 600F * (float)Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityYaw(entity, Mth.cos(entity.tickCount / 500F * (float)Math.PI) / 1.3F * motionEffect * (random.nextFloat() + 0.5F));
 
-            rotateEntityPitch(entity, MathHelper.sin(entity.age / 180F * (float) Math.PI) / 3F * motionEffect * (random.nextFloat() + 0.5F));
-            rotateEntityYaw(entity, MathHelper.cos(entity.age / 150F * (float) Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityPitch(entity, Mth.sin(entity.tickCount / 180F * (float)Math.PI) / 3F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityYaw(entity, Mth.cos(entity.tickCount / 150F * (float)Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
         }
     }
 
@@ -73,12 +73,12 @@ public class AlcoholDrug extends SimpleDrug {
         if (value > 0) {
             super.onWakeUp(drugProperties);
 
-            PlayerEntity player = drugProperties.asEntity();
-            Random random = player.getWorld().random;
+            Player player = drugProperties.asEntity();
+            RandomSource random = player.level().random;
 
             if (random.nextFloat() > (1 - value)) {
-                player.animateDamage(random.nextFloat() * MathHelper.TAU);
-                player.playSound(SoundEvents.ENTITY_PLAYER_HURT, 1, 1);
+                player.animateHurt(random.nextFloat() * ((float)Math.PI * 2));
+                player.playSound(SoundEvents.PLAYER_HURT, 1, 1);
                 drugProperties.addToDrug(DrugType.SLEEP_DEPRIVATION, 0.25F);
                 PSCriteria.HANGOVER.trigger(player);
             }

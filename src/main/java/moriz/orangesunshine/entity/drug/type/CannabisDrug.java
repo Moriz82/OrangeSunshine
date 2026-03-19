@@ -22,7 +22,7 @@ public class CannabisDrug extends SimpleDrug {
         super.update(drugProperties);
 
         if (getActiveValue() > 0) {
-            drugProperties.asEntity().addExhaustion(0.03F * (float) getActiveValue());
+            drugProperties.asEntity().causeFoodExhaustion(0.03F * (float) getActiveValue());
         }
     }
 

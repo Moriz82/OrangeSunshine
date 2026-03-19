@@ -5,15 +5,16 @@
 
 package moriz.orangesunshine.block.entity;
 
-import moriz.orangesunshine.fluid.*;
-import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.fluid.Processable;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.*;
+import moriz.orangesunshine.fluid.container.Resovoir;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class FluidProcessingBlockEntity extends FlaskBlockEntity {
     private final Processable.ProcessType processType;
@@ -63,8 +64,8 @@ public abstract class FluidProcessingBlockEntity extends FlaskBlockEntity {
     }
 
     @Override
-    public void tick(ServerWorld world) {
-        super.tick(world);
+    public void tick(ServerLevel level) {
+        super.tick(level);
 
         Resovoir compliment = getTank(Direction.UP);
         Resovoir tank = getTank(Direction.DOWN);
@@ -80,9 +81,9 @@ public abstract class FluidProcessingBlockEntity extends FlaskBlockEntity {
 
             setTimeNeeded(p.getProcessingTime(tank, processType, compliment));
 
-            if (canProcess(world, getTimeNeeded())) {
+            if (canProcess(level, getTimeNeeded())) {
                 if (getTimeProcessed() >= getTimeNeeded()) {
-                    onProcessCompleted(world, tank, p.process(tank, processType, compliment));
+                    onProcessCompleted(level, tank, p.process(tank, processType, compliment));
                 } else {
                     setTimeProcessed(getTimeProcessed() + 1);
                 }
@@ -94,14 +95,13 @@ public abstract class FluidProcessingBlockEntity extends FlaskBlockEntity {
         }
     }
 
-    protected boolean canProcess(ServerWorld world, int timeNeeded) {
+    protected boolean canProcess(ServerLevel level, int timeNeeded) {
         return timeNeeded >= 0;
     }
 
-    protected void onProcessCompleted(ServerWorld world, Resovoir tank, ItemStack solids) {
+    protected void onProcessCompleted(ServerLevel level, Resovoir tank, ItemStack solids) {
         setTimeProcessed(0);
         setTimeNeeded(Processable.UNCONVERTABLE);
-
         markForUpdate();
     }
 
@@ -116,21 +116,21 @@ public abstract class FluidProcessingBlockEntity extends FlaskBlockEntity {
     @Override
     public void onFill(Resovoir resovoir, int amountFilled) {
         super.onFill(resovoir, amountFilled);
-        double percentFilled = amountFilled / (double) resovoir.getLevel();
-        setTimeNeeded(MathHelper.floor(getTimeProcessed() * (1 - percentFilled)));
+        double percentFilled = amountFilled / (double)resovoir.getLevel();
+        setTimeNeeded(Mth.floor(getTimeProcessed() * (1 - percentFilled)));
     }
 
     @Override
-    public void writeNbt(NbtCompound compound) {
+    protected void writeNbt(CompoundTag compound) {
         super.writeNbt(compound);
         compound.putInt("timeProcessed", getTimeProcessed());
         compound.putInt("timeNeeded", getTimeNeeded());
     }
 
     @Override
-    public void readNbt(NbtCompound compound) {
+    protected void readNbt(CompoundTag compound) {
         super.readNbt(compound);
-        setTimeProcessed(compound.getInt("timeProcessed"));
-        setTimeNeeded(compound.getInt("timeNeeded"));
+        setTimeProcessed(compound.getIntOr("timeProcessed", 0));
+        setTimeNeeded(compound.getIntOr("timeNeeded", Processable.UNCONVERTABLE));
     }
 }

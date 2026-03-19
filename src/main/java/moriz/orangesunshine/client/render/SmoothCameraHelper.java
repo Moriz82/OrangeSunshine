@@ -9,9 +9,9 @@ import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import org.joml.Vector2f;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.SmoothUtil;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 /**
  * Created by lukas on 23.02.14.
@@ -52,7 +52,7 @@ public class SmoothCameraHelper {
     }
 
     public void tick(DrugProperties properties) {
-        float multiplier = MathHelper.clamp(properties.getModifier(Drug.HEAD_MOTION_INERTNESS), 0, 1);
+        float multiplier = Mth.clamp(properties.getModifier(Drug.HEAD_MOTION_INERTNESS), 0, 1);
         float speed = getSpeed();
         smoothedCursor.set(
                 (float)xSmoother.smooth(cursorDelta.x, multiplier * speed),

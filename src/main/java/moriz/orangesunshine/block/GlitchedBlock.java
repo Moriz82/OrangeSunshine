@@ -6,52 +6,53 @@
 package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 /**
  * Created by lukas on 06.03.14.
  * Updated by Sollace on 3 Jan 2023
  */
 class GlitchedBlock extends Block {
-    public static final MapCodec<GlitchedBlock> CODEC = createCodec(GlitchedBlock::new);
+    public static final MapCodec<GlitchedBlock> CODEC = simpleCodec(GlitchedBlock::new);
 
-    public GlitchedBlock(Settings settings) {
+    public GlitchedBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends GlitchedBlock> getCodec() {
+    public MapCodec<? extends GlitchedBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
-            world.removeBlock(pos, true);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!level.isClientSide()) {
+            level.removeBlock(pos, true);
         }
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (!world.isClient) {
-            world.removeBlock(pos, true);
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean moved) {
+        if (!level.isClientSide()) {
+            level.removeBlock(pos, true);
         }
     }
 
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-        super.onLandedUpon(world, state, pos, entity, fallDistance);
-        if (!world.isClient) {
-            world.removeBlock(pos, true);
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
+        super.fallOn(level, state, pos, entity, fallDistance);
+        if (!level.isClientSide()) {
+            level.removeBlock(pos, true);
         }
     }
 }

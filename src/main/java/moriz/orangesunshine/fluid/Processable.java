@@ -12,8 +12,8 @@ import java.util.function.Function;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A fluid that can processed in the correct container, e.g. distillery.
@@ -71,9 +71,9 @@ public interface Processable {
          */
         REACT;
 
-        private final Text status = Text.translatable("fluid.status." + name().toLowerCase(Locale.ROOT));
+        private final Component status = Component.translatable("fluid.status." + name().toLowerCase(Locale.ROOT));
 
-        public Text getStatus() {
+        public Component getStatus() {
             return status;
         }
     }

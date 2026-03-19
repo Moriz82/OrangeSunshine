@@ -1,6 +1,8 @@
 package moriz.orangesunshine.fluid.container;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -10,16 +12,18 @@ import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.item.PSItems;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.*;
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluids;
 
 public class FluidContainerRegistry {
     private static final Map<Item, Supplier<FluidContainer>> ENTRIES = new HashMap<>();
     private static final Map<Item, Map<SimpleFluid, Item>> REFILL_MAPPING = new HashMap<>();
 
     public static Optional<FluidContainer> getContainer(Item item) {
-        return Optional.ofNullable(ENTRIES.get(item)).map(Supplier::get).or(() -> VariantMarshal.probeContents(item.getDefaultStack()));
+        return Optional.ofNullable(ENTRIES.get(item)).map(Supplier::get).or(() -> VariantMarshal.probeContents(item.getDefaultInstance()));
     }
 
     public static void registerRefillMapping(Item emptyForm, SimpleFluid fluid, Item filledForm) {
@@ -27,52 +31,49 @@ public class FluidContainerRegistry {
     }
 
     public static void registerFillableContainer(Function<Item, FluidContainer> container, Item... items) {
-        for (Item item : items ) {
+        for (Item item : items) {
             ENTRIES.put(item, Suppliers.memoize(() -> container.apply(item)));
         }
     }
 
     public static void registerFillableContainer(Item emptyForm, Item dynamicFilledForm, int capacity, SimpleFluid fluid, Item... items) {
-        registerFillableContainer(i -> {
-            return new FluidContainer() {
-                @Override
-                public Item asItem() {
-                    return i;
-                }
+        registerFillableContainer(i -> new FluidContainer() {
+            @Override
+            public Item asItem() {
+                return i;
+            }
 
-                @Override
-                public Item asEmpty() {
-                    return emptyForm;
-                }
+            @Override
+            public Item asEmpty() {
+                return emptyForm;
+            }
 
-                @Override
-                public Item asFilled(SimpleFluid fluid) {
-                    return REFILL_MAPPING.getOrDefault(asEmpty(), Map.of()).getOrDefault(fluid, dynamicFilledForm);
-                }
+            @Override
+            public Item asFilled(SimpleFluid fluidType) {
+                return REFILL_MAPPING.getOrDefault(asEmpty(), Map.of()).getOrDefault(fluidType, dynamicFilledForm);
+            }
 
-                @Override
-                public int getMaxCapacity() {
-                    return capacity;
-                }
+            @Override
+            public int getMaxCapacity() {
+                return capacity;
+            }
 
-                @Override
-                public int getLevel(ItemStack stack) {
-                    if (stack.getItem() == asEmpty()) {
-                        return FluidContainer.super.getLevel(stack);
-                    }
-                    return stack.getNbt() != null
-                        && stack.getNbt().contains("fluid", NbtElement.COMPOUND_TYPE)
-                        && stack.getSubNbt("fluid").contains("level", NbtElement.INT_TYPE) ? stack.getSubNbt("fluid").getInt("level") : capacity;
+            @Override
+            public int getLevel(ItemStack stack) {
+                if (stack.getItem() == asEmpty()) {
+                    return FluidContainer.super.getLevel(stack);
                 }
+                CompoundTag fluidTag = FluidContainer.getFluidTag(stack);
+                return fluidTag.contains("level") ? fluidTag.getIntOr("level", capacity) : capacity;
+            }
 
-                @Override
-                public SimpleFluid getFluid(ItemStack stack) {
-                    if (stack.getItem() == asEmpty()) {
-                        return FluidContainer.super.getFluid(stack);
-                    }
-                    return fluid;
+            @Override
+            public SimpleFluid getFluid(ItemStack stack) {
+                if (stack.getItem() == asEmpty()) {
+                    return FluidContainer.super.getFluid(stack);
                 }
-            };
+                return fluid;
+            }
         }, items);
     }
 

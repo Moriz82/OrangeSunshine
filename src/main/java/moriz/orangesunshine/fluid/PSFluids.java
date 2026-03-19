@@ -12,7 +12,7 @@ import moriz.orangesunshine.fluid.alcohol.FluidAppearance;
 import moriz.orangesunshine.fluid.alcohol.DrinkType;
 import moriz.orangesunshine.fluid.alcohol.DrinkTypes;
 import moriz.orangesunshine.fluid.alcohol.StatePredicate;
-import net.minecraft.predicate.NumberRange.IntRange;
+import net.minecraft.advancements.criterion.MinMaxBounds.Ints;
 
 /**
  * Created by lukas on 22.10.14.
@@ -64,10 +64,10 @@ public interface PSFluids {
             .matureColor(0xaaff3300)
             .tickRate(() -> OrangeSunshine.getConfig().balancing.fluidAttributes.alcInfoTomato)
             .variants(DrinkTypes.builder()
-                    .add(DrinkType.KETCHUP.withExtraDrug(new DrugInfluence(DrugType.SUGAR, 20, 0.003, 0.002, 0.3)), StatePredicate.builder().unfermented().maturation(IntRange.between(1, 4)).vinegar())
-                    .add(DrinkType.WHISKEY.withAppearance(FluidAppearance.RUM_SEMI_MATURE), StatePredicate.builder().fermented().maturation(IntRange.atLeast(6)).distillation(IntRange.atLeast(3)))
-                    .add(DrinkType.MEAD, StatePredicate.builder().fermented().maturation(IntRange.atLeast(5)).undistilled())
-                    .add(DrinkType.BEER, StatePredicate.builder().fermented().distillation(IntRange.exactly(1)))
+                    .add(DrinkType.KETCHUP.withExtraDrug(new DrugInfluence(DrugType.SUGAR, 20, 0.003, 0.002, 0.3)), StatePredicate.builder().unfermented().maturation(Ints.between(1, 4)).vinegar())
+                    .add(DrinkType.WHISKEY.withAppearance(FluidAppearance.RUM_SEMI_MATURE), StatePredicate.builder().fermented().maturation(Ints.atLeast(6)).distillation(Ints.atLeast(3)))
+                    .add(DrinkType.MEAD, StatePredicate.builder().fermented().maturation(Ints.atLeast(5)).undistilled())
+                    .add(DrinkType.BEER, StatePredicate.builder().fermented().distillation(Ints.exactly(1)))
                     .add(DrinkType.VINEGAR, StatePredicate.Standard.VINEGAR)
                     .add(DrinkType.VODKA, StatePredicate.Standard.DISTILLED)
                     .add(DrinkType.JUICE.withAppearance(FluidAppearance.TOMATO_JUICE), StatePredicate.Standard.ANY))
@@ -83,10 +83,10 @@ public interface PSFluids {
                     .add(DrinkType.JUICE.withAppearance(FluidAppearance.WINE), StatePredicate.Standard.BASE)
                     .add(DrinkType.VINEGAR, StatePredicate.Standard.VINEGAR)
                     .add(DrinkType.BRANDY, StatePredicate.Standard.DISTILLED)
-                    .add(DrinkType.VINEGAR, StatePredicate.builder().maturation(IntRange.atLeast(16)))
-                    .add(DrinkType.WINE.withVariation(DrinkType.Variation.WELL_AGED), StatePredicate.builder().maturation(IntRange.atLeast(14)))
-                    .add(DrinkType.WINE.withVariation(DrinkType.Variation.AGED), StatePredicate.builder().maturation(IntRange.atLeast(8)))
-                    .add(DrinkType.WINE.withVariation(DrinkType.Variation.SLIGHTLY_AGED), StatePredicate.builder().maturation(IntRange.atLeast(4)))
+                    .add(DrinkType.VINEGAR, StatePredicate.builder().maturation(Ints.atLeast(16)))
+                    .add(DrinkType.WINE.withVariation(DrinkType.Variation.WELL_AGED), StatePredicate.builder().maturation(Ints.atLeast(14)))
+                    .add(DrinkType.WINE.withVariation(DrinkType.Variation.AGED), StatePredicate.builder().maturation(Ints.atLeast(8)))
+                    .add(DrinkType.WINE.withVariation(DrinkType.Variation.SLIGHTLY_AGED), StatePredicate.builder().maturation(Ints.atLeast(4)))
                     .add(DrinkType.WINE.withVariation(DrinkType.Variation.YOUNG), StatePredicate.Standard.MATURED)
                     .add(DrinkType.HALF_WASH.withVariation(DrinkType.Variation.WINE).withAppearance(FluidAppearance.WINE), StatePredicate.Standard.FERMENTED_1)
                     .add(DrinkType.WASH.withVariation(DrinkType.Variation.WINE).withAppearance(FluidAppearance.WINE), StatePredicate.Standard.FERMENTED_2))
@@ -223,9 +223,9 @@ public interface PSFluids {
             .matureColor(0x779beb62)
             .tickRate(() -> OrangeSunshine.getConfig().balancing.fluidAttributes.alcInfoAgave)
             .variants(DrinkTypes.builder()
-                    .add(DrinkType.MEZCAL, StatePredicate.builder().fermented().unmatured().distillation(IntRange.exactly(1)))
-                    .add(DrinkType.TEQUILA.withVariation(DrinkType.Variation.BLANCO), StatePredicate.builder().fermented().unmatured().distillation(IntRange.atLeast(2)))
-                    .add(DrinkType.TEQUILA.withVariation(DrinkType.Variation.REPOSADO), StatePredicate.builder().fermented().matured().distillation(IntRange.atLeast(2)))
+                    .add(DrinkType.MEZCAL, StatePredicate.builder().fermented().unmatured().distillation(Ints.exactly(1)))
+                    .add(DrinkType.TEQUILA.withVariation(DrinkType.Variation.BLANCO), StatePredicate.builder().fermented().unmatured().distillation(Ints.atLeast(2)))
+                    .add(DrinkType.TEQUILA.withVariation(DrinkType.Variation.REPOSADO), StatePredicate.builder().fermented().matured().distillation(Ints.atLeast(2)))
                     .add(DrinkType.JUICE, StatePredicate.Standard.ANY))
             .color(0x779bab62)
             .viscocity(1)

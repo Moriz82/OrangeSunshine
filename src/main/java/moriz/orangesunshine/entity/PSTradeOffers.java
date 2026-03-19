@@ -5,37 +5,48 @@
 
 package moriz.orangesunshine.entity;
 
+import com.google.common.collect.ImmutableSet;
+import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.block.PSBlocks;
 import moriz.orangesunshine.item.PSItems;
-import org.jetbrains.annotations.Nullable;
-
-import com.google.common.collect.ImmutableSet;
-
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
-import net.minecraft.block.*;
-import net.minecraft.item.*;
-import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.village.*;
-import net.minecraft.world.poi.PointOfInterestType;
-import net.minecraft.world.poi.PointOfInterestTypes;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Sollace
  * @since 1 Jan 2023
  */
 public interface PSTradeOffers {
-    RegistryKey<PointOfInterestType> DRUG_DEALER_POI = poi("drug_dealer");
-    VillagerProfession DRUG_DEALER_PROFESSION = register("drug_dealer",
-            type -> type.matchesKey(DRUG_DEALER_POI),
-            type -> type.matchesKey(DRUG_DEALER_POI),
+    ResourceKey<PoiType> DRUG_DEALER_POI = poi("drug_dealer");
+    ResourceKey<VillagerProfession> DRUG_DEALER_PROFESSION = profession("drug_dealer");
+    VillagerProfession DRUG_DEALER = register(DRUG_DEALER_PROFESSION,
+            type -> type.is(DRUG_DEALER_POI),
+            type -> type.is(DRUG_DEALER_POI),
             ImmutableSet.of(
                     PSItems.CANNABIS_SEEDS, PSItems.HOP_SEEDS, PSItems.TOBACCO_SEEDS,
                     PSItems.COCA_SEEDS, PSItems.COFFEA_CHERRIES, PSItems.MORNING_GLORY_SEEDS,
@@ -45,12 +56,13 @@ public interface PSTradeOffers {
                     Items.BONE_MEAL
             ),
             ImmutableSet.of(Blocks.FARMLAND),
-            SoundEvents.ENTITY_WANDERING_TRADER_DRINK_POTION
+            SoundEvents.WANDERING_TRADER_DRINK_POTION
     );
 
-    VillagerProfession DRUG_ADDICT_PROFESSION = register("drug_addict",
-            PointOfInterestType.NONE,
-            VillagerProfession.IS_ACQUIRABLE_JOB_SITE,
+    ResourceKey<VillagerProfession> DRUG_ADDICT_PROFESSION = profession("drug_addict");
+    VillagerProfession DRUG_ADDICT = register(DRUG_ADDICT_PROFESSION,
+            PoiType.NONE,
+            VillagerProfession.ALL_ACQUIRABLE_JOBS,
             ImmutableSet.of(),
             ImmutableSet.of(),
             null
@@ -90,7 +102,7 @@ public interface PSTradeOffers {
             factories.add(sell(1, PSItems.JOINT, 2, 2, 3, 0.5f));
 
             if (OrangeSunshine.getConfig().balancing.enableHarmonium) {
-                factories.add(new TradeOffers.SellDyedArmorFactory(PSItems.HARMONIUM, 3, 7, 2));
+                factories.add(new VillagerTrades.DyedArmorForEmeralds(PSItems.HARMONIUM, 3, 7, 2));
             }
         });
 
@@ -108,9 +120,9 @@ public interface PSTradeOffers {
             factories.add(buy(5, PSItems.DRIED_COCA_LEAVES, 20, 3, 2, 0.5f));
         });
 
-        PointOfInterestTypes.register(Registries.POINT_OF_INTEREST_TYPE, DRUG_DEALER_POI, Stream.concat(
-                        PSBlocks.DRYING_TABLE.getStateManager().getStates().stream(),
-                        PSBlocks.IRON_DRYING_TABLE.getStateManager().getStates().stream()
+        registerPoi(DRUG_DEALER_POI, Stream.concat(
+                PSBlocks.DRYING_TABLE.getStateDefinition().getPossibleStates().stream(),
+                PSBlocks.IRON_DRYING_TABLE.getStateDefinition().getPossibleStates().stream()
         ).collect(Collectors.toUnmodifiableSet()), 1, 1);
 
         if (OrangeSunshine.getConfig().balancing.worldGeneration.farmerDrugDeals) {
@@ -129,23 +141,71 @@ public interface PSTradeOffers {
         }
     }
 
-    private static TradeOffers.Factory buy(int cost, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
-        return (e, rng) -> new TradeOffer(new ItemStack(returnItem, returnCount), new ItemStack(Items.EMERALD, cost), maxUses, experience, priceChange);
+    private static VillagerTrades.ItemListing buy(int cost, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
+        return (level, entity, random) -> new MerchantOffer(
+                new ItemCost(returnItem, returnCount),
+                new ItemStack(Items.EMERALD, cost),
+                maxUses,
+                experience,
+                priceChange
+        );
     }
 
-    private static TradeOffers.Factory sell(int cost, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
-        return (e, rng) -> new TradeOffer(new ItemStack(Items.EMERALD, cost), new ItemStack(returnItem, returnCount), maxUses, experience, priceChange);
+    private static VillagerTrades.ItemListing sell(int cost, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
+        return (level, entity, random) -> new MerchantOffer(
+                new ItemCost(Items.EMERALD, cost),
+                new ItemStack(returnItem, returnCount),
+                maxUses,
+                experience,
+                priceChange
+        );
     }
 
-    private static TradeOffers.Factory trade(int cost, Item item, int count, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
-        return (e, rng) -> new TradeOffer(new ItemStack(Items.EMERALD, cost), new ItemStack(item, count), new ItemStack(returnItem, returnCount), maxUses, experience, priceChange);
+    private static VillagerTrades.ItemListing trade(int cost, Item item, int count, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
+        return (level, entity, random) -> new MerchantOffer(
+                new ItemCost(Items.EMERALD, cost),
+                Optional.of(new ItemCost(item, count)),
+                new ItemStack(returnItem, returnCount),
+                maxUses,
+                experience,
+                priceChange
+        );
     }
 
-    private static RegistryKey<PointOfInterestType> poi(String id) {
-        return RegistryKey.of(RegistryKeys.POINT_OF_INTEREST_TYPE, OrangeSunshine.id(id));
+    private static ResourceKey<PoiType> poi(String id) {
+        return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, OrangeSunshine.id(id));
     }
 
-    private static VillagerProfession register(String id, Predicate<RegistryEntry<PointOfInterestType>> heldWorkstation, Predicate<RegistryEntry<PointOfInterestType>> acquirableWorkstation, ImmutableSet<Item> gatherableItems, ImmutableSet<Block> secondaryJobSites, @Nullable SoundEvent workSound) {
-        return Registry.register(Registries.VILLAGER_PROFESSION, OrangeSunshine.id(id), new VillagerProfession("orangesunshine:" + id, heldWorkstation, acquirableWorkstation, gatherableItems, secondaryJobSites, workSound));
+    private static ResourceKey<VillagerProfession> profession(String id) {
+        return ResourceKey.create(Registries.VILLAGER_PROFESSION, OrangeSunshine.id(id));
+    }
+
+    private static VillagerProfession register(ResourceKey<VillagerProfession> key, Predicate<Holder<PoiType>> heldWorkstation, Predicate<Holder<PoiType>> acquirableWorkstation, ImmutableSet<Item> gatherableItems, ImmutableSet<Block> secondaryJobSites, @Nullable SoundEvent workSound) {
+        return Registry.register(
+                BuiltInRegistries.VILLAGER_PROFESSION,
+                key.identifier(),
+                new VillagerProfession(
+                        Component.translatable("entity.minecraft.villager." + key.identifier().getPath()),
+                        heldWorkstation,
+                        acquirableWorkstation,
+                        gatherableItems,
+                        secondaryJobSites,
+                        workSound
+                )
+        );
+    }
+
+    private static PoiType registerPoi(ResourceKey<PoiType> key, java.util.Set<BlockState> states, int maxTickets, int validRange) {
+        PoiType poiType = Registry.register(BuiltInRegistries.POINT_OF_INTEREST_TYPE, key.identifier(), new PoiType(states, maxTickets, validRange));
+
+        try {
+            Method registerBlockStates = PoiTypes.class.getDeclaredMethod("registerBlockStates", Holder.class, java.util.Set.class);
+            registerBlockStates.setAccessible(true);
+            registerBlockStates.invoke(null, BuiltInRegistries.POINT_OF_INTEREST_TYPE.getOrThrow(key), states);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to register POI block states for " + key.identifier(), e);
+        }
+
+        return poiType;
     }
 }

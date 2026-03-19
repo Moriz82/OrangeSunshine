@@ -1,6 +1,6 @@
 package moriz.orangesunshine.util;
 
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
 
 public interface Pool<T> {
 
@@ -9,5 +9,5 @@ public interface Pool<T> {
         return rng -> options[rng.nextInt(options.length)];
     }
 
-    T get(Random rng);
+    T get(RandomSource rng);
 }

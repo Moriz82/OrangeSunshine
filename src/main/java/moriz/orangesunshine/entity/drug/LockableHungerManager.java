@@ -2,9 +2,9 @@ package moriz.orangesunshine.entity.drug;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.entity.player.HungerManager;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 
 public interface LockableHungerManager {
     default void lockHunger(int hunger, float saturation, boolean full, float strength) {
@@ -21,14 +21,14 @@ public interface LockableHungerManager {
 
     default void makePermanent() {
         if (getLockedState() != null) {
-            HungerManager hunger = getHungerManager();
-            hunger.setSaturationLevel(hunger.getSaturationLevel());
+            FoodData hunger = getHungerManager();
+            hunger.setSaturation(hunger.getSaturationLevel());
             hunger.setFoodLevel(hunger.getFoodLevel());
             unlockHunger();
         }
     }
 
-    HungerManager getHungerManager();
+    FoodData getHungerManager();
 
     @Nullable
     State getLockedState();
@@ -36,16 +36,16 @@ public interface LockableHungerManager {
     void setLockedState(State state);
 
     record State(Ratio hunger, Ratio saturation, boolean full) {
-        static State fromNbt(NbtCompound compound) {
+        static State fromNbt(CompoundTag compound) {
             return new State(
-                    Ratio.fromNbt(compound.getCompound("hunger")),
-                    Ratio.fromNbt(compound.getCompound("saturation")),
-                    compound.getBoolean("full")
+                    Ratio.fromNbt(compound.getCompoundOrEmpty("hunger")),
+                    Ratio.fromNbt(compound.getCompoundOrEmpty("saturation")),
+                    compound.getBooleanOr("full", false)
             );
         }
 
-        public NbtCompound toNbt() {
-            NbtCompound compound = new NbtCompound();
+        public CompoundTag toNbt() {
+            CompoundTag compound = new CompoundTag();
             compound.put("hunger", hunger.toNbt());
             compound.put("saturation", saturation.toNbt());
             compound.putBoolean("full", full);
@@ -75,18 +75,18 @@ public interface LockableHungerManager {
             return rate;
         }
 
-        static Ratio fromNbt(NbtCompound compound) {
-            return new Ratio(compound.getFloat("initial"), compound.getFloat("rate"));
+        static Ratio fromNbt(CompoundTag compound) {
+            return new Ratio(compound.getFloatOr("initial", 0), compound.getFloatOr("rate", 0));
         }
 
         public float toFloat(float reference) {
             initial = rate > 0 ? Math.max(initial, reference) : Math.min(initial, reference);
 
-            return Math.max(0, MathHelper.lerp(reference > initial ? -rate : rate, reference, initial));
+            return Math.max(0, Mth.lerp(reference > initial ? -rate : rate, reference, initial));
         }
 
-        public NbtCompound toNbt() {
-            NbtCompound compound = new NbtCompound();
+        public CompoundTag toNbt() {
+            CompoundTag compound = new CompoundTag();
             compound.putFloat("initial", initial);
             compound.putFloat("rate", rate);
             return compound;

@@ -13,11 +13,11 @@ import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 
 public class SimpleDrug implements Drug {
     protected double effect;
@@ -99,7 +99,7 @@ public class SimpleDrug implements Drug {
             ticksActive++;
 
             if (heartbeatSpeed() > 3) {
-                drugProperties.asEntity().damage(drugProperties.damageOf(PSDamageTypes.HEART_ATTACK), Integer.MAX_VALUE);
+                drugProperties.asEntity().hurt(drugProperties.damageOf(PSDamageTypes.HEART_ATTACK), Integer.MAX_VALUE);
                 reset(drugProperties);
             }
         } else {
@@ -111,7 +111,7 @@ public class SimpleDrug implements Drug {
             effect -= decreaseSpeedPlus;
         }
 
-        effect = MathHelper.clamp(effect, 0, 1);
+        effect = Mth.clamp(effect, 0, 1);
         setActiveValue(MathUtils.nearValue(effectActive, effect, 0.05, 0.005));
     }
 
@@ -128,15 +128,15 @@ public class SimpleDrug implements Drug {
     }
 
     @Override
-    public void fromNbt(NbtCompound compound) {
-        setDesiredValue(compound.getDouble("effect"));
-        setActiveValue(compound.getDouble("effectActive"));
-        setLocked(compound.getBoolean("locked"));
-        ticksActive = compound.getInt("ticksActive");
+    public void fromNbt(CompoundTag compound) {
+        setDesiredValue(compound.getDoubleOr("effect", 0));
+        setActiveValue(compound.getDoubleOr("effectActive", 0));
+        setLocked(compound.getBooleanOr("locked", false));
+        ticksActive = compound.getIntOr("ticksActive", 0);
     }
 
     @Override
-    public void toNbt(NbtCompound compound) {
+    public void toNbt(CompoundTag compound) {
         compound.putDouble("effect", getDesiredValue());
         compound.putDouble("effectActive", getActiveValue());
         compound.putBoolean("locked", isLocked());
@@ -144,7 +144,7 @@ public class SimpleDrug implements Drug {
     }
 
     @Override
-    public Optional<Text> trySleep(BlockPos pos) {
+    public Optional<Component> trySleep(BlockPos pos) {
         return Optional.empty();
     }
 
@@ -159,10 +159,10 @@ public class SimpleDrug implements Drug {
     }
 
     protected static void rotateEntityPitch(Entity entity, double amount) {
-        entity.setPitch((float)MathHelper.clamp(entity.getPitch() + amount, -90, 90));
+        entity.setXRot((float)Mth.clamp(entity.getXRot() + amount, -90, 90));
     }
 
     protected static void rotateEntityYaw(Entity entity, double amount) {
-        entity.setYaw(entity.getYaw() + (float)amount);
+        entity.setYRot(entity.getYRot() + (float)amount);
     }
 }

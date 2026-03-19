@@ -5,51 +5,57 @@
 
 package moriz.orangesunshine.block.entity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.*;
+import java.util.List;
 
-public abstract class BlockEntityWithInventory extends SyncedBlockEntity implements SidedInventory {
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+
+public abstract class BlockEntityWithInventory extends SyncedBlockEntity implements WorldlyContainer {
     protected static final int[] NO_SLOTS = new int[0];
 
-    private final DefaultedList<ItemStack> inventory;
+    private final NonNullList<ItemStack> inventory;
 
     public BlockEntityWithInventory(BlockEntityType<? extends BlockEntityWithInventory> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
-        inventory = DefaultedList.ofSize(size, ItemStack.EMPTY);
+        inventory = NonNullList.withSize(size, ItemStack.EMPTY);
     }
 
     @Override
-    public void writeNbt(NbtCompound compound) {
+    protected void writeNbt(CompoundTag compound) {
         super.writeNbt(compound);
-        Inventories.writeNbt(compound, inventory);
+        compound.store("items", ItemStack.OPTIONAL_CODEC.listOf(), inventory);
     }
 
     @Override
-    public void readNbt(NbtCompound compound) {
+    protected void readNbt(CompoundTag compound) {
         super.readNbt(compound);
-        inventory.clear();
-        Inventories.readNbt(compound, inventory);
+        List<ItemStack> items = compound.read("items", ItemStack.OPTIONAL_CODEC.listOf()).orElse(List.of());
+        for (int i = 0; i < inventory.size(); i++) {
+            inventory.set(i, i < items.size() ? items.get(i) : ItemStack.EMPTY);
+        }
     }
 
     @Override
-    public int size() {
+    public int getContainerSize() {
         return inventory.size();
     }
 
     @Override
-    public ItemStack getStack(int slot) {
+    public ItemStack getItem(int slot) {
         return inventory.get(slot);
     }
 
     @Override
-    public void clear() {
+    public void clearContent() {
         inventory.clear();
         onInventoryChanged();
     }
@@ -60,8 +66,9 @@ public abstract class BlockEntityWithInventory extends SyncedBlockEntity impleme
     }
 
     @Override
-    public ItemStack removeStack(int slot) {
-        ItemStack removed = Inventories.removeStack(inventory, slot);
+    public ItemStack removeItemNoUpdate(int slot) {
+        ItemStack removed = inventory.get(slot);
+        inventory.set(slot, ItemStack.EMPTY);
         if (!removed.isEmpty()) {
             onInventoryChanged();
         }
@@ -69,48 +76,64 @@ public abstract class BlockEntityWithInventory extends SyncedBlockEntity impleme
     }
 
     @Override
-    public ItemStack removeStack(int slot, int amount) {
-        ItemStack removed = Inventories.splitStack(inventory, slot, amount);
-        if (!removed.isEmpty()) {
+    public ItemStack removeItem(int slot, int amount) {
+        ItemStack current = inventory.get(slot);
+        ItemStack removed = current.split(amount);
+        if (!removed.isEmpty() || current.isEmpty()) {
+            if (current.isEmpty()) {
+                inventory.set(slot, ItemStack.EMPTY);
+            }
             onInventoryChanged();
+        }
+        if (!current.isEmpty() && current.getCount() == 0) {
+            inventory.set(slot, ItemStack.EMPTY);
+        }
+        if (!removed.isEmpty() && inventory.get(slot).isEmpty()) {
+            inventory.set(slot, ItemStack.EMPTY);
         }
         return removed;
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
+    public void setItem(int slot, ItemStack stack) {
         inventory.set(slot, stack);
         onInventoryChanged();
     }
 
     @Override
-    public int getMaxCountPerStack() {
+    public int getMaxStackSize() {
         return 1;
     }
 
+    @Override
+    public int[] getSlotsForFace(Direction direction) {
+        return NO_SLOTS;
+    }
+
     public void onInventoryChanged() {
-        markDirty();
-        if (world != null) {
-            world.updateNeighbors(pos, getCachedState().getBlock());
-            if (world instanceof ServerWorld sw) {
-                sw.getChunkManager().markForUpdate(getPos());
-            }
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return (getCachedState().equals(player.getWorld().getBlockState(pos)))
-                && player.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ()) <= 64;
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, Direction direction) {
-        return isValid(slot, stack);
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        return true;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction direction) {
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction direction) {
+        return canPlaceItem(slot, stack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
         return true;
     }
 }

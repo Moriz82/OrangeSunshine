@@ -1,16 +1,16 @@
 package moriz.orangesunshine.util;
 
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public interface NbtSerialisable {
 
-    default NbtCompound toNbt() {
-        NbtCompound tagCompound = new NbtCompound();
+    default CompoundTag toNbt() {
+        CompoundTag tagCompound = new CompoundTag();
         toNbt(tagCompound);
         return tagCompound;
     }
 
-    void toNbt(NbtCompound compound);
+    void toNbt(CompoundTag compound);
 
-    void fromNbt(NbtCompound compound);
+    void fromNbt(CompoundTag compound);
 }

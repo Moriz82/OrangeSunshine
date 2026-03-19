@@ -4,8 +4,8 @@ package moriz.orangesunshine.entity.drug.hallucination;
  *  * http://lukas.axxim.net
  */
 
-import net.minecraft.text.Text;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 
 import java.util.function.Consumer;
 
@@ -46,28 +46,28 @@ public class RastaheadPersonality implements Personality {
     };
 
     @Override
-    public Text getName(Random random) {
-        return Text.literal("Reggie");
+    public Component getName(RandomSource random) {
+        return Component.literal("Reggie");
     }
 
     @Override
-    public void supplyMessage(Random random, Consumer<Text> responseSender) {
+    public void supplyMessage(RandomSource random, Consumer<Component> responseSender) {
         for (String line : RANDOM_STATEMENTS[random.nextInt(RANDOM_STATEMENTS.length)]) {
-            responseSender.accept(Text.literal(line));
+            responseSender.accept(Component.literal(line));
         }
     }
 
     @Override
-    public void onMessageReceived(String sender, Text message, Random random, boolean fromPlayer, Consumer<Text> responseSender) {
+    public void onMessageReceived(String sender, Component message, RandomSource random, boolean fromPlayer, Consumer<Component> responseSender) {
         if (random.nextFloat() < 0.4f) {
             if (fromPlayer) {
                 for (String response : RESPONSES_TO_PLAYER[random.nextInt(RESPONSES_TO_PLAYER.length)]) {
-                    responseSender.accept(Text.literal(response));
+                    responseSender.accept(Component.literal(response));
                 }
 
             } else {
                 for (String response : RESPONSES_OTHER[random.nextInt(RESPONSES_OTHER.length)]) {
-                    responseSender.accept(Text.literal(response));
+                    responseSender.accept(Component.literal(response));
                 }
             }
         }

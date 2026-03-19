@@ -8,7 +8,7 @@ package moriz.orangesunshine.client.render;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 /**
  * Created by lukas on 25.02.14.
@@ -17,7 +17,7 @@ public interface DrugEffectInterpreter {
     static float getCameraShiftY(DrugProperties drugProperties, float ticks) {
         float amplitude = drugProperties.getModifier(Drug.VIEW_TREMBLE_STRENGTH);
         if (amplitude > 0) {
-            return MathHelper.square(MathHelper.sin(ticks / 3F)) * amplitude * 0.1F;
+            return Mth.square(Mth.sin(ticks / 3F)) * amplitude * 0.1F;
         }
         return 0;
     }
@@ -43,7 +43,7 @@ public interface DrugEffectInterpreter {
     }
 
     static float getAlcohol(DrugProperties properties) {
-        return MathHelper.clamp(properties.getDrugValue(DrugType.ALCOHOL) + properties.getDrugValue(DrugType.KAVA), 0, 1);
+        return Mth.clamp(properties.getDrugValue(DrugType.ALCOHOL) + properties.getDrugValue(DrugType.KAVA), 0, 1);
     }
 
     static boolean getOOB(DrugProperties properties) {

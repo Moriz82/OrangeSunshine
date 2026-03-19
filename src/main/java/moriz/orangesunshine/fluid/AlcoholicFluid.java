@@ -11,14 +11,14 @@ import moriz.orangesunshine.fluid.container.MutableFluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.fluid.physical.FluidStateManager;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,19 +41,23 @@ public class AlcoholicFluid extends DrugFluid implements Processable {
     public static final Attribute<Integer> FERMENTATION = Attribute.ofInt("fermentation", 0, FERMENTATION_STEPS);
     public static final Attribute<Boolean> VINEGAR = Attribute.ofBoolean("vinegar");
 
-    final Settings settings;
+    final moriz.orangesunshine.fluid.AlcoholicFluid.Settings settings;
 
-    public AlcoholicFluid(Identifier id, Settings settings) {
-        super(id, settings.drinkable().with(new FluidStateManager.FluidProperty<>(IntProperty.of("variant", 0, settings.states.get().size()), (stack, variant) -> {
-            return settings.states.get().get(MathHelper.clamp(variant, 0, settings.states.get().size())).apply(stack);
-        }, stack -> {
-            return settings.states.get().stream()
-                    .filter(s -> s.entry().predicate().test(stack))
-                    .findFirst()
-                    .map(match -> settings.states.get().indexOf(match))
-                    .orElse(0);
-        })));
+    public AlcoholicFluid(Identifier id, moriz.orangesunshine.fluid.AlcoholicFluid.Settings settings) {
+        super(id, settings.drinkable().with(createVariantProperty(settings)));
         this.settings = settings;
+    }
+
+    private static FluidStateManager.FluidProperty<Integer> createVariantProperty(moriz.orangesunshine.fluid.AlcoholicFluid.Settings settings) {
+        int maxVariant = Math.max(0, settings.states.get().size() - 1);
+        return new FluidStateManager.FluidProperty<>(IntegerProperty.create("variant", 0, maxVariant), (stack, variant) ->
+                settings.states.get().get(Mth.clamp(variant, 0, maxVariant)).apply(stack),
+                stack -> settings.states.get().stream()
+                        .filter(s -> s.entry().predicate().test(stack))
+                        .findFirst()
+                        .map(match -> settings.states.get().indexOf(match))
+                        .orElse(0)
+        );
     }
 
     protected int getDistilledColor() {
@@ -122,7 +126,7 @@ public class AlcoholicFluid extends DrugFluid implements Processable {
 
             DISTILLATION.set(contents, distillation + 1);
 
-            contents.drain(MathHelper.floor(contents.getLevel() * MathUtils.progress(distillation, 0.5F)));
+            contents.drain(Mth.floor(contents.getLevel() * MathUtils.progress(distillation, 0.5F)));
             return PSFluids.SLURRY.getDefaultStack(1);
         }
 
@@ -213,27 +217,27 @@ public class AlcoholicFluid extends DrugFluid implements Processable {
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        return settings.variants.find(stack).getName(Text.translatable(getTranslationKey()));
+    public Component getName(ItemStack stack) {
+        return settings.variants.find(stack).getName(Component.translatable(getTranslationKey()));
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, @Nullable Level world, List<Component> tooltip, Item.TooltipContext context) {
 
         int distillation = DISTILLATION.get(stack);
         int maturation = MATURATION.get(stack);
         int fermentation = FERMENTATION.get(stack);
 
         if (distillation > 0) {
-            tooltip.add(Text.translatable("orangesunshine.alcohol.distillations", distillation).formatted(Formatting.GRAY));
+            tooltip.add(Component.translatable("orangesunshine.alcohol.distillations", distillation).withStyle(ChatFormatting.GRAY));
         }
 
         if (fermentation > 0) {
-            tooltip.add(Text.translatable("orangesunshine.alcohol.fermentations", fermentation).formatted(Formatting.GRAY));
+            tooltip.add(Component.translatable("orangesunshine.alcohol.fermentations", fermentation).withStyle(ChatFormatting.GRAY));
         }
 
         if (maturation > 0) {
-            tooltip.add(Text.translatable("orangesunshine.alcohol.maturations", maturation, Maturity.getMaturity(maturation).getName()).formatted(Formatting.GRAY));
+            tooltip.add(Component.translatable("orangesunshine.alcohol.maturations", maturation, Maturity.getMaturity(maturation).getName()).withStyle(ChatFormatting.GRAY));
         }
 
         //if (distillation > 0 || maturation > 0 || fermentation > 0) {
@@ -268,7 +272,7 @@ public class AlcoholicFluid extends DrugFluid implements Processable {
     @SuppressWarnings("deprecation")
     @Override
     public boolean isSuitableContainer(FluidContainer container) {
-        return container.asItem().getRegistryEntry().isIn(PSTags.Items.SUITABLE_ALCOHOLIC_DRINK_RECEPTICALS);
+        return container.asItem().builtInRegistryHolder().is(PSTags.Items.SUITABLE_ALCOHOLIC_DRINK_RECEPTICALS);
     }
 
     public static class Settings extends DrugFluid.Settings {
@@ -291,34 +295,34 @@ public class AlcoholicFluid extends DrugFluid implements Processable {
             this.appearance = stack -> variants.find(stack).appearance();
         }
 
-        public Settings drug(DrugType drug) {
+        public moriz.orangesunshine.fluid.AlcoholicFluid.Settings drug(DrugType drug) {
             this.drugType = drug;
             return this;
         }
 
-        public Settings matureColor(int matureColor) {
+        public moriz.orangesunshine.fluid.AlcoholicFluid.Settings matureColor(int matureColor) {
             this.matureColor = matureColor;
             return this;
         }
 
-        public Settings distilledColor(int distilledColor) {
+        public moriz.orangesunshine.fluid.AlcoholicFluid.Settings distilledColor(int distilledColor) {
             this.distilledColor = distilledColor;
             return this;
         }
 
-        public Settings variants(DrinkTypes variants) {
+        public moriz.orangesunshine.fluid.AlcoholicFluid.Settings variants(DrinkTypes variants) {
             this.variants = variants;
             return this;
         }
 
-        public Settings alcohol(double fermentationAlcohol, double distillationAlcohol, double maturationAlcohol) {
+        public moriz.orangesunshine.fluid.AlcoholicFluid.Settings alcohol(double fermentationAlcohol, double distillationAlcohol, double maturationAlcohol) {
             this.fermentationAlcohol = fermentationAlcohol;
             this.distillationAlcohol = distillationAlcohol;
             this.maturationAlcohol = maturationAlcohol;
             return this;
         }
 
-        public Settings tickRate(Supplier<PSConfig.Balancing.FluidProperties.TickInfo> tickInfo) {
+        public moriz.orangesunshine.fluid.AlcoholicFluid.Settings tickRate(Supplier<PSConfig.Balancing.FluidProperties.TickInfo> tickInfo) {
             this.tickInfo = tickInfo;
             return this;
         }

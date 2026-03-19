@@ -9,12 +9,12 @@ import moriz.orangesunshine.block.entity.FlaskBlockEntity;
 import moriz.orangesunshine.client.render.FluidBoxRenderer;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 
 /**
  * Created by lukas on 25.10.14.
@@ -29,7 +29,7 @@ public class FlaskBlockEntityRenderer<T extends FlaskBlockEntity> implements Blo
     }
 
     @Override
-    public void render(T entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(T entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         matrices.push();
         matrices.translate(0.5F, 0, 0.5F);
 
@@ -41,7 +41,7 @@ public class FlaskBlockEntityRenderer<T extends FlaskBlockEntity> implements Blo
         SimpleFluid fluid = tank.getFluidType();
 
         if (!fluid.isEmpty()) {
-            float fluidHeight = MathHelper.clamp((float) tank.getLevel() / (float) tank.getCapacity(), 0, 1);
+            float fluidHeight = Mth.clamp((float) tank.getLevel() / (float) tank.getCapacity(), 0, 1);
 
             FluidBoxRenderer fluidRenderer = FluidBoxRenderer.getInstance()
                     .texture(vertices, tank)

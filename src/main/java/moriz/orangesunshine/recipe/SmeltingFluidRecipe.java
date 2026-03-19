@@ -5,18 +5,23 @@
 
 package moriz.orangesunshine.recipe;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CookingRecipeCategory;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.dynamic.Codecs;
-import net.minecraft.world.World;
-
-import java.lang.ref.WeakReference;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.level.Level;
 
 /**
  * Created by Sollace on 5 Jan 2023
@@ -40,22 +45,37 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
  *      }
  *    }
  *  }
- *
  */
 public class SmeltingFluidRecipe extends SmeltingRecipe {
     private final FluidIngredient fluid;
     private final FluidModifyingResult result;
 
-    private WeakReference<Inventory> lastQueriedInventory = new WeakReference<>(null);
+    private WeakReference<ItemStack> lastQueriedStack = new WeakReference<>(null);
 
     public SmeltingFluidRecipe(
-            String group, CookingRecipeCategory category,
-            FluidIngredient fluid, Ingredient inputStack,
+            String group,
+            CookingBookCategory category,
+            FluidIngredient fluid,
+            Ingredient inputStack,
             FluidModifyingResult result,
-            float experience, int cookingTime) {
+            float experience,
+            int cookingTime
+    ) {
         super(group, category, inputStack, result.result(), experience, cookingTime);
         this.fluid = fluid;
         this.result = result;
+    }
+
+    private static Ingredient emptyIngredient() {
+        return Ingredient.of(Stream.of());
+    }
+
+    public String getGroup() {
+        return group();
+    }
+
+    public CookingBookCategory getCategory() {
+        return category();
     }
 
     public FluidIngredient getFluid() {
@@ -66,70 +86,83 @@ public class SmeltingFluidRecipe extends SmeltingRecipe {
         return result;
     }
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return PSRecipes.SMELTING_RECEPTICAL;
+    public List<Ingredient> getIngredients() {
+        return List.of(input());
+    }
+
+    public float getExperience() {
+        return experience();
+    }
+
+    public int getCookingTime() {
+        return cookingTime();
+    }
+
+    public ItemStack getResult(HolderLookup.Provider registries) {
+        ItemStack stack = lastQueriedStack.get();
+        return stack == null ? result().copy() : result.applyTo(stack);
     }
 
     @Override
-    public boolean matches(Inventory inventory, World world) {
-        lastQueriedInventory = new WeakReference<>(inventory);
-        return (ingredient.isEmpty() || ingredient.test(inventory.getStack(0))) && fluid.test(inventory.getStack(0));
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<SmeltingRecipe> getSerializer() {
+        return (RecipeSerializer<SmeltingRecipe>)(RecipeSerializer<?>)PSRecipes.SMELTING_RECEPTICAL;
     }
 
     @Override
-    public ItemStack getResult(DynamicRegistryManager registries) {
-        Inventory inventory = lastQueriedInventory.get();
-        if (inventory == null) {
-            return super.getResult(registries);
-        }
-        return craft(inventory, registries);
+    public boolean matches(SingleRecipeInput inventory, Level level) {
+        ItemStack stack = inventory.item();
+        lastQueriedStack = new WeakReference<>(stack.copy());
+        return (input().isEmpty() || input().test(stack)) && fluid.test(stack);
     }
 
     @Override
-    public ItemStack craft(Inventory inventory, DynamicRegistryManager registries) {
-        lastQueriedInventory = new WeakReference<>(inventory);
-        return result.applyTo(inventory.getStack(0));
+    public ItemStack assemble(SingleRecipeInput inventory, HolderLookup.Provider registries) {
+        ItemStack stack = inventory.item();
+        lastQueriedStack = new WeakReference<>(stack.copy());
+        return result.applyTo(stack);
     }
 
     static class Serializer implements RecipeSerializer<SmeltingFluidRecipe> {
-        private static final Codec<SmeltingFluidRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codecs.createStrictOptionalFieldCodec(Codec.STRING, "group", "").forGetter(SmeltingFluidRecipe::getGroup),
-                CookingRecipeCategory.CODEC.fieldOf("category").orElse(CookingRecipeCategory.MISC).forGetter(SmeltingFluidRecipe::getCategory),
-                FluidIngredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.fluid),
-                Ingredient.ALLOW_EMPTY_CODEC.optionalFieldOf("item", Ingredient.empty()).forGetter(recipe -> recipe.ingredient),
+        private static final MapCodec<SmeltingFluidRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                com.mojang.serialization.Codec.STRING.optionalFieldOf("group", "").forGetter(SmeltingFluidRecipe::getGroup),
+                CookingBookCategory.CODEC.fieldOf("category").orElse(CookingBookCategory.MISC).forGetter(SmeltingFluidRecipe::getCategory),
+                FluidIngredient.CODEC.fieldOf("input").forGetter(SmeltingFluidRecipe::getFluid),
+                Ingredient.CODEC.optionalFieldOf("item").forGetter(recipe ->
+                        recipe.input().isEmpty() ? Optional.empty() : Optional.of(recipe.input())),
                 FluidModifyingResult.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                Codec.FLOAT.fieldOf("experience").forGetter(SmeltingFluidRecipe::getExperience),
-                Codec.INT.optionalFieldOf("cookingTIme", 200).forGetter(SmeltingFluidRecipe::getCookingTime)
-            ).apply(instance, SmeltingFluidRecipe::new));
+                com.mojang.serialization.Codec.FLOAT.fieldOf("experience").forGetter(SmeltingFluidRecipe::getExperience),
+                com.mojang.serialization.Codec.INT.optionalFieldOf("cookingtime", 200).forGetter(SmeltingFluidRecipe::getCookingTime)
+        ).apply(instance, (group, category, fluid, item, result, experience, cookingTime) ->
+                new SmeltingFluidRecipe(group, category, fluid, item.orElseGet(SmeltingFluidRecipe::emptyIngredient), result, experience, cookingTime)));
+
+        private static final StreamCodec<RegistryFriendlyByteBuf, SmeltingFluidRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                SmeltingFluidRecipe::getGroup,
+                CookingBookCategory.STREAM_CODEC,
+                SmeltingFluidRecipe::getCategory,
+                FluidIngredient.STREAM_CODEC,
+                SmeltingFluidRecipe::getFluid,
+                Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC,
+                recipe -> recipe.input().isEmpty() ? Optional.empty() : Optional.of(recipe.input()),
+                ByteBufCodecs.fromCodecWithRegistriesTrusted(FluidModifyingResult.CODEC),
+                recipe -> recipe.result,
+                ByteBufCodecs.FLOAT,
+                SmeltingFluidRecipe::getExperience,
+                ByteBufCodecs.VAR_INT,
+                SmeltingFluidRecipe::getCookingTime,
+                (group, category, fluid, item, result, experience, cookingTime) ->
+                        new SmeltingFluidRecipe(group, category, fluid, item.orElseGet(SmeltingFluidRecipe::emptyIngredient), result, experience, cookingTime)
+        );
 
         @Override
-        public Codec<SmeltingFluidRecipe> codec() {
+        public MapCodec<SmeltingFluidRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public SmeltingFluidRecipe read(PacketByteBuf buffer) {
-            return new SmeltingFluidRecipe(
-                    buffer.readString(),
-                    buffer.readEnumConstant(CookingRecipeCategory.class),
-                    new FluidIngredient(buffer),
-                    Ingredient.fromPacket(buffer),
-                    new FluidModifyingResult(buffer),
-                    buffer.readFloat(),
-                    buffer.readVarInt()
-            );
-        }
-
-        @Override
-        public void write(PacketByteBuf buffer, SmeltingFluidRecipe recipe) {
-            buffer.writeString(recipe.getGroup());
-            buffer.writeEnumConstant(recipe.getCategory());
-            recipe.fluid.write(buffer);
-            recipe.ingredient.write(buffer);
-            recipe.result.write(buffer);
-            buffer.writeFloat(recipe.getExperience());
-            buffer.writeVarInt(recipe.getCookingTime());
+        public StreamCodec<RegistryFriendlyByteBuf, SmeltingFluidRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
     }
 }

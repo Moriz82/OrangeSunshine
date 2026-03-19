@@ -9,11 +9,11 @@ import moriz.orangesunshine.PSDamageTypes;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by Sollace on Feb 6 2023.
@@ -28,21 +28,21 @@ public class BathSaltsDrug extends SimpleDrug {
         super.update(drugProperties);
 
         if (getActiveValue() > 0) {
-            PlayerEntity entity = drugProperties.asEntity();
-            Random random = entity.getWorld().random;
+            Player entity = drugProperties.asEntity();
+            RandomSource random = entity.level().random;
 
-            if (!entity.getWorld().isClient) {
+            if (!entity.level().isClientSide()) {
                 double chance = (getActiveValue() - 0.8F) * 0.051F;
 
-                if (entity.age % 20 == 0 && random.nextFloat() < chance) {
+                if (entity.tickCount % 20 == 0 && random.nextFloat() < chance) {
                     if (random.nextFloat() < 0.4F) {
-                        entity.damage(drugProperties.damageOf(PSDamageTypes.STROKE), Integer.MAX_VALUE);
+                        entity.hurt(drugProperties.damageOf(PSDamageTypes.STROKE), Integer.MAX_VALUE);
                     } else if (random.nextFloat() < 0.5F) {
-                        entity.damage(drugProperties.damageOf(PSDamageTypes.HEART_FAILURE), Integer.MAX_VALUE);
+                        entity.hurt(drugProperties.damageOf(PSDamageTypes.HEART_FAILURE), Integer.MAX_VALUE);
                     } else if (random.nextFloat() < 0.5F) {
-                        entity.damage(drugProperties.damageOf(PSDamageTypes.RESPIRATORY_FAILURE), Integer.MAX_VALUE);
+                        entity.hurt(drugProperties.damageOf(PSDamageTypes.RESPIRATORY_FAILURE), Integer.MAX_VALUE);
                     } else if (random.nextFloat() < 0.5F) {
-                        entity.damage(drugProperties.damageOf(PSDamageTypes.KIDNEY_FAILURE), Integer.MAX_VALUE);
+                        entity.hurt(drugProperties.damageOf(PSDamageTypes.KIDNEY_FAILURE), Integer.MAX_VALUE);
                     }
                 }
             }
@@ -52,15 +52,15 @@ public class BathSaltsDrug extends SimpleDrug {
     @Override
     public void onWakeUp(DrugProperties drugProperties) {
         if (getActiveValue() > 0) {
-            Random random = drugProperties.asEntity().getWorld().random;
+            RandomSource random = drugProperties.asEntity().level().random;
 
             if (random.nextFloat() < 0.5) {
-                drugProperties.asEntity().damage(
+                drugProperties.asEntity().hurt(
                         drugProperties.damageOf(random.nextFloat() < 0.002 ? PSDamageTypes.KIDNEY_FAILURE : PSDamageTypes.IN_SLEEP),
                         Integer.MAX_VALUE
                 );
             } else {
-                drugProperties.asEntity().addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 0, false, false, false));
+                drugProperties.asEntity().addEffect(new MobEffectInstance(MobEffects.NAUSEA, 300, 0, false, false, false));
                 super.onWakeUp(drugProperties);
             }
         } else {
@@ -97,6 +97,6 @@ public class BathSaltsDrug extends SimpleDrug {
     public float colorInversionHallucinationStrength() {
         float value = (float) getActiveValue();
         value *= value;
-        return MathHelper.clamp(value * 5.3F, 0, 1.5F);
+        return Mth.clamp(value * 5.3F, 0, 1.5F);
     }
 }

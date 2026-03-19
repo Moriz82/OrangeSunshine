@@ -6,10 +6,12 @@ import org.jetbrains.annotations.Nullable;
 
 import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.SimpleFluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 public class MutableFluidContainer {
 
@@ -21,12 +23,12 @@ public class MutableFluidContainer {
 
     protected SimpleFluid fluid;
     protected int level;
-    protected NbtCompound attributes;
+    protected CompoundTag attributes;
 
     @Nullable
-    protected NbtCompound stackNbt;
+    protected CompoundTag stackNbt;
 
-    protected MutableFluidContainer(FluidContainer container, SimpleFluid fluid, int level, NbtCompound attributes, @Nullable NbtCompound stackNbt) {
+    protected MutableFluidContainer(FluidContainer container, SimpleFluid fluid, int level, CompoundTag attributes, @Nullable CompoundTag stackNbt) {
         this.container = container;
         this.fluid = fluid;
         this.level = level;
@@ -40,15 +42,22 @@ public class MutableFluidContainer {
 
     public ItemStack asStack() {
         if (isEmpty()) {
-            return container.asEmpty().getDefaultStack();
+            return container.asEmpty().getDefaultInstance();
         }
 
-        ItemStack stack = container.asFilled(getFluid()).getDefaultStack();
-        stack.setNbt(stackNbt == null ? null : stackNbt.copy());
-        NbtCompound fluidTag = stack.getOrCreateSubNbt("fluid");
+        ItemStack stack = container.asFilled(getFluid()).getDefaultInstance();
+        CompoundTag rootTag = stackNbt == null ? new CompoundTag() : stackNbt.copy();
+        CompoundTag fluidTag = rootTag.getCompoundOrEmpty("fluid").copy();
         fluidTag.putInt("level", getLevel());
         fluidTag.putString("id", getFluid().getId().toString());
         fluidTag.put("attributes", (isEmpty() ? FluidContainer.EMPTY_NBT : attributes).copy());
+        rootTag.put("fluid", fluidTag);
+
+        if (rootTag.isEmpty()) {
+            stack.remove(DataComponents.CUSTOM_DATA);
+        } else {
+            CustomData.set(DataComponents.CUSTOM_DATA, stack, rootTag);
+        }
         return stack;
     }
 
@@ -68,12 +77,12 @@ public class MutableFluidContainer {
         return container.getMaxCapacity();
     }
 
-    public NbtCompound getAttributes() {
+    public CompoundTag getAttributes() {
         return attributes;
     }
 
     public MutableFluidContainer withLevel(int level) {
-        this.level = MathHelper.clamp(level, 0, getCapacity());
+        this.level = Mth.clamp(level, 0, getCapacity());
         if (this.level == 0) {
             return withFluid(PSFluids.EMPTY);
         }
@@ -88,15 +97,13 @@ public class MutableFluidContainer {
         this.fluid = fluid;
         if (fluid.isEmpty()) {
             this.level = 0;
-        }
-        if (fluid.isEmpty()) {
             this.attributes = FluidContainer.EMPTY_NBT;
         }
 
         return this;
     }
 
-    public MutableFluidContainer withAttributes(@Nullable NbtCompound attributes) {
+    public MutableFluidContainer withAttributes(@Nullable CompoundTag attributes) {
         this.attributes = isEmpty() || attributes == null || attributes.isEmpty() ? FluidContainer.EMPTY_NBT : attributes.copy();
         return this;
     }
@@ -149,7 +156,7 @@ public class MutableFluidContainer {
 
         if (isEmpty()
                 || (!outputFluid.isEmpty() && outputFluid != inputFluid)
-                || !(outputFluid.isEmpty() || outputContainer.attributes.isEmpty() || NbtHelper.matches(attributes, outputContainer.attributes, true))) {
+                || !(outputFluid.isEmpty() || outputContainer.attributes.isEmpty() || NbtUtils.compareNbt(attributes, outputContainer.attributes, true))) {
             return this;
         }
 

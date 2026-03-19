@@ -13,10 +13,10 @@ package moriz.orangesunshine.client.render.blocks;
 
 import moriz.orangesunshine.block.entity.RiftJarBlockEntity;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.util.Mth;
 
 /**
  * Updated by Sollace on 5 Jan 2023
@@ -60,17 +60,17 @@ public class RiftJarModel extends Model {
     public void setAngles(RiftJarBlockEntity entity, float tickDelta) {
         cork.pivotX = entity.fractionOpen * 2;
         cork.yaw = entity.fractionOpen * 0.1F;
-        knot.roll = 0.2602503F + (entity.fractionHandleUp * (1 + MathHelper.sin(entity.ticksAliveVisual * 0.1f) * 0.1f)) * 0.5f;
+        knot.roll = 0.2602503F + (entity.fractionHandleUp * (1 + Mth.sin(entity.ticksAliveVisual * 0.1f) * 0.1f)) * 0.5f;
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float r, float g, float b, float a) {
+    public void render(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float r, float g, float b, float a) {
         interior.hidden = true;
         tree.render(matrices, vertices, light, overlay, r, g, b, a);
         interior.hidden = false;
     }
 
-    public void renderInterior(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float r, float g, float b, float a) {
+    public void renderInterior(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float r, float g, float b, float a) {
         interior.render(matrices, vertices, light, overlay, r, g, b, a);
     }
 }

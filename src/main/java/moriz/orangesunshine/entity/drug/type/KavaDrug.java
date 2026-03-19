@@ -9,9 +9,9 @@ import moriz.orangesunshine.PSDamageTypes;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by Sollace on Feb 17 2023.
@@ -51,13 +51,13 @@ public class KavaDrug extends SimpleDrug {
 
     @Override
     public float desaturationHallucinationStrength() {
-        float strength = (MathHelper.clamp(getTicksActive(), 50, 250) - 50) / 200F;
+        float strength = (Mth.clamp(getTicksActive(), 50, 250) - 50) / 200F;
         return (float)getActiveValue() * 0.75f * strength;
     }
 
     @Override
     public float heartbeatVolume() {
-        float strength = (MathHelper.clamp(getTicksActive(), 50, 250) - 50) / 200F;
+        float strength = (Mth.clamp(getTicksActive(), 50, 250) - 50) / 200F;
         return MathUtils.inverseLerp((float) getActiveValue(), 0.4F, 1) * 1.2F * strength;
     }
 
@@ -66,26 +66,26 @@ public class KavaDrug extends SimpleDrug {
         super.update(drugProperties);
 
         if (getActiveValue() > 0) {
-            PlayerEntity entity = drugProperties.asEntity();
-            Random random = entity.getRandom();
+            Player entity = drugProperties.asEntity();
+            RandomSource random = entity.getRandom();
 
             double activeValue = getActiveValue();
 
-            if ((entity.age % 20) == 0 && getTicksActive() > 100) {
+            if ((entity.tickCount % 20) == 0 && getTicksActive() > 100) {
                 double damageChance = (activeValue - 1.3F) * 2;
 
-                if (entity.age % 10 == 0 && random.nextFloat() < damageChance) {
-                    entity.damage(drugProperties.damageOf(PSDamageTypes.HEART_FAILURE), (int) ((activeValue - 0.9f) * 50.0f + 4.0f));
+                if (entity.tickCount % 10 == 0 && random.nextFloat() < damageChance) {
+                    entity.hurt(drugProperties.damageOf(PSDamageTypes.HEART_FAILURE), (int)((activeValue - 0.9f) * 50.0f + 4.0f));
                 }
             }
 
             double motionEffect = Math.min(activeValue, 0.8);
 
-            rotateEntityPitch(entity, MathHelper.sin(entity.age / 600F * (float) Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
-            rotateEntityYaw(entity, MathHelper.cos(entity.age / 500F * (float) Math.PI) / 1.3F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityPitch(entity, Mth.sin(entity.tickCount / 600F * (float)Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityYaw(entity, Mth.cos(entity.tickCount / 500F * (float)Math.PI) / 1.3F * motionEffect * (random.nextFloat() + 0.5F));
 
-            rotateEntityPitch(entity, MathHelper.sin(entity.age / 180F * (float) Math.PI) / 3F * motionEffect * (random.nextFloat() + 0.5F));
-            rotateEntityYaw(entity, MathHelper.cos(entity.age / 150F * (float) Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityPitch(entity, Mth.sin(entity.tickCount / 180F * (float)Math.PI) / 3F * motionEffect * (random.nextFloat() + 0.5F));
+            rotateEntityYaw(entity, Mth.cos(entity.tickCount / 150F * (float)Math.PI) / 2F * motionEffect * (random.nextFloat() + 0.5F));
         }
     }
 }

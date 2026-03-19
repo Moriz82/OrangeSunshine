@@ -13,15 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.mojang.datafixers.util.Either;
 
 import moriz.orangesunshine.entity.drug.*;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Unit;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-@Mixin(PlayerEntity.class)
+@Mixin(Player.class)
 abstract class MixinPlayerEntity extends LivingEntity implements DrugPropertiesContainer {
     MixinPlayerEntity() {super(null, null);}
 
@@ -31,7 +32,7 @@ abstract class MixinPlayerEntity extends LivingEntity implements DrugPropertiesC
     @Override
     public DrugProperties getDrugProperties() {
         if (drugProperties == null) {
-            drugProperties = new DrugProperties((PlayerEntity)(Object)this);
+            drugProperties = new DrugProperties((Player)(Object)this);
         }
         return drugProperties;
     }
@@ -41,40 +42,39 @@ abstract class MixinPlayerEntity extends LivingEntity implements DrugPropertiesC
         getDrugProperties().onTick();
     }
 
-    @Inject(method = "wakeUp(ZZ)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "stopSleepInBed(ZZ)V", at = @At("HEAD"), cancellable = true)
     private void onWakeUp(boolean skipSleepTimer, boolean updateSleepingPlayers, CallbackInfo info) {
         if (!getDrugProperties().onAwoken()) {
             info.cancel();
         }
     }
 
-    @Inject(method = "trySleep(Lnet/minecraft/util/math/BlockPos;)Lcom/mojang/datafixers/util/Either;",
+    @Inject(method = "startSleepInBed(Lnet/minecraft/core/BlockPos;)Lcom/mojang/datafixers/util/Either;",
             at = @At("HEAD"),
             cancellable = true)
-    private void onTrySleep(BlockPos pos, CallbackInfoReturnable<Either<PlayerEntity.SleepFailureReason, Unit>> info) {
-        if (!getWorld().isClient) {
+    private void onTrySleep(BlockPos pos, CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> info) {
+        if (!level().isClientSide()) {
             getDrugProperties().trySleep(pos).ifPresent(reason -> {
-                ((PlayerEntity)(Object)this).sendMessage(reason, true);
+                ((Player)(Object)this).displayClientMessage(reason, true);
 
                 info.setReturnValue(Either.right(Unit.INSTANCE));
             });
         }
     }
 
-    @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getDestroySpeed(Lnet/minecraft/world/level/block/state/BlockState;)F", at = @At("RETURN"), cancellable = true)
     private void onGetBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> info) {
         info.setReturnValue(info.getReturnValue() * getDrugProperties().getModifier(Drug.DIG_SPEED));
     }
 
-    @Inject(method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
-    private void onWriteCustomDataToTag(NbtCompound tag, CallbackInfo info) {
-        tag.put("orangesunshine_drug_properties", getDrugProperties().toNbt());
+    @Inject(method = "addAdditionalSaveData(Lnet/minecraft/world/level/storage/ValueOutput;)V", at = @At("HEAD"))
+    private void onWriteCustomDataToTag(ValueOutput output, CallbackInfo info) {
+        output.store("orangesunshine_drug_properties", CompoundTag.CODEC, getDrugProperties().toNbt());
     }
 
-    @Inject(method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
-    private void onReadCustomDataFromTag(NbtCompound tag, CallbackInfo info) {
-        if (tag.contains("orangesunshine_drug_properties", NbtElement.COMPOUND_TYPE)) {
-            getDrugProperties().fromNbt(tag.getCompound("orangesunshine_drug_properties"));
-        }
+    @Inject(method = "readAdditionalSaveData(Lnet/minecraft/world/level/storage/ValueInput;)V", at = @At("HEAD"))
+    private void onReadCustomDataFromTag(ValueInput input, CallbackInfo info) {
+        input.read("orangesunshine_drug_properties", CompoundTag.CODEC)
+                .ifPresent(tag -> getDrugProperties().fromNbt(tag));
     }
 }

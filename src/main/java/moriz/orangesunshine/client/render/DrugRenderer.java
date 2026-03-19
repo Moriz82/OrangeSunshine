@@ -17,21 +17,21 @@ import moriz.orangesunshine.entity.drug.hallucination.DriftingCamera;
 import moriz.orangesunshine.entity.drug.hallucination.Hallucination;
 import moriz.orangesunshine.entity.drug.hallucination.HallucinationManager;
 import moriz.orangesunshine.client.render.effect.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.model.BipedEntityModel;
+import net.minecraft.client.renderer.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 
 import java.lang.Math;
 
@@ -87,7 +87,7 @@ public class DrugRenderer {
         //musicManager.update(drugProperties);
     }
 
-    public void distortScreen(MatrixStack matrices, float tickDelta) {
+    public void distortScreen(PoseStack matrices, float tickDelta) {
         DrugProperties properties = DrugProperties.of(MinecraftClient.getInstance().player);
         if (properties == null) {
             return;
@@ -106,29 +106,29 @@ public class DrugRenderer {
         Vec3d cameraOffset = driftingCam.getPosition();
         Vec3d prevCameraOffset = driftingCam.getPrevPosition();
         matrices.translate(
-             MathHelper.lerp(tickDelta, prevCameraOffset.x, cameraOffset.x),
-             MathHelper.lerp(tickDelta, prevCameraOffset.y, cameraOffset.y),
-             MathHelper.lerp(tickDelta, prevCameraOffset.z, cameraOffset.z)
+             Mth.lerp(tickDelta, prevCameraOffset.x, cameraOffset.x),
+             Mth.lerp(tickDelta, prevCameraOffset.y, cameraOffset.y),
+             Mth.lerp(tickDelta, prevCameraOffset.z, cameraOffset.z)
         );
         Vec3d cameraRoll = driftingCam.getRotation();
         Vec3d prevCameraRoll = driftingCam.getPrevRotation();
         matrices.multiply(new Quaternionf().rotateXYZ(
-                (float)MathHelper.lerp(tickDelta, prevCameraRoll.x, cameraRoll.x),
-                (float)MathHelper.lerp(tickDelta, prevCameraRoll.y, cameraRoll.y),
-                (float)MathHelper.lerp(tickDelta, prevCameraRoll.z, cameraRoll.z)
+                (float)Mth.lerp(tickDelta, prevCameraRoll.x, cameraRoll.x),
+                (float)Mth.lerp(tickDelta, prevCameraRoll.y, cameraRoll.y),
+                (float)Mth.lerp(tickDelta, prevCameraRoll.z, cameraRoll.z)
         ));
 
         matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(camera.getYaw() + 180.0f));
         matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(camera.getPitch()));
 
         if (wobblyness > 0) {
-            float f4 = MathHelper.square(5F / (wobblyness * wobblyness + 5F) - wobblyness * 0.04F);
+            float f4 = Mth.square(5F / (wobblyness * wobblyness + 5F) - wobblyness * 0.04F);
 
-            float sin1 = MathHelper.sin(tick / 150 * MathHelper.PI);
-            float sin2 = MathHelper.sin(tick / 170 * MathHelper.PI);
-            float sin3 = MathHelper.sin(tick / 190 * MathHelper.PI);
+            float sin1 = Mth.sin(tick / 150 * Mth.PI);
+            float sin2 = Mth.sin(tick / 170 * Mth.PI);
+            float sin3 = Mth.sin(tick / 190 * Mth.PI);
 
-            float yz = tick * 3F * MathHelper.RADIANS_PER_DEGREE;
+            float yz = tick * 3F * Mth.RADIANS_PER_DEGREE;
             Quaternionf rotation = new Quaternionf().rotateXYZ(0, yz, yz);
             matrices.multiply(rotation);
             matrices.scale(
@@ -146,7 +146,7 @@ public class DrugRenderer {
         );
     }
 
-    public void distortHand(MatrixStack matrices) {
+    public void distortHand(PoseStack matrices) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null) {
             return;
@@ -204,9 +204,9 @@ public class DrugRenderer {
         RenderPhase.pop();
     }
 
-    public void renderAllHallucinations(MatrixStack matrices, VertexConsumerProvider vertices, Camera camera, float tickDelta, DrugProperties drugProperties) {
+    public void renderAllHallucinations(PoseStack matrices, MultiBufferSource vertices, Camera camera, float tickDelta, DrugProperties drugProperties) {
         HallucinationManager hallucinations = drugProperties.getHallucinations();
-        float alpha = MathHelper.clamp(hallucinations.getHallucinationStrength(tickDelta) * 15, 0, 1);
+        float alpha = Mth.clamp(hallucinations.getHallucinationStrength(tickDelta) * 15, 0, 1);
         float forcedAlpha = hallucinations.getEntities().getForcedAlpha(tickDelta);
         if (forcedAlpha > 0) {
             alpha += forcedAlpha;

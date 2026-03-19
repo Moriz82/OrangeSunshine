@@ -5,21 +5,24 @@
 
 package moriz.orangesunshine.recipe;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.dynamic.Codecs;
-
-import java.util.*;
-
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 /**
  * Created from by Sollace on 7 Feb 2023
@@ -27,25 +30,26 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
  * Used by the mash table to produce a particular fluid from items dropped in.
  */
 public class MashingRecipe extends FillRecepticalRecipe {
-
     private final int stewTime;
-
     private final FluidIngredient fluid;
 
-    public MashingRecipe(String group, CraftingRecipeCategory category, FluidIngredient output, FluidIngredient fluid, DefaultedList<Ingredient> input, int stewTime) {
-        super(group, category, output, input, Ingredient.empty());
+    public MashingRecipe(String group, CraftingBookCategory category, FluidIngredient output,
+                         FluidIngredient fluid, List<Ingredient> input, int stewTime) {
+        super(group, category, output, input, Ingredient.of(java.util.stream.Stream.of()));
         this.fluid = fluid;
         this.stewTime = stewTime;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return PSRecipes.MASHING;
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<FillRecepticalRecipe> getSerializer() {
+        return (RecipeSerializer<FillRecepticalRecipe>)(RecipeSerializer<?>)PSRecipes.MASHING;
     }
 
     @Override
-    public RecipeType<?> getType() {
-        return PSRecipes.MASHING_TYPE;
+    @SuppressWarnings("unchecked")
+    public RecipeType<CraftingRecipe> getType() {
+        return (RecipeType<CraftingRecipe>)(RecipeType<?>)PSRecipes.MASHING_TYPE;
     }
 
     public int getStewTime() {
@@ -57,19 +61,17 @@ public class MashingRecipe extends FillRecepticalRecipe {
     }
 
     public MatchResult matchPartially(Object2IntMap<Item> inputs) {
-        final List<Ingredient> expectedInputs = new ArrayList<>(getIngredients());
-        final Object2IntMap<Item> unmatchedInputs = new Object2IntOpenHashMap<>(inputs);
+        List<Ingredient> expectedInputs = new ArrayList<>(getIngredients());
+        Object2IntMap<Item> unmatchedInputs = new Object2IntOpenHashMap<>(inputs);
 
         for (Item item : inputs.keySet()) {
-            ItemStack stack = item.getDefaultStack();
+            ItemStack stack = item.getDefaultInstance();
 
             if (expectedInputs.isEmpty()) {
-                // fail match as the supplied ingredients exceeds the expected inputs
                 return MatchResult.NONE;
             }
 
             Iterator<Ingredient> iter = expectedInputs.iterator();
-
             while (iter.hasNext()) {
                 Ingredient ingredient = iter.next();
                 if (ingredient.test(stack)) {
@@ -78,12 +80,9 @@ public class MashingRecipe extends FillRecepticalRecipe {
                         return MatchResult.of(unmatchedInputs.isEmpty(), expectedInputs.isEmpty());
                     }
 
-                    unmatchedInputs.computeInt(item, (s, i) -> i <= 1 ? null : i - 1);
+                    unmatchedInputs.computeInt(item, (entry, count) -> count <= 1 ? null : count - 1);
 
                     if (unmatchedInputs.isEmpty()) {
-                        // succeed if all supplied inputs are matched.
-                        // The recipe might be expecting more additional inputs.
-                        // We don't actually care. Crafting is done when only one recipe fits our current selection.
                         return MatchResult.of(true, expectedInputs.isEmpty());
                     }
                 }
@@ -94,43 +93,41 @@ public class MashingRecipe extends FillRecepticalRecipe {
     }
 
     static class Serializer implements RecipeSerializer<MashingRecipe> {
-        public static final Codec<MashingRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codecs.createStrictOptionalFieldCodec(Codec.STRING, "group", "").forGetter(MashingRecipe::getGroup),
-                CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter(MashingRecipe::getCategory),
+        private static final MapCodec<MashingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Codec.STRING.optionalFieldOf("group", "").forGetter(MashingRecipe::group),
+                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(MashingRecipe::category),
                 FluidIngredient.CODEC.fieldOf("result").forGetter(MashingRecipe::getOutputFluid),
                 FluidIngredient.CODEC.fieldOf("base_fluid").forGetter(MashingRecipe::getPoolFluid),
                 RecipeUtils.SHAPELESS_RECIPE_INGREDIENTS_CODEC.fieldOf("ingredients").forGetter(MashingRecipe::getIngredients),
-                Codec.INT.optionalFieldOf("stew_time", 0).forGetter(recipe -> recipe.stewTime)
+                Codec.INT.optionalFieldOf("stew_time", 0).forGetter(MashingRecipe::getStewTime)
         ).apply(instance, MashingRecipe::new));
 
+        private static final StreamCodec<RegistryFriendlyByteBuf, MashingRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                MashingRecipe::group,
+                CraftingBookCategory.STREAM_CODEC,
+                MashingRecipe::category,
+                FluidIngredient.STREAM_CODEC,
+                MashingRecipe::getOutputFluid,
+                FluidIngredient.STREAM_CODEC,
+                MashingRecipe::getPoolFluid,
+                ByteBufCodecs.collection(ArrayList::new, Ingredient.CONTENTS_STREAM_CODEC),
+                MashingRecipe::getIngredients,
+                ByteBufCodecs.VAR_INT,
+                MashingRecipe::getStewTime,
+                MashingRecipe::new
+        );
+
         @Override
-        public Codec<MashingRecipe> codec() {
+        public MapCodec<MashingRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public MashingRecipe read(PacketByteBuf buffer) {
-            return new MashingRecipe(
-                    buffer.readString(),
-                    buffer.readEnumConstant(CraftingRecipeCategory.class),
-                    new FluidIngredient(buffer),
-                    new FluidIngredient(buffer),
-                    buffer.readCollection(DefaultedList::ofSize, Ingredient::fromPacket),
-                    buffer.readVarInt()
-            );
-        }
-
-        @Override
-        public void write(PacketByteBuf buffer, MashingRecipe recipe) {
-            buffer.writeString(recipe.getGroup());
-            buffer.writeEnumConstant(recipe.getCategory());
-            recipe.getOutputFluid().write(buffer);
-            recipe.getPoolFluid().write(buffer);
-            buffer.writeCollection(recipe.getIngredients(), (b, c) -> c.write(b));
-            buffer.writeVarInt(recipe.getStewTime());
+        public StreamCodec<RegistryFriendlyByteBuf, MashingRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
     }
-
 
     public enum MatchResult {
         NONE,

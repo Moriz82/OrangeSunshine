@@ -9,26 +9,26 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.structure.pool.StructurePool;
-import net.minecraft.structure.pool.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
-@Mixin(StructurePool.class)
+@Mixin(StructureTemplatePool.class)
 interface MixinStructurePool extends MutableStructurePool {
     @Override
-    @Accessor
+    @Accessor("templates")
     ObjectArrayList<StructurePoolElement> getElements();
 
     @Override
-    @Accessor
+    @Accessor("templates")
     @Mutable
     void setElements(ObjectArrayList<StructurePoolElement> elements);
 
     @Override
-    @Accessor
+    @Accessor("rawTemplates")
     List<Pair<StructurePoolElement, Integer>> getElementCounts();
 
     @Override
-    @Accessor
+    @Accessor("rawTemplates")
     @Mutable
     void setElementCounts(List<Pair<StructurePoolElement, Integer>> elementCounts);
 }

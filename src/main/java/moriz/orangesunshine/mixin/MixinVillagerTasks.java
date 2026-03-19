@@ -12,38 +12,39 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.task.LoseJobOnSiteLossTask;
-import net.minecraft.entity.ai.brain.task.Task;
-import net.minecraft.entity.ai.brain.task.VillagerTaskListProvider;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.village.VillagerProfession;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.behavior.BehaviorControl;
+import net.minecraft.world.entity.ai.behavior.ResetProfession;
+import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
 
-@Mixin(LoseJobOnSiteLossTask.class)
+@Mixin(ResetProfession.class)
 abstract class MixinLoseJobOnSiteLossTask {
-    @Inject(method = "method_47038(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/passive/VillagerEntity;J)Z", at = @At("HEAD"), cancellable = true)
-    private static void onTryLoseJobSite(ServerWorld world, VillagerEntity entity, long time,
+    @Inject(method = "lambda$create$0", at = @At("HEAD"), cancellable = true)
+    private static void onTryLoseJobSite(ServerLevel world, Villager entity, long time,
             CallbackInfoReturnable<Boolean> info) {
-        if (entity.getVillagerData().getProfession() == PSTradeOffers.DRUG_ADDICT_PROFESSION) {
+        if (entity.getVillagerData().profession().is(PSTradeOffers.DRUG_ADDICT_PROFESSION)) {
             info.setReturnValue(false);
         }
     }
 }
 
-@Mixin(VillagerTaskListProvider.class)
+@Mixin(VillagerGoalPackages.class)
 abstract class MixinVillagerTaskListProvider {
     @Shadow
-    static Pair<Integer, Task<LivingEntity>> createBusyFollowTask() { return null; }
+    private static Pair<Integer, BehaviorControl<LivingEntity>> getFullLookBehavior() { return null; }
 
-    @Inject(method = "createWorkTasks(Lnet/minecraft/village/VillagerProfession;F)Lcom/google/common/collect/ImmutableList;", at = @At("HEAD"), cancellable = true)
-    private static void onCreateWorkTasks(VillagerProfession profession, float speed,
-            CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends Task<? super VillagerEntity>>>> info) {
-        if (profession == PSTradeOffers.DRUG_DEALER_PROFESSION) {
-            info.setReturnValue(DealerTaskListProvider.createWorkTasks(createBusyFollowTask(), speed));
+    @Inject(method = "getWorkPackage(Lnet/minecraft/core/Holder;F)Lcom/google/common/collect/ImmutableList;", at = @At("HEAD"), cancellable = true)
+    private static void onCreateWorkTasks(Holder<VillagerProfession> profession, float speed,
+            CallbackInfoReturnable<ImmutableList<Pair<Integer, ? extends BehaviorControl<? super Villager>>>> info) {
+        if (profession.is(PSTradeOffers.DRUG_DEALER_PROFESSION)) {
+            info.setReturnValue(DealerTaskListProvider.createWorkTasks(getFullLookBehavior(), speed));
         }
-        if (profession == PSTradeOffers.DRUG_ADDICT_PROFESSION) {
-            info.setReturnValue(AddictTaskListProvider.createWorkTasks(createBusyFollowTask(), speed));
+        if (profession.is(PSTradeOffers.DRUG_ADDICT_PROFESSION)) {
+            info.setReturnValue(AddictTaskListProvider.createWorkTasks(getFullLookBehavior(), speed));
         }
     }
 }

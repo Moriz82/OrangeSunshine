@@ -7,33 +7,36 @@ package moriz.orangesunshine.item;
 
 import moriz.orangesunshine.block.LatticeBlock;
 import moriz.orangesunshine.block.PSBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WineGrapesItem extends SpecialFoodItem {
-    public WineGrapesItem(Settings settings, int eatSpeed) {
+    public WineGrapesItem(Item.Properties settings, int eatSpeed) {
         super(settings, eatSpeed);
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        if (context.shouldCancelInteraction() || !context.getPlayer().canModifyAt(context.getWorld(), context.getBlockPos())) {
-            return ActionResult.PASS;
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null || context.isSecondaryUseActive() || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), context.getItemInHand())) {
+            return InteractionResult.PASS;
         }
 
-        BlockPos pos = context.getBlockPos();
-        BlockState state = context.getWorld().getBlockState(pos);
+        BlockPos pos = context.getClickedPos();
+        BlockState state = context.getLevel().getBlockState(pos);
 
-        if (state.isOf(PSBlocks.LATTICE)) {
-
-            context.getWorld().playSoundFromEntity(null, context.getPlayer(), SoundEvents.BLOCK_AZALEA_LEAVES_HIT, context.getPlayer().getSoundCategory(), 1, 1);
-            context.getWorld().setBlockState(pos, LatticeBlock.copyStateProperties(PSBlocks.WINE_GRAPE_LATTICE.getDefaultState(), state));
-            return ActionResult.SUCCESS;
+        if (state.is(PSBlocks.LATTICE)) {
+            context.getLevel().playSound(null, pos, SoundEvents.AZALEA_LEAVES_HIT, SoundSource.BLOCKS, 1, 1);
+            context.getLevel().setBlock(pos, LatticeBlock.copyStateProperties(PSBlocks.WINE_GRAPE_LATTICE.defaultBlockState(), state), 3);
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 }

@@ -16,14 +16,14 @@ import moriz.orangesunshine.client.render.ZeroScreen;
 import moriz.orangesunshine.client.render.bezier.Bezier;
 import moriz.orangesunshine.client.render.bezier.BezierLabelRenderer;
 import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.block.entity.*;
+import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.math.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -41,13 +41,13 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
     private static final Bezier OUTGOING_PATH = Bezier.spiral(0.06, 6, 6, 1, 0.2, 0);
 
     private static final BezierLabelRenderer.Style LABEL_STYLE = new BezierLabelRenderer.Style().spread(true);
-    private static final Text SMALL_SPIRAL_TEXT = Text.literal("This is a small spiral.").styled(s -> s.withFont(FONT));
+    private static final Component SMALL_SPIRAL_TEXT = Component.literal("This is a small spiral.").styled(s -> s.withFont(FONT));
 
     private final RiftJarModel model = new RiftJarModel(RiftJarModel.getTexturedModelData().createModel());
 
     private static final RiftJarBlockEntity ITEM_ENTITY = PSBlockEntities.RIFT_JAR.instantiate(BlockPos.ORIGIN, PSBlocks.RIFT_JAR.getDefaultState());
 
-    public static void renderStack(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public static void renderStack(ItemStack stack, ModelTransformationMode mode, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         ITEM_ENTITY.currentRiftFraction = PSItems.RIFT_JAR.getRiftFraction(stack);
         ITEM_ENTITY.ticksAliveVisual = (int)((System.currentTimeMillis() % 500) / 100);
         MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(ITEM_ENTITY, matrices, vertices, light, overlay);
@@ -58,7 +58,7 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
     }
 
     @Override
-    public void render(RiftJarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(RiftJarBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         float ticks = entity.ticksAliveVisual + tickDelta;
 
         matrices.push();
@@ -121,7 +121,7 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
                 BezierLabelRenderer.INSTANCE.render(matrices, vertices, light,
                         SPHERE_BEZIER_PATH,
                         LABEL_STYLE.shift(ticks * -0.002F).topCap(1),
-                        Text.literal(cheeseString("This is a small circle.", 1 - connection.fractionUp, new Random(42))).styled(s -> s.withFont(FONT)));
+                        Component.literal(cheeseString("This is a small circle.", 1 - connection.fractionUp, new Random(42))).styled(s -> s.withFont(FONT)));
 
                 matrices.pop();
             }

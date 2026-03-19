@@ -1,25 +1,26 @@
 package moriz.orangesunshine.recipe;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.RawShapedRecipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.DyeColor;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.Util;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 
 public class BottleRecipe extends ShapedRecipe {
     public static final Map<Item, DyeColor> COLORS = Util.make(new HashMap<>(), map -> {
@@ -41,61 +42,86 @@ public class BottleRecipe extends ShapedRecipe {
         map.put(Items.BLACK_STAINED_GLASS, DyeColor.BLACK);
     });
 
-    private final RawShapedRecipe raw;
+    private final ShapedRecipePattern pattern;
     private final ItemStack result;
 
-    public BottleRecipe(String group, CraftingRecipeCategory category, RawShapedRecipe raw, ItemStack result, boolean showNotification) {
-        super(group, category, raw, result, showNotification);
-        this.raw = raw;
+    public BottleRecipe(
+            String group,
+            CraftingBookCategory category,
+            ShapedRecipePattern pattern,
+            ItemStack result,
+            boolean showNotification
+    ) {
+        super(group, category, pattern, result, showNotification);
+        this.pattern = pattern;
         this.result = result;
     }
 
+    public String getGroup() {
+        return group();
+    }
+
+    public CraftingBookCategory getCategory() {
+        return category();
+    }
+
+    public ShapedRecipePattern getPattern() {
+        return pattern;
+    }
+
+    public ItemStack getResult() {
+        return result;
+    }
+
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registries) {
-        ItemStack output = getResult(registries).copy();
-        if (output.getItem() instanceof DyeableItem dyeable) {
-            RecipeUtils.stacks(inventory)
-                .map(stack -> stack.getItem())
+    public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider registries) {
+        ItemStack output = result.copy();
+        RecipeUtils.stacks(inventory)
+                .map(ItemStack::getItem)
                 .distinct()
                 .map(COLORS::get)
                 .filter(Objects::nonNull)
-                .findFirst().ifPresent(color -> {
-                    dyeable.setColor(output, color.getSignColor());
-                });
-        }
+                .findFirst()
+                .ifPresent(color -> output.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextColor())));
         return output;
     }
 
+    @Override
+    public RecipeSerializer<BottleRecipe> getSerializer() {
+        return PSRecipes.CRAFTING_SHAPED;
+    }
+
     public static class Serializer implements RecipeSerializer<BottleRecipe> {
-        private static final Codec<BottleRecipe> CODEC = RecordCodecBuilder.<BottleRecipe>create(instance -> instance.group(
-                Codecs.createStrictOptionalFieldCodec(Codec.STRING, "group", "").forGetter(recipe -> recipe.getGroup()),
-                CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter(recipe -> recipe.getCategory()),
-                RawShapedRecipe.CODEC.forGetter(recipe -> recipe.raw),
-                ItemStack.RECIPE_RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                Codecs.createStrictOptionalFieldCodec(Codec.BOOL, "show_notification", true).forGetter(recipe -> recipe.showNotification())
+        private static final MapCodec<BottleRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                com.mojang.serialization.Codec.STRING.optionalFieldOf("group", "").forGetter(BottleRecipe::getGroup),
+                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(BottleRecipe::getCategory),
+                ShapedRecipePattern.MAP_CODEC.forGetter(BottleRecipe::getPattern),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(BottleRecipe::getResult),
+                com.mojang.serialization.Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(BottleRecipe::showNotification)
         ).apply(instance, BottleRecipe::new));
 
+        private static final StreamCodec<RegistryFriendlyByteBuf, BottleRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                BottleRecipe::getGroup,
+                CraftingBookCategory.STREAM_CODEC,
+                BottleRecipe::getCategory,
+                ShapedRecipePattern.STREAM_CODEC,
+                BottleRecipe::getPattern,
+                ItemStack.STREAM_CODEC,
+                BottleRecipe::getResult,
+                ByteBufCodecs.BOOL,
+                BottleRecipe::showNotification,
+                BottleRecipe::new
+        );
+
         @Override
-        public Codec<BottleRecipe> codec() {
+        public MapCodec<BottleRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public BottleRecipe read(PacketByteBuf packetByteBuf) {
-            String string = packetByteBuf.readString();
-            CraftingRecipeCategory craftingRecipeCategory = packetByteBuf.readEnumConstant(CraftingRecipeCategory.class);
-            RawShapedRecipe rawShapedRecipe = RawShapedRecipe.readFromBuf(packetByteBuf);
-            ItemStack itemStack = packetByteBuf.readItemStack();
-            boolean bl = packetByteBuf.readBoolean();
-            return new BottleRecipe(string, craftingRecipeCategory, rawShapedRecipe, itemStack, bl);
-        }
-        @Override
-        public void write(PacketByteBuf packetByteBuf, BottleRecipe shapedRecipe) {
-            packetByteBuf.writeString(shapedRecipe.getGroup());
-            packetByteBuf.writeEnumConstant(shapedRecipe.getCategory());
-            shapedRecipe.raw.writeToBuf(packetByteBuf);
-            packetByteBuf.writeItemStack(shapedRecipe.result);
-            packetByteBuf.writeBoolean(shapedRecipe.showNotification());
+        public StreamCodec<RegistryFriendlyByteBuf, BottleRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
     }
 }

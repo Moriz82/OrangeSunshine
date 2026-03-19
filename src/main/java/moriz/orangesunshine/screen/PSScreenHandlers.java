@@ -1,47 +1,79 @@
 package moriz.orangesunshine.screen;
 
 import moriz.orangesunshine.OrangeSunshine;
-import moriz.orangesunshine.block.entity.*;
 import moriz.orangesunshine.block.entity.BarrelBlockEntity;
 import moriz.orangesunshine.block.entity.DistilleryBlockEntity;
 import moriz.orangesunshine.block.entity.FlaskBlockEntity;
 import moriz.orangesunshine.block.entity.MashTubBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 
 /**
  * @author Sollace
  * @since 12 Jan 2023
  */
 public interface PSScreenHandlers {
-    ScreenHandlerType<DryingTableScreenHandler> DRYING_TABLE = register("drying_table", new ExtendedScreenHandlerType<>(DryingTableScreenHandler::new));
+    MenuType<DryingTableScreenHandler> DRYING_TABLE = register("drying_table", new ExtendedScreenHandlerType<>(DryingTableScreenHandler::new, BlockPosData.STREAM_CODEC));
 
-    ScreenHandlerType<FluidContraptionScreenHandler<BarrelBlockEntity>> BARREL = register("barrel", new ExtendedScreenHandlerType<>(
-            (sync, inventory, buf) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.BARREL, sync, inventory, buf)
+    MenuType<FluidContraptionScreenHandler<BarrelBlockEntity>> BARREL = register("barrel", new ExtendedScreenHandlerType<>(
+            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.BARREL, sync, inventory, data),
+            BlockSideData.STREAM_CODEC
     ));
-    ScreenHandlerType<FluidContraptionScreenHandler<DistilleryBlockEntity>> DISTILLERY = register("distillery", new ExtendedScreenHandlerType<>(
-            (sync, inventory, buf) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.DISTILLERY, sync, inventory, buf)
+    MenuType<FluidContraptionScreenHandler<DistilleryBlockEntity>> DISTILLERY = register("distillery", new ExtendedScreenHandlerType<>(
+            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.DISTILLERY, sync, inventory, data),
+            BlockSideData.STREAM_CODEC
     ));
-    ScreenHandlerType<FluidContraptionScreenHandler<FlaskBlockEntity>> FLASK = register("flask", new ExtendedScreenHandlerType<>(
-            (sync, inventory, buf) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.FLASK, sync, inventory, buf)
+    MenuType<FluidContraptionScreenHandler<FlaskBlockEntity>> FLASK = register("flask", new ExtendedScreenHandlerType<>(
+            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.FLASK, sync, inventory, data),
+            BlockSideData.STREAM_CODEC
     ));
-    ScreenHandlerType<FluidContraptionScreenHandler<MashTubBlockEntity>> MASH_TUB = register("mash_tub", new ExtendedScreenHandlerType<>(
-            (sync, inventory, buf) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.MASH_TUB, sync, inventory, buf)
+    MenuType<FluidContraptionScreenHandler<MashTubBlockEntity>> MASH_TUB = register("mash_tub", new ExtendedScreenHandlerType<>(
+            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.MASH_TUB, sync, inventory, data),
+            BlockSideData.STREAM_CODEC
     ));
-    public static final ScreenHandlerType<MortarPestleScreenHandler> MORTAR_PESTLE =
-            Registry.register(Registries.SCREEN_HANDLER, OrangeSunshine.id("mortar_pestle"),
-                    new ExtendedScreenHandlerType<>(MortarPestleScreenHandler::new));
+    MenuType<MortarPestleScreenHandler> MORTAR_PESTLE =
+            Registry.register(BuiltInRegistries.MENU, OrangeSunshine.id("mortar_pestle"),
+                    new ExtendedScreenHandlerType<>(MortarPestleScreenHandler::new, BlockPosData.STREAM_CODEC));
 
-    public static final ScreenHandlerType<MixingTableScreenHandler> MIXING_TABLE =
-            Registry.register(Registries.SCREEN_HANDLER, OrangeSunshine.id("mixing_table"),
-                    new ExtendedScreenHandlerType<>(MixingTableScreenHandler::new));
+    MenuType<MixingTableScreenHandler> MIXING_TABLE =
+            Registry.register(BuiltInRegistries.MENU, OrangeSunshine.id("mixing_table"),
+                    new ExtendedScreenHandlerType<>(MixingTableScreenHandler::new, BlockPosData.STREAM_CODEC));
 
-    static <T extends ScreenHandler> ScreenHandlerType<T> register(String name, ScreenHandlerType<T> type) {
-        return Registry.register(Registries.SCREEN_HANDLER, OrangeSunshine.id(name), type);
+    static <T extends AbstractContainerMenu> MenuType<T> register(String name, MenuType<T> type) {
+        return Registry.register(BuiltInRegistries.MENU, OrangeSunshine.id(name), type);
     }
 
     static void bootstrap() { }
+
+    record BlockPosData(BlockPos pos) {
+        public static final StreamCodec<RegistryFriendlyByteBuf, BlockPosData> STREAM_CODEC = StreamCodec.of(BlockPosData::write, BlockPosData::read);
+
+        private static BlockPosData read(RegistryFriendlyByteBuf buffer) {
+            return new BlockPosData(buffer.readBlockPos());
+        }
+
+        private static void write(RegistryFriendlyByteBuf buffer, BlockPosData data) {
+            buffer.writeBlockPos(data.pos);
+        }
+    }
+
+    record BlockSideData(BlockPos pos, Direction direction) {
+        public static final StreamCodec<RegistryFriendlyByteBuf, BlockSideData> STREAM_CODEC = StreamCodec.of(BlockSideData::write, BlockSideData::read);
+
+        private static BlockSideData read(RegistryFriendlyByteBuf buffer) {
+            return new BlockSideData(buffer.readBlockPos(), buffer.readEnum(Direction.class));
+        }
+
+        private static void write(RegistryFriendlyByteBuf buffer, BlockSideData data) {
+            buffer.writeBlockPos(data.pos);
+            buffer.writeEnum(data.direction);
+        }
+    }
 }

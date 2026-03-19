@@ -13,19 +13,20 @@ import moriz.orangesunshine.block.PlacedDrinksBlock;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
 import moriz.orangesunshine.particle.ExhaledSmokeParticleEffect;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.phys.AABB;
 
 public class SmokeableItem extends Item {
     public static Vector3f WHITE = new Vector3f(1, 1, 1);
@@ -36,7 +37,7 @@ public class SmokeableItem extends Item {
 
     private final int useStages;
 
-    public SmokeableItem(Settings settings, int useStages, Vector3f smokeColor, DrugInfluence... drugEffects) {
+    public SmokeableItem(Item.Properties settings, int useStages, Vector3f smokeColor, DrugInfluence... drugEffects) {
         super(settings);
         this.smokeColor = smokeColor;
         this.useStages = useStages;
@@ -44,7 +45,7 @@ public class SmokeableItem extends Item {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 25;
     }
 
@@ -53,60 +54,62 @@ public class SmokeableItem extends Item {
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.TOOT_HORN;
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return ItemUseAnimation.TOOT_HORN;
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         DrugProperties.of(entity).ifPresent(drugProperties -> {
             drugProperties.addAll(drugEffects);
-            drugProperties.startBreathingSmoke(10 + world.random.nextInt(10), smokeColor);
+            drugProperties.startBreathingSmoke(10 + level.random.nextInt(10), smokeColor);
         });
 
-        if (!(entity instanceof PlayerEntity && ((PlayerEntity)entity).getAbilities().creativeMode)) {
-            if (!stack.isDamageable()) {
-                stack.decrement(1);
+        if (!(entity instanceof Player player && player.getAbilities().instabuild)) {
+            if (!stack.isDamageableItem()) {
+                stack.consume(1, entity);
             } else {
-                stack.damage(1, entity, p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+                stack.hurtAndBreak(1, entity, entity.getUsedItemHand());
             }
         }
 
-        return super.finishUsing(stack, world, entity);
+        return super.finishUsingItem(stack, level, entity);
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         return PlacedDrinksBlock.tryPlace(context);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (!DrugProperties.of(player).isBreathingSmoke()) {
-            player.setCurrentHand(hand);
-            return TypedActionResult.consume(stack);
+            player.startUsingItem(hand);
+            return InteractionResult.CONSUME;
         }
 
-        return TypedActionResult.fail(stack);
+        return InteractionResult.FAIL;
     }
 
-    public void onIncinerated(ItemStack stack, World world, BlockPos pos, AbstractFurnaceBlockEntity furnace) {
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(3), EntityPredicates.EXCEPT_SPECTATOR).forEach(player -> {
+    public void onIncinerated(ItemStack stack, Level level, BlockPos pos, AbstractFurnaceBlockEntity furnace) {
+        level.getEntitiesOfClass(Player.class, new AABB(pos).inflate(3), EntitySelector.NO_SPECTATORS).forEach(player -> {
             DrugProperties.of(player).addAll(drugEffects);
         });
 
         var effect = new ExhaledSmokeParticleEffect(smokeColor, 1);
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
         for (int i = 0; i < 30; i++) {
-            ((ServerWorld)world).spawnParticles(effect,
-                    world.random.nextTriangular(pos.getX() + 0.5, 0.3),
+            serverLevel.sendParticles(effect,
+                    level.random.nextGaussian() * 0.3 + pos.getX() + 0.5,
                     pos.getY() + 1,
-                    world.random.nextTriangular(pos.getZ() + 0.5, 0.3),
+                    level.random.nextGaussian() * 0.3 + pos.getZ() + 0.5,
                     1,
-                    world.random.nextTriangular(0, 0.3),
-                    world.random.nextTriangular(0.8, 0.3),
-                    world.random.nextTriangular(0, 0.3), 0.001F);
+                    level.random.nextGaussian() * 0.3,
+                    level.random.nextGaussian() * 0.3 + 0.8,
+                    level.random.nextGaussian() * 0.3,
+                    0.001F);
         }
     }
 }

@@ -5,31 +5,33 @@
 
 package moriz.orangesunshine.item;
 
+import net.minecraft.core.component.DataComponents;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class EdibleItem extends Item {
-    public static final FoodComponent NON_FILLING_EDIBLE = new FoodComponent.Builder().hunger(0).saturationModifier(0.1F).alwaysEdible().build();
-    public static final FoodComponent HAS_MUFFIN = new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).alwaysEdible().build();
-    public static final FoodComponent TOMATO = new FoodComponent.Builder().hunger(1).saturationModifier(1.9F).alwaysEdible().build();
+    public static final FoodProperties NON_FILLING_EDIBLE = new FoodProperties.Builder().nutrition(0).saturationModifier(0.1F).alwaysEdible().build();
+    public static final FoodProperties HAS_MUFFIN = new FoodProperties.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().build();
+    public static final FoodProperties TOMATO = new FoodProperties.Builder().nutrition(1).saturationModifier(1.9F).alwaysEdible().build();
 
     private final DrugInfluence influence;
 
-    public EdibleItem(Settings settings, DrugInfluence influence) {
+    public EdibleItem(Item.Properties settings, DrugInfluence influence) {
         super(settings);
         this.influence = influence;
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        ItemStack remainder = super.finishUsing(stack, world, user);
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
+        ItemStack remainder = super.finishUsingItem(stack, level, user);
 
-        if (!isFood() && (!(user instanceof PlayerEntity) || ((PlayerEntity)user).isCreative())) {
-            remainder.decrement(1);
+        if (stack.get(DataComponents.FOOD) == null && user.hasInfiniteMaterials() && !remainder.isEmpty()) {
+            remainder.shrink(1);
         }
 
         DrugProperties.of(user).ifPresent(drugProperties -> {

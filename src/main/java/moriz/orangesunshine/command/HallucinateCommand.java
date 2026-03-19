@@ -9,50 +9,49 @@ import com.mojang.brigadier.suggestion.*;
 import moriz.orangesunshine.entity.drug.hallucination.HallucinationTypeKeys;
 import moriz.orangesunshine.network.Channel;
 import moriz.orangesunshine.network.MsgHallucinate;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.IdentifierArgumentType;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 
 /**
  * @author Sollace
  * @since 5 Jan 2023
  */
 class HallucinateCommand {
-    private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS = (context, builder) -> CommandSource.suggestIdentifiers(HallucinationTypeKeys.REGISTRY, builder);
+    private static final SuggestionProvider<CommandSourceStack> SUGGESTIONS = (context, builder) -> SharedSuggestionProvider.suggestResource(HallucinationTypeKeys.REGISTRY, builder);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registries) {
-        dispatcher.register(CommandManager.literal("hallucinate")
-                .requires(source -> source.hasPermissionLevel(2))
-            .requires(source -> source.hasPermissionLevel(2))
-                    .then(CommandManager.argument("type", IdentifierArgumentType.identifier()).suggests(SUGGESTIONS).executes(ctx -> {
-                        sendHallucination(ctx, ctx.getSource().getPlayerOrThrow(), Optional.empty());
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registries) {
+        dispatcher.register(Commands.literal("hallucinate")
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                    .then(Commands.argument("type", IdentifierArgument.id()).suggests(SUGGESTIONS).executes(ctx -> {
+                        sendHallucination(ctx, ctx.getSource().getPlayerOrException(), Optional.empty());
                         return 0;
                     })
-                    .then(CommandManager.argument("target", EntityArgumentType.players()).executes(ctx -> {
-                        EntityArgumentType.getPlayers(ctx, "target").forEach(player -> {
+                    .then(Commands.argument("target", EntityArgument.players()).executes(ctx -> {
+                        EntityArgument.getPlayers(ctx, "target").forEach(player -> {
                             sendHallucination(ctx, player, Optional.empty());
                         });
                         return 0;
                     }))
-                    .then(CommandManager.argument("position", BlockPosArgumentType.blockPos()).executes(ctx -> {
-                        sendHallucination(ctx, ctx.getSource().getPlayerOrThrow(), Optional.of(BlockPosArgumentType.getBlockPos(ctx, "position")));
+                    .then(Commands.argument("position", BlockPosArgument.blockPos()).executes(ctx -> {
+                        sendHallucination(ctx, ctx.getSource().getPlayerOrException(), Optional.of(BlockPosArgument.getBlockPos(ctx, "position")));
                         return 0;
                     }))
             )
         );
     }
 
-    private static void sendHallucination(CommandContext<ServerCommandSource> ctx, ServerPlayerEntity player, Optional<BlockPos> position) {
-        Identifier type = IdentifierArgumentType.getIdentifier(ctx, "type");
+    private static void sendHallucination(CommandContext<CommandSourceStack> ctx, ServerPlayer player, Optional<BlockPos> position) {
+        Identifier type = IdentifierArgument.getId(ctx, "type");
         Channel.HALLUCINATE.sendToPlayer(new MsgHallucinate(player.getId(), type, position), player);
-        ctx.getSource().sendFeedback(() -> Text.translatable("commands.hallucinate.success"), true);
+        ctx.getSource().sendSuccess(() -> Component.translatable("commands.hallucinate.success"), true);
     }
 }

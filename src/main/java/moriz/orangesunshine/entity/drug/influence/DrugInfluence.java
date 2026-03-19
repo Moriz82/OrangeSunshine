@@ -12,14 +12,13 @@ import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.NbtSerialisable;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.util.Identifier;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
 
 public class DrugInfluence implements NbtSerialisable {
 
-    public static Optional<DrugInfluence> loadFromNbt(NbtCompound compound) {
-        return InfluenceType.of(compound.getString("type")).map(type -> type.create(compound));
+    public static Optional<DrugInfluence> loadFromNbt(CompoundTag compound) {
+        return InfluenceType.of(compound.getStringOr("type", "")).map(type -> type.create(compound));
     }
 
     protected DrugType drugType;
@@ -122,20 +121,21 @@ public class DrugInfluence implements NbtSerialisable {
     }
 
     @Override
-    public void fromNbt(NbtCompound compound) {
-        if (compound.contains("drugName", NbtElement.STRING_TYPE)) {
-            drugType = DrugType.REGISTRY.get(OrangeSunshine.id(compound.getString("drugName").toLowerCase(Locale.ROOT)));
+    public void fromNbt(CompoundTag compound) {
+        if (compound.contains("drugName")) {
+            drugType = DrugType.REGISTRY.getValue(OrangeSunshine.id(compound.getStringOr("drugName", "").toLowerCase(Locale.ROOT)));
         } else {
-            drugType = DrugType.REGISTRY.get(Identifier.tryParse(compound.getString("drugType")));
+            Identifier id = Identifier.tryParse(compound.getStringOr("drugType", ""));
+            drugType = id == null ? null : DrugType.REGISTRY.getValue(id);
         }
-        delay = compound.getInt("delay");
-        influenceSpeed = compound.getDouble("influenceSpeed");
-        influenceSpeedPlus = compound.getDouble("influenceSpeedPlus");
-        maxInfluence = compound.getDouble("maxInfluence");
+        delay = compound.getIntOr("delay", 0);
+        influenceSpeed = compound.getDoubleOr("influenceSpeed", 0);
+        influenceSpeedPlus = compound.getDoubleOr("influenceSpeedPlus", 0);
+        maxInfluence = compound.getDoubleOr("maxInfluence", 0);
     }
 
     @Override
-    public void toNbt(NbtCompound compound) {
+    public void toNbt(CompoundTag compound) {
         compound.putString("type", type.identifier());
         compound.putString("drugType", drugType.id().toString());
         compound.putInt("delay", delay);

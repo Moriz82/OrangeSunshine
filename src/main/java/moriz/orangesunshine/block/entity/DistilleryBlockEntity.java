@@ -11,16 +11,17 @@ import moriz.orangesunshine.fluid.*;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.fluid.Processable;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Created by lukas on 25.10.14.
@@ -33,38 +34,39 @@ public class DistilleryBlockEntity extends FluidProcessingBlockEntity {
     }
 
     @Override
-    protected boolean canProcess(ServerWorld world, int timeNeeded) {
+    protected boolean canProcess(ServerLevel world, int timeNeeded) {
         return super.canProcess(world, timeNeeded)
                 && getFacing().getAxis() != Axis.Y
                 && DistilleryBlock.canConnectTo(world.getBlockState(getOutputPos()), getFacing())
-                && getOutput(world, getPos()) instanceof FlaskBlockEntity;
+                && getOutput(world) instanceof FlaskBlockEntity;
     }
 
     @Override
-    protected void onProcessCompleted(ServerWorld world, Resovoir tank, ItemStack results) {
-        world.spawnParticles(ParticleTypes.CLOUD,
-                pos.getX() + world.getRandom().nextTriangular(0.5F, 0.5F),
+    protected void onProcessCompleted(ServerLevel world, Resovoir tank, ItemStack results) {
+        BlockPos pos = getBlockPos();
+        world.sendParticles(ParticleTypes.CLOUD,
+                pos.getX() + world.getRandom().triangle(0.5F, 0.5F),
                 pos.getY() + 0.6F,
-                pos.getZ() + world.getRandom().nextTriangular(0.5F, 0.5F),
+                pos.getZ() + world.getRandom().triangle(0.5F, 0.5F),
                 2, 0, 0, 0, 0);
         if (world.getRandom().nextInt(10) == 0) {
-            world.playSound(null, getPos(), SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 0.25F, 0.02F);
+            world.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.25F, 0.02F);
         }
 
         BlockPos outputPos = getOutputPos();
-        if (getOutput(world, getPos()) instanceof FlaskBlockEntity destination) {
+        if (getOutput(world) instanceof FlaskBlockEntity destination) {
             ItemStack overflow = destination.getTank(getFacing().getOpposite()).deposit(results);
             if (FluidContainer.of(overflow).getLevel(overflow) > 0) {
-                Block.dropStack(world, outputPos, overflow);
+                Block.popResource(world, outputPos, overflow);
             }
         } else {
-            Block.dropStack(world, outputPos, results);
+            Block.popResource(world, outputPos, results);
         }
         super.onProcessCompleted(world, tank, results);
     }
 
-    private BlockEntity getOutput(ServerWorld world, BlockPos pos) {
-        pos = getOutputPos();
+    private BlockEntity getOutput(ServerLevel world) {
+        BlockPos pos = getOutputPos();
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof MashTubWallBlock f) {
             pos = world.getBlockEntity(pos, PSBlockEntities.MASH_TUB_EDGE).map(p -> p.getMasterPos()).orElse(pos);
@@ -73,10 +75,10 @@ public class DistilleryBlockEntity extends FluidProcessingBlockEntity {
     }
 
     private BlockPos getOutputPos() {
-        return getPos().offset(getFacing());
+        return getBlockPos().relative(getFacing());
     }
 
     private Direction getFacing() {
-        return getCachedState().get(DistilleryBlock.FACING);
+        return getBlockState().getValue(DistilleryBlock.FACING);
     }
 }

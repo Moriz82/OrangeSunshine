@@ -3,15 +3,14 @@ package moriz.orangesunshine.client.render.bezier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.font.TextRenderer.TextLayerType;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resource.language.ReorderingUtil;
-import net.minecraft.client.util.math.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.text.*;
 import net.minecraft.util.math.RotationAxis;
 
@@ -32,7 +31,7 @@ public class BezierLabelRenderer {
         return visitor.accept(activeIndex, activeStyle, activeCodePoint);
     };
 
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, int light, Bezier bezier, Style style, Text text) {
+    public void render(PoseStack matrices, MultiBufferSource vertices, int light, Bezier bezier, Style style, Component text) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 

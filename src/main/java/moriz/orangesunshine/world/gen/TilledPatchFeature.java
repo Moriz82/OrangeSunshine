@@ -5,16 +5,18 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import moriz.orangesunshine.block.CannabisPlantBlock;
 import moriz.orangesunshine.block.PSBlocks;
-import net.minecraft.block.*;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 public class TilledPatchFeature extends Feature<TilledPatchFeature.Config> {
     public TilledPatchFeature() {
@@ -22,26 +24,26 @@ public class TilledPatchFeature extends Feature<TilledPatchFeature.Config> {
     }
 
     @Override
-    public boolean generate(FeatureContext<Config> context) {
-        final StructureWorldAccess world = context.getWorld();
+    public boolean place(FeaturePlaceContext<Config> context) {
+        final WorldGenLevel world = context.level();
 
-        final Random random = context.getRandom();
+        final RandomSource random = context.random();
 
-        Config config = context.getConfig();
+        Config config = context.config();
 
-        BlockPos.Mutable mutablePos = context.getOrigin().mutableCopy();
+        BlockPos.MutableBlockPos mutablePos = context.origin().mutable();
 
         findTerrainLevel(world, mutablePos);
 
-        if (world.isOutOfHeightLimit(mutablePos) || (!world.isAir(mutablePos) && !isReplaceable(world, mutablePos))) {
+        if (world.isOutsideBuildHeight(mutablePos) || (!world.isEmptyBlock(mutablePos) && !isReplaceable(world, mutablePos))) {
             return false;
         }
 
-        final BlockPos origin = mutablePos.toImmutable();
+        final BlockPos origin = mutablePos.immutable();
         mutablePos.move(Direction.DOWN);
 
-        if (isSoil(world, mutablePos) && (!config.needsWater || isWaterNearby(world, mutablePos))) {
-            final int patchSize = context.getRandom().nextInt(3) + 1;
+        if (isDirt(world.getBlockState(mutablePos)) && (!config.needsWater() || isWaterNearby(world, mutablePos))) {
+            final int patchSize = context.random().nextInt(3) + 1;
             final int patchSizeSq = patchSize * patchSize;
 
             for (int xOffset = -patchSize; xOffset <= patchSize; xOffset++) {
@@ -55,17 +57,17 @@ public class TilledPatchFeature extends Feature<TilledPatchFeature.Config> {
 
                     findTerrainLevel(world, mutablePos);
 
-                    if (world.isOutOfHeightLimit(mutablePos) || !isReplaceable(world, mutablePos)) {
+                    if (world.isOutsideBuildHeight(mutablePos) || !isReplaceable(world, mutablePos)) {
                         continue;
                     }
                     mutablePos.move(Direction.DOWN);
 
-                    if (isSoil(world, mutablePos) && random.nextInt(3) == 0) {
+                    if (isDirt(world.getBlockState(mutablePos)) && random.nextInt(3) == 0) {
                         placeCrop(world, config, random, mutablePos);
                         mutablePos.move(Direction.DOWN);
                         BlockState roots = world.getBlockState(mutablePos);
-                        if (isSoil(roots) || isStone(roots)) {
-                            setBlockState(world, mutablePos, Blocks.ROOTED_DIRT.getDefaultState());
+                        if (isDirt(roots) || isStone(roots)) {
+                            setBlock(world, mutablePos, Blocks.ROOTED_DIRT.defaultBlockState());
                         }
                     }
                 }
@@ -77,42 +79,42 @@ public class TilledPatchFeature extends Feature<TilledPatchFeature.Config> {
         return false;
     }
 
-    private void placeCrop(StructureWorldAccess world, Config config, Random random, BlockPos.Mutable mutablePos) {
-        int plantHeight = Math.min(2 + random.nextInt(random.nextInt(3) + 1), config.block.getMaxHeight());
+    private void placeCrop(WorldGenLevel world, Config config, RandomSource random, BlockPos.MutableBlockPos mutablePos) {
+        int plantHeight = Math.min(2 + random.nextInt(random.nextInt(3) + 1), config.block().getMaxHeight());
 
         for (int i = 0; i < plantHeight; ++i) {
-            BlockState state = config.block.getStateForHeight(i).with(CannabisPlantBlock.NATURAL, true);
+            BlockState state = config.block().getStateForHeight(i).setValue(CannabisPlantBlock.NATURAL, true);
 
-            int age = config.block.getMaxAge(state);
+            int age = config.block().getMaxAge(state);
             if (i == plantHeight - 1) {
                 age = random.nextInt(age + 1);
             }
 
-            state = state.with(config.block.getAgeProperty(), age);
+            state = state.setValue(config.block().getAgeProperty(), age);
 
             mutablePos.move(Direction.UP);
 
-            if (!state.canPlaceAt(world, mutablePos)) {
+            if (!state.canSurvive(world, mutablePos)) {
                 break;
             }
 
-            setBlockState(world, mutablePos, state);
+            setBlock(world, mutablePos, state);
         }
     }
 
-    static boolean isReplaceable(StructureWorldAccess world, BlockPos pos) {
-        return world.isAir(pos) || world.getBlockState(pos).isIn(BlockTags.REPLACEABLE_BY_TREES);
+    static boolean isReplaceable(WorldGenLevel world, BlockPos pos) {
+        return world.isEmptyBlock(pos) || world.getBlockState(pos).is(BlockTags.REPLACEABLE_BY_TREES);
     }
 
-    static boolean isWaterNearby(StructureWorldAccess world, BlockPos pos) {
-        return BlockPos.findClosest(pos, 1, 1, p -> world.getFluidState(p).isIn(FluidTags.WATER) && pos != null).isPresent();
+    static boolean isWaterNearby(WorldGenLevel world, BlockPos pos) {
+        return BlockPos.findClosestMatch(pos, 1, 1, p -> world.getFluidState(p).is(FluidTags.WATER)).isPresent();
     }
 
-    static void findTerrainLevel(StructureWorldAccess world, BlockPos.Mutable mutablePos) {
+    static void findTerrainLevel(WorldGenLevel world, BlockPos.MutableBlockPos mutablePos) {
         if (isReplaceable(world, mutablePos)) {
             do {
                 mutablePos.move(Direction.DOWN);
-            } while (isReplaceable(world, mutablePos) && !world.isOutOfHeightLimit(mutablePos));
+            } while (isReplaceable(world, mutablePos) && !world.isOutsideBuildHeight(mutablePos));
 
             mutablePos.move(Direction.UP);
         }
@@ -120,18 +122,45 @@ public class TilledPatchFeature extends Feature<TilledPatchFeature.Config> {
         if (!isReplaceable(world, mutablePos)) {
             do {
                 mutablePos.move(Direction.UP);
-            } while (!isReplaceable(world, mutablePos) && !world.isOutOfHeightLimit(mutablePos));
+            } while (!isReplaceable(world, mutablePos) && !world.isOutsideBuildHeight(mutablePos));
         }
     }
 
-    public static record Config (boolean needsWater, CannabisPlantBlock block) implements FeatureConfig {
+    public static record Config (boolean needsWater, CannabisPlantBlock block) implements FeatureConfiguration {
+        private static Identifier blockId(CannabisPlantBlock block) {
+            if (block == (CannabisPlantBlock) PSBlocks.HOP) {
+                return Identifier.parse("orangesunshine:hop");
+            }
+            if (block == (CannabisPlantBlock) PSBlocks.TOBACCO) {
+                return Identifier.parse("orangesunshine:tobacco");
+            }
+            if (block == (CannabisPlantBlock) PSBlocks.COFFEA) {
+                return Identifier.parse("orangesunshine:coffea");
+            }
+            if (block == (CannabisPlantBlock) PSBlocks.COCA) {
+                return Identifier.parse("orangesunshine:coca");
+            }
+            return Identifier.parse("orangesunshine:cannabis");
+        }
+
+        private static CannabisPlantBlock resolveBlock(Identifier id) {
+            String path = id.getPath();
+            return switch (path) {
+                case "hop" -> (CannabisPlantBlock) PSBlocks.HOP;
+                case "tobacco" -> (CannabisPlantBlock) PSBlocks.TOBACCO;
+                case "coffea" -> (CannabisPlantBlock) PSBlocks.COFFEA;
+                case "coca" -> (CannabisPlantBlock) PSBlocks.COCA;
+                default -> (CannabisPlantBlock) PSBlocks.CANNABIS;
+            };
+        }
+
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     Codec.BOOL.fieldOf("needsWater").orElse(true).forGetter(Config::needsWater),
-                    Registries.BLOCK.getCodec().fieldOf("block").forGetter(Config::block)
+                    Identifier.CODEC.fieldOf("block").xmap(Config::resolveBlock, Config::blockId).forGetter(Config::block)
             ).apply(instance, (needsWater, block) -> new Config(
                     (boolean)needsWater,
-                    (CannabisPlantBlock)(block instanceof CannabisPlantBlock ? block : PSBlocks.CANNABIS)
+                    block
             ));
         });
     }

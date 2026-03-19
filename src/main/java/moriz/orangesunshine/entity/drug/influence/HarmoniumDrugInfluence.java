@@ -10,8 +10,8 @@ import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.entity.drug.type.HarmoniumDrug;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 
 /**
  * Created by lukas on 10.03.14.
@@ -40,22 +40,22 @@ public class HarmoniumDrugInfluence extends DrugInfluence {
             HarmoniumDrug harmonium = (HarmoniumDrug) drug;
 
             double inf = value + (1 - value) * (1 - harmonium.getActiveValue());
-            harmonium.currentColor[0] = (float) MathHelper.lerp(inf, harmonium.currentColor[0], color[0]);
-            harmonium.currentColor[1] = (float) MathHelper.lerp(inf, harmonium.currentColor[1], color[1]);
-            harmonium.currentColor[2] = (float) MathHelper.lerp(inf, harmonium.currentColor[2], color[2]);
+            harmonium.currentColor[0] = (float) Mth.lerp(inf, harmonium.currentColor[0], color[0]);
+            harmonium.currentColor[1] = (float) Mth.lerp(inf, harmonium.currentColor[1], color[1]);
+            harmonium.currentColor[2] = (float) Mth.lerp(inf, harmonium.currentColor[2], color[2]);
         }
     }
 
     @Override
-    public void fromNbt(NbtCompound compound) {
+    public void fromNbt(CompoundTag compound) {
         super.fromNbt(compound);
-        color[0] = compound.getFloat("color[0]");
-        color[1] = compound.getFloat("color[1]");
-        color[2] = compound.getFloat("color[2]");
+        color[0] = compound.getFloatOr("color[0]", 0);
+        color[1] = compound.getFloatOr("color[1]", 0);
+        color[2] = compound.getFloatOr("color[2]", 0);
     }
 
     @Override
-    public void toNbt(NbtCompound compound) {
+    public void toNbt(CompoundTag compound) {
         super.toNbt(compound);
         compound.putFloat("color[0]", color[0]);
         compound.putFloat("color[1]", color[1]);

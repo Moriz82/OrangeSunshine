@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.util.*;
 
 import org.joml.Vector3f;
-
 import com.google.gson.JsonSyntaxException;
 
 import it.unimi.dsi.fastutil.floats.FloatConsumer;
 import moriz.orangesunshine.client.render.shader.UniformBinding.UniformSetter;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gl.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 class LoadedShader extends PostEffectProcessor {
     private final UniformBinding.Set bindings;

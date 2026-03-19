@@ -6,57 +6,67 @@
 package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
-
-import net.minecraft.block.*;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CannabisPlantBlock extends CropBlock {
-    public static final MapCodec<CannabisPlantBlock> CODEC = createCodec(CannabisPlantBlock::new);
+    public static final MapCodec<CannabisPlantBlock> CODEC = simpleCodec(CannabisPlantBlock::new);
     public static final int MAX_AGE = 15;
     public static final int MAX_AGE_WHILE_COVERED = 11;
 
-    private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
+    private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
 
-    public static final BooleanProperty GROWING = BooleanProperty.of("growing");
-    public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+    public static final BooleanProperty GROWING = BooleanProperty.create("growing");
+    public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
 
-    public CannabisPlantBlock(Settings settings) {
-        super(settings.ticksRandomly().nonOpaque());
-        setDefaultState(getDefaultState().with(NATURAL, false));
+    public CannabisPlantBlock(BlockBehaviour.Properties settings) {
+        super(settings.noOcclusion());
+        registerDefaultState(defaultBlockState().setValue(NATURAL, false));
     }
 
     @Override
-    public MapCodec<? extends CannabisPlantBlock> getCodec() {
+    public MapCodec<? extends CannabisPlantBlock> codec() {
         return CODEC;
     }
 
     public BlockState getStateForHeight(int y) {
-        return getDefaultState();
+        return defaultBlockState();
     }
 
     @Override
-    public IntProperty getAgeProperty() {
-        return Properties.AGE_15;
+    public IntegerProperty getAgeProperty() {
+        return BlockStateProperties.AGE_15;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        // Do not call super: CropBlock hardcodes AGE_7, but we use AGE_15.
+        // CropBlock.<init> uses virtual getAgeProperty() for registerDefaultState,
+        // so we must include getAgeProperty() (AGE_15) here, not the super's AGE_7.
         builder.add(getAgeProperty(), GROWING, NATURAL);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
@@ -73,77 +83,85 @@ public class CannabisPlantBlock extends CropBlock {
     }
 
     @Override
-    protected ItemConvertible getSeedsItem() {
+    protected ItemLike getBaseSeedId() {
         return asItem();
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isOf(this) || super.canPlantOnTop(floor, world, pos);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+        return floor.is(this) || super.mayPlaceOn(floor, world, pos);
     }
 
     @Override
-    public final boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if (state.get(NATURAL)) {
-            BlockState floor = world.getBlockState(pos.down());
-            return floor.isOf(this) || floor.isOf(Blocks.GRASS_BLOCK) || floor.isIn(BlockTags.DIRT);
+    protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        if (state.getValue(NATURAL)) {
+            BlockState floor = world.getBlockState(pos.below());
+            return floor.is(this) || floor.is(Blocks.GRASS_BLOCK) || floor.is(BlockTags.DIRT);
         }
-        return super.canPlaceAt(state, world, pos);
+        return super.canSurvive(state, world, pos);
     }
 
-    @Override
     public boolean isMature(BlockState state) {
-        return state.get(getAgeProperty()) >= getMaxAge(state) && !state.get(GROWING);
+        return state.getValue(getAgeProperty()) >= getMaxAge(state) && !state.getValue(GROWING);
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.getBaseLightLevel(pos.up(), 0) >= 9 && random.nextFloat() < getRandomGrowthChance()) {
-            if (isFertilizable(world, pos, state)) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (world.getRawBrightness(pos.above(), 0) >= 9 && random.nextFloat() < getRandomGrowthChance()) {
+            if (isValidBonemealTarget(world, pos, state)) {
                 applyGrowth(world, pos, state, false);
             }
         }
     }
 
-    public void applyGrowth(World world, BlockPos pos, BlockState state, boolean bonemeal) {
+    public void applyGrowth(Level world, BlockPos pos, BlockState state, boolean bonemeal) {
         int number = bonemeal ? world.random.nextInt(4) + 1 : 1;
 
         for (int i = 0; i < number; i++) {
-            if (state.get(getAgeProperty()) < getMaxAge(state)) {
+            if (state.getValue(getAgeProperty()) < getMaxAge(state)) {
                 state = state.cycle(getAgeProperty());
-                world.setBlockState(pos, state, Block.NOTIFY_ALL);
+                world.setBlock(pos, state, Block.UPDATE_ALL);
             } else if (canGrowUpwards(world, pos, state)) {
-                pos = pos.up();
-                state = getDefaultState();
-                world.setBlockState(pos, state, Block.NOTIFY_ALL);
+                pos = pos.above();
+                state = defaultBlockState();
+                world.setBlock(pos, state, Block.UPDATE_ALL);
             }
         }
     }
 
-    protected int getPlantSize(WorldView world, BlockPos pos) {
+    protected int getPlantSize(LevelReader world, BlockPos pos) {
         int plantSize = 1;
-        while (world.getBlockState(pos.down(plantSize)).isOf(this)) {
+        while (world.getBlockState(pos.below(plantSize)).is(this)) {
             ++plantSize;
         }
         return plantSize;
     }
 
-    protected boolean canGrowUpwards(World world, BlockPos pos, BlockState state) {
-        return world.isAir(pos.up())
+    protected boolean canGrowUpwards(Level world, BlockPos pos, BlockState state) {
+        return world.isEmptyBlock(pos.above())
                 && getPlantSize(world, pos) < getMaxHeight()
-                && state.get(getAgeProperty()) > MAX_AGE_WHILE_COVERED;
+                && state.getValue(getAgeProperty()) > MAX_AGE_WHILE_COVERED;
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
         applyGrowth(world, pos, state, true);
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+    ) {
         if (direction == Direction.UP) {
-            return state.with(GROWING, neighborState.isAir() && getPlantSize(world, pos) < getMaxHeight());
+            return state.setValue(GROWING, neighborState.isAir() && getPlantSize(world, pos) < getMaxHeight());
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.updateShape(state, world, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 }

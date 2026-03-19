@@ -1,193 +1,191 @@
 package moriz.orangesunshine.item;
 
-import java.util.List;
-import java.util.Optional;
-import org.jetbrains.annotations.Nullable;
-
 import moriz.orangesunshine.PSTags;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.StackReference;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.BlockPointer;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.phys.AABB;
+
+import java.util.function.Consumer;
 
 public class PaperBagItem extends Item {
 
-    public PaperBagItem(Settings settings) {
+    public PaperBagItem(Item.Properties settings) {
         super(settings);
-        DispenserBlock.registerBehavior(this, new ItemDispenserBehavior(){
+        DispenserBlock.registerBehavior(this, new DefaultDispenseItemBehavior() {
             @Override
-            public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+            protected ItemStack execute(BlockSource pointer, ItemStack stack) {
                 Contents contents = getContents(stack);
                 if (contents.isEmpty() || stack.getCount() > 1) {
-                    return super.dispenseSilently(pointer, stack);
+                    return super.execute(pointer, stack);
                 }
+
                 Contents.Builder builder = new Contents.Builder(contents);
                 ItemStack dispensed = builder.split(1);
                 setContents(stack, builder.build());
-                return super.dispenseSilently(pointer, dispensed);
+                return super.execute(pointer, dispensed);
             }
         });
     }
 
     @Override
-    public boolean onStackClicked(ItemStack bag, Slot slot, ClickType clickType, PlayerEntity player) {
-        if (clickType != ClickType.RIGHT || bag.getCount() != 1) {
+    public boolean overrideStackedOnOther(ItemStack bag, Slot slot, ClickAction action, Player player) {
+        if (action != ClickAction.SECONDARY || bag.getCount() != 1) {
             return false;
         }
 
         Contents contents = getContents(bag);
         Contents.Builder builder = new Contents.Builder(contents);
-
-        ItemStack slotStack = slot.getStack();
+        ItemStack slotStack = slot.getItem();
 
         if (slotStack.isEmpty()) {
             if (!contents.isEmpty()) {
-                // dispense into empty slot
-                builder.add(slot.insertStack(builder.split(contents.stack().getMaxCount())));
-                player.playSound(SoundEvents.ITEM_BUNDLE_REMOVE_ONE, 1, 1);
+                builder.add(slot.safeInsert(builder.split(contents.stack().getMaxStackSize())));
+                player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 1, 1);
                 setContents(bag, builder.build());
                 return true;
             }
         } else if (canPickUp(slotStack) && builder.canAdd(slotStack)) {
-            // pick up from filled slot
             int maxTaken = getMaxCountForItem(slotStack.getItem()) - contents.count();
-
-            builder.add(slot.takeStackRange(slotStack.getCount(), maxTaken, player));
-            player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 1, 1);
+            builder.add(slot.safeTake(slotStack.getCount(), maxTaken, player));
+            player.playSound(SoundEvents.BUNDLE_INSERT, 1, 1);
             setContents(bag, builder.build());
             return true;
         }
+
         return false;
     }
 
     @Override
-    public boolean onClicked(ItemStack clickedStack, ItemStack cursorStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
-        if (clickType != ClickType.RIGHT || !(cursorStack.getItem() instanceof PaperBagItem || slot.canTakePartial(player)) || clickedStack.getCount() != 1) {
+    public boolean overrideOtherStackedOnMe(ItemStack bag, ItemStack cursorStack, Slot slot, ClickAction action, Player player, SlotAccess cursorAccess) {
+        if (action != ClickAction.SECONDARY || !(cursorStack.getItem() instanceof PaperBagItem || slot.allowModification(player)) || bag.getCount() != 1) {
             return false;
         }
 
-        Contents contents = getContents(clickedStack);
+        Contents contents = getContents(bag);
         Contents.Builder builder = new Contents.Builder(contents);
 
         if (cursorStack.isEmpty()) {
-            // remove from bag into held stack
-            cursorStackReference.set(builder.split(64));
-            player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 1, 1);
-            setContents(clickedStack, builder.build());
+            if (!cursorAccess.set(builder.split(64))) {
+                return false;
+            }
+            player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 1, 1);
+            setContents(bag, builder.build());
             return true;
         }
 
-        if (builder.canAdd(cursorStack)) {
-            int maxTaken = getMaxCountForItem(cursorStack.getItem()) - contents.count();
-
-            if (canPickUp(cursorStack)) {
-                // insert into bag from held stack
-                builder.add(cursorStack.split(maxTaken));
-                player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 1, 1);
-                setContents(clickedStack, builder.build());
-                return true;
+        if (builder.canAdd(cursorStack) && canPickUp(cursorStack)) {
+            ItemStack cursorCopy = cursorStack.copy();
+            builder.add(cursorCopy);
+            if (!cursorAccess.set(cursorCopy)) {
+                return false;
             }
-
-            // bag to bag transfer
-            /*
-            if (cursorStack.getItem() instanceof PaperBagItem) {
-                Contents.Builder cursorContents = new Contents.Builder(getContents(cursorStack));
-                builder.add(cursorContents.split(maxTaken));
-                player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 1, 1);
-                setContents(clickedStack, builder.build());
-                setContents(cursorStack, cursorContents.build());
-                return true;
-            }
-            */
+            player.playSound(SoundEvents.BUNDLE_INSERT, 1, 1);
+            setContents(bag, builder.build());
+            return true;
         }
 
         return false;
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack bag = user.getStackInHand(hand);
+    public InteractionResult use(Level level, Player user, InteractionHand hand) {
+        ItemStack bag = user.getItemInHand(hand);
         Contents contents = getContents(bag);
 
         if (!contents.isEmpty()) {
-            user.dropItem(removeItems(bag, contents, user.isSneaky() ? 1 : contents.stack().getMaxCount()), false, false);
-            user.playSound(SoundEvents.ITEM_BUNDLE_REMOVE_ONE, 1, 1);
-            user.incrementStat(Stats.USED.getOrCreateStat(this));
-            return TypedActionResult.success(bag, world.isClient());
+            int removedCount = user.isShiftKeyDown() ? 1 : contents.stack().getMaxStackSize();
+            user.drop(removeItems(bag, contents, removedCount), false);
+            user.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 1, 1);
+            user.awardStat(Stats.ITEM_USED.get(this));
+            return InteractionResult.SUCCESS;
         }
-        return TypedActionResult.fail(bag);
+
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        ItemStack bag = context.getStack();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null) {
+            return InteractionResult.PASS;
+        }
 
+        ItemStack bag = context.getItemInHand();
         Contents contents = getContents(bag);
-
         Contents.Builder builder = new Contents.Builder(contents);
 
-        if (context.getWorld().getOtherEntities(context.getPlayer(),
-                Box.from(context.getHitPos()).expand(0.25),
-                e -> e instanceof ItemEntity i && canPickUp(i.getStack()))
-            .stream().filter(e -> {
-                if (builder.add(((ItemEntity)e).getStack())) {
-                    if (((ItemEntity)e).getStack().isEmpty()) {
-                        e.discard();
-                    }
-                    return true;
+        boolean pickedUpAny = !context.getLevel().getEntities(
+                player,
+                new AABB(context.getClickLocation(), context.getClickLocation()).inflate(0.25),
+                entity -> entity instanceof ItemEntity itemEntity && canPickUp(itemEntity.getItem())
+        ).stream().filter(entity -> {
+            ItemEntity itemEntity = (ItemEntity)entity;
+            if (builder.add(itemEntity.getItem())) {
+                if (itemEntity.getItem().isEmpty()) {
+                    itemEntity.discard();
                 }
-                return false;
-            }).findAny().isEmpty()) {
-
-            if (!contents.isEmpty()) {
-                context.getPlayer().dropItem(removeItems(bag, contents, context.getPlayer().isSneaky() ? 1 : contents.stack().getMaxCount()), false, false);
-                context.getPlayer().playSound(SoundEvents.ITEM_BUNDLE_REMOVE_ONE, 1, 1);
-                return ActionResult.SUCCESS;
+                return true;
             }
+            return false;
+        }).findAny().isEmpty();
 
-            return ActionResult.FAIL;
+        if (!pickedUpAny) {
+            if (!contents.isEmpty()) {
+                int removedCount = player.isShiftKeyDown() ? 1 : contents.stack().getMaxStackSize();
+                player.drop(removeItems(bag, contents, removedCount), false);
+                player.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 1, 1);
+                return InteractionResult.SUCCESS;
+            }
+            return InteractionResult.FAIL;
         }
 
         if (bag.getCount() > 1) {
-            bag = bag.split(1);
-            setContents(bag, builder.build());
-            context.getPlayer().getInventory().insertStack(bag);
+            ItemStack splitBag = bag.split(1);
+            setContents(splitBag, builder.build());
+            player.getInventory().add(splitBag);
         } else {
             setContents(bag, builder.build());
         }
-        context.getPlayer().playSound(SoundEvents.ITEM_BUNDLE_INSERT, 1, 1);
-        return ActionResult.SUCCESS;
+        player.playSound(SoundEvents.BUNDLE_INSERT, 1, 1);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (world.isClient() || !selected || stack.getCount() != 1) {
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot equipmentSlot) {
+        if (equipmentSlot != EquipmentSlot.MAINHAND || stack.getCount() != 1) {
             return;
         }
 
-        if (entity instanceof PlayerEntity player) {
-            Inventory inv = player.getInventory();
+        if (entity instanceof Player player) {
+            Inventory inventory = player.getInventory();
+            int slot = inventory.getSelectedSlot();
 
-            if (inv.getStack(slot) != stack) {
+            if (inventory.getItem(slot) != stack) {
                 return;
             }
 
@@ -197,23 +195,38 @@ public class PaperBagItem extends Item {
             }
 
             Contents.Builder builder = new Contents.Builder(contents);
-
-
             boolean changed = false;
 
-            if (slot < inv.size() - 1) {
-                changed |= builder.add(inv.getStack(slot + 1));
+            if (slot < inventory.getContainerSize() - 1) {
+                changed |= builder.add(inventory.getItem(slot + 1));
             }
             if (slot > 0) {
-                changed |= builder.add(inv.getStack(slot - 1));
+                changed |= builder.add(inventory.getItem(slot - 1));
             }
 
             if (changed) {
-                player.playSound(SoundEvents.ITEM_BUNDLE_REMOVE_ONE, player.getSoundCategory(), 1, 1);
+                player.playSound(SoundEvents.BUNDLE_INSERT, 1, 1);
                 setContents(stack, builder.build());
-                inv.setStack(slot, stack);
+                inventory.setItem(slot, stack);
             }
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
+        Contents contents = getContents(stack);
+        if (!contents.isEmpty()) {
+            consumer.accept(Component.literal(contents.count() + " x ").append(contents.stack().getHoverName()));
+        }
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        Contents contents = getContents(stack);
+        if (!contents.isEmpty()) {
+            return Component.translatable(getDescriptionId() + ".filled", contents.stack().getHoverName());
+        }
+        return super.getName(stack);
     }
 
     private static ItemStack removeItems(ItemStack bag, Contents contents, int count) {
@@ -222,33 +235,29 @@ public class PaperBagItem extends Item {
         return dispensed;
     }
 
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        Contents contents = getContents(stack);
-        if (!contents.isEmpty()) {
-            tooltip.add(Text.literal(contents.count() + " x ").append(contents.stack().getName()));
-        }
-    }
-
-    @Override
-    public Text getName(ItemStack stack) {
-        Contents contents = getContents(stack);
-        if (!contents.isEmpty()) {
-            return Text.translatable(getTranslationKey(stack) + ".filled", contents.stack().getName());
-        }
-        return super.getName(stack);
-    }
-
     private boolean canPickUp(ItemStack incomingStack) {
-        return incomingStack.isIn(PSTags.Items.CAN_GO_INTO_PAPER_BAG);
+        return incomingStack.is(PSTags.Items.CAN_GO_INTO_PAPER_BAG);
     }
 
     public static Contents getContents(ItemStack stack) {
-        return Optional.ofNullable(stack.getSubNbt("contents")).map(Contents::fromNbt).orElse(Contents.EMPTY);
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        if (!tag.contains("contents")) {
+            return Contents.EMPTY;
+        }
+        return Contents.fromNbt(tag.getCompoundOrEmpty("contents"));
     }
 
     public static void setContents(ItemStack stack, Contents contents) {
-        contents.writeNbt(stack.getOrCreateSubNbt("contents"));
+        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> {
+            if (contents.isEmpty()) {
+                tag.remove("contents");
+                return;
+            }
+
+            CompoundTag contentsTag = new CompoundTag();
+            contents.writeNbt(contentsTag);
+            tag.put("contents", contentsTag);
+        });
     }
 
     public static int getMaxCountForItem(Item item) {
@@ -261,8 +270,13 @@ public class PaperBagItem extends Item {
     public record Contents(ItemStack stack, int count) {
         static final Contents EMPTY = new Contents(ItemStack.EMPTY, 0);
 
-        public static Contents fromNbt(NbtCompound nbt) {
-            return from(ItemStack.fromNbt(nbt.getCompound("stack")), Math.max(0, nbt.getInt("count")));
+        public static Contents fromNbt(CompoundTag nbt) {
+            if (!nbt.contains("stack")) {
+                return EMPTY;
+            }
+
+            ItemStack stack = ItemStack.CODEC.parse(NbtOps.INSTANCE, nbt.get("stack")).result().orElse(ItemStack.EMPTY);
+            return from(stack, Math.max(0, nbt.getIntOr("count", 0)));
         }
 
         public static Contents from(ItemStack stack, int count) {
@@ -280,8 +294,8 @@ public class PaperBagItem extends Item {
             return stack.isEmpty() || count <= 0;
         }
 
-        public NbtCompound writeNbt(NbtCompound nbt) {
-            nbt.put("stack", stack.writeNbt(new NbtCompound()));
+        public CompoundTag writeNbt(CompoundTag nbt) {
+            ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, stack).result().ifPresent(tag -> nbt.put("stack", tag));
             nbt.putInt("count", count);
             return nbt;
         }
@@ -290,39 +304,32 @@ public class PaperBagItem extends Item {
             private ItemStack stack;
             private int count;
 
-            public Builder(Contents contents) {
-                stack = contents.stack();
-                count = contents.count();
+            Builder(Contents contents) {
+                this.stack = contents.stack();
+                this.count = contents.count();
             }
 
-            public boolean canAdd(ItemStack stack) {
-                if (stack.getItem() instanceof PaperBagItem) {
+            public boolean canAdd(ItemStack incomingStack) {
+                if (incomingStack.getItem() instanceof PaperBagItem) {
+                    return false;
+                }
+                if (this.stack.isEmpty()) {
+                    return true;
+                }
+                return ItemStack.isSameItemSameComponents(this.stack, incomingStack) && count < getMaxCountForItem(incomingStack.getItem());
+            }
+
+            public boolean add(ItemStack incomingStack) {
+                if (!canAdd(incomingStack)) {
                     return false;
                 }
 
                 if (this.stack.isEmpty()) {
-                    return true;
+                    this.stack = incomingStack.copyWithCount(1);
                 }
-                //if (stack.getItem() instanceof PaperBagItem) {
-                //    return canAdd(getContents(stack).stack());
-                //}
-                return (this.stack.isEmpty() || ItemStack.canCombine(this.stack, stack)) && count < getMaxCountForItem(stack.getItem());
-            }
 
-            public boolean add(ItemStack stack) {
-                /*if (stack.getItem() instanceof PaperBagItem) {
-                    Builder builder = new Builder(getContents(stack));
-                    this.stack = builder.stack.copy();
-                    count += builder.split(getMaxCountForItem(builder.stack.getItem()) - count).getCount();
-                    setContents(stack, builder.build());
-                    return true;
-                }*/
-                if (canAdd(stack)) {
-                    this.stack = stack.copyWithCount(1);
-                    count += stack.split(getMaxCountForItem(stack.getItem()) - count).getCount();
-                    return true;
-                }
-                return false;
+                count += incomingStack.split(getMaxCountForItem(incomingStack.getItem()) - count).getCount();
+                return true;
             }
 
             public ItemStack split(int count) {

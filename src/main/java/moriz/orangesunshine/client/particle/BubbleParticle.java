@@ -6,7 +6,7 @@ import org.joml.Vector3f;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 
 public class BubbleParticle extends SpriteBillboardParticle {
     BubbleParticle(BubbleParticleEffect effect, SpriteProvider spriteProvider, ClientWorld world,

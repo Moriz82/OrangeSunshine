@@ -12,15 +12,14 @@ import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.MutableFluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.fluid.physical.FluidStateManager;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.text.Text;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,9 +32,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public class CoffeeFluid extends DrugFluid implements Processable {
     public static final Attribute<Integer> WARMTH = Attribute.ofInt("warmth", 0, 2);
-    private static final FluidStateManager.FluidProperty<Integer> TEMPERATURE = new FluidStateManager.FluidProperty<>(IntProperty.of("temperature", 0, 2), WARMTH::set, WARMTH::get);
+    private static final FluidStateManager.FluidProperty<Integer> TEMPERATURE =
+            new FluidStateManager.FluidProperty<>(IntegerProperty.create("temperature", 0, 2), WARMTH::set, WARMTH::get);
 
-    public CoffeeFluid(Identifier id, Settings settings) {
+    public CoffeeFluid(Identifier id, moriz.orangesunshine.fluid.DrugFluid.Settings settings) {
         super(id, settings.with(TEMPERATURE));
     }
 
@@ -48,16 +48,16 @@ public class CoffeeFluid extends DrugFluid implements Processable {
     }
 
     @Override
-    public void onRandomTick(World world, BlockPos pos, FluidState state, Random random) {
-        int temperature = state.get(TEMPERATURE.property());
-        if (temperature > 0 && world.getBlockState(pos).getBlock() instanceof FluidBlock) {
-            world.setBlockState(pos, state.with(TEMPERATURE.property(), temperature - 1).getBlockState());
+    public void onRandomTick(ServerLevel world, BlockPos pos, FluidState state, net.minecraft.util.RandomSource random) {
+        int temperature = state.getValue(TEMPERATURE.property());
+        if (temperature > 0 && world.getBlockState(pos).getBlock() instanceof LiquidBlock) {
+            world.setBlockAndUpdate(pos, state.setValue(TEMPERATURE.property(), temperature - 1).createLegacyBlock());
         }
     }
 
     @Override
-    public Text getName(ItemStack stack) {
-        return Text.translatable(getTranslationKey() + ".temperature." + WARMTH.get(stack));
+    public Component getName(ItemStack stack) {
+        return Component.translatable(getTranslationKey() + ".temperature." + WARMTH.get(stack));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CoffeeFluid extends DrugFluid implements Processable {
     @SuppressWarnings("deprecation")
     @Override
     public boolean isSuitableContainer(FluidContainer container) {
-        return container.asItem().getRegistryEntry().isIn(PSTags.Items.SUITABLE_HOT_DRINK_RECEPTICALS);
+        return container.asItem().builtInRegistryHolder().is(PSTags.Items.SUITABLE_HOT_DRINK_RECEPTICALS);
     }
 
     @Override

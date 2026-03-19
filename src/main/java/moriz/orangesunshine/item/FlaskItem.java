@@ -5,17 +5,17 @@
 
 package moriz.orangesunshine.item;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 import moriz.orangesunshine.fluid.container.FluidContainer;
-import org.jetbrains.annotations.Nullable;
-
 import moriz.orangesunshine.fluid.SimpleFluid;
-import net.minecraft.block.*;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.*;
-import net.minecraft.text.Text;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Created by lukas on 25.10.14.
@@ -26,26 +26,26 @@ public class FlaskItem extends BlockItem implements FluidContainer {
 
     private final int capacity;
 
-    public FlaskItem(Block block, Settings settings, int capacity) {
+    public FlaskItem(Block block, Item.Properties settings, int capacity) {
         super(block, settings);
         this.capacity = capacity;
     }
 
     @Override
-    public Text getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         SimpleFluid fluid = getFluid(stack);
 
         if (!fluid.isEmpty()) {
-            return Text.translatable(getTranslationKey() + ".filled", fluid.getName(stack));
+            return Component.translatable(getDescriptionId() + ".filled", fluid.getName(stack));
         }
 
         return super.getName(stack);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (context.isAdvanced()) {
-            tooltip.add(Text.literal(getLevel(stack) + "/" + getMaxCapacity(stack)));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
+        if (flag.isAdvanced()) {
+            consumer.accept(Component.literal(getLevel(stack) + "/" + getMaxCapacity(stack)));
         }
     }
 

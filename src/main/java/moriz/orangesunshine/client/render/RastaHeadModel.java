@@ -12,8 +12,8 @@
 package moriz.orangesunshine.client.render;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.model.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.entity.passive.PigEntity;
 
 public class RastaHeadModel extends SinglePartEntityModel<PigEntity> {

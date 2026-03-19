@@ -14,19 +14,18 @@ import moriz.orangesunshine.client.render.RenderUtil;
 import moriz.orangesunshine.util.MathUtils;
 import org.jetbrains.annotations.Nullable;
 import org.joml.*;
-
 import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import moriz.orangesunshine.client.OrangeSunshineClient;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.entity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.World;
 
 import java.lang.Math;
@@ -71,7 +70,7 @@ public class LensFlareScreenEffect implements ScreenEffect {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float tickDelta, @Nullable PingPong pingPong) {
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float tickDelta, @Nullable PingPong pingPong) {
         if (pingPong != null) {
             pingPong.pingPong();
             ScreenEffect.drawScreen(screenWidth, screenHeight);
@@ -88,8 +87,8 @@ public class LensFlareScreenEffect implements ScreenEffect {
         float sunRadians = world.getSkyAngleRadians(tickDelta);
 
         Vector3f sunPositionOnScreen = PsycheMatrixHelper.projectPointCurrentView(new Vector3f(
-                -MathHelper.sin(sunRadians) * 120,
-                MathHelper.cos(sunRadians) * 120,
+                -Mth.sin(sunRadians) * 120,
+                Mth.cos(sunRadians) * 120,
                 0
         ));
 

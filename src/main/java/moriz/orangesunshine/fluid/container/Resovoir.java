@@ -6,24 +6,24 @@ import org.jetbrains.annotations.Nullable;
 
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.util.NbtSerialisable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * @author Sollace
  * @since 3 Jan 2023
  */
 public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal, FluidStore {
-    private FluidContainer container;
+    private final FluidContainer container;
     private MutableFluidContainer stack;
 
     private final ChangeListener changeCallback;
 
     public Resovoir(int capacity, ChangeListener changeCallback) {
         this.container = FluidContainer.withCapacity(Items.STONE, capacity);
-        this.stack = container.toMutable(Items.STONE.getDefaultStack());
+        this.stack = container.toMutable(Items.STONE.getDefaultInstance());
         this.changeCallback = changeCallback;
     }
 
@@ -33,7 +33,7 @@ public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal,
 
     public void transferTo(Resovoir tank) {
         tank.stack = stack;
-        stack = container.toMutable(Items.STONE.getDefaultStack());
+        stack = container.toMutable(Items.STONE.getDefaultInstance());
     }
 
     @Override
@@ -41,8 +41,11 @@ public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal,
         return stack;
     }
 
-    @Override
-    public int getMaxCountPerStack() {
+    public boolean isEmpty() {
+        return VariantMarshal.StorageMarshal.super.isEmpty();
+    }
+
+    public int getMaxStackSize() {
         return 1;
     }
 
@@ -67,34 +70,28 @@ public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal,
         return output;
     }
 
-    @Override
-    public void clear() {
-        stack = container.toMutable(Items.STONE.getDefaultStack());
+    public void clearContent() {
+        stack = container.toMutable(Items.STONE.getDefaultInstance());
         changeCallback.onDrain(this);
     }
 
-    @Override
-    public int size() {
+    public int getContainerSize() {
         return 1;
     }
 
-    @Override
-    public ItemStack getStack(int slot) {
+    public ItemStack getItem(int slot) {
         return getStack();
     }
 
-    @Override
-    public ItemStack removeStack(int slot, int count) {
+    public ItemStack removeItem(int slot, int count) {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public ItemStack removeStack(int slot) {
+    public ItemStack removeItemNoUpdate(int slot) {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public void setStack(int slot, ItemStack stack) {
+    public void setItem(int slot, ItemStack stack) {
         boolean wasEmpty = isEmpty();
         int oldLevel = getLevel();
         this.stack = container.toMutable(stack);
@@ -115,28 +112,25 @@ public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal,
         }
     }
 
-    @Override
-    public void markDirty() {
+    public void setChanged() {
     }
 
-    @Override
-    public boolean canPlayerUse(PlayerEntity var1) {
+    public boolean stillValid(Player player) {
         return true;
     }
 
-    @Override
-    public boolean isValid(int slot, ItemStack stack) {
+    public boolean canPlaceItem(int slot, ItemStack stack) {
         return !FluidContainer.of(stack).getFluid(stack).isEmpty();
     }
 
     @Override
-    public void toNbt(NbtCompound compound) {
-        compound.put("stack", stack.asStack().writeNbt(new NbtCompound()));
+    public void toNbt(CompoundTag compound) {
+        compound.store("stack", ItemStack.OPTIONAL_CODEC, stack.asStack());
     }
 
     @Override
-    public void fromNbt(NbtCompound compound) {
-        stack = container.toMutable(ItemStack.fromNbt(compound.getCompound("stack")));
+    public void fromNbt(CompoundTag compound) {
+        stack = container.toMutable(compound.read("stack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
     }
 
     public interface ChangeListener {

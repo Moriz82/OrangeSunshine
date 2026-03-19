@@ -7,25 +7,27 @@ package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
 
-import net.minecraft.block.*;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class HopPlantBlock extends CannabisPlantBlock {
-    public static final MapCodec<HopPlantBlock> CODEC = createCodec(HopPlantBlock::new);
+    public static final MapCodec<HopPlantBlock> CODEC = simpleCodec(HopPlantBlock::new);
 
-    public HopPlantBlock(Settings settings) {
+    public HopPlantBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    public MapCodec<? extends HopPlantBlock> getCodec() {
+    public MapCodec<? extends HopPlantBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isOf(Blocks.FARMLAND) || floor.isOf(this) || floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.GRASS_BLOCK);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+        return floor.is(Blocks.FARMLAND) || floor.is(this) || floor.is(BlockTags.DIRT) || floor.is(Blocks.GRASS_BLOCK);
     }
 }

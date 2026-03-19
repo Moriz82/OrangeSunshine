@@ -1,9 +1,27 @@
 pluginManagement {
     repositories {
+        maven { name = 'Architectury'; url = 'https://maven.architectury.dev/' }
+        maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+        maven { name = 'Forge'; url = 'https://maven.minecraftforge.net/' }
+        maven { name = 'NeoForged'; url = 'https://maven.neoforged.net/releases/' }
         mavenCentral()
-        maven { name 'Fabric'; url 'https://maven.fabricmc.net/' }
-        maven { name 'Jitpack'; url 'https://jitpack.io' }
         gradlePluginPortal()
     }
 }
+
+def activePlatforms = ((gradle.startParameter.projectProperties['active_platforms'] ?: 'fabric,forge,neoforge') as String)
+        .split(',')
+        .collect { it.trim() }
+        .findAll { !it.isEmpty() }
+
 rootProject.name = 'OrangeSunshine'
+include 'common'
+if (activePlatforms.contains('fabric')) {
+    include 'fabric'
+}
+if (activePlatforms.contains('forge')) {
+    include 'forge'
+}
+if (activePlatforms.contains('neoforge')) {
+    include 'neoforge'
+}

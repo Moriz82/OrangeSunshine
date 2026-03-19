@@ -10,8 +10,8 @@ import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 14.11.14.
@@ -51,9 +51,9 @@ public class HallucinationManager {
         camera.update(properties);
 
         float totalHallucinationValue = hallucinationTypes.getTotal(properties);
-        int desiredHallucinations = Math.max(0, MathHelper.floor(totalHallucinationValue * 4F + 0.9f));
+        int desiredHallucinations = Math.max(0, Mth.floor(totalHallucinationValue * 4F + 0.9f));
 
-        Random random = properties.asEntity().getRandom();
+        RandomSource random = properties.asEntity().getRandom();
 
         if (activeHallucinations.size() > 0) {
             while (random.nextFloat() < 1f / (20 * 60 * 5 / activeHallucinations.size())) {
@@ -91,11 +91,11 @@ public class HallucinationManager {
         currentMindColor[2] = MathUtils.nearValue(currentMindColor[2], MathUtils.randomColor(random, properties.getAge(), 0.5f, 0.5f, 0.0011541f, 0.0018682f), 0.002f, 0.002f);
     }
 
-    private void removeRandomHallucination(Random random) {
+    private void removeRandomHallucination(RandomSource random) {
         activeHallucinations.remove(activeHallucinations.get(random.nextInt(activeHallucinations.size())));
     }
 
-    private boolean addRandomHallucination(Random random) {
+    private boolean addRandomHallucination(RandomSource random) {
         float maxValue = 0.0f;
         int currentHallucination = -1;
 
@@ -174,7 +174,7 @@ public class HallucinationManager {
                 currentMindColor[0],
                 currentMindColor[1],
                 currentMindColor[2],
-                RenderPhase.current() == RenderPhase.SKY ? 0 : MathHelper.clamp(getMultiplier(HallucinationTypes.PULSES), 0, 1)
+                RenderPhase.current() == RenderPhase.SKY ? 0 : Mth.clamp(getMultiplier(HallucinationTypes.PULSES), 0, 1)
         };
     }
 
@@ -182,14 +182,14 @@ public class HallucinationManager {
         return MathUtils.mixColorsDynamic(
                 currentMindColor,
                 Drug.BLOOM.apply(properties),
-                MathHelper.clamp(1.5f * getMultiplier(HallucinationTypes.COLOR_BLOOM), 0, 1), false);
+                Mth.clamp(1.5f * getMultiplier(HallucinationTypes.COLOR_BLOOM), 0, 1), false);
     }
 
     public float[] getContrastColorization(float tickDelta) {
         return MathUtils.mixColorsDynamic(
                 currentMindColor,
                 Drug.CONTRAST_COLORIZATION.apply(properties),
-                MathHelper.clamp(getMultiplier(HallucinationTypes.COLOR_CONTRAST), 0, 1),
+                Mth.clamp(getMultiplier(HallucinationTypes.COLOR_CONTRAST), 0, 1),
                 true
         );
     }

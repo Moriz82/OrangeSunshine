@@ -18,16 +18,16 @@ import moriz.orangesunshine.entity.drug.*;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.IdentifierArgumentType;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.GameRules;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.gamerules.GameRules;
 
 /**
  * @author Sollace
@@ -35,76 +35,76 @@ import net.minecraft.world.GameRules;
  */
 class DrugCommand {
     private static final Identifier ALL = OrangeSunshine.id("all");
-    public static final SimpleCommandExceptionType INVALID_DRUG_NAME = new SimpleCommandExceptionType(Text.translatable("commands.drug.nodrug"));
-    private static final SuggestionProvider<ServerCommandSource> DRUG_NAME_SUGGESTIONS = (context, builder) -> CommandSource.suggestIdentifiers(DrugType.REGISTRY.getIds(), builder);
+    public static final SimpleCommandExceptionType INVALID_DRUG_NAME = new SimpleCommandExceptionType(Component.translatable("commands.drug.nodrug"));
+    private static final SuggestionProvider<CommandSourceStack> DRUG_NAME_SUGGESTIONS = (context, builder) -> SharedSuggestionProvider.suggestResource(DrugType.REGISTRY.keySet(), builder);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registries) {
-        dispatcher.register(CommandManager.literal("drug")
-                .requires(source -> source.hasPermissionLevel(2))
-            .then(CommandManager.argument("target", EntityArgumentType.players())
-                .then(CommandManager.literal("lock")
-                    .then(CommandManager.literal("all")
-                        .then(CommandManager.argument("locked", BoolArgumentType.bool()).executes(ctx -> lockDrugs(ctx, ALL))))
-                    .then(CommandManager.argument("drug", IdentifierArgumentType.identifier()).suggests(DRUG_NAME_SUGGESTIONS)
-                        .then(CommandManager.argument("locked", BoolArgumentType.bool()).executes(ctx -> lockDrugs(ctx, IdentifierArgumentType.getIdentifier(ctx, "drug")))
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registries) {
+        dispatcher.register(Commands.literal("drug")
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+            .then(Commands.argument("target", EntityArgument.players())
+                .then(Commands.literal("lock")
+                    .then(Commands.literal("all")
+                        .then(Commands.argument("locked", BoolArgumentType.bool()).executes(ctx -> lockDrugs(ctx, ALL))))
+                    .then(Commands.argument("drug", IdentifierArgument.id()).suggests(DRUG_NAME_SUGGESTIONS)
+                        .then(Commands.argument("locked", BoolArgumentType.bool()).executes(ctx -> lockDrugs(ctx, IdentifierArgument.getId(ctx, "drug")))
                     )
                 ))
-                .then(CommandManager.literal("get").executes(DrugCommand::getAllDrugs)
-                    .then(CommandManager.argument("drug", IdentifierArgumentType.identifier()).suggests(DRUG_NAME_SUGGESTIONS).executes(DrugCommand::getDrugs)
+                .then(Commands.literal("get").executes(DrugCommand::getAllDrugs)
+                    .then(Commands.argument("drug", IdentifierArgument.id()).suggests(DRUG_NAME_SUGGESTIONS).executes(DrugCommand::getDrugs)
                 ))
-                .then(CommandManager.literal("set")
-                    .then(CommandManager.literal("all")
-                        .then(CommandManager.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> setDrugs(ctx, ALL))))
-                    .then(CommandManager.argument("drug", IdentifierArgumentType.identifier()).suggests(DRUG_NAME_SUGGESTIONS)
-                        .then(CommandManager.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> setDrugs(ctx, IdentifierArgumentType.getIdentifier(ctx, "drug")))))
+                .then(Commands.literal("set")
+                    .then(Commands.literal("all")
+                        .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> setDrugs(ctx, ALL))))
+                    .then(Commands.argument("drug", IdentifierArgument.id()).suggests(DRUG_NAME_SUGGESTIONS)
+                        .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> setDrugs(ctx, IdentifierArgument.getId(ctx, "drug")))))
                 )
-                .then(CommandManager.literal("add")
-                    .then(CommandManager.literal("all")
-                        .then(CommandManager.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> addToDrugs(ctx, ALL))))
-                    .then(CommandManager.argument("drug", IdentifierArgumentType.identifier()).suggests(DRUG_NAME_SUGGESTIONS)
-                        .then(CommandManager.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> addToDrugs(ctx, IdentifierArgumentType.getIdentifier(ctx, "drug")))))
+                .then(Commands.literal("add")
+                    .then(Commands.literal("all")
+                        .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> addToDrugs(ctx, ALL))))
+                    .then(Commands.argument("drug", IdentifierArgument.id()).suggests(DRUG_NAME_SUGGESTIONS)
+                        .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 1)).executes(ctx -> addToDrugs(ctx, IdentifierArgument.getId(ctx, "drug")))))
                 )
             )
         );
     }
 
-    private static int getAllDrugs(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerCommandSource source = context.getSource();
-        ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
+    private static int getAllDrugs(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        CommandSourceStack source = context.getSource();
+        ServerPlayer player = EntityArgument.getPlayer(context, "target");
         DrugProperties properties = DrugProperties.of(player);
 
         List<Drug> drugs = properties.getAllDrugs().stream().filter(drug -> drug.getActiveValue() > 0).toList();
 
         if (drugs.isEmpty()) {
-            source.sendFeedback(() -> Text.translatable("commands.drug.success.get.sober", player.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.drug.success.get.sober", player.getName()), true);
         } else {
-            source.sendFeedback(() -> Text.translatable("commands.drug.success.get", player.getName(), drugs.size()), true);
+            source.sendSuccess(() -> Component.translatable("commands.drug.success.get", player.getName(), drugs.size()), true);
             drugs.forEach(drug -> {
                 double value = drug.getActiveValue();
-                source.sendFeedback(() -> Text.literal(DrugType.REGISTRY.getId(drug.getType()).getPath() + ": " + value), true);
+                source.sendSuccess(() -> Component.literal(DrugType.REGISTRY.getKey(drug.getType()).getPath() + ": " + value), true);
             });
         }
 
         return 0;
     }
 
-    private static int getDrugs(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerCommandSource source = context.getSource();
-        ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
-        Identifier drugName = IdentifierArgumentType.getIdentifier(context, "drug");
+    private static int getDrugs(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        CommandSourceStack source = context.getSource();
+        ServerPlayer player = EntityArgument.getPlayer(context, "target");
+        Identifier drugName = IdentifierArgument.getId(context, "drug");
         DrugProperties properties = DrugProperties.of(player);
 
-        DrugType.REGISTRY.getOrEmpty(drugName).ifPresentOrElse(drugType -> {
+        DrugType.REGISTRY.getOptional(drugName).ifPresentOrElse(drugType -> {
             float value = properties.isDrugActive(drugType) ? properties.getDrugValue(drugType) : 0;
-            source.sendFeedback(() -> Text.translatable("commands.drug.success.get." + (player == source.getEntity() ? "self" : "other"), player.getName(), drugName.getPath(), value), true);
+            source.sendSuccess(() -> Component.translatable("commands.drug.success.get." + (player == source.getEntity() ? "self" : "other"), player.getName(), drugName.getPath(), value), true);
         }, () -> {
-            source.sendFeedback(() -> Text.translatable("commands.drug.fail.get", drugName), true);
+            source.sendSuccess(() -> Component.translatable("commands.drug.fail.get", drugName), true);
         });
 
         return 0;
     }
 
-    private static int lockDrugs(CommandContext<ServerCommandSource> context, Identifier drugName) throws CommandSyntaxException {
+    private static int lockDrugs(CommandContext<CommandSourceStack> context, Identifier drugName) throws CommandSyntaxException {
         boolean locked = BoolArgumentType.getBool(context, "locked");
         applyDrugChange(context, drugName, (properties, type) -> properties.getDrug(type).setLocked(locked), (player, type) -> {
             if (type == UpdateType.NONE) {
@@ -118,7 +118,7 @@ class DrugCommand {
         return 0;
     }
 
-    private static int setDrugs(CommandContext<ServerCommandSource> context, Identifier drugName) throws CommandSyntaxException {
+    private static int setDrugs(CommandContext<CommandSourceStack> context, Identifier drugName) throws CommandSyntaxException {
         double value = DoubleArgumentType.getDouble(context, "value");
         applyDrugChange(context, drugName, (properties, type) -> properties.setDrugValue(type, value), (player, type) -> {
             if (type == UpdateType.NONE) {
@@ -133,7 +133,7 @@ class DrugCommand {
         return 0;
     }
 
-    private static int addToDrugs(CommandContext<ServerCommandSource> context, Identifier drugName) throws CommandSyntaxException {
+    private static int addToDrugs(CommandContext<CommandSourceStack> context, Identifier drugName) throws CommandSyntaxException {
         double value = DoubleArgumentType.getDouble(context, "value");
         applyDrugChange(context, drugName, (properties, type) -> properties.addToDrug(type, value), (player, type) -> {
             if (type == UpdateType.NONE) {
@@ -148,8 +148,8 @@ class DrugCommand {
         return 0;
     }
 
-    static void applyDrugChange(CommandContext<ServerCommandSource> context, Identifier drugName, BiConsumer<DrugProperties, DrugType> change, FeedbackConsumer feedback) throws CommandSyntaxException {
-        ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
+    static void applyDrugChange(CommandContext<CommandSourceStack> context, Identifier drugName, BiConsumer<DrugProperties, DrugType> change, FeedbackConsumer feedback) throws CommandSyntaxException {
+        ServerPlayer player = EntityArgument.getPlayer(context, "target");
         DrugProperties properties = DrugProperties.of(player);
 
         if ("all".equals(drugName.getPath())) {
@@ -158,7 +158,7 @@ class DrugCommand {
             });
             feedback.accept(player, UpdateType.ALL);
         } else {
-            DrugType.REGISTRY.getOrEmpty(drugName).ifPresentOrElse(type -> {
+            DrugType.REGISTRY.getOptional(drugName).ifPresentOrElse(type -> {
                 change.accept(properties, type);
                 feedback.accept(player, UpdateType.ONE);
             }, () -> feedback.accept(player, UpdateType.NONE));
@@ -168,7 +168,7 @@ class DrugCommand {
     }
 
     interface FeedbackConsumer {
-        void accept(ServerPlayerEntity player, UpdateType updateType);
+        void accept(ServerPlayer player, UpdateType updateType);
     }
 
     enum UpdateType {
@@ -177,15 +177,15 @@ class DrugCommand {
         NONE
     }
 
-    private static void sendFeedback(ServerCommandSource source, ServerPlayerEntity player, boolean succeeded, String key, Object... arguments) {
+    private static void sendFeedback(CommandSourceStack source, ServerPlayer player, boolean succeeded, String key, Object... arguments) {
         if (source.getEntity() == player) {
-            source.sendFeedback(() -> Text.translatable("commands.drug." + (succeeded ? "success" : "fail") + "." + key + ".self", arguments), true);
+            source.sendSuccess(() -> Component.translatable("commands.drug." + (succeeded ? "success" : "fail") + "." + key + ".self", arguments), true);
         } else {
-            if (succeeded && source.getWorld().getGameRules().getBoolean(GameRules.SEND_COMMAND_FEEDBACK)) {
-                player.sendMessage(Text.translatable("commands.drug." + key + ".changed", arguments));
+            if (succeeded && source.getLevel().getGameRules().get(GameRules.SEND_COMMAND_FEEDBACK)) {
+                player.sendSystemMessage(Component.translatable("commands.drug." + key + ".changed", arguments));
             }
 
-            source.sendFeedback(() -> Text.translatable("commands.drug." + (succeeded ? "success" : "fail") + "." + key + ".other", Streams.concat(
+            source.sendSuccess(() -> Component.translatable("commands.drug." + (succeeded ? "success" : "fail") + "." + key + ".other", Streams.concat(
                     Stream.of(player.getDisplayName()),
                     Arrays.stream(arguments)).toArray()
             ), true);

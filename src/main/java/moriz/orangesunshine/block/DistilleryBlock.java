@@ -6,94 +6,92 @@
 package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
-
 import moriz.orangesunshine.PSTags;
-import moriz.orangesunshine.block.entity.*;
 import moriz.orangesunshine.block.entity.DistilleryBlockEntity;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
 import moriz.orangesunshine.screen.FluidContraptionScreenHandler;
 import moriz.orangesunshine.screen.PSScreenHandlers;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.*;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Created by lukas on 25.10.14.
  */
 public class DistilleryBlock extends BlockWithFluid<DistilleryBlockEntity> {
-    public static final MapCodec<DistilleryBlock> CODEC = createCodec(DistilleryBlock::new);
-    private static final VoxelShape SHAPE = VoxelShapes.union(
-        Block.createCuboidShape(5, 0, 5, 11, 6, 11),
-        Block.createCuboidShape(4, 0, 6, 12, 5, 10),
-        Block.createCuboidShape(6, 0, 4, 10, 5, 12),
-        Block.createCuboidShape(6, 6, 6, 10, 14, 10),
-        Block.createCuboidShape(5, 9, 6, 11, 13, 10),
-        Block.createCuboidShape(6, 9, 5, 10, 13, 11)
+    public static final MapCodec<DistilleryBlock> CODEC = simpleCodec(DistilleryBlock::new);
+    private static final VoxelShape SHAPE = Shapes.or(
+        Block.box(5, 0, 5, 11, 6, 11),
+        Block.box(4, 0, 6, 12, 5, 10),
+        Block.box(6, 0, 4, 10, 5, 12),
+        Block.box(6, 6, 6, 10, 14, 10),
+        Block.box(5, 9, 6, 11, 13, 10),
+        Block.box(6, 9, 5, 10, 13, 11)
     );
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
-    public DistilleryBlock(Settings settings) {
-        super(settings.nonOpaque());
-        setDefaultState(getDefaultState().with(FACING, Direction.UP));
+    public DistilleryBlock(BlockBehaviour.Properties settings) {
+        super(settings.noOcclusion());
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.UP));
     }
 
     @Override
-    protected MapCodec<? extends DistilleryBlock> getCodec() {
+    public MapCodec<? extends DistilleryBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(FACING)));
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, Direction.Type.HORIZONTAL.stream().filter(direction -> {
-            return canConnectTo(ctx.getWorld().getBlockState(ctx.getBlockPos().offset(direction)), direction);
-        }).findAny().orElse(Direction.UP));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return defaultBlockState().setValue(FACING, findConnection(ctx.getLevel(), ctx.getClickedPos()).orElse(Direction.UP));
     }
 
     public static boolean canConnectTo(BlockState state, Direction direction) {
-        return state.isIn(PSTags.BARRELS)
-            || state.isOf(PSBlocks.MASH_TUB)
-            || state.isOf(PSBlocks.FLASK)
-            || (state.isOf(PSBlocks.DISTILLERY) && state.get(FACING) != direction.getOpposite());
+        return state.is(PSTags.BARRELS)
+            || state.is(PSBlocks.MASH_TUB)
+            || state.is(PSBlocks.FLASK)
+            || (state.is(PSBlocks.DISTILLERY) && state.getValue(FACING) != direction.getOpposite());
     }
 
-    @Deprecated
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if (state.get(FACING).getAxis() == Axis.Y || state.get(FACING) == direction) {
-            return state.with(FACING, Direction.Type.HORIZONTAL.stream().filter(d -> {
-                return canConnectTo(world.getBlockState(pos.offset(d)), d);
-            }).findAny().orElse(Direction.UP));
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess scheduledTicks, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(FACING).getAxis() == Direction.Axis.Y || state.getValue(FACING) == direction) {
+            return state.setValue(FACING, findConnection(world, pos).orElse(Direction.UP));
         }
 
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.updateShape(state, world, scheduledTicks, pos, direction, neighborPos, neighborState, random);
     }
-
 
     @Override
     protected BlockEntityType<DistilleryBlockEntity> getBlockEntityType() {
@@ -101,13 +99,22 @@ public class DistilleryBlock extends BlockWithFluid<DistilleryBlockEntity> {
     }
 
     @Override
-    protected ScreenHandlerType<FluidContraptionScreenHandler<DistilleryBlockEntity>> getScreenHandlerType() {
+    protected MenuType<FluidContraptionScreenHandler<DistilleryBlockEntity>> getScreenHandlerType() {
         return PSScreenHandlers.DISTILLERY;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(FACING);
+    }
+
+    private static java.util.Optional<Direction> findConnection(LevelReader world, BlockPos pos) {
+        for (Direction direction : new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST}) {
+            if (canConnectTo(world.getBlockState(pos.relative(direction)), direction)) {
+                return java.util.Optional.of(direction);
+            }
+        }
+        return java.util.Optional.empty();
     }
 }

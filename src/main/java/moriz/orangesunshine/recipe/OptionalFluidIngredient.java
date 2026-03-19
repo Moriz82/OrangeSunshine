@@ -1,47 +1,68 @@
 package moriz.orangesunshine.recipe;
 
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.function.Predicate;
-
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.Encoder;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import moriz.orangesunshine.util.CodecUtils;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
-public record OptionalFluidIngredient (
-        Optional<FluidIngredient> fluid,
-        Optional<Ingredient> receptical
-) implements Predicate<ItemStack> {
+public record OptionalFluidIngredient(Optional<FluidIngredient> fluid, Optional<Ingredient> receptical)
+        implements Predicate<ItemStack> {
     public static final OptionalFluidIngredient EMPTY = new OptionalFluidIngredient(Optional.empty(), Optional.empty());
-    public static final Codec<OptionalFluidIngredient> CODEC = CodecUtils.extend(Ingredient.ALLOW_EMPTY_CODEC, FluidIngredient.CODEC.fieldOf("fluid")).xmap(
-        pair -> new OptionalFluidIngredient(pair.getSecond(), pair.getFirst()),
-        ingredient -> new Pair<>(ingredient.receptical(), ingredient.fluid())
-    );
-    public static final Codec<DefaultedList<OptionalFluidIngredient>> LIST_CODEC = CODEC.listOf().xmap(
-            values -> DefaultedList.copyOf(EMPTY, values.toArray(OptionalFluidIngredient[]::new)),
-            defaultedList -> new ArrayList<>(defaultedList)
+
+    private static final Codec<Ingredient> OPTIONAL_RECEPTICAL_CODEC = Codec.of(new Encoder<>() {
+            @Override
+            public <T> DataResult<T> encode(Ingredient ingredient, DynamicOps<T> ops, T prefix) {
+                return ingredient.isEmpty()
+                        ? DataResult.success(ops.emptyMap())
+                        : Ingredient.CODEC.encode(ingredient, ops, prefix);
+            }
+        },
+            Ingredient.CODEC
     );
 
-    public OptionalFluidIngredient(PacketByteBuf buffer) {
-        this(buffer.readOptional(FluidIngredient::new), buffer.readOptional(Ingredient::fromPacket));
-    }
+    public static final Codec<OptionalFluidIngredient> CODEC = CodecUtils.extend(
+            OPTIONAL_RECEPTICAL_CODEC,
+            FluidIngredient.CODEC.fieldOf("fluid")
+    ).xmap(
+            pair -> new OptionalFluidIngredient(pair.getSecond(), pair.getFirst()),
+            ingredient -> Pair.of(ingredient.receptical(), ingredient.fluid())
+    );
+
+    public static final Codec<NonNullList<OptionalFluidIngredient>> LIST_CODEC = CODEC.listOf().xmap(
+            values -> {
+                NonNullList<OptionalFluidIngredient> list = NonNullList.createWithCapacity(values.size());
+                list.addAll(values);
+                return list;
+            },
+            List::copyOf
+    );
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, OptionalFluidIngredient> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.optional(FluidIngredient.STREAM_CODEC),
+            OptionalFluidIngredient::fluid,
+            ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
+            OptionalFluidIngredient::receptical,
+            OptionalFluidIngredient::new
+    );
 
     public boolean isEmpty() {
         return fluid.isEmpty() && receptical.isEmpty();
     }
 
-    public void write(PacketByteBuf buffer) {
-        buffer.writeOptional(fluid, (a, b) -> b.write(a));
-        buffer.writeOptional(receptical, (a, b) -> b.write(a));
-    }
-
     @Override
     public boolean test(ItemStack stack) {
-        return fluid.map(f -> f.test(stack)).orElse(true) && receptical.map(r -> r.test(stack)).orElse(true);
+        return fluid.map(value -> value.test(stack)).orElse(true)
+                && receptical.map(value -> value.test(stack)).orElse(true);
     }
 }
-

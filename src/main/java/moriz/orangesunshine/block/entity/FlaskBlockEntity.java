@@ -4,6 +4,9 @@
  */
 package moriz.orangesunshine.block.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import moriz.orangesunshine.block.BlockWithFluid;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.fluid.PSFluids;
@@ -13,25 +16,22 @@ import moriz.orangesunshine.util.NbtSerialisable;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.ArrayPropertyDelegate;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import moriz.orangesunshine.fluid.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 /**
  * Created by lukas on 25.10.14.
@@ -39,7 +39,7 @@ import moriz.orangesunshine.fluid.*;
  */
 public class FlaskBlockEntity extends SyncedBlockEntity
         implements BlockWithFluid.DirectionalFluidResovoir,
-        Resovoir.ChangeListener, SidedInventory,
+        Resovoir.ChangeListener, WorldlyContainer,
                    SidedStorageBlockEntity {
     private static final int[] NO_SLOT_ID = {};
     private static final int[] INPUT_SLOT_ID = {0};
@@ -54,8 +54,7 @@ public class FlaskBlockEntity extends SyncedBlockEntity
     public final IoSlot outputSlot = new IoSlot(1);
 
     public final IoInventory ioInventory = new IoInventory();
-
-    public final PropertyDelegate propertyDelegate = new ArrayPropertyDelegate(getTotalProperties());
+    public final ContainerData propertyDelegate = new SimpleContainerData(getTotalProperties());
 
     public FlaskBlockEntity(BlockPos pos, BlockState state) {
         this(PSBlockEntities.FLASK, pos, state, FLASK_CAPACITY);
@@ -95,13 +94,13 @@ public class FlaskBlockEntity extends SyncedBlockEntity
     }
 
     @Override
-    public void tick(ServerWorld world) {
+    public void tick(ServerLevel level) {
         ItemStack output = outputSlot.getStack();
         boolean playSound = false;
         FluidContainer container = FluidContainer.of(output, null);
         if (container != null && container.getFillPercentage(output) < 1) {
             int oldLevel = container.getLevel(output);
-            ioInventory.setStack(1, tank.drain(50, output, outputSlot::incrementLevelsTransferred));
+            ioInventory.setItem(1, tank.drain(50, output, outputSlot::incrementLevelsTransferred));
             playSound |= oldLevel != FluidContainer.of(outputSlot.getStack()).getLevel(outputSlot.getStack());
         }
 
@@ -109,18 +108,18 @@ public class FlaskBlockEntity extends SyncedBlockEntity
         container = FluidContainer.of(input, null);
         if (container != null && container.getFillPercentage(input) > 0) {
             int oldLevel = container.getLevel(input);
-            ioInventory.setStack(0, tank.deposit(50, input, inputSlot::incrementLevelsTransferred));
+            ioInventory.setItem(0, tank.deposit(50, input, inputSlot::incrementLevelsTransferred));
             playSound |= oldLevel != FluidContainer.of(inputSlot.getStack()).getLevel(inputSlot.getStack());
         }
 
-        if (playSound && world.getTime() % 9 == 0) {
-            world.playSound(null, getPos(), SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 0.025F, 0.5F);
+        if (playSound && level.getGameTime() % 9 == 0) {
+            level.playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.025F, 0.5F);
         }
 
         if (pendingSync) {
             pendingSync = false;
-            markDirty();
-            world.getChunkManager().markForUpdate(getPos());
+            setChanged();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 
@@ -136,26 +135,30 @@ public class FlaskBlockEntity extends SyncedBlockEntity
     }
 
     @Override
-    public void writeNbt(NbtCompound compound) {
+    protected void writeNbt(CompoundTag compound) {
         super.writeNbt(compound);
         compound.put("tank", tank.toNbt());
-        Inventories.writeNbt(compound, ioInventory.heldStacks);
+        compound.store("items", ItemStack.OPTIONAL_CODEC.listOf(), List.copyOf(ioInventory.getItems()));
         compound.put("inputSlot", inputSlot.toNbt());
         compound.put("outputSlot", outputSlot.toNbt());
     }
 
     @Override
-    public void readNbt(NbtCompound compound) {
+    protected void readNbt(CompoundTag compound) {
         super.readNbt(compound);
-        tank.fromNbt(compound.getCompound("tank"));
-        Inventories.readNbt(compound, ioInventory.heldStacks);
-        inputSlot.fromNbt(compound.getCompound("inputSlot"));
-        outputSlot.fromNbt(compound.getCompound("outputSlot"));
+        tank.fromNbt(compound.getCompoundOrEmpty("tank"));
+        var items = compound.read("items", ItemStack.OPTIONAL_CODEC.listOf()).orElse(List.of());
+        var slots = ioInventory.getItems();
+        for (int i = 0; i < slots.size(); i++) {
+            slots.set(i, i < items.size() ? items.get(i) : ItemStack.EMPTY);
+        }
+        inputSlot.fromNbt(compound.getCompoundOrEmpty("inputSlot"));
+        outputSlot.fromNbt(compound.getCompoundOrEmpty("outputSlot"));
     }
 
     @Override
-    public int size() {
-        return ioInventory.size();
+    public int getContainerSize() {
+        return ioInventory.getContainerSize();
     }
 
     @Override
@@ -164,23 +167,23 @@ public class FlaskBlockEntity extends SyncedBlockEntity
     }
 
     @Override
-    public ItemStack getStack(int slot) {
-        return ioInventory.getStack(slot);
+    public ItemStack getItem(int slot) {
+        return ioInventory.getItem(slot);
     }
 
     @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return ioInventory.removeStack(slot, amount);
+    public ItemStack removeItem(int slot, int amount) {
+        return ioInventory.removeItem(slot, amount);
     }
 
     @Override
-    public ItemStack removeStack(int slot) {
-        return ioInventory.removeStack(slot);
+    public ItemStack removeItemNoUpdate(int slot) {
+        return ioInventory.removeItemNoUpdate(slot);
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
-        ioInventory.setStack(slot, stack);
+    public void setItem(int slot, ItemStack stack) {
+        ioInventory.setItem(slot, stack);
         onContentsExternallyChanged(slot);
     }
 
@@ -194,21 +197,21 @@ public class FlaskBlockEntity extends SyncedBlockEntity
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity var1) {
-        return true;
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
     }
 
     @Override
-    public void clear() {
-        ioInventory.clear();
-        tank.clear();
+    public void clearContent() {
+        ioInventory.clearContent();
+        tank.clearContent();
     }
 
     @Override
-    public int[] getAvailableSlots(Direction direction) {
-        Direction facing = getCachedState().getOrEmpty(Properties.HORIZONTAL_FACING).orElse(Direction.UP);
+    public int[] getSlotsForFace(Direction direction) {
+        Direction facing = getBlockState().getOptionalValue(BlockStateProperties.HORIZONTAL_FACING).orElse(Direction.UP);
         if (facing.getAxis() != Direction.Axis.Y && direction.getAxis() != Direction.Axis.Y) {
-            direction = Direction.fromRotation(facing.asRotation() - direction.asRotation());
+            direction = Direction.fromYRot(facing.toYRot() - direction.toYRot());
         }
 
         if (direction == Direction.EAST) {
@@ -224,27 +227,27 @@ public class FlaskBlockEntity extends SyncedBlockEntity
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, Direction direction) {
-        int[] availableSlots = getAvailableSlots(direction);
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction direction) {
+        int[] availableSlots = getSlotsForFace(direction);
 
         if (availableSlots.length == 0) {
             return false;
         }
 
         if (slot == OUTPUT_SLOT_ID[0]) {
-            return ioInventory.isValid(slot, stack) && FluidContainer.of(stack).getFillPercentage(stack) < 1;
+            return ioInventory.canPlaceItem(slot, stack) && FluidContainer.of(stack).getFillPercentage(stack) < 1;
         }
 
         if (slot == INPUT_SLOT_ID[0]) {
-            return ioInventory.isValid(slot, stack) && FluidContainer.of(stack).getFillPercentage(stack) > 0;
+            return ioInventory.canPlaceItem(slot, stack) && FluidContainer.of(stack).getFillPercentage(stack) > 0;
         }
 
         return false;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction direction) {
-        int[] availableSlots = getAvailableSlots(direction);
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
+        int[] availableSlots = getSlotsForFace(direction);
 
         if (availableSlots.length == 0) {
             return false;
@@ -266,18 +269,18 @@ public class FlaskBlockEntity extends SyncedBlockEntity
         return getTank(side);
     }
 
-    class IoInventory extends SimpleInventory {
-        public IoInventory() {
+    class IoInventory extends SimpleContainer {
+        IoInventory() {
             super(2);
         }
 
         @Override
-        public int getMaxCountPerStack() {
+        public int getMaxStackSize() {
             return 1;
         }
 
         @Override
-        public boolean isValid(int slot, ItemStack stack) {
+        public boolean canPlaceItem(int slot, ItemStack stack) {
             var container = FluidContainer.of(stack, null);
             return container != null && (slot == 0 ? container.getFillPercentage(stack) > 0 : container.getFillPercentage(stack) < 1);
         }
@@ -291,7 +294,7 @@ public class FlaskBlockEntity extends SyncedBlockEntity
 
         public IoSlot(int index) {
             this.index = index;
-            levelsTransferredIndex = 0 + (index * 2);
+            levelsTransferredIndex = index * 2;
             inputtedLevelsIndex = 1 + (index * 2);
         }
 
@@ -304,10 +307,10 @@ public class FlaskBlockEntity extends SyncedBlockEntity
         }
 
         public void onChange() {
-            ItemStack stack = ioInventory.getStack(index);
-            var container = FluidContainer.of(stack);
-            int levels = container.getLevel(stack);
-            if (index == 1) {
+            ItemStack stack = ioInventory.getItem(index);
+            var container = FluidContainer.of(stack, null);
+            int levels = container == null ? 0 : container.getLevel(stack);
+            if (container != null && index == 1) {
                 levels = container.getMaxCapacity(stack) - levels;
             }
             propertyDelegate.set(inputtedLevelsIndex, levels);
@@ -315,24 +318,25 @@ public class FlaskBlockEntity extends SyncedBlockEntity
         }
 
         public ItemStack getStack() {
-            return ioInventory.getStack(index);
+            return ioInventory.getItem(index);
         }
 
         public float getFillPercentage(float def) {
             ItemStack stack = getStack();
-            return stack.getItem() instanceof FluidContainer container ? container.getFillPercentage(stack) : def;
+            var container = FluidContainer.of(stack, null);
+            return container == null ? def : container.getFillPercentage(stack);
         }
 
         @Override
-        public void toNbt(NbtCompound compound) {
+        public void toNbt(CompoundTag compound) {
             compound.putInt("inputtedLevels", propertyDelegate.get(inputtedLevelsIndex));
             compound.putInt("levelsTransferred", propertyDelegate.get(levelsTransferredIndex));
         }
 
         @Override
-        public void fromNbt(NbtCompound compound) {
-            propertyDelegate.set(inputtedLevelsIndex, compound.getInt("inputtedLevels"));
-            propertyDelegate.set(levelsTransferredIndex, compound.getInt("levelsTransferred"));
+        public void fromNbt(CompoundTag compound) {
+            propertyDelegate.set(inputtedLevelsIndex, compound.getIntOr("inputtedLevels", 0));
+            propertyDelegate.set(levelsTransferredIndex, compound.getIntOr("levelsTransferred", 0));
         }
     }
 }

@@ -5,11 +5,10 @@
 
 package moriz.orangesunshine.block.entity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class PeyoteBlockEntity extends BlockEntity {
+public class PeyoteBlockEntity extends SyncedBlockEntity {
     public PeyoteBlockEntity(BlockPos pos, BlockState state) {
         super(PSBlockEntities.PEYOTE, pos, state);
     }

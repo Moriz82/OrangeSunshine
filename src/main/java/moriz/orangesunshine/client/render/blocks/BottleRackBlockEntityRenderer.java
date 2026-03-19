@@ -6,13 +6,13 @@ import moriz.orangesunshine.block.BottleRackBlock;
 import moriz.orangesunshine.block.entity.BottleRackBlockEntity;
 import moriz.orangesunshine.client.render.PlacedDrinksModelProvider;
 import moriz.orangesunshine.client.render.RenderUtil;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.math.RotationAxis;
 
 /**
@@ -25,7 +25,7 @@ public class BottleRackBlockEntityRenderer implements BlockEntityRenderer<Bottle
     }
 
     @Override
-    public void render(BottleRackBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(BottleRackBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         matrices.push();
         matrices.translate(0.5F, 0.5F, 0.5F);
         Direction direction = entity.getCachedState().get(BottleRackBlock.FACING);

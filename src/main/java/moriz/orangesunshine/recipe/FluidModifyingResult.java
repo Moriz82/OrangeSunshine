@@ -1,65 +1,56 @@
 package moriz.orangesunshine.recipe;
 
-import java.util.Locale;
-import java.util.Map;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.StringIdentifiable;
+import java.util.Locale;
+import java.util.Map;
+import moriz.orangesunshine.fluid.container.FluidContainer;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.ItemStack;
 
 public record FluidModifyingResult(Map<String, Modification> attributes, ItemStack result) {
     public static final Codec<FluidModifyingResult> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(Codec.STRING, Modification.CODEC).optionalFieldOf("attributes", Map.of()).forGetter(FluidModifyingResult::attributes),
-            ItemStack.RECIPE_RESULT_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(FluidModifyingResult::result)
-        ).apply(instance, FluidModifyingResult::new));
+            Codec.unboundedMap(Codec.STRING, Modification.CODEC)
+                    .optionalFieldOf("attributes", Map.of())
+                    .forGetter(FluidModifyingResult::attributes),
+            ItemStack.OPTIONAL_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(FluidModifyingResult::result)
+    ).apply(instance, FluidModifyingResult::new));
 
-    public FluidModifyingResult(PacketByteBuf buffer) {
-        this(buffer.readMap(PacketByteBuf::readString, FluidModifyingResult.Modification::new), buffer.readItemStack());
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, FluidModifyingResult> STREAM_CODEC =
+            ByteBufCodecs.fromCodecWithRegistriesTrusted(CODEC);
 
     public ItemStack applyTo(ItemStack input) {
-        ItemStack stack = result.isEmpty() ? input.copyWithCount(
-                result.getItem() == Items.AIR ? 1 : result.getCount()
-            ) : result.copy();
-        NbtCompound tag = stack.getOrCreateSubNbt("fluid");
-        attributes.forEach((key, modder) -> {
-            if (!tag.contains(key, NbtElement.INT_TYPE)) {
-                tag.putInt(key, 0);
-            }
-            tag.putInt(key, modder.applyAsInt(tag.getInt(key)));
-        });
+        ItemStack stack = result.isEmpty() ? input.copyWithCount(1) : result.copy();
+        if (!attributes.isEmpty()) {
+            FluidContainer.updateFluidAttributes(stack, tag ->
+                    attributes.forEach((key, modifier) -> tag.putInt(key, modifier.applyAsInt(tag.getIntOr(key, 0))))
+            );
+        }
         return stack;
-    }
-
-    public void write(PacketByteBuf buffer) {
-        buffer.writeMap(attributes, PacketByteBuf::writeString, (b, c) -> c.write(b));
-        buffer.writeItemStack(result);
     }
 
     interface Op {
         int apply(int a, int b);
     }
 
-    public enum Ops implements Op, StringIdentifiable {
+    public enum Ops implements Op, StringRepresentable {
         SET((a, b) -> b),
         ADD((a, b) -> a + b),
         SUBTRACT((a, b) -> a - b),
         MULTIPLY((a, b) -> a * b),
         DIVIDE((a, b) -> a / b);
-        private static final Codec<Ops> CODEC = StringIdentifiable.createCodec(Ops::values);
 
-        private final String name;
+        private static final Codec<Ops> CODEC = StringRepresentable.fromEnum(Ops::values);
+
+        private final String serializedName;
         private final Op operation;
 
         Ops(Op operation) {
-            this.name = name().toLowerCase(Locale.ROOT);
+            this.serializedName = name().toLowerCase(Locale.ROOT);
             this.operation = operation;
         }
 
@@ -69,8 +60,8 @@ public record FluidModifyingResult(Map<String, Modification> attributes, ItemSta
         }
 
         @Override
-        public String asString() {
-            return name;
+        public String getSerializedName() {
+            return serializedName;
         }
     }
 
@@ -80,18 +71,9 @@ public record FluidModifyingResult(Map<String, Modification> attributes, ItemSta
                 Ops.CODEC.optionalFieldOf("type", Ops.ADD).forGetter(Modification::type)
         ).apply(instance, Modification::new));
 
-        Modification(PacketByteBuf buffer) {
-            this(buffer.readVarInt(), buffer.readEnumConstant(Ops.class));
-        }
-
         @Override
-        public int get(int v) {
-            return type.operation.apply(v, value);
-        }
-
-        public void write(PacketByteBuf buffer) {
-            buffer.writeVarInt(value);
-            buffer.writeEnumConstant(type);
+        public int get(int currentValue) {
+            return type.apply(currentValue, value);
         }
     }
 }

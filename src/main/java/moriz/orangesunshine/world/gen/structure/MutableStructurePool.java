@@ -11,19 +11,19 @@ import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistrySetupCallback;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.structure.pool.StructurePool;
-import net.minecraft.structure.pool.StructurePoolElement;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
 public interface MutableStructurePool {
     static void bootstrap() {
         DynamicRegistrySetupCallback.EVENT.register(registries -> {
             Map<Identifier, PoolPair> registeredPools = new HashMap<>();
-            registries.registerEntryAdded(RegistryKeys.TEMPLATE_POOL, (rawId, id, pool) -> {
+            registries.registerEntryAdded(Registries.TEMPLATE_POOL, (rawId, id, pool) -> {
                 boolean isInjectedPool = id.getNamespace().equals("orangesunshinemc");
                 if (isInjectedPool || id.getNamespace().equals("minecraft")) {
-                    Identifier targetId = isInjectedPool ? new Identifier(id.getPath()) : id;
+                    Identifier targetId = isInjectedPool ? Identifier.withDefaultNamespace(id.getPath()) : id;
 
                     if (registeredPools.computeIfAbsent(targetId, PoolPair::new).offer(isInjectedPool, pool)) {
                         registeredPools.remove(targetId);
@@ -33,7 +33,7 @@ public interface MutableStructurePool {
         });
     }
 
-    static MutableStructurePool of(StructurePool pool) {
+    static MutableStructurePool of(StructureTemplatePool pool) {
         return (MutableStructurePool)pool;
     }
 
@@ -53,7 +53,7 @@ public interface MutableStructurePool {
 
         PoolPair(Identifier id) {}
 
-        public boolean offer(boolean isSource, StructurePool pool) {
+        public boolean offer(boolean isSource, StructureTemplatePool pool) {
             if (isSource) {
                 source = of(pool);
             } else {

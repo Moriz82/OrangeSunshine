@@ -6,7 +6,7 @@
 package moriz.orangesunshine.fluid;
 
 import moriz.orangesunshine.fluid.container.FluidContainer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A fluid that can explode.

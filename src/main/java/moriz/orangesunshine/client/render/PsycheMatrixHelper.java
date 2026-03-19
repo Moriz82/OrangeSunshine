@@ -5,9 +5,9 @@
 
 package moriz.orangesunshine.client.render;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.Camera;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import org.joml.*;
 
@@ -30,8 +30,8 @@ public interface PsycheMatrixHelper {
 
     static Vector3f fromPolar(float angle, float distance) {
         return new Vector3f(
-               -MathHelper.sin(angle) * distance,
-                MathHelper.cos(angle) * distance,
+               -Mth.sin(angle) * distance,
+                Mth.cos(angle) * distance,
                 0
         );
     }

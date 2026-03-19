@@ -6,45 +6,48 @@
 package moriz.orangesunshine.item;
 
 import java.util.Optional;
-
-import org.jetbrains.annotations.Nullable;
-
 import moriz.orangesunshine.block.PSBlocks;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
-import net.minecraft.block.*;
-import net.minecraft.item.*;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Updated by Sollace on 8 Feb 2023
  */
 public class MashTubItem extends FlaskItem {
-    public MashTubItem(Block block, Settings settings, int capacity) {
+    public MashTubItem(Block block, Item.Properties settings, int capacity) {
         super(block, settings, capacity);
     }
 
     @Override
     @Nullable
-    public ItemPlacementContext getPlacementContext(ItemPlacementContext context) {
-        return findPlacementPosition(context.getWorld(), context.getBlockPos()).map(position -> {
-            return new ItemPlacementContext(
-                    context.getPlayer(), context.getHand(), context.getStack(),
-                    new BlockHitResult(position.toCenterPos(), Direction.UP, position, false)
-            );
-        }).orElse(context);
+    public BlockPlaceContext updatePlacementContext(BlockPlaceContext context) {
+        return findPlacementPosition(context.getLevel(), context.getClickedPos())
+                .map(position -> new BlockPlaceContext(
+                        context.getPlayer(),
+                        context.getHand(),
+                        context.getItemInHand(),
+                        new BlockHitResult(position.getCenter(), Direction.UP, position, false)
+                ))
+                .orElse(context);
     }
 
     @Override
-    protected boolean place(ItemPlacementContext context, BlockState state) {
-        if (super.place(context, state)) {
-            BlockPos center = context.getBlockPos();
-            BlockPos.iterateOutwards(center, 1, 0, 1).forEach(p -> {
+    protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
+        if (super.placeBlock(context, state)) {
+            BlockPos center = context.getClickedPos();
+            BlockPos.withinManhattan(center, 1, 0, 1).forEach(p -> {
                 if (!p.equals(center)) {
-                    context.getWorld().setBlockState(p, PSBlocks.MASH_TUB_EDGE.getDefaultState(), Block.NOTIFY_ALL);
-                    context.getWorld().getBlockEntity(p, PSBlockEntities.MASH_TUB_EDGE).ifPresent(be -> be.setMasterPos(center));
+                    context.getLevel().setBlock(p, PSBlocks.MASH_TUB_EDGE.defaultBlockState(), Block.UPDATE_ALL);
+                    context.getLevel().getBlockEntity(p, PSBlockEntities.MASH_TUB_EDGE).ifPresent(be -> be.setMasterPos(center));
                 }
             });
             return true;
@@ -52,13 +55,12 @@ public class MashTubItem extends FlaskItem {
         return false;
     }
 
-    public static Optional<BlockPos> findPlacementPosition(WorldView world, BlockPos pos) {
-        return BlockPos.streamOutwards(pos, 1, 0, 1)
-                .filter(center -> BlockPos.streamOutwards(center, 1, 0, 1).allMatch(p -> {
+    public static Optional<BlockPos> findPlacementPosition(LevelReader world, BlockPos pos) {
+        return BlockPos.withinManhattanStream(pos, 1, 0, 1)
+                .filter(center -> BlockPos.withinManhattanStream(center, 1, 0, 1).allMatch(p -> {
                     BlockState s = world.getBlockState(p);
-                    return world.isAir(p) || s.isReplaceable();
+                    return world.isEmptyBlock(p) || s.canBeReplaced();
                 }))
-                .findFirst()
-                .map(p -> p.toImmutable());
+                .findFirst();
     }
 }

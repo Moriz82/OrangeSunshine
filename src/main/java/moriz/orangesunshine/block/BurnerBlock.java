@@ -6,27 +6,29 @@
 package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
-
-import net.minecraft.block.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BurnerBlock extends Block {
-    public static final MapCodec<BurnerBlock> CODEC = createCodec(BurnerBlock::new);
+    public static final MapCodec<BurnerBlock> CODEC = simpleCodec(BurnerBlock::new);
     private static final VoxelShape SHAPE = ShapeUtil.createCenteredShape(5, 2, 5);
 
-    public BurnerBlock(Settings settings) {
-        super(settings.nonOpaque());
+    public BurnerBlock(BlockBehaviour.Properties settings) {
+        super(settings.noOcclusion());
     }
 
     @Override
-    protected MapCodec<? extends BurnerBlock> getCodec() {
+    public MapCodec<? extends BurnerBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 }

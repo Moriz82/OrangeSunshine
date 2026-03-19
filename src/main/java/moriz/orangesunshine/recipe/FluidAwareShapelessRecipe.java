@@ -5,116 +5,149 @@
 
 package moriz.orangesunshine.recipe;
 
-import moriz.orangesunshine.fluid.container.MutableFluidContainer;
-import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.dynamic.Codecs;
-import net.minecraft.world.World;
-
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.Optional;
+import java.util.stream.Stream;
+import moriz.orangesunshine.fluid.container.MutableFluidContainer;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.level.Level;
 
 public class FluidAwareShapelessRecipe extends ShapelessRecipe {
-
     private final ItemStack output;
-    private final DefaultedList<OptionalFluidIngredient> ingredients;
+    private final NonNullList<OptionalFluidIngredient> ingredients;
     private final List<OptionalFluidIngredient> fluidRestrictions;
 
-    public FluidAwareShapelessRecipe(String group, CraftingRecipeCategory category, ItemStack output,
-            DefaultedList<OptionalFluidIngredient> input) {
-        super(group, category, output,
-                // parent expects regular ingredients but we don't actually use them
-                input.stream()
-                .map(i -> i.receptical().orElse(Ingredient.EMPTY))
-                .collect(Collectors.toCollection(DefaultedList::of))
-        );
+    public FluidAwareShapelessRecipe(
+            String group,
+            CraftingBookCategory category,
+            ItemStack output,
+            List<OptionalFluidIngredient> input
+    ) {
+        super(group, category, output, input.stream()
+                .map(ingredient -> ingredient.receptical().orElseGet(FluidAwareShapelessRecipe::emptyIngredient))
+                .toList());
         this.output = output;
-        this.ingredients = input;
-        this.fluidRestrictions = ingredients.stream().filter(i -> i.fluid().filter(f -> f.level() > 0).isPresent()).toList();
+        this.ingredients = NonNullList.createWithCapacity(input.size());
+        this.ingredients.addAll(input);
+        this.fluidRestrictions = this.ingredients.stream()
+                .filter(ingredient -> ingredient.fluid().filter(fluid -> fluid.level() > 0).isPresent())
+                .toList();
     }
 
-    public DefaultedList<OptionalFluidIngredient> getFluidAwareIngredients() {
+    private static Ingredient emptyIngredient() {
+        return Ingredient.of(Stream.of());
+    }
+
+    public String getGroup() {
+        return group();
+    }
+
+    public CraftingBookCategory getCategory() {
+        return category();
+    }
+
+    public ItemStack getResult() {
+        return output;
+    }
+
+    public NonNullList<OptionalFluidIngredient> getFluidAwareIngredients() {
         return ingredients;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return PSRecipes.SHAPELESS_FLUID;
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<ShapelessRecipe> getSerializer() {
+        return (RecipeSerializer<ShapelessRecipe>)(RecipeSerializer<?>)PSRecipes.SHAPELESS_FLUID;
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingInput inventory, Level level) {
         List<OptionalFluidIngredient> unmatchedInputs = new ArrayList<>(ingredients);
-        return RecipeUtils.stacks(inventory)
-                    .filter(stack -> unmatchedInputs.stream()
+        long matched = RecipeUtils.stacks(inventory)
+                .filter(stack -> unmatchedInputs.stream()
                         .filter(ingredient -> ingredient.test(stack))
                         .findFirst()
                         .map(unmatchedInputs::remove)
-                        .orElse(false)).count() == ingredients.size() && unmatchedInputs.isEmpty();
+                        .orElse(false))
+                .count();
+
+        return matched == ingredients.size() && unmatchedInputs.isEmpty();
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainder(RecipeInputInventory inventory) {
-        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput inventory) {
+        NonNullList<ItemStack> remaining = NonNullList.withSize(inventory.size(), ItemStack.EMPTY);
 
-        for (int i = 0; i < defaultedList.size(); ++i) {
-            ItemStack stack = inventory.getStack(i);
-            Item item = stack.getItem();
+        for (int i = 0; i < remaining.size(); ++i) {
+            ItemStack stack = inventory.getItem(i);
+            ItemStack remainder = stack.getItem().getCraftingRemainder();
+            if (!remainder.isEmpty()) {
+                remaining.set(i, remainder.copy());
+                continue;
+            }
 
-            defaultedList.set(i, item.hasRecipeRemainder()
-                ? new ItemStack(item.getRecipeRemainder())
-                : fluidRestrictions.stream()
-                        .filter(t -> t.test(stack))
-                        .findFirst()
-                        .flatMap(OptionalFluidIngredient::fluid)
-                        .map(fluid -> MutableFluidContainer.of(stack).decrement(fluid.level()))
-                        .map(MutableFluidContainer::asStack)
-                        .orElse(ItemStack.EMPTY)
-            );
+            ItemStack fluidRemainder = fluidRestrictions.stream()
+                    .filter(ingredient -> ingredient.test(stack))
+                    .findFirst()
+                    .flatMap(OptionalFluidIngredient::fluid)
+                    .map(fluid -> MutableFluidContainer.of(stack.copy()).decrement(fluid.level()))
+                    .map(MutableFluidContainer::asStack)
+                    .orElse(ItemStack.EMPTY);
+
+            remaining.set(i, fluidRemainder);
         }
-        return defaultedList;
+
+        return remaining;
     }
 
     static class Serializer implements RecipeSerializer<FluidAwareShapelessRecipe> {
-        public static final Codec<FluidAwareShapelessRecipe> CODEC = RecordCodecBuilder.create(instance -> instance
-                .group(Codecs.createStrictOptionalFieldCodec(Codec.STRING, "group", "").forGetter(FluidAwareShapelessRecipe::getGroup),
-                        CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter(FluidAwareShapelessRecipe::getCategory),
-                        ItemStack.RECIPE_RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.getResult(null)),
-                        OptionalFluidIngredient.LIST_CODEC.fieldOf("ingredients").forGetter(recipe -> recipe.ingredients)
-                ).apply(instance, FluidAwareShapelessRecipe::new)
+        private static final StreamCodec<RegistryFriendlyByteBuf, OptionalFluidIngredient> OPTIONAL_FLUID_INGREDIENT_STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.optional(FluidIngredient.STREAM_CODEC),
+                OptionalFluidIngredient::fluid,
+                ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
+                OptionalFluidIngredient::receptical,
+                OptionalFluidIngredient::new
+        );
+
+        private static final MapCodec<FluidAwareShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                com.mojang.serialization.Codec.STRING.optionalFieldOf("group", "").forGetter(FluidAwareShapelessRecipe::getGroup),
+                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(FluidAwareShapelessRecipe::getCategory),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(FluidAwareShapelessRecipe::getResult),
+                OptionalFluidIngredient.CODEC.listOf().fieldOf("ingredients").forGetter(FluidAwareShapelessRecipe::getFluidAwareIngredients)
+        ).apply(instance, FluidAwareShapelessRecipe::new));
+
+        private static final StreamCodec<RegistryFriendlyByteBuf, FluidAwareShapelessRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                FluidAwareShapelessRecipe::getGroup,
+                CraftingBookCategory.STREAM_CODEC,
+                FluidAwareShapelessRecipe::getCategory,
+                ItemStack.STREAM_CODEC,
+                FluidAwareShapelessRecipe::getResult,
+                ByteBufCodecs.collection(ArrayList::new, OPTIONAL_FLUID_INGREDIENT_STREAM_CODEC),
+                FluidAwareShapelessRecipe::getFluidAwareIngredients,
+                FluidAwareShapelessRecipe::new
         );
 
         @Override
-        public Codec<FluidAwareShapelessRecipe> codec() {
+        public MapCodec<FluidAwareShapelessRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public FluidAwareShapelessRecipe read(PacketByteBuf buffer) {
-            return new FluidAwareShapelessRecipe(
-                    buffer.readString(),
-                    buffer.readEnumConstant(CraftingRecipeCategory.class),
-                    buffer.readItemStack(),
-                    buffer.readCollection(DefaultedList::ofSize, OptionalFluidIngredient::new)
-            );
+        public StreamCodec<RegistryFriendlyByteBuf, FluidAwareShapelessRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
-
-        @Override
-        public void write(PacketByteBuf buffer, FluidAwareShapelessRecipe recipe) {
-            buffer.writeString(recipe.getGroup());
-            buffer.writeEnumConstant(recipe.getCategory());
-            buffer.writeItemStack(recipe.output);
-            buffer.writeCollection(recipe.ingredients, (b, c) -> c.write(b));
-        }
-
     }
 }

@@ -7,40 +7,41 @@ package moriz.orangesunshine.entity.drug.hallucination;
 
 import moriz.orangesunshine.PSTags;
 import moriz.orangesunshine.entity.TouchingWaterAccessor;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.math.*;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class EntityHallucination extends AbstractEntityHallucination {
     private float rotationYawPlus;
 
-    public EntityHallucination(PlayerEntity player) {
+    public EntityHallucination(Player player) {
         this(player, PSTags.Entities.SINGLE_ENTITY_HALLUCINATIONS);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public EntityHallucination(PlayerEntity player, TagKey<EntityType<?>> entityTypes) {
-        super(player, player.getWorld().getRegistryManager().get(RegistryKeys.ENTITY_TYPE)
-                .getOrCreateEntryList(entityTypes)
-                .getRandom(player.getWorld().random)
-                .map(RegistryEntry::value)
+    public EntityHallucination(Player player, TagKey<EntityType<?>> entityTypes) {
+        super(player, player.level().registryAccess().lookupOrThrow(Registries.ENTITY_TYPE)
+                .getRandomElementOf(entityTypes, player.getRandom())
+                .map(Holder::value)
                 .orElse((EntityType)EntityType.PIG)
-                .create(player.getWorld()));
+                .create(player.level(), EntitySpawnReason.LOAD));
 
-        entity.setPosition(
+        entity.setPos(
                 player.getX() + random.nextDouble() * 50D - 25D,
                 player.getY() + random.nextDouble() * 10D - 5D,
                 player.getZ() + random.nextDouble() * 50D - 25D
         );
-        entity.setVelocity(
+        entity.setDeltaMovement(
                 (random.nextDouble() - 0.5D) / 10D,
                 (random.nextDouble() - 0.5D) / 10D,
                 (random.nextDouble() - 0.5D) / 10D
         );
-        entity.setYaw(random.nextInt(360));
+        entity.setYRot(random.nextInt(360));
         maxAge = (random.nextInt(59) + 3) * 20;
         rotationYawPlus = random.nextFloat() * 10 * (random.nextBoolean() ? 0 : 1);
 
@@ -59,9 +60,9 @@ public class EntityHallucination extends AbstractEntityHallucination {
 
     @Override
     protected void animateEntity() {
-        entity.setPosition(entity.getPos().add(entity.getVelocity()));
-        entity.setYaw(MathHelper.wrapDegrees(entity.getYaw() + rotationYawPlus));
-        if (entity instanceof LivingEntity l && l.canBreatheInWater()) {
+        entity.setPos(entity.position().add(entity.getDeltaMovement()));
+        entity.setYRot(Mth.wrapDegrees(entity.getYRot() + rotationYawPlus));
+        if (entity instanceof LivingEntity l && l.canBreatheUnderwater()) {
            ((TouchingWaterAccessor)entity).setTouchingWater(true);
         }
     }

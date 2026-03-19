@@ -3,6 +3,7 @@ package moriz.orangesunshine.block;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import com.mojang.serialization.MapCodec;
@@ -13,174 +14,201 @@ import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.PSTags;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
 import moriz.orangesunshine.block.entity.SyncedBlockEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PlacedDrinksBlock extends BlockWithEntity {
-    public static final MapCodec<PlacedDrinksBlock> CODEC = createCodec(PlacedDrinksBlock::new);
-    private static final Optional<TypedActionResult<ItemStack>> FAILURE = Optional.of(TypedActionResult.fail(ItemStack.EMPTY));
-    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
+public class PlacedDrinksBlock extends BaseEntityBlock implements EntityBlock {
+    public static final MapCodec<PlacedDrinksBlock> CODEC = simpleCodec(PlacedDrinksBlock::new);
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
-    protected PlacedDrinksBlock(Settings settings) {
+    protected PlacedDrinksBlock(BlockBehaviour.Properties settings) {
         super(settings.noCollision());
     }
 
     @Override
-    protected MapCodec<? extends PlacedDrinksBlock> getCodec() {
+    public MapCodec<? extends PlacedDrinksBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public boolean canMobSpawnInside(BlockState state) {
-        return true;
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    @Deprecated
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    @Deprecated
-    public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         return SHAPE;
     }
 
     @Override
-    public boolean hasSidedTransparency(BlockState state) {
+    protected boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
     @Override
-    public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
-        return 1;
+    protected float getShadeBrightness(BlockState state, BlockGetter world, BlockPos pos) {
+        return 1.0F;
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    protected ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return OrangeSunshine.getCrossHairTarget()
                 .filter(hit -> hit.getType() == HitResult.Type.BLOCK)
                 .map(hit -> (BlockHitResult)hit)
                 .filter(hit -> hit.getBlockPos().equals(pos))
                 .flatMap(Data::getHitPos)
-                .flatMap(hitPos -> world.getBlockEntity(pos, PSBlockEntities.PLACED_DRINK).flatMap(be -> be.getDrink(hitPos)))
-                .orElseGet(() -> super.getPickStack(world, pos, state));
+                .flatMap(hitPos -> world.getBlockEntity(pos) instanceof Data data ? data.getDrink(hitPos) : Optional.empty())
+                .orElseGet(() -> super.getCloneItemStack(world, pos, state, includeData));
     }
 
     public static boolean canPlace(ItemStack stack) {
-        return stack.isIn(PSTags.Items.PLACEABLE);
+        return stack.is(PSTags.Items.PLACEABLE);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        return world.getBlockEntity(pos, PSBlockEntities.PLACED_DRINK).flatMap(be -> {
-
-            ItemStack heldStack = player.getStackInHand(hand);
-
-            if (heldStack.isEmpty()) {
-                return Data.getHitPos(hit).map(be::removeDrink).map(extracted -> {
-                    ItemStack stack = extracted.getValue();
-                    if (!stack.isEmpty()) {
-                        player.giveItemStack(stack);
-                    }
-                    return extracted;
-                });
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        return world.getBlockEntity(pos, PSBlockEntities.PLACED_DRINK).flatMap(be -> Data.getHitPos(hit).map(hitPos -> {
+            if (world.isClientSide()) {
+                return be.hasDrink(hitPos) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
 
-            if (!canPlace(heldStack)) {
-                return FAILURE;
+            DrinkAction extracted = be.removeDrink(hitPos);
+            if (!extracted.stack().isEmpty() && !player.addItem(extracted.stack())) {
+                player.drop(extracted.stack(), false);
+            }
+            return extracted.result();
+        })).orElse(InteractionResult.FAIL);
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!canPlace(stack)) {
+            return InteractionResult.FAIL;
+        }
+
+        return world.getBlockEntity(pos, PSBlockEntities.PLACED_DRINK).flatMap(be -> Data.getHitPos(hit).map(hitPos -> {
+            if (world.isClientSide()) {
+                return be.canPlaceDrink(hitPos) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
 
-            return Data.getHitPos(hit).map(position -> {
-                return be.placeDrink(position, player.isCreative() ? heldStack.copyWithCount(1) : heldStack, player.getHeadYaw());
-            });
-        }).map(TypedActionResult::getResult).orElse(ActionResult.FAIL);
+            ItemStack toInsert = player.isCreative() ? stack.copyWithCount(1) : stack;
+            return be.placeDrink(hitPos, toInsert, player.getYHeadRot()).result();
+        })).orElse(InteractionResult.FAIL);
     }
 
     @Override
-    @Deprecated
-    public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack, boolean dropExperience) {
-        world.getBlockEntity(pos, PSBlockEntities.PLACED_DRINK).ifPresent(be -> {
-            be.forEachDrink((y, entry) -> {
-                Block.dropStack(world, pos, entry.stack());
-                return 0;
-            });
-            be.entries.clear();
-        });
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof Data data) {
+            data.dropAllDrinks();
+        }
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (!world.isClient && (entity.getY() > pos.getY() || entity.getY() >= pos.getY() && !entity.isSneaking()) && entity instanceof LivingEntity && Math.max(
-                Math.abs(entity.getX() - entity.lastRenderX),
-                Math.abs(entity.getZ() - entity.lastRenderZ)
-            ) >= 0.003F) {
-            Block.dropStacks(state, world, pos, world.getBlockEntity(pos), entity, ItemStack.EMPTY);
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
+        if (!world.isClientSide()
+                && entity instanceof LivingEntity
+                && (entity.getY() > pos.getY() || (!entity.isShiftKeyDown() && entity.getY() >= pos.getY()))
+                && Math.max(Math.abs(entity.getX() - entity.xo), Math.abs(entity.getZ() - entity.zo)) >= 0.003F) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof Data data) {
+                data.dropAllDrinks();
+            }
             world.removeBlock(pos, false);
-            world.playSound(null, pos, SoundEvents.BLOCK_CANDLE_PLACE, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SoundEvents.CANDLE_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new Data(pos, state);
     }
 
-    public static ActionResult tryPlace(ItemUsageContext context) {
-        if (!canPlace(context.getStack())) {
-            return ActionResult.PASS;
+    public static InteractionResult tryPlace(UseOnContext context) {
+        if (!canPlace(context.getItemInHand())) {
+            return InteractionResult.PASS;
         }
 
-        BlockState state = context.getWorld().getBlockState(context.getBlockPos());
-        boolean replaceable = state.canReplace(new ItemPlacementContext(context));
+        Level world = context.getLevel();
+        BlockPos clickedPos = context.getClickedPos();
+        BlockState clickedState = world.getBlockState(clickedPos);
+        boolean replaceable = clickedState.canBeReplaced(new BlockPlaceContext(context));
 
-        if (!replaceable && context.getSide() != Direction.UP) {
-            return ActionResult.PASS;
+        if (!replaceable && context.getClickedFace() != Direction.UP) {
+            return InteractionResult.PASS;
         }
 
-        if (state.isOf(PSBlocks.PLACED_DRINK)) {
-            return state.onUse(context.getWorld(), context.getPlayer(), context.getHand(), new BlockHitResult(
-                    context.getHitPos(), context.getSide(), context.getBlockPos(), true
-            ));
+        if (clickedState.is(PSBlocks.PLACED_DRINK)) {
+            return clickedState.useItemOn(
+                    context.getItemInHand(),
+                    world,
+                    context.getPlayer(),
+                    context.getHand(),
+                    new BlockHitResult(context.getClickLocation(), context.getClickedFace(), clickedPos, true)
+            );
         }
 
-        BlockPos blockPos = replaceable ? context.getBlockPos() : context.getBlockPos().offset(context.getSide());
-        if (!replaceable && !context.getWorld().isAir(blockPos)) {
-            return ActionResult.PASS;
+        BlockPos blockPos = replaceable ? clickedPos : clickedPos.relative(context.getClickedFace());
+        if (!replaceable && !world.isEmptyBlock(blockPos)) {
+            return InteractionResult.PASS;
         }
-        BlockPos hitPos = Data.getHitPos(blockPos, context.getHitPos());
-        context.getWorld().setBlockState(blockPos, PSBlocks.PLACED_DRINK.getDefaultState());
-        return context.getWorld().getBlockEntity(blockPos, PSBlockEntities.PLACED_DRINK).map(be -> {
-            return be.placeDrink(hitPos, context.getStack().split(1), context.getPlayerYaw()).getResult();
-        }).orElse(ActionResult.FAIL);
+
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+
+        BlockPos hitPos = Data.getHitPos(blockPos, context.getClickLocation());
+        if (!world.setBlock(blockPos, PSBlocks.PLACED_DRINK.defaultBlockState(), Block.UPDATE_ALL)) {
+            return InteractionResult.FAIL;
+        }
+
+        Player player = context.getPlayer();
+        ItemStack stack = player != null && player.isCreative()
+                ? context.getItemInHand().copyWithCount(1)
+                : context.getItemInHand();
+        float yaw = player != null ? player.getYHeadRot() : context.getRotation();
+
+        return world.getBlockEntity(blockPos, PSBlockEntities.PLACED_DRINK)
+                .map(be -> be.placeDrink(hitPos, stack, yaw).result())
+                .orElse(InteractionResult.FAIL);
+    }
+
+    private record DrinkAction(InteractionResult result, ItemStack stack) {
     }
 
     public static class Data extends SyncedBlockEntity {
@@ -197,139 +225,169 @@ public class PlacedDrinksBlock extends BlockWithEntity {
         public void forEachDrink(DrinkConsumer consumer) {
             entries.values().forEach(list -> {
                 final float[] y = new float[1];
-                list.forEach(drink -> {
-                    y[0] += consumer.accept(y[0], drink);
-                });
+                list.forEach(drink -> y[0] += consumer.accept(y[0], drink));
             });
         }
 
-        public TypedActionResult<ItemStack> removeDrink(BlockPos center) {
-            return StreamSupport.stream(BlockPos.iterateInSquare(center, 2, Direction.EAST, Direction.NORTH).spliterator(), false).map(pos -> {
+        public DrinkAction removeDrink(BlockPos center) {
+            return nearbyPositions(center).map(pos -> {
                 int index = getIndex(pos);
                 Stack<Entry> list = entries.get(index);
-                if (list != null) {
+                if (list != null && !list.isEmpty()) {
                     Entry entry = list.pop();
-                    if (entry != null) {
-                        if (list.isEmpty()) {
-                            entries.remove(index);
-                            if (entries.isEmpty()) {
-                                getWorld().removeBlock(getPos(), false);
-                            }
-                        }
-                        markDirty();
-                        return TypedActionResult.success(entry.stack());
+                    if (list.isEmpty()) {
+                        entries.remove(index);
                     }
-                }
 
-                return TypedActionResult.fail(ItemStack.EMPTY);
-            }).filter(i -> i.getResult().isAccepted()).findFirst().orElseGet(() -> TypedActionResult.fail(ItemStack.EMPTY));
+                    onContentsChanged();
+                    if (entries.isEmpty() && level != null) {
+                        level.removeBlock(getBlockPos(), false);
+                    }
+                    return new DrinkAction(InteractionResult.SUCCESS_SERVER, entry.stack());
+                }
+                return new DrinkAction(InteractionResult.FAIL, ItemStack.EMPTY);
+            }).filter(result -> result.result().consumesAction()).findFirst().orElse(new DrinkAction(InteractionResult.FAIL, ItemStack.EMPTY));
         }
 
         public boolean hasDrink(BlockPos center) {
-            return StreamSupport.stream(BlockPos.iterateInSquare(center, 2, Direction.EAST, Direction.NORTH).spliterator(), false)
+            return nearbyPositions(center)
                     .map(pos -> entries.get(getIndex(pos)))
-                    .anyMatch(list -> list != null && !list.empty());
+                    .anyMatch(list -> list != null && !list.isEmpty());
         }
 
         public Optional<ItemStack> getDrink(BlockPos center) {
-            return StreamSupport.stream(BlockPos.iterateInSquare(center, 2, Direction.EAST, Direction.NORTH).spliterator(), false)
+            return nearbyPositions(center)
                     .map(pos -> entries.get(getIndex(pos)))
-                    .filter(list -> list != null && !list.empty())
+                    .filter(list -> list != null && !list.isEmpty())
                     .map(Stack::peek)
                     .map(Entry::stack)
                     .findFirst();
         }
 
-        public TypedActionResult<ItemStack> placeDrink(BlockPos position, ItemStack stack, float yaw) {
+        public boolean canPlaceDrink(BlockPos position) {
+            Stack<Entry> list = entries.get(getIndex(position));
+            return list == null || list.size() < MAX_STACK_HEIGHT;
+        }
+
+        public DrinkAction placeDrink(BlockPos position, ItemStack stack, float yaw) {
+            if (stack.isEmpty()) {
+                return new DrinkAction(InteractionResult.FAIL, ItemStack.EMPTY);
+            }
+
             int index = getIndex(position);
             Stack<Entry> list = entries.get(index);
             if (list == null) {
                 list = new Stack<>();
                 entries.put(index, list);
             }
-            if (list.size() < MAX_STACK_HEIGHT) {
-                list.add(new Entry(position.getX() / 16F - 0.5F, position.getZ() / 16F - 0.5F, (-yaw) % 360, stack.split(1)));
-                getWorld().playSound(null, getPos(), SoundEvents.BLOCK_CANDLE_PLACE, SoundCategory.BLOCKS);
-                markDirty();
-                return TypedActionResult.success(stack);
+            if (list.size() >= MAX_STACK_HEIGHT) {
+                return new DrinkAction(InteractionResult.FAIL, stack);
             }
-            return TypedActionResult.fail(stack);
+
+            ItemStack storedStack = stack.split(1);
+            if (storedStack.isEmpty()) {
+                return new DrinkAction(InteractionResult.FAIL, stack);
+            }
+
+            list.add(new Entry(position.getX() / 16.0F - 0.5F, position.getZ() / 16.0F - 0.5F, (-yaw) % 360.0F, storedStack));
+            if (level != null) {
+                level.playSound(null, getBlockPos(), SoundEvents.CANDLE_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+            onContentsChanged();
+            return new DrinkAction(InteractionResult.SUCCESS_SERVER, stack);
         }
 
         @Override
-        public void readNbt(NbtCompound nbt) {
-            readEntriesFromNbt(nbt.getCompound("entries"));
+        protected void readNbt(CompoundTag nbt) {
+            readEntriesFromNbt(nbt.getCompoundOrEmpty("entries"));
         }
 
         @Override
-        protected void writeNbt(NbtCompound nbt) {
-            nbt.put("entries", writeEntriesToNbt(new NbtCompound()));
+        protected void writeNbt(CompoundTag nbt) {
+            nbt.put("entries", writeEntriesToNbt(new CompoundTag()));
         }
 
-        private void readEntriesFromNbt(NbtCompound nbt) {
+        private void readEntriesFromNbt(CompoundTag nbt) {
             entries.clear();
-            nbt.getKeys().forEach(key -> {
+            nbt.keySet().forEach(key -> {
                 int index = Integer.parseInt(key);
-                NbtList list = nbt.getList(key, NbtElement.COMPOUND_TYPE);
+                ListTag list = nbt.getListOrEmpty(key);
                 if (!list.isEmpty()) {
-                    entries.put(index, list
-                            .stream()
-                            .map(e -> (NbtCompound)e).map(Entry::new)
-                            .collect(Collectors.toCollection(Stack::new))
-                    );
+                    entries.put(index, list.compoundStream().map(Entry::new).collect(Collectors.toCollection(Stack::new)));
                 }
             });
         }
 
-        private NbtCompound writeEntriesToNbt(NbtCompound nbt) {
+        private CompoundTag writeEntriesToNbt(CompoundTag nbt) {
             entries.entries().forEach(entry -> {
-                NbtList list = new NbtList();
-                entry.value().forEach(e -> {
-                    list.add(e.toNbt(new NbtCompound()));
-                });
-                nbt.put(entry.key() + "", list);
+                ListTag list = new ListTag();
+                entry.value().forEach(drink -> list.add(drink.toNbt(new CompoundTag())));
+                nbt.put(Integer.toString(entry.key()), list);
             });
             return nbt;
         }
 
         public static Optional<BlockPos> getHitPos(BlockHitResult hit) {
-            Direction direction = hit.getSide();
-
+            Direction direction = hit.getDirection();
             if (direction.getAxis() != Direction.Axis.Y) {
                 return Optional.empty();
             }
-
-            return Optional.of(getHitPos(hit.getBlockPos().offset(direction), hit.getPos()));
+            return Optional.of(getHitPos(hit.getBlockPos().relative(direction), hit.getLocation()));
         }
 
-        public static BlockPos getHitPos(BlockPos pos, Vec3d relativePos) {
-            return BlockPos.ofFloored(
-                    (relativePos.getX() - pos.getX()) * MAX_COORD,
+        public static BlockPos getHitPos(BlockPos pos, Vec3 relativePos) {
+            return BlockPos.containing(
+                    (relativePos.x - pos.getX()) * MAX_COORD,
                     0,
-                    (relativePos.getZ() - pos.getZ()) * MAX_COORD
+                    (relativePos.z - pos.getZ()) * MAX_COORD
             );
+        }
+
+        private static Stream<BlockPos> nearbyPositions(BlockPos center) {
+            return StreamSupport.stream(BlockPos.spiralAround(center, 2, Direction.EAST, Direction.NORTH).spliterator(), false)
+                    .map(pos -> (BlockPos)pos);
         }
 
         private static int getIndex(BlockPos position) {
             return ((Math.max(0, position.getX()) * MAX_COORD) + Math.max(0, position.getZ())) % MAX_INDEX;
         }
 
-        public record Entry (float x, float z, float rotation, ItemStack stack) {
+        private void dropAllDrinks() {
+            if (level == null) {
+                entries.clear();
+                return;
+            }
 
-            public Entry(NbtCompound compound) {
+            forEachDrink((y, entry) -> {
+                Block.popResource(level, getBlockPos(), entry.stack());
+                return 0;
+            });
+            entries.clear();
+        }
+
+        private void onContentsChanged() {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+            }
+        }
+
+        public record Entry(float x, float z, float rotation, ItemStack stack) {
+
+            public Entry(CompoundTag compound) {
                 this(
-                        compound.getFloat("x"),
-                        compound.getFloat("z"),
-                        compound.getFloat("rotation"),
-                        ItemStack.fromNbt(compound.getCompound("stack"))
+                        compound.getFloatOr("x", 0.0F),
+                        compound.getFloatOr("z", 0.0F),
+                        compound.getFloatOr("rotation", 0.0F),
+                        compound.read("stack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY)
                 );
             }
 
-            public NbtCompound toNbt(NbtCompound compound) {
+            public CompoundTag toNbt(CompoundTag compound) {
                 compound.putFloat("x", x);
                 compound.putFloat("z", z);
                 compound.putFloat("rotation", rotation);
-                compound.put("stack", stack.writeNbt(new NbtCompound()));
+                compound.store("stack", ItemStack.OPTIONAL_CODEC, stack);
                 return compound;
             }
         }
@@ -339,4 +397,3 @@ public class PlacedDrinksBlock extends BlockWithEntity {
         }
     }
 }
-

@@ -4,12 +4,12 @@ import org.joml.Vector3d;
 import org.joml.Vector3f;
 
 import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 public interface MathUtils {
     static float nearValue(float from, float to, float delta, float adjustmentRate) {
-        return approach(MathHelper.lerp(delta, from, to), to, adjustmentRate);
+        return approach(Mth.lerp(delta, from, to), to, adjustmentRate);
     }
 
     static float approach(float value, float target, float adjustmentRate) {
@@ -25,7 +25,7 @@ public interface MathUtils {
     }
 
     static double nearValue(double from, double to, double delta, double adjustmentRate) {
-        return approach(MathHelper.lerp(delta, from, to), to, adjustmentRate);
+        return approach(Mth.lerp(delta, from, to), to, adjustmentRate);
     }
 
     static double approach(double value, double target, double adjustmentRate) {
@@ -70,39 +70,39 @@ public interface MathUtils {
 
     static int mixColors(int left, int right, float progress) {
         return packArgb(
-                MathHelper.lerp(a(left), a(right), progress),
-                MathHelper.lerp(r(left), r(right), progress),
-                MathHelper.lerp(g(left), g(right), progress),
-                MathHelper.lerp(b(left), b(right), progress)
+                Mth.lerp(progress, a(left), a(right)),
+                Mth.lerp(progress, r(left), r(right)),
+                Mth.lerp(progress, g(left), g(right)),
+                Mth.lerp(progress, b(left), b(right))
         );
     }
 
     static int packArgb(float a, float r, float g, float b) {
         return packArgb(
-                MathHelper.floor(a * 255 + 0.5F),
-                MathHelper.floor(r * 255 + 0.5F),
-                MathHelper.floor(g * 255 + 0.5F),
-                MathHelper.floor(b * 255 + 0.5F)
+                Mth.floor(a * 255 + 0.5F),
+                Mth.floor(r * 255 + 0.5F),
+                Mth.floor(g * 255 + 0.5F),
+                Mth.floor(b * 255 + 0.5F)
         );
     }
 
     static float[] mixColorsDynamic(float[] color, float[] colorBase, float alpha, boolean fixAlpha) {
         if (alpha > 0.0f) {
             float max = alpha + colorBase[3];
-            colorBase[0] = MathHelper.lerp(alpha / max, colorBase[0], color[0]);
-            colorBase[1] = MathHelper.lerp(alpha / max, colorBase[1], color[1]);
-            colorBase[2] = MathHelper.lerp(alpha / max, colorBase[2], color[2]);
+            colorBase[0] = Mth.lerp(alpha / max, colorBase[0], color[0]);
+            colorBase[1] = Mth.lerp(alpha / max, colorBase[1], color[1]);
+            colorBase[2] = Mth.lerp(alpha / max, colorBase[2], color[2]);
             colorBase[3] = max;
         }
         if (fixAlpha) {
-            colorBase[3] = MathHelper.clamp(colorBase[3], 0, 1);
+            colorBase[3] = Mth.clamp(colorBase[3], 0, 1);
         }
         return colorBase;
     }
 
-    static float randomColor(Random random, int ticksExisted, float base, float sway, float... speed) {
+    static float randomColor(RandomSource random, int ticksExisted, float base, float sway, float... speed) {
         for (float s : speed) {
-            base *= 1.0f + MathHelper.sin(ticksExisted * s) * sway;
+            base *= 1.0f + Mth.sin(ticksExisted * s) * sway;
         }
         return base;
     }
@@ -128,15 +128,15 @@ public interface MathUtils {
     }
 
     static double easeZeroToOne(double delta) {
-        return cubicMix(0, 0, 1, 1, MathHelper.clamp(delta, 0, 1));
+        return cubicMix(0, 0, 1, 1, Mth.clamp(delta, 0, 1));
     }
 
     static float easeZeroToOne(float delta) {
-        return cubicMix(0, 0, 1, 1, MathHelper.clamp(delta, 0, 1));
+        return cubicMix(0, 0, 1, 1, Mth.clamp(delta, 0, 1));
     }
 
     static float inverseLerp(float value, float start, float end) {
-        return MathHelper.clamp(MathHelper.getLerpProgress(value, start, end), 0, 1);
+        return Mth.clamp(Mth.inverseLerp(value, start, end), 0, 1);
     }
 
     static Vector3d cubicMix(Vector3d v1, Vector3d v2, Vector3d v3, Vector3d v4, double delta, Vector3d dest) {
@@ -148,11 +148,11 @@ public interface MathUtils {
     }
 
     static float cubicMix(float v1, float v2, float v3, float v4, float delta) {
-        return (float)MathHelper.lerp3(delta, delta, delta, v1, v2, v2, v3, v2, v3, v3, v4);
+        return (float)Mth.lerp3(delta, delta, delta, v1, v2, v2, v3, v2, v3, v3, v4);
     }
 
     static double cubicMix(double v1, double v2, double v3, double v4, double delta) {
-        return MathHelper.lerp3(delta, delta, delta, v1, v2, v2, v3, v2, v3, v3, v4);
+        return Mth.lerp3(delta, delta, delta, v1, v2, v2, v3, v2, v3, v3, v4);
     }
 
     static Vector3d apply(Vector3d vector, Double2DoubleFunction function) {

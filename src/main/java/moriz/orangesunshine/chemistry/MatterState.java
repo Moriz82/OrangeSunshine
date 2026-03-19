@@ -1,8 +1,8 @@
 package moriz.orangesunshine.chemistry;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
-public enum MatterState implements StringIdentifiable {
+public enum MatterState implements StringRepresentable {
     BEAKER("beaker"),
     FLASK("flask"),
     GAS("gas"),
@@ -15,7 +15,7 @@ public enum MatterState implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return state;
     }
 }

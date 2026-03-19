@@ -7,66 +7,60 @@ package moriz.orangesunshine.client.screen;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.screen.DryingTableScreenHandler;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
-import net.minecraft.util.*;
-
-import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 /**
  * Updated by Sollace on 3 Jan 2023
  */
-public class DryingTableScreen extends HandledScreen<DryingTableScreenHandler> {
+public class DryingTableScreen extends AbstractContainerScreen<DryingTableScreenHandler> {
     public static final Identifier TEXTURE = OrangeSunshine.id("textures/gui/drying_table.png");
 
-    public DryingTableScreen(DryingTableScreenHandler handler, PlayerInventory inventory, Text title) {
+    public DryingTableScreen(DryingTableScreenHandler handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
     }
 
     @Override
     public void init() {
         super.init();
-        titleX = 26;
+        titleLabelX = 26;
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        drawMouseoverTooltip(context, mouseX, mouseY);
+        renderTooltip(context, mouseX, mouseY);
 
-        if (handler.getCursorStack().isEmpty() && (focusedSlot == null || !focusedSlot.hasStack())) {
-            int centerX = (width - backgroundWidth) / 2 + backgroundWidth;
-            int centerY = (height - backgroundHeight) / 2;
+        if (menu.getCarried().isEmpty() && (hoveredSlot == null || !hoveredSlot.hasItem())) {
+            int centerX = (width - imageWidth) / 2 + imageWidth;
+            int centerY = (height - imageHeight) / 2;
 
             if (mouseX > centerX - 30 && mouseX < centerX
                     && mouseY > centerY && mouseY < centerY + 30) {
-
-                context.drawTooltip(textRenderer, Text.translatable("block.orangesunshine.drying_table.daylight", (int)(handler.getHeatRatio() * 100)), mouseX, mouseY);
+                context.setTooltipForNextFrame(font, Component.translatable("block.orangesunshine.drying_table.daylight", (int)(menu.getHeatRatio() * 100)), mouseX, mouseY);
             }
         }
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
+    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
+        int centerX = (width - imageWidth) / 2;
+        int centerY = (height - imageHeight) / 2;
 
-        int centerX = (width - backgroundWidth) / 2;
-        int centerY = (height - backgroundHeight) / 2;
+        context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, centerX, centerY, 0, 0, imageWidth, imageHeight, 256, 256);
 
-        context.drawTexture(TEXTURE, centerX, centerY, 0, 0, backgroundWidth, backgroundHeight);
-
-        if (handler.getProgress() > 0) {
-            context.drawTexture(TEXTURE, centerX + 88, centerY + 34, 176, 59, 25, 16);
+        if (menu.getProgress() > 0) {
+            context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, centerX + 88, centerY + 34, 176, 59, 25, 16, 256, 256);
         }
 
-        int progress = (int)(handler.getProgress() * 24); //Max 24, progress
-        context.drawTexture(TEXTURE, centerX + 88, centerY + 34, 176, 42, progress + 1, 16);
+        int progress = (int)(menu.getProgress() * 24);
+        context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, centerX + 88, centerY + 34, 176, 42, progress + 1, 16, 256, 256);
 
-        int heat = (int) (handler.getHeatRatio() * 20); //Max 20, sun
-        context.drawTexture(TEXTURE, centerX + 148, centerY + 6 + (20 - heat), 176, 21 + (20 - heat), 20, heat);
+        int heat = (int)(menu.getHeatRatio() * 20);
+        context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, centerX + 148, centerY + 6 + (20 - heat), 176, 21 + (20 - heat), 20, heat, 256, 256);
     }
 }

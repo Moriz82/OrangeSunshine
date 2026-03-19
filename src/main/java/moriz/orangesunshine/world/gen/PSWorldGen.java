@@ -22,44 +22,61 @@ import moriz.orangesunshine.world.gen.structure.MutableStructurePool;
 import net.fabricmc.fabric.api.biome.v1.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.*;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
-import net.minecraft.world.gen.foliage.BlobFoliagePlacer;
-import net.minecraft.world.gen.placementmodifier.*;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
-import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider;
-import net.minecraft.world.gen.trunk.ForkingTrunkPlacer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.FeatureUtils;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.ForkingTrunkPlacer;
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 /**
  * Created by lukas on 25.04.14.
  * Updated by Sollace on 16 Jan 2023
  */
 public class PSWorldGen extends FabricDynamicRegistryProvider {
-    public static final TilledPatchFeature TILLED_PATCH_FEATURE = Registry.register(Registries.FEATURE, OrangeSunshine.id("tilled_patch"), new TilledPatchFeature());
+    public static final TilledPatchFeature TILLED_PATCH_FEATURE = Registry.register(BuiltInRegistries.FEATURE, OrangeSunshine.id("tilled_patch"), new TilledPatchFeature());
 
-    public static final RegistryKey<ConfiguredFeature<?, ?>> JUNIPER_TREE_CONFIG = createConfiguredFeature("juniper_tree");
-    public static final RegistryKey<PlacedFeature> JUNIPER_TREE_PLACEMENT = createPlacement("juniper_tree_checked");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> JUNIPER_TREE_CONFIG = createConfiguredFeature("juniper_tree");
+    public static final ResourceKey<PlacedFeature> JUNIPER_TREE_PLACEMENT = createPlacement("juniper_tree_checked");
 
-    public PSWorldGen(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public PSWorldGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
-    public static RegistryKey<ConfiguredFeature<?, ?>> createConfiguredFeature(String name) {
-        return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, OrangeSunshine.id(name));
+    public static ResourceKey<ConfiguredFeature<?, ?>> createConfiguredFeature(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, OrangeSunshine.id(name));
     }
 
-    public static RegistryKey<PlacedFeature> createPlacement(String id) {
-        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, OrangeSunshine.id(id));
+    public static ResourceKey<PlacedFeature> createPlacement(String id) {
+        return ResourceKey.create(Registries.PLACED_FEATURE, OrangeSunshine.id(id));
+    }
+
+    private static Block block(String path) {
+        return BuiltInRegistries.BLOCK.getOptional(OrangeSunshine.id(path)).orElse(Blocks.AIR);
     }
 
     private static void registerTilledPatch(String id, CannabisPlantBlock crop, boolean requireWater, PSConfig.Balancing.Generation.FeatureConfig config) {
@@ -71,10 +88,10 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
         var placement = createPlacement(id + "_tilled_patch_checked");
         FeatureRegistry.registerPlacedFeature(placement, cannabisPatch, feature -> {
             return new PlacedFeature(feature, List.of(
-                    RarityFilterPlacementModifier.of(160),
-                    SquarePlacementModifier.of(),
-                    PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-                    BiomePlacementModifier.of()
+                    RarityFilter.onAverageOnceEvery(160),
+                    InSquarePlacement.spread(),
+                    PlacementUtils.HEIGHTMAP,
+                    BiomeFilter.biome()
             ));
         });
 
@@ -84,22 +101,23 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
                             BiomeSelector.COLD
                             .or(BiomeSelectors.tag(BiomeTags.IS_HILL))
                             .or(BiomeSelectors.tag(BiomeTags.IS_FOREST))
-                            .or(ctx -> ctx.getBiomeKey() == BiomeKeys.PLAINS)
+                            .or(ctx -> ctx.getBiomeKey() == Biomes.PLAINS)
                     )),
-                    GenerationStep.Feature.VEGETAL_DECORATION,
+                    GenerationStep.Decoration.VEGETAL_DECORATION,
                     placement
             );
         });
     }
 
-    private static void registerUnTilledPatch(String id, Block plant, IntProperty ageProperty, IntProvider ageRange, Predicate<BiomeSelectionContext> builtinBiomePredicate, PSConfig.Balancing.Generation.FeatureConfig config) {
+    private static void registerUnTilledPatch(String id, Block plant, IntegerProperty ageProperty, IntProvider ageRange, Predicate<BiomeSelectionContext> builtinBiomePredicate, PSConfig.Balancing.Generation.FeatureConfig config) {
         var patch = createConfiguredFeature(id + "_patch");
 
         FeatureRegistry.registerConfiguredFeature(patch, () -> {
-            return new ConfiguredFeature<>(Feature.RANDOM_PATCH, ConfiguredFeatures.createRandomPatchFeatureConfig(
-                    5,
-                    PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
-                    new SimpleBlockFeatureConfig(new RandomizedIntBlockStateProvider(BlockStateProvider.of(plant), ageProperty, ageRange)))
+            return new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(
+                    Feature.SIMPLE_BLOCK,
+                    new SimpleBlockConfiguration(new RandomizedIntStateProvider(BlockStateProvider.simple(plant), ageProperty, ageRange)),
+                    List.of(plant),
+                    5
             ));
         });
 
@@ -107,10 +125,10 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
 
         FeatureRegistry.registerPlacedFeature(placement, patch, feature -> {
             return new PlacedFeature(feature, List.of(
-                    RarityFilterPlacementModifier.of(20),
-                    SquarePlacementModifier.of(),
-                    PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-                    BiomePlacementModifier.of()));
+                    RarityFilter.onAverageOnceEvery(20),
+                    InSquarePlacement.spread(),
+                    PlacementUtils.HEIGHTMAP,
+                    BiomeFilter.biome()));
         });
 
         FeatureRegistry.registerPlacedFeature(createPlacement(id + "_patch_unchecked"), patch, feature -> {
@@ -120,33 +138,34 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
         config.ifEnabled(spawnableBiomes -> {
             BiomeModifications.addFeature(
                     spawnableBiomes.createPredicate(builtinBiomePredicate),
-                    GenerationStep.Feature.VEGETAL_DECORATION,
+                    GenerationStep.Decoration.VEGETAL_DECORATION,
                     placement
             );
         });
     }
+
     public static void bootstrap() {
         var genConf = OrangeSunshine.getConfig().balancing.worldGeneration;
 
         FeatureRegistry.registerConfiguredFeature(JUNIPER_TREE_CONFIG, () -> {
-            return new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
-                    BlockStateProvider.of(PSBlocks.JUNIPER_LOG),
+            return new ConfiguredFeature<>(Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                    BlockStateProvider.simple(block("juniper_log")),
                     new ForkingTrunkPlacer(5, 2, 2),
-                    BlockStateProvider.of(PSBlocks.JUNIPER_LEAVES),
+                    BlockStateProvider.simple(block("juniper_leaves")),
                     new BlobFoliagePlacer(
-                            ConstantIntProvider.create(2),
-                            ConstantIntProvider.ZERO,
+                            ConstantInt.of(2),
+                            ConstantInt.ZERO,
                             3
                     ),
                     new TwoLayersFeatureSize(1, 0, 2))
-            .dirtProvider(BlockStateProvider.of(Blocks.ROOTED_DIRT))
+            .dirt(BlockStateProvider.simple(Blocks.ROOTED_DIRT))
             .forceDirt()
             .build());
         });
         FeatureRegistry.registerPlacedFeature(JUNIPER_TREE_PLACEMENT, JUNIPER_TREE_CONFIG, config -> {
-            return new PlacedFeature(config, VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
-                    PlacedFeatures.createCountExtraModifier(1, 0.05F, 2),
-                    PSBlocks.JUNIPER_SAPLING)
+            return new PlacedFeature(config, VegetationPlacements.treePlacement(
+                    PlacementUtils.countExtra(1, 0.05F, 2),
+                    block("juniper_sapling"))
             );
         });
 
@@ -158,7 +177,7 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
                             .or(BiomeSelectors.tag(BiomeTags.IS_FOREST))
                         )
                     ),
-                    GenerationStep.Feature.VEGETAL_DECORATION,
+                    GenerationStep.Decoration.VEGETAL_DECORATION,
                     JUNIPER_TREE_PLACEMENT
             );
         });
@@ -168,35 +187,36 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
         registerTilledPatch("tobacco", PSBlocks.TOBACCO, false, genConf.tobacco);
         registerTilledPatch("coffea", PSBlocks.COFFEA, false, genConf.coffea);
         registerTilledPatch("coca", PSBlocks.COCA, true, genConf.coca);
-        registerUnTilledPatch("morning_glory", PSBlocks.MORNING_GLORY, VineStemBlock.AGE, UniformIntProvider.create(0, VineStemBlock.MAX_AGE), BiomeSelectors.includeByKey(
-                BiomeKeys.FLOWER_FOREST,
-                BiomeKeys.SUNFLOWER_PLAINS,
-                BiomeKeys.MEADOW,
-                BiomeKeys.LUSH_CAVES
+        registerUnTilledPatch("morning_glory", PSBlocks.MORNING_GLORY, VineStemBlock.AGE, UniformInt.of(0, VineStemBlock.MAX_AGE), BiomeSelectors.includeByKey(
+                Biomes.FLOWER_FOREST,
+                Biomes.SUNFLOWER_PLAINS,
+                Biomes.MEADOW,
+                Biomes.LUSH_CAVES
         ), genConf.morningGlories);
-        registerUnTilledPatch("belladonna", PSBlocks.BELLADONNA, NightshadeBlock.AGE, UniformIntProvider.create(0, NightshadeBlock.MAX_AGE), BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST), genConf.belladonna);
-        registerUnTilledPatch("jimsonweed", PSBlocks.JIMSONWEEED, NightshadeBlock.AGE, UniformIntProvider.create(0, NightshadeBlock.MAX_AGE), BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), genConf.jimsonweed);
-        registerUnTilledPatch("tomato", PSBlocks.TOMATOES, NightshadeBlock.AGE, UniformIntProvider.create(0, NightshadeBlock.MAX_AGE), BiomeSelectors.includeByKey(BiomeKeys.FOREST), genConf.tomato);
-        registerUnTilledPatch("peyote", PSBlocks.PEYOTE, PeyoteBlock.AGE, UniformIntProvider.create(0, PeyoteBlock.MAX_AGE), BiomeSelectors.foundInOverworld().and(
+        registerUnTilledPatch("belladonna", PSBlocks.BELLADONNA, NightshadeBlock.AGE, UniformInt.of(0, NightshadeBlock.MAX_AGE), BiomeSelectors.includeByKey(Biomes.DARK_FOREST), genConf.belladonna);
+        registerUnTilledPatch("jimsonweed", PSBlocks.JIMSONWEEED, NightshadeBlock.AGE, UniformInt.of(0, NightshadeBlock.MAX_AGE), BiomeSelectors.includeByKey(Biomes.JUNGLE, Biomes.SPARSE_JUNGLE), genConf.jimsonweed);
+        registerUnTilledPatch("tomato", PSBlocks.TOMATOES, NightshadeBlock.AGE, UniformInt.of(0, NightshadeBlock.MAX_AGE), BiomeSelectors.includeByKey(Biomes.FOREST), genConf.tomato);
+        registerUnTilledPatch("peyote", PSBlocks.PEYOTE, PeyoteBlock.AGE, UniformInt.of(0, PeyoteBlock.MAX_AGE), BiomeSelectors.foundInOverworld().and(
                     BiomeSelectors.tag(BiomeTags.IS_SAVANNA)
                 .or(BiomeSelectors.tag(BiomeTags.IS_BADLANDS))
-                .or(BiomeSelectors.tag(BiomeTags.DESERT_PYRAMID_HAS_STRUCTURE))
+                .or(BiomeSelectors.tag(BiomeTags.HAS_DESERT_PYRAMID))
                 .or(BiomeSelector.DRY)
         ), genConf.peyote);
-        registerUnTilledPatch("agave", PSBlocks.AGAVE_PLANT, AgavePlantBlock.AGE, UniformIntProvider.create(0, AgavePlantBlock.MAX_AGE), BiomeSelectors.foundInOverworld().and(
+        registerUnTilledPatch("agave", PSBlocks.AGAVE_PLANT, AgavePlantBlock.AGE, UniformInt.of(0, AgavePlantBlock.MAX_AGE), BiomeSelectors.foundInOverworld().and(
             BiomeSelectors.tag(BiomeTags.IS_BADLANDS)
-            .or(BiomeSelectors.tag(BiomeTags.DESERT_PYRAMID_HAS_STRUCTURE))
+            .or(BiomeSelectors.tag(BiomeTags.HAS_DESERT_PYRAMID))
             .or(BiomeSelector.DRY)
-        ), genConf.peyote);
+        ), genConf.agave);
 
         ModOreGeneration.generateOres();
 
         MutableStructurePool.bootstrap();
     }
+
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-        entries.addAll(registries.getWrapperOrThrow(RegistryKeys.CONFIGURED_FEATURE));
-        entries.addAll(registries.getWrapperOrThrow(RegistryKeys.PLACED_FEATURE));
+    protected void configure(HolderLookup.Provider registries, Entries entries) {
+        entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE));
+        entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE));
     }
 
     @Override

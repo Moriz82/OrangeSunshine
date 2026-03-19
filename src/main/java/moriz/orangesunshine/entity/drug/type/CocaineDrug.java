@@ -11,16 +11,16 @@ import moriz.orangesunshine.PSDamageTypes;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 01.11.14.
  */
 public class CocaineDrug extends SimpleDrug {
-    static final Optional<Text> SLEEP_STATUS = Optional.of(Text.translatable("orangesunshine.sleep.fail.coccaine"));
+    static final Optional<Component> SLEEP_STATUS = Optional.of(Component.translatable("orangesunshine.sleep.fail.coccaine"));
 
     public CocaineDrug(double decSpeed, double decSpeedPlus) {
         super(DrugType.COCAINE, decSpeed, decSpeedPlus);
@@ -31,13 +31,13 @@ public class CocaineDrug extends SimpleDrug {
         super.update(drugProperties);
 
         if (getActiveValue() > 0) {
-            PlayerEntity entity = drugProperties.asEntity();
-            Random random = entity.getWorld().random;
-            if (!entity.getWorld().isClient) {
+            Player entity = drugProperties.asEntity();
+            RandomSource random = entity.level().random;
+            if (!entity.level().isClientSide()) {
                 double chance = (getActiveValue() - 0.8F) * 0.1F;
 
-                if (entity.age % 20 == 0 && random.nextFloat() < chance) {
-                    entity.damage(drugProperties.damageOf(random.nextFloat() < 0.4F
+                if (entity.tickCount % 20 == 0 && random.nextFloat() < chance) {
+                    entity.hurt(drugProperties.damageOf(random.nextFloat() < 0.4F
                             ? PSDamageTypes.STROKE
                             : random.nextFloat() < 0.5F
                             ? PSDamageTypes.HEART_FAILURE
@@ -88,7 +88,7 @@ public class CocaineDrug extends SimpleDrug {
     }
 
     @Override
-    public Optional<Text> trySleep(BlockPos pos) {
+    public Optional<Component> trySleep(BlockPos pos) {
         return getActiveValue() > 0.4
                 ? SLEEP_STATUS
                 : Optional.empty();

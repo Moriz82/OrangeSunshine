@@ -7,12 +7,12 @@ import moriz.orangesunshine.entity.drug.*;
 import moriz.orangesunshine.entity.drug.type.WarmthDrug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 
 public class WarmthOverlayScreenEffect extends DrugOverlayScreenEffect<WarmthDrug> {
     private static final Identifier COFFEE_OVERLAY = OrangeSunshine.id("textures/drug/coffee/overlay.png");
@@ -22,11 +22,11 @@ public class WarmthOverlayScreenEffect extends DrugOverlayScreenEffect<WarmthDru
     }
 
     @Override
-    protected void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float ticks, DrugProperties properties, WarmthDrug drug) {
+    protected void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, DrugProperties properties, WarmthDrug drug) {
         renderWarmthOverlay(matrices, (float)drug.getActiveValue() * 0.5F, screenWidth, screenHeight, MinecraftClient.getInstance().player.age);
     }
 
-    private void renderWarmthOverlay(MatrixStack matrices, float alpha, int width, int height, int ticks) {
+    private void renderWarmthOverlay(PoseStack matrices, float alpha, int width, int height, int ticks) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, COFFEE_OVERLAY);
         RenderSystem.enableBlend();
@@ -49,7 +49,7 @@ public class WarmthOverlayScreenEffect extends DrugOverlayScreenEffect<WarmthDru
 
                 int xM = (int) (segWidth * (i * 3 + 1.5F));
 
-                float xShift = MathHelper.sin((float) y / (float) steps * 5F + ticks / 10F);
+                float xShift = Mth.sin((float) y / (float) steps * 5F + ticks / 10F);
                 float mXL = xM - segWidth + xShift * segWidth * 0.25f;
                 float mXR = xM + segWidth + xShift * segWidth * 0.25f;
                 float mY = (float) y / (float) steps * height / 7 * 5 + height / 7;

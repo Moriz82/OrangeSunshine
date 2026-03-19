@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import net.minecraft.resource.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 class ModdedResourceManager implements ResourceManager {
     private final ResourceManager parent;

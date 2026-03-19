@@ -10,7 +10,7 @@ import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 /**
  * Created by Sollace on Feb 6 2023.
@@ -32,7 +32,7 @@ public class LsdDrug extends SimpleDrug {
                 caffiene.addToDesiredValue(-0.5);
                 effect /= 2;
             } else {
-                drugProperties.asEntity().damage(drugProperties.damageOf(PSDamageTypes.STROKE), 1);
+                drugProperties.asEntity().hurt(drugProperties.damageOf(PSDamageTypes.STROKE), 1);
             }
         }
         super.update(drugProperties);
@@ -61,7 +61,7 @@ public class LsdDrug extends SimpleDrug {
 
     @Override
     public float soundVolumeModifier() {
-        float strength = (MathHelper.clamp(getTicksActive(), 50, 250) - 50) / 200F;
+        float strength = (Mth.clamp(getTicksActive(), 50, 250) - 50) / 200F;
         return 1 + (float)getActiveValue() * 1.75f * strength;
     }
 

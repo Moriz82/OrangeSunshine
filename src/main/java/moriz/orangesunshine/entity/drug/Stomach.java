@@ -4,15 +4,15 @@ import moriz.orangesunshine.PSDamageTypes;
 import moriz.orangesunshine.item.PSItems;
 import moriz.orangesunshine.item.PaperBagItem;
 import moriz.orangesunshine.util.NbtSerialisable;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 public class Stomach implements NbtSerialisable {
 
@@ -22,7 +22,7 @@ public class Stomach implements NbtSerialisable {
     private int vomitCooldown;
     private int vomitingTicks;
 
-    private final PlayerEntity entity;
+    private final Player entity;
 
     public Stomach(DrugProperties properties) {
         this.properties = properties;
@@ -30,16 +30,16 @@ public class Stomach implements NbtSerialisable {
     }
 
     public LockableHungerManager getStomach() {
-        return (LockableHungerManager)entity.getHungerManager();
+        return (LockableHungerManager)entity.getFoodData();
     }
 
     public GluttonyManager getGlut() {
-        return (GluttonyManager)entity.getHungerManager();
+        return (GluttonyManager)entity.getFoodData();
     }
 
     public void onTick() {
-        final float hungerSuppression = MathHelper.clamp(properties.getModifier(Drug.HUNGER_SUPPRESSION), -1, 1);
-        final boolean shouldLockHunger = Math.abs(hungerSuppression) > MathHelper.EPSILON;
+        final float hungerSuppression = Mth.clamp(properties.getModifier(Drug.HUNGER_SUPPRESSION), -1, 1);
+        final boolean shouldLockHunger = Math.abs(hungerSuppression) > Mth.EPSILON;
 
         if (shouldLockHunger != (getStomach().getLockedState() != null)) {
             if (shouldLockHunger) {
@@ -60,12 +60,16 @@ public class Stomach implements NbtSerialisable {
         }
 
         if (vomitingTicks > 0) {
-            if (entity.age % (int)(1 + entity.getWorld().random.nextFloat() * 3) == 0) {
-                int count = (int)(entity.getWorld().random.nextFloat() * (vomitingTicks / 2));
+            RandomSource random = entity.getRandom();
+            if (entity.tickCount % (int)(1 + random.nextFloat() * 3) == 0) {
+                int count = (int)(random.nextFloat() * (vomitingTicks / 2));
                 for (int i = 0; i < count; i++) {
                     vomitingTicks--;
-                    if (!entity.getWorld().isClient) {
-                        entity.dropItem(PSItems.VOMIT.getDefaultStack(), true, true).setPickupDelayInfinite();
+                    if (!entity.level().isClientSide()) {
+                        var dropped = entity.drop(PSItems.VOMIT.getDefaultInstance(), true);
+                        if (dropped != null) {
+                            dropped.setNeverPickUp();
+                        }
                         playBarfNoise();
                     }
                 }
@@ -81,47 +85,48 @@ public class Stomach implements NbtSerialisable {
     }
 
     public void vomit() {
-        ItemStack heldItem = entity.getStackInHand(Hand.OFF_HAND);
-        if (heldItem.isOf(PSItems.PAPER_BAG) && PaperBagItem.getContents(heldItem).isEmpty()) {
+        ItemStack heldItem = entity.getItemInHand(InteractionHand.OFF_HAND);
+        if (heldItem.is(PSItems.PAPER_BAG) && PaperBagItem.getContents(heldItem).isEmpty()) {
             playBarfNoise();
 
             if (!entity.isCreative()) {
-                heldItem.decrement(1);
+                heldItem.shrink(1);
             }
             if (heldItem.isEmpty()) {
-                entity.setStackInHand(Hand.OFF_HAND, PSItems.BAG_O_VOMIT.getDefaultStack());
+                entity.setItemInHand(InteractionHand.OFF_HAND, PSItems.BAG_O_VOMIT.getDefaultInstance());
             } else {
-                entity.getInventory().offerOrDrop(PSItems.BAG_O_VOMIT.getDefaultStack());
+                entity.getInventory().placeItemBackInInventory(PSItems.BAG_O_VOMIT.getDefaultInstance());
             }
         } else {
-            vomitingTicks = entity.getWorld().random.nextBetween(10, 100);
+            vomitingTicks = Mth.nextInt(entity.getRandom(), 10, 100);
             if (++vomitCount > 16) {
-                entity.damage(properties.damageOf(PSDamageTypes.OVER_EATING), Integer.MAX_VALUE);
+                entity.hurt(properties.damageOf(PSDamageTypes.OVER_EATING), Integer.MAX_VALUE);
             }
         }
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 1));
+        entity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100, 1));
         getGlut().setOvereating(0);
         properties.markDirty();
     }
 
     private void playBarfNoise() {
-        entity.getWorld().playSoundFromEntity(null, entity, SoundEvents.ENTITY_VILLAGER_DEATH, entity.getSoundCategory(), 1, (float)entity.getWorld().random.nextTriangular(0.5, 0.25));
+        RandomSource random = entity.getRandom();
+        float pitch = 0.5F + (random.nextFloat() - random.nextFloat()) * 0.25F;
+        entity.level().playSound(null, entity, SoundEvents.VILLAGER_DEATH, entity.getSoundSource(), 1, pitch);
     }
 
     @Override
-    public void fromNbt(NbtCompound compound) {
-        if (compound.contains("hunger", NbtElement.COMPOUND_TYPE)) {
-            getStomach().setLockedState(LockableHungerManager.State.fromNbt(compound.getCompound("hunger")));
-        } else {
-            getStomach().unlockHunger();
-        }
-        vomitCount = compound.getInt("vomitCount");
-        vomitCooldown = compound.getInt("vomitCooldown");
-        vomitingTicks = compound.getInt("vomitingTicks");
+    public void fromNbt(CompoundTag compound) {
+        compound.getCompound("hunger").ifPresentOrElse(
+                tag -> getStomach().setLockedState(LockableHungerManager.State.fromNbt(tag)),
+                getStomach()::unlockHunger
+        );
+        vomitCount = compound.getIntOr("vomitCount", 0);
+        vomitCooldown = compound.getIntOr("vomitCooldown", 0);
+        vomitingTicks = compound.getIntOr("vomitingTicks", 0);
     }
 
     @Override
-    public void toNbt(NbtCompound compound) {
+    public void toNbt(CompoundTag compound) {
         LockableHungerManager.State lockedHungerState = getStomach().getLockedState();
         if (lockedHungerState != null) {
             compound.put("hunger", lockedHungerState.toNbt());

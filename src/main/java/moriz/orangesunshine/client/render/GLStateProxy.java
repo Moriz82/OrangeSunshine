@@ -7,10 +7,10 @@ import org.lwjgl.opengl.*;
 import com.mojang.blaze3d.platform.GlConst;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.Window;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 /**
  * Created by lukas on 16.11.14.

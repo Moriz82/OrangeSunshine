@@ -5,7 +5,7 @@ import moriz.orangesunshine.entity.drug.hallucination.HallucinationManager;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public interface ShaderContext {
     static HallucinationManager hallucinations() {

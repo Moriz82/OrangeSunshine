@@ -13,10 +13,10 @@ import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 
 public class PowerOverlayScreenEffect extends DrugOverlayScreenEffect<PowerDrug> {
     private static final Identifier POWER_PARTICLE_TEXTURE = OrangeSunshine.id("textures/drug/power/particle.png");
@@ -29,17 +29,17 @@ public class PowerOverlayScreenEffect extends DrugOverlayScreenEffect<PowerDrug>
     }
 
     @Override
-    protected void render(MatrixStack matrices, VertexConsumerProvider vertices, int width, int height, float partialTicks, DrugProperties properties, PowerDrug drug) {
+    protected void render(PoseStack matrices, MultiBufferSource vertices, int width, int height, float partialTicks, DrugProperties properties, PowerDrug drug) {
 
         PlayerEntity entity = properties.asEntity();
 
         float power = (float)drug.getActiveValue();
         Random powerR = new Random(entity.age); // 20 changes / sec is alright
-        int powerParticles = MathHelper.floor(powerR.nextFloat() * 200.0f * power);
+        int powerParticles = Mth.floor(powerR.nextFloat() * 200.0f * power);
         if (powerParticles > 0) {
             RenderSystem.setShader(GameRenderer::getPositionTexProgram);
             RenderSystem.setShaderTexture(0, POWER_PARTICLE_TEXTURE);
-            renderRandomParticles(matrices, powerParticles, height / 10, MathHelper.ceil(height / 10 * power), width, height, powerR);
+            renderRandomParticles(matrices, powerParticles, height / 10, Mth.ceil(height / 10 * power), width, height, powerR);
         }
 
         Random powerLR = new Random(entity.age / 2 * 21124871824l); // Chaos principle doesn't apply ;_;
@@ -82,7 +82,7 @@ public class PowerOverlayScreenEffect extends DrugOverlayScreenEffect<PowerDrug>
         }
     }
 
-    public void renderRandomParticles(MatrixStack matrices, int number, int width, int height, int screenWidth, int screenHeight, Random rand) {
+    public void renderRandomParticles(PoseStack matrices, int number, int width, int height, int screenWidth, int screenHeight, Random rand) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
 

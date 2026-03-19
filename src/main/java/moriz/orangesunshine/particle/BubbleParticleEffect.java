@@ -1,37 +1,55 @@
 package moriz.orangesunshine.particle;
 
 import org.joml.Vector3f;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.Mth;
 
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
+public class BubbleParticleEffect extends DustParticleOptions {
+    public static final MapCodec<BubbleParticleEffect> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.INT.fieldOf("color").forGetter(BubbleParticleEffect::packedColor),
+            Codec.FLOAT.fieldOf("scale").forGetter(BubbleParticleEffect::getScale)
+    ).apply(instance, BubbleParticleEffect::new));
 
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.*;
+    public static final StreamCodec<RegistryFriendlyByteBuf, BubbleParticleEffect> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT,
+            BubbleParticleEffect::packedColor,
+            ByteBufCodecs.FLOAT,
+            BubbleParticleEffect::getScale,
+            BubbleParticleEffect::new
+    );
 
-public class BubbleParticleEffect extends DustParticleEffect {
-    @SuppressWarnings("deprecation")
-    public static final Factory<BubbleParticleEffect> FACTORY = new Factory<>(){
-        @Override
-        public BubbleParticleEffect read(ParticleType<BubbleParticleEffect> particleType, StringReader reader) throws CommandSyntaxException {
-            Vector3f color = AbstractDustParticleEffect.readColor(reader);
-            reader.expect(' ');
-            float f = reader.readFloat();
-            return new BubbleParticleEffect(color, f);
-        }
+    private final int packedColor;
 
-        @Override
-        public BubbleParticleEffect read(ParticleType<BubbleParticleEffect> type, PacketByteBuf buffer) {
-            return new BubbleParticleEffect(AbstractDustParticleEffect.readColor(buffer), buffer.readFloat());
-        }
-    };
-
-    public BubbleParticleEffect(Vector3f color, float scale) {
-        super(color, scale);
+    public BubbleParticleEffect(int packedColor, float scale) {
+        super(packedColor, scale);
+        this.packedColor = packedColor;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public BubbleParticleEffect(Vector3f color, float scale) {
+        this(pack(color), scale);
+    }
+
+    public int packedColor() {
+        return packedColor;
+    }
+
+    private static int pack(Vector3f color) {
+        int red = Mth.clamp((int)(color.x() * 255.0F), 0, 255);
+        int green = Mth.clamp((int)(color.y() * 255.0F), 0, 255);
+        int blue = Mth.clamp((int)(color.z() * 255.0F), 0, 255);
+        return (red << 16) | (green << 8) | blue;
+    }
+
     @Override
-    public ParticleType<DustParticleEffect> getType() {
-        return (ParticleType)PSParticles.BUBBLE;
+    @SuppressWarnings("unchecked")
+    public ParticleType<DustParticleOptions> getType() {
+        return (ParticleType<DustParticleOptions>)(ParticleType<?>)PSParticles.BUBBLE;
     }
 }

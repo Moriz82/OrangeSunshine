@@ -10,12 +10,12 @@ import moriz.orangesunshine.block.entity.MixingTableBlockEntity;
 import moriz.orangesunshine.client.render.FluidBoxRenderer;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 public class MixingTableEntityRenderer<T extends MixingTableBlockEntity> implements BlockEntityRenderer<T> {
 
     public MixingTableEntityRenderer(BlockEntityRendererFactory.Context context) {
@@ -23,7 +23,7 @@ public class MixingTableEntityRenderer<T extends MixingTableBlockEntity> impleme
     }
 
     @Override
-    public void render(T entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(T entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         matrices.push();
         matrices.translate(0.5F, 0, 0.5F);
 

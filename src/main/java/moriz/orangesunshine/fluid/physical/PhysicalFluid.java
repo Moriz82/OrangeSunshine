@@ -3,16 +3,18 @@ package moriz.orangesunshine.fluid.physical;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 public final class PhysicalFluid {
     private final Fluid standing;
@@ -22,7 +24,7 @@ public final class PhysicalFluid {
     @Nullable
     private final SimpleFluid type;
 
-    public PhysicalFluid(Fluid standing, Fluid flowing, FluidBlock block) {
+    public PhysicalFluid(Fluid standing, Fluid flowing, LiquidBlock block) {
         this.standing = standing;
         this.flowing = flowing;
         this.block = block;
@@ -32,9 +34,10 @@ public final class PhysicalFluid {
     public PhysicalFluid(Identifier id, SimpleFluid type) {
         @SuppressWarnings("unused") Object o = Fluids.EMPTY;
         this.type = type;
-        standing = Registry.register(Registries.FLUID, id, PlacedFluid.still(this));
-        flowing = Registry.register(Registries.FLUID, id.withPath(p -> "flowing_" + p), PlacedFluid.flowing(this));
-        block = type.isEmpty() ? Blocks.AIR : Registry.register(Registries.BLOCK, id, PlacedFluidBlock.create(this));
+        standing = Registry.register(BuiltInRegistries.FLUID, id, PlacedFluid.still(this));
+        flowing = Registry.register(BuiltInRegistries.FLUID, id.withPath(p -> "flowing_" + p), PlacedFluid.flowing(this));
+        block = type.isEmpty() ? Blocks.AIR : Registry.register(BuiltInRegistries.BLOCK, id,
+                PlacedFluidBlock.create(this, ResourceKey.create(Registries.BLOCK, id)));
     }
 
     public Fluid getStandingFluid() {
@@ -55,15 +58,14 @@ public final class PhysicalFluid {
     }
 
     public FluidState getDefaultState() {
-        return getStandingFluid().getDefaultState();
+        return getStandingFluid().defaultFluidState();
     }
 
-    @SuppressWarnings("deprecation")
     public boolean isIn(TagKey<Fluid> tag) {
-        return standing.isIn(tag);
+        return standing.is(tag);
     }
 
     public boolean isOf(Fluid fluid) {
-        return getStandingFluid().matchesType(fluid);
+        return getStandingFluid().isSame(fluid);
     }
 }

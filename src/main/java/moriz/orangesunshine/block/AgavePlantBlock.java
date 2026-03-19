@@ -8,59 +8,66 @@ package moriz.orangesunshine.block;
 import com.mojang.serialization.MapCodec;
 
 import moriz.orangesunshine.item.PSItems;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AgavePlantBlock extends SucculentPlantBlock {
-    public static final MapCodec<AgavePlantBlock> CODEC = createCodec(AgavePlantBlock::new);
-    public static final IntProperty AGE = Properties.AGE_5;
-    public static final int MAX_AGE = Properties.AGE_5_MAX;
+    public static final MapCodec<AgavePlantBlock> CODEC = simpleCodec(AgavePlantBlock::new);
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_5;
+    public static final int MAX_AGE = BlockStateProperties.MAX_AGE_5;
+    private static final TagKey<Item> SHEARS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "shears"));
 
     public static final VoxelShape[] SHAPES = {
-            createCuboidShape(6, 0, 6, 10,  4, 10),
-            createCuboidShape(6, 0, 6, 10,  8, 10),
-            createCuboidShape(5, 0, 5, 11, 10, 11),
-            createCuboidShape(5, 0, 5, 11, 10, 11),
-            createCuboidShape(4, 0, 4, 12, 12, 12),
-            createCuboidShape(2, 0, 2, 14, 14, 14)
+            Block.box(6, 0, 6, 10, 4, 10),
+            Block.box(6, 0, 6, 10, 8, 10),
+            Block.box(5, 0, 5, 11, 10, 11),
+            Block.box(5, 0, 5, 11, 10, 11),
+            Block.box(4, 0, 4, 12, 12, 12),
+            Block.box(2, 0, 2, 14, 14, 14)
     };
 
-    public AgavePlantBlock(Settings settings) {
+    public AgavePlantBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends AgavePlantBlock> getCodec() {
-        return CODEC;
+    @SuppressWarnings("unchecked")
+    public MapCodec<BushBlock> codec() {
+        return (MapCodec<BushBlock>)(MapCodec<?>)CODEC;
     }
 
     @Override
-    public VoxelShape[] getShapes() {
+    protected VoxelShape[] getShapes() {
         return SHAPES;
     }
 
     @Override
-    protected IntProperty getAgeProperty() {
+    protected IntegerProperty getAgeProperty() {
         return AGE;
     }
 
@@ -75,70 +82,64 @@ public class AgavePlantBlock extends SucculentPlantBlock {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
         if (!(entity instanceof LivingEntity) || entity.getType() == EntityType.FOX || entity.getType() == EntityType.BEE) {
             return;
         }
-        entity.slowMovement(state, new Vec3d(0.8F, 0.75F, 0.8F));
-        if (!(world.isClient
-                || state.get(getAgeProperty()) <= 0
-                || entity.lastRenderX == entity.getX() && entity.lastRenderZ == entity.getZ()
-                || entity.isSneaking())) {
-            if (Math.max(
-                    Math.abs(entity.getX() - entity.lastRenderX),
-                    Math.abs(entity.getZ() - entity.lastRenderZ)
-                ) >= 0.003F) {
-                entity.damage(entity.getDamageSources().cactus(), 1);
+        entity.makeStuckInBlock(state, new Vec3(0.8F, 0.75F, 0.8F));
+        if (!(world.isClientSide()
+                || state.getValue(getAgeProperty()) <= 0
+                || entity.xo == entity.getX() && entity.zo == entity.getZ()
+                || entity.isShiftKeyDown())) {
+            if (Math.max(Math.abs(entity.getX() - entity.xo), Math.abs(entity.getZ() - entity.zo)) >= 0.003F) {
+                entity.hurt(entity.damageSources().cactus(), 1);
             }
         }
     }
 
-    @Deprecated
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
-        int age = state.get(getAgeProperty());
-
-        if ((stack.isIn(ConventionalItemTags.SHEARS) && age >= 1)) {
-            stack.damage(1, player, p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-            dropStack(world, pos, new ItemStack(PSItems.AGAVE_LEAF, 1 + world.random.nextInt(2)));
-
-            state = state.with(getAgeProperty(), age - 1);
-            world.setBlockState(pos, state, NOTIFY_LISTENERS);
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state));
-
-            if (stack.isOf(Items.BONE_MEAL)) {
-                return ActionResult.PASS;
-            }
-
-            world.playSound(null, pos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS,
-                    1,
-                    0.8F + world.random.nextFloat() * 0.4F
-            );
-            return ActionResult.success(world.isClient);
-        }
-        if (stack.isEmpty()) {
-            player.damage(player.getDamageSources().cactus(), 1);
-            return ActionResult.SUCCESS;
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        int age = state.getValue(getAgeProperty());
+        if (!stack.is(SHEARS) || age < 1) {
+            return InteractionResult.PASS;
         }
 
-        return super.onUse(state, world, pos, player, hand, hit);
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+
+        stack.hurtAndBreak(1, player, hand);
+        Block.popResource(world, pos, new ItemStack(PSItems.AGAVE_LEAF, 1 + world.random.nextInt(2)));
+
+        BlockState newState = state.setValue(getAgeProperty(), age - 1);
+        world.setBlock(pos, newState, Block.UPDATE_ALL);
+        world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newState));
+        world.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!isAppropriateTool(player.getStackInHand(Hand.MAIN_HAND))) {
-            player.damage(player.getDamageSources().cactus(), 1);
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!world.isClientSide()) {
+            player.hurt(player.damageSources().cactus(), 1);
         }
-        return super.onBreak(world, pos, state, player);
+        return world.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
-    private boolean isAppropriateTool(ItemStack stack) {
-        return stack.isIn(ItemTags.PICKAXES)
-                || stack.isIn(ItemTags.SHOVELS)
-                || stack.isIn(ItemTags.SWORDS)
-                || stack.isIn(ItemTags.AXES)
-                || stack.isIn(ItemTags.HOES)
-                || stack.isIn(ConventionalItemTags.SHEARS);
+    @Override
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+        if (!isAppropriateTool(player.getMainHandItem())) {
+            player.hurt(player.damageSources().cactus(), 1);
+        }
+        return super.playerWillDestroy(world, pos, state, player);
+    }
+
+    private static boolean isAppropriateTool(ItemStack stack) {
+        return stack.is(ItemTags.PICKAXES)
+                || stack.is(ItemTags.SHOVELS)
+                || stack.is(ItemTags.SWORDS)
+                || stack.is(ItemTags.AXES)
+                || stack.is(ItemTags.HOES)
+                || stack.is(SHEARS);
     }
 }

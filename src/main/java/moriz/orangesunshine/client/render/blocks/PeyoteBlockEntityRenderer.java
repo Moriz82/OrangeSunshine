@@ -12,9 +12,9 @@ import moriz.orangesunshine.client.render.RenderUtil;
 import moriz.orangesunshine.block.entity.PeyoteBlockEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.block.entity.*;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.blockentity.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.math.*;
 
 import java.util.Random;
@@ -37,7 +37,7 @@ public class PeyoteBlockEntityRenderer implements BlockEntityRenderer<PeyoteBloc
     }
 
     @Override
-    public void render(PeyoteBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(PeyoteBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         matrices.push();
         matrices.translate(0.5F, 0.5f, 0.5F);
         matrices.translate(0, 1, 0);

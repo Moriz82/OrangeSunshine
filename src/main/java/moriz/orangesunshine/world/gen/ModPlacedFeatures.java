@@ -1,45 +1,48 @@
 package moriz.orangesunshine.world.gen;
 
 import moriz.orangesunshine.OrangeSunshine;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.world.gen.YOffset;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.PlacementModifier;
 
 import java.util.List;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.core.registries.Registries;
+
 public class ModPlacedFeatures {
-    public static final RegistryKey<PlacedFeature> SULFUR_ORE_PLACED_KEY = registerKey("sulfur_ore_placed");
-    public static final RegistryKey<PlacedFeature> SALT_DEPOSIT_PLACED_KEY = registerKey("salt_deposit_placed");
-    public static final RegistryKey<PlacedFeature> PYROLUSITE_PLACED_KEY = registerKey("pyrolusite_placed");
-    public static final RegistryKey<PlacedFeature> PHOSPHORUS_PLACED_KEY = registerKey("phosphorus_ore_placed");
-    public static void boostrap(Registerable<PlacedFeature> context) {
-        var configuredFeatureRegistryEntryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
+    public static final ResourceKey<PlacedFeature> SULFUR_ORE_PLACED_KEY = registerKey("sulfur_ore_placed");
+    public static final ResourceKey<PlacedFeature> SALT_DEPOSIT_PLACED_KEY = registerKey("salt_deposit_placed");
+    public static final ResourceKey<PlacedFeature> PYROLUSITE_PLACED_KEY = registerKey("pyrolusite_placed");
+    public static final ResourceKey<PlacedFeature> PHOSPHORUS_PLACED_KEY = registerKey("phosphorus_ore_placed");
 
-        register(context, SULFUR_ORE_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.SULFUR_ORE_KEY),
+    public static void boostrap(BootstrapContext<PlacedFeature> context) {
+        HolderGetter<ConfiguredFeature<?, ?>> configuredFeatureLookup = context.lookup(Registries.CONFIGURED_FEATURE);
+
+        register(context, SULFUR_ORE_PLACED_KEY, configuredFeatureLookup.getOrThrow(ModConfiguredFeatures.SULFUR_ORE_KEY),
                 ModOrePlacement.modifiersWithCount(12, // Veins per Chunk
-                        HeightRangePlacementModifier.uniform(YOffset.fixed(-120), YOffset.fixed(120))));
-        register(context, SALT_DEPOSIT_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.SALT_DEPOSIT_KEY),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-120), VerticalAnchor.absolute(120))));
+        register(context, SALT_DEPOSIT_PLACED_KEY, configuredFeatureLookup.getOrThrow(ModConfiguredFeatures.SALT_DEPOSIT_KEY),
                 ModOrePlacement.modifiersWithCount(12, // Veins per Chunk
-                        HeightRangePlacementModifier.uniform(YOffset.fixed(-120), YOffset.fixed(120))));
-        register(context, PYROLUSITE_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.PYROLUSITE_KEY),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-120), VerticalAnchor.absolute(120))));
+        register(context, PYROLUSITE_PLACED_KEY, configuredFeatureLookup.getOrThrow(ModConfiguredFeatures.PYROLUSITE_KEY),
                 ModOrePlacement.modifiersWithCount(12, // Veins per Chunk
-                        HeightRangePlacementModifier.uniform(YOffset.fixed(-120), YOffset.fixed(120))));
-        register(context, PHOSPHORUS_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.PHOSPHORUS_KEY),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-120), VerticalAnchor.absolute(120))));
+        register(context, PHOSPHORUS_PLACED_KEY, configuredFeatureLookup.getOrThrow(ModConfiguredFeatures.PHOSPHORUS_KEY),
                 ModOrePlacement.modifiersWithCount(12, // Veins per Chunk
-                        HeightRangePlacementModifier.uniform(YOffset.fixed(-120), YOffset.fixed(120))));
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-120), VerticalAnchor.absolute(120))));
     }
 
-    public static RegistryKey<PlacedFeature> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, OrangeSunshine.id(name));
+    public static ResourceKey<PlacedFeature> registerKey(String name) {
+        return ResourceKey.create(Registries.PLACED_FEATURE, OrangeSunshine.id(name));
     }
 
-    private static void register(Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key, RegistryEntry<ConfiguredFeature<?, ?>> configuration,
+    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration,
                                  List<PlacementModifier> modifiers) {
         context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
     }

@@ -12,17 +12,17 @@ import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.util.MathUtils;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
 public class ChemicalExtractFluid extends DrugFluid implements Processable {
     public static final Attribute<Integer> DISTILLATION = Attribute.ofInt("distillation", 0, 2);
 
-    final Settings settings;
+    final moriz.orangesunshine.fluid.DrugFluid.Settings settings;
     private final DrugType drug;
 
-    public ChemicalExtractFluid(Identifier id, Settings settings, DrugType drug) {
+    public ChemicalExtractFluid(Identifier id, moriz.orangesunshine.fluid.DrugFluid.Settings settings, DrugType drug) {
         super(id, settings.drinkable());
         this.settings = settings;
         this.drug = drug;
@@ -73,9 +73,9 @@ public class ChemicalExtractFluid extends DrugFluid implements Processable {
     }
 
     @Override
-    public Text getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         int distillation = DISTILLATION.get(stack);
-        return Text.translatable(getTranslationKey() + ".distilled." + distillation, distillation);
+        return Component.translatable(getTranslationKey() + ".distilled." + distillation, distillation);
     }
 
     @Override

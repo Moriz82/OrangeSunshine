@@ -2,49 +2,54 @@ package moriz.orangesunshine.world.gen;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.block.PSBlocks;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.structure.rule.RuleTest;
-import net.minecraft.structure.rule.TagMatchRuleTest;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
 
 import java.util.List;
 
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraft.core.registries.Registries;
+
 public class ModConfiguredFeatures {
 
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SULFUR_ORE_KEY = registerKey("sulfur_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SALT_DEPOSIT_KEY = registerKey("salt_deposit");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> PYROLUSITE_KEY = registerKey("pyrolusite");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> PHOSPHORUS_KEY = registerKey("phosphorus_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SULFUR_ORE_KEY = registerKey("sulfur_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SALT_DEPOSIT_KEY = registerKey("salt_deposit");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PYROLUSITE_KEY = registerKey("pyrolusite");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PHOSPHORUS_KEY = registerKey("phosphorus_ore");
 
-    public static void boostrap(Registerable<ConfiguredFeature<?, ?>> context) {
-        RuleTest stoneReplacables = new TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES);
+    public static void boostrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
 
-        List<OreFeatureConfig.Target> overworldSulfurOres =
-                List.of(OreFeatureConfig.createTarget(stoneReplacables, PSBlocks.SULFUR_ORE.getDefaultState()));
-        List<OreFeatureConfig.Target> overworldSaltOres =
-                List.of(OreFeatureConfig.createTarget(stoneReplacables, PSBlocks.SALT_DEPOSIT.getDefaultState()));
-        List<OreFeatureConfig.Target> overworldPyrolusiteOres =
-                List.of(OreFeatureConfig.createTarget(stoneReplacables, PSBlocks.PYROLUSITE.getDefaultState()));
-        List<OreFeatureConfig.Target> overworldPhosphorusOres =
-                List.of(OreFeatureConfig.createTarget(stoneReplacables, PSBlocks.PHOSPHORUS_ORE.getDefaultState()));
+        List<OreConfiguration.TargetBlockState> overworldSulfurOres =
+                List.of(OreConfiguration.target(stoneReplaceables, PSBlocks.SULFUR_ORE.defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> overworldSaltOres =
+                List.of(OreConfiguration.target(stoneReplaceables, PSBlocks.SALT_DEPOSIT.defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> overworldPyrolusiteOres =
+                List.of(OreConfiguration.target(stoneReplaceables, PSBlocks.PYROLUSITE.defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> overworldPhosphorusOres =
+                List.of(OreConfiguration.target(stoneReplaceables, PSBlocks.PHOSPHORUS_ORE.defaultBlockState()));
 
-        register(context, SULFUR_ORE_KEY, Feature.ORE, new OreFeatureConfig(overworldSulfurOres, 12));
-        register(context, SALT_DEPOSIT_KEY, Feature.ORE, new OreFeatureConfig(overworldSaltOres, 12));
-        register(context, PYROLUSITE_KEY, Feature.ORE, new OreFeatureConfig(overworldPyrolusiteOres, 12));
-        register(context, PHOSPHORUS_KEY, Feature.ORE, new OreFeatureConfig(overworldPhosphorusOres, 12));
+        register(context, SULFUR_ORE_KEY, Feature.ORE, new OreConfiguration(overworldSulfurOres, 12));
+        register(context, SALT_DEPOSIT_KEY, Feature.ORE, new OreConfiguration(overworldSaltOres, 12));
+        register(context, PYROLUSITE_KEY, Feature.ORE, new OreConfiguration(overworldPyrolusiteOres, 12));
+        register(context, PHOSPHORUS_KEY, Feature.ORE, new OreConfiguration(overworldPhosphorusOres, 12));
     }
 
-    public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, OrangeSunshine.id(name));
+    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, OrangeSunshine.id(name));
     }
-    private static <FC extends FeatureConfig, F extends Feature<FC>> void register(Registerable<ConfiguredFeature<?, ?>> context,
-                                                                                   RegistryKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
+
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(
+            BootstrapContext<ConfiguredFeature<?, ?>> context,
+            ResourceKey<ConfiguredFeature<?, ?>> key,
+            F feature,
+            FC configuration) {
         context.register(key, new ConfiguredFeature<>(feature, configuration));
     }
 }

@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 import moriz.orangesunshine.OrangeSunshine;
 import net.minecraft.resource.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 class ModdedResourceFactory implements ResourceFactory {
     private final ResourceFactory parent;

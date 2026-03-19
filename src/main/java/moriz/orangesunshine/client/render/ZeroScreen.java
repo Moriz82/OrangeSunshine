@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.client.render.shader.PSShaders;
 import net.minecraft.client.render.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class ZeroScreen extends RenderLayer {
     private ZeroScreen() {super(null, null, null, 0, false, false, null, null);}
@@ -33,7 +33,7 @@ public class ZeroScreen extends RenderLayer {
     ));
 
     public static void render(float ticks, Renderable action) {
-        int seed = MathHelper.floor(ticks * 0.5F);
+        int seed = Mth.floor(ticks * 0.5F);
         var rng = RenderUtil.random(seed);
         action.render(
                 PS_ZERO_SCREEN.apply(TEXTURES[seed % TEXTURES.length]),

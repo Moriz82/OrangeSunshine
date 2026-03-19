@@ -7,22 +7,19 @@ package moriz.orangesunshine.entity.drug.hallucination;
 
 import java.util.Optional;
 
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public abstract class Hallucination {
 
     public static final int UNLIMITED = -1;
 
-    protected final PlayerEntity player;
+    protected final Player player;
 
     protected int age;
 
     protected Optional<ChatBot> chatBot = Optional.empty();
 
-    public Hallucination(PlayerEntity player) {
+    public Hallucination(Player player) {
         this.player = player;
     }
 
@@ -35,7 +32,7 @@ public abstract class Hallucination {
         return chatBot;
     }
 
-    public abstract void render(MatrixStack matrices, VertexConsumerProvider vertices, Camera camera, float tickDelta, float alpha);
+    public abstract void render(Object matrices, Object vertices, Object camera, float tickDelta, float alpha);
 
     public abstract boolean isDead();
 

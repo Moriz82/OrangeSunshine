@@ -9,8 +9,8 @@ import moriz.orangesunshine.PSDamageTypes;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 01.11.14.
@@ -25,17 +25,17 @@ public class AtropineDrug extends SimpleDrug {
         super.update(drugProperties);
 
         if (getActiveValue() > 0) {
-            PlayerEntity entity = drugProperties.asEntity();
-            Random random = entity.getWorld().random;
+            Player entity = drugProperties.asEntity();
+            RandomSource random = entity.level().random;
 
-            if (!entity.getWorld().isClient) {
+            if (!entity.level().isClientSide()) {
                 double chance = (getActiveValue() - 0.8F) * 0.051F;
 
-                if (entity.age % 20 == 0 && random.nextFloat() < chance) {
+                if (entity.tickCount % 20 == 0 && random.nextFloat() < chance) {
                     if (random.nextFloat() < 0.8F) {
-                        entity.damage(drugProperties.damageOf(PSDamageTypes.STROKE), Integer.MAX_VALUE);
+                        entity.hurt(drugProperties.damageOf(PSDamageTypes.STROKE), Integer.MAX_VALUE);
                     } else if (random.nextFloat() < 0.5F) {
-                        entity.damage(drugProperties.damageOf(PSDamageTypes.HEART_ATTACK), Integer.MAX_VALUE);
+                        entity.hurt(drugProperties.damageOf(PSDamageTypes.HEART_ATTACK), Integer.MAX_VALUE);
                     }
                 }
             }

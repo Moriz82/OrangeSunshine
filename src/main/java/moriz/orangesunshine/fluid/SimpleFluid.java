@@ -5,43 +5,47 @@
 
 package moriz.orangesunshine.fluid;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.mojang.serialization.Codec;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.PSTags;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.MutableFluidContainer;
 import moriz.orangesunshine.fluid.container.VariantMarshal;
 import moriz.orangesunshine.fluid.physical.FluidStateManager;
+import moriz.orangesunshine.fluid.physical.PhysicalFluid;
 import moriz.orangesunshine.fluid.physical.PlacedFluid;
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.serialization.Codec;
-
-import moriz.orangesunshine.fluid.physical.PhysicalFluid;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.fluid.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.state.State;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.StateHolder;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 /**
  * Created by lukas on 29.10.14.
@@ -49,7 +53,7 @@ import net.minecraft.world.World;
  */
 public class SimpleFluid {
     public static final Identifier EMPTY_KEY = OrangeSunshine.id("empty");
-    private static final Registry<SimpleFluid> REGISTRY = FabricRegistryBuilder.createDefaulted(RegistryKey.<SimpleFluid>ofRegistry(OrangeSunshine.id("fluids")), EMPTY_KEY).buildAndRegister();
+    private static final Map<Identifier, SimpleFluid> REGISTRY = new LinkedHashMap<>();
     private static final Map<Identifier, SimpleFluid> VANILLA_FLUIDS = new HashMap<>();
     public static final Codec<SimpleFluid> CODEC = Identifier.CODEC.xmap(SimpleFluid::byId, SimpleFluid::getId);
 
@@ -75,11 +79,11 @@ public class SimpleFluid {
         this.custom = true;
         this.empty = empty;
         physical = new PhysicalFluid(id, this);
-        Registry.register(REGISTRY, id, this);
+        REGISTRY.put(id, this);
         FluidVariantAttributes.register(physical.getStandingFluid(), new FluidVariantAttributeHandler() {
             @Override
-            public Text getName(FluidVariant fluidVariant) {
-                return SimpleFluid.this.getName(VariantMarshal.unpackFluid(Items.STONE.getDefaultStack(), fluidVariant, 1).asStack());
+            public Component getName(FluidVariant fluidVariant) {
+                return SimpleFluid.this.getName(VariantMarshal.unpackFluid(Items.STONE.getDefaultInstance(), fluidVariant, 1).asStack());
             }
         });
     }
@@ -118,7 +122,7 @@ public class SimpleFluid {
         return Optional.empty();
     }
 
-    public final ItemStack getStack(State<?, ?> state, FluidContainer container) {
+    public final ItemStack getStack(StateHolder<?, ?> state, FluidContainer container) {
         return getStateManager().writeStack(state, container.getDefaultStack(this));
     }
 
@@ -143,7 +147,7 @@ public class SimpleFluid {
     }
 
     protected String getTranslationKey() {
-        return Util.createTranslationKey(isCustomFluid() ? "fluid" : "block", id);
+        return Util.makeDescriptionId(isCustomFluid() ? "fluid" : "block", id);
     }
 
     public final ItemStack getDefaultStack(FluidContainer container) {
@@ -166,29 +170,28 @@ public class SimpleFluid {
         consumer.accept(getDefaultStack(container));
     }
 
-    public Text getName(ItemStack stack) {
-        return Text.translatable(getTranslationKey());
+    public Component getName(ItemStack stack) {
+        return Component.translatable(getTranslationKey());
     }
 
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, @Nullable Level world, List<Component> tooltip, Item.TooltipContext context) {
 
     }
 
-    @SuppressWarnings("deprecation")
     public boolean isSuitableContainer(FluidContainer container) {
-        return !container.asItem().getRegistryEntry().isIn(PSTags.Items.BARRELS);
+        return !container.asItem().builtInRegistryHolder().is(PSTags.Items.BARRELS);
     }
 
-    public void randomDisplayTick(World world, BlockPos pos, FluidState state, Random random) {
+    public void randomDisplayTick(Level world, net.minecraft.core.BlockPos pos, FluidState state, RandomSource random) {
         if (!custom) {
-            state.randomDisplayTick(world, pos, random);
+            state.animateTick(world, pos, random);
         }
     }
 
-    public void onRandomTick(World world, BlockPos pos, FluidState state, Random random) {
+    public void onRandomTick(ServerLevel world, net.minecraft.core.BlockPos pos, FluidState state, RandomSource random) {
     }
 
-    public static final boolean isEquivalent(SimpleFluid fluidA, ItemStack selfStack, SimpleFluid fluidB, ItemStack otherStack) {
+    public static boolean isEquivalent(SimpleFluid fluidA, ItemStack selfStack, SimpleFluid fluidB, ItemStack otherStack) {
         return fluidA == fluidB && fluidA.getHash(selfStack) == fluidB.getHash(otherStack);
     }
 
@@ -200,7 +203,8 @@ public class SimpleFluid {
         if (id == null) {
             return PSFluids.EMPTY;
         }
-        return REGISTRY.getOrEmpty(id).orElseGet(() -> Registries.FLUID.getOrEmpty(id).map(SimpleFluid::forVanilla).orElse(PSFluids.EMPTY));
+        return Optional.ofNullable(REGISTRY.get(id))
+                .orElseGet(() -> BuiltInRegistries.FLUID.getOptional(id).map(SimpleFluid::forVanilla).orElse(PSFluids.EMPTY));
     }
 
     public static SimpleFluid forVanilla(@Nullable Fluid fluid) {
@@ -211,22 +215,22 @@ public class SimpleFluid {
             return PSFluids.EMPTY;
         }
         Fluid still = toStill(fluid);
-        Identifier id = Registries.FLUID.getId(still);
+        Identifier id = BuiltInRegistries.FLUID.getKey(still);
         return VANILLA_FLUIDS.computeIfAbsent(id, i -> new SimpleFluid(i, 0xFFFFFFFF,
-                new PhysicalFluid(still, toFlowing(still), (FluidBlock)still.getDefaultState().getBlockState().getBlock())
+                new PhysicalFluid(still, toFlowing(still), (LiquidBlock)still.defaultFluidState().createLegacyBlock().getBlock())
         ));
     }
 
     private static Fluid toStill(Fluid fluid) {
-        return fluid instanceof FlowableFluid ? ((FlowableFluid)fluid).getStill() : fluid;
+        return fluid instanceof FlowingFluid flowing ? flowing.getSource() : fluid;
     }
 
     private static Fluid toFlowing(Fluid fluid) {
-        return fluid instanceof FlowableFluid ? ((FlowableFluid)fluid).getFlowing() : fluid;
+        return fluid instanceof FlowingFluid flowing ? flowing.getFlowing() : fluid;
     }
 
     public static Iterable<SimpleFluid> all() {
-        return REGISTRY;
+        return REGISTRY.values();
     }
 
     @SuppressWarnings("unchecked")
@@ -266,23 +270,23 @@ public class SimpleFluid {
             return new Attribute<>() {
                 @Override
                 public Integer get(ItemStack stack) {
-                    return MathHelper.clamp(FluidContainer.getFluidAttributesTag(stack, true).getInt(name), min, max);
+                    return Mth.clamp(FluidContainer.getFluidAttributesTag(stack).getIntOr(name, 0), min, max);
                 }
 
                 @Override
                 public ItemStack set(ItemStack stack, Integer value) {
-                    FluidContainer.getFluidAttributesTag(stack, false).putInt(name, value);
+                    FluidContainer.updateFluidAttributes(stack, tag -> tag.putInt(name, value));
                     return stack;
                 }
 
                 @Override
                 public Integer get(MutableFluidContainer stack) {
-                    return MathHelper.clamp(stack.getAttributes().getInt(name), min, max);
+                    return Mth.clamp(stack.getAttributes().getIntOr(name, 0), min, max);
                 }
 
                 @Override
                 public MutableFluidContainer set(MutableFluidContainer stack, Integer value) {
-                    NbtCompound attributes = stack.getAttributes().copy();
+                    CompoundTag attributes = stack.getAttributes().copy();
                     attributes.putInt(name, value);
                     stack.withAttributes(attributes);
                     return stack;
@@ -301,23 +305,23 @@ public class SimpleFluid {
             return new Attribute<>() {
                 @Override
                 public Boolean get(ItemStack stack) {
-                    return FluidContainer.getFluidAttributesTag(stack, true).getBoolean(name);
+                    return FluidContainer.getFluidAttributesTag(stack).getBooleanOr(name, false);
                 }
 
                 @Override
                 public ItemStack set(ItemStack stack, Boolean value) {
-                    FluidContainer.getFluidAttributesTag(stack, false).putBoolean(name, value);
+                    FluidContainer.updateFluidAttributes(stack, tag -> tag.putBoolean(name, value));
                     return stack;
                 }
 
                 @Override
                 public Boolean get(MutableFluidContainer stack) {
-                    return stack.getAttributes().getBoolean(name);
+                    return stack.getAttributes().getBooleanOr(name, false);
                 }
 
                 @Override
                 public MutableFluidContainer set(MutableFluidContainer stack, Boolean value) {
-                    NbtCompound attributes = stack.getAttributes().copy();
+                    CompoundTag attributes = stack.getAttributes().copy();
                     attributes.putBoolean(name, value);
                     stack.withAttributes(attributes);
                     return stack;

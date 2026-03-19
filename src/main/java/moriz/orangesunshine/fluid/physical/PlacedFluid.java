@@ -4,19 +4,21 @@ import java.util.stream.Stream;
 
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.item.PSItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.WaterFluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.state.StateManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.WaterFluid;
+import net.minecraft.server.level.ServerLevel;
 
 public abstract class PlacedFluid extends WaterFluid {
     private static final Direction[] ALL_DIRECTIONS = Direction.values();
@@ -24,8 +26,8 @@ public abstract class PlacedFluid extends WaterFluid {
     protected abstract PhysicalFluid getPysicalFluid();
 
     @Override
-    protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
-        super.appendProperties(builder);
+    protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+        super.createFluidStateDefinition(builder);
         getType().getStateManager().appendProperties(builder);
     }
 
@@ -39,62 +41,82 @@ public abstract class PlacedFluid extends WaterFluid {
     }
 
     @Override
-    public Fluid getStill() {
+    public Fluid getSource() {
         return getPysicalFluid().getStandingFluid();
     }
 
     @Override
-    public Item getBucketItem() {
+    public Item getBucket() {
         return getType().isEmpty() ? Items.BUCKET : PSItems.FILLED_BUCKET;
     }
 
     @Override
-    public BlockState toBlockState(FluidState state) {
-        return getType().getStateManager().copyStateValues(state, getPysicalFluid().getBlock().getDefaultState()
-                .withIfExists(FluidBlock.LEVEL, getBlockStateLevel(state))
+    public BlockState createLegacyBlock(FluidState state) {
+        return getType().getStateManager().copyStateValues(state, getPysicalFluid().getBlock().defaultBlockState()
+                .trySetValue(LiquidBlock.LEVEL, getLegacyLevel(state))
         );
     }
 
     @Override
-    public int getLevelDecreasePerBlock(WorldView world) {
-        return getType().getViscocity();
+    public int getDropOff(LevelReader world) {
+        return super.getDropOff(world);
     }
 
     @Override
-    public boolean matchesType(Fluid fluid) {
-        return fluid == getStill() || fluid == getFlowing();
+    public int getSlopeFindDistance(LevelReader world) {
+        return super.getSlopeFindDistance(world);
     }
 
     @Override
-    public void randomDisplayTick(World world, BlockPos pos, FluidState state, Random random) {
-        super.randomDisplayTick(world, pos, state, random);
+    public int getTickDelay(LevelReader world) {
+        return super.getTickDelay(world);
+    }
+
+    @Override
+    public int getAmount(FluidState state) {
+        return state.getValue(LEVEL);
+    }
+
+    @Override
+    public boolean isSame(Fluid fluid) {
+        return fluid == getSource() || fluid == getFlowing();
+    }
+
+    @Override
+    public void animateTick(Level world, BlockPos pos, FluidState state, RandomSource random) {
+        super.animateTick(world, pos, state, random);
         getType().randomDisplayTick(world, pos, state, random);
     }
 
     @Override
-    protected void onRandomTick(World world, BlockPos pos, FluidState state, Random random) {
-        super.onRandomTick(world, pos, state, random);
+    protected void randomTick(ServerLevel world, BlockPos pos, FluidState state, RandomSource random) {
+        super.randomTick(world, pos, state, random);
         getType().onRandomTick(world, pos, state, random);
     }
 
     @Override
-    protected FluidState getUpdatedState(World world, BlockPos pos, BlockState state) {
+    protected FluidState getNewLiquid(ServerLevel world, BlockPos pos, BlockState state) {
         return getType().getStateManager().computeAverage(Stream.of(ALL_DIRECTIONS)
-                .map(direction -> world.getBlockState(pos.offset(direction)).getFluidState())
-                .filter(neighbourState -> neighbourState.getFluid().matchesType(this)),
-                super.getUpdatedState(world, pos, state)
+                .map(direction -> world.getBlockState(pos.relative(direction)).getFluidState())
+                .filter(neighbourState -> neighbourState.getType().isSame(this)),
+                super.getNewLiquid(world, pos, state)
         );
     }
 
     static PlacedFluid still(PhysicalFluid physical) {
         return new PlacedFluid() {
             @Override
-            public int getLevel(FluidState state) {
+            public boolean isSource(FluidState state) {
+                return true;
+            }
+
+            @Override
+            public int getAmount(FluidState state) {
                 return 8;
             }
 
             @Override
-            public boolean isStill(FluidState state) {
+            protected boolean canConvertToSource(ServerLevel world) {
                 return true;
             }
 
@@ -108,19 +130,24 @@ public abstract class PlacedFluid extends WaterFluid {
     static PlacedFluid flowing(PhysicalFluid physical) {
         return new PlacedFluid() {
             @Override
-            protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
-                super.appendProperties(builder);
+            protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+                super.createFluidStateDefinition(builder);
                 builder.add(LEVEL);
             }
 
             @Override
-            public int getLevel(FluidState state) {
-                return state.get(LEVEL);
+            public boolean isSource(FluidState state) {
+                return false;
             }
 
             @Override
-            public boolean isStill(FluidState state) {
-                return false;
+            public int getAmount(FluidState state) {
+                return state.getValue(LEVEL);
+            }
+
+            @Override
+            protected boolean canConvertToSource(ServerLevel world) {
+                return true;
             }
 
             @Override

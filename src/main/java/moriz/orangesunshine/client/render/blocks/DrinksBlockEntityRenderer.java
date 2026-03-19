@@ -10,18 +10,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import moriz.orangesunshine.block.PlacedDrinksBlock;
 import moriz.orangesunshine.client.render.PlacedDrinksModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DrinksBlockEntityRenderer implements BlockEntityRenderer<PlacedDrinksBlock.Data> {
     private static final VoxelShape FILLED_SLOT_RAY_TRACE_SHAPE = Block.createCuboidShape(-2, 0, -2, 2, 4, 2);
@@ -30,7 +30,7 @@ public class DrinksBlockEntityRenderer implements BlockEntityRenderer<PlacedDrin
     public DrinksBlockEntityRenderer(BlockEntityRendererFactory.Context context) { }
 
     @Override
-    public void render(PlacedDrinksBlock.Data entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(PlacedDrinksBlock.Data entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         entity.forEachDrink((y, drink) -> {
             PlacedDrinksModelProvider.Entry geometry = PlacedDrinksModelProvider.INSTANCE.get(drink.stack().getItem()).orElse(PlacedDrinksModelProvider.Entry.DEFAULT);
             matrices.push();

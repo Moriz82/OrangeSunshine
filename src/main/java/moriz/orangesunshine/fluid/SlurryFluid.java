@@ -15,17 +15,17 @@ import moriz.orangesunshine.particle.BubbleParticleEffect;
 import moriz.orangesunshine.util.MathUtils;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.client.util.ParticleUtil;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ParticleUtils;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FluidState;
 
 /**
  * Created by lukas on 27.10.14.
@@ -41,10 +41,11 @@ public class SlurryFluid extends SimpleFluid implements Processable {
     }
 
     @Override
-    public void randomDisplayTick(World world, BlockPos pos, FluidState state, Random random) {
-        ParticleUtil.spawnParticle(world, pos, new BubbleParticleEffect(MathUtils.unpackRgbVector(getColor(ItemStack.EMPTY)), 1), ConstantIntProvider.create(5));
+    public void randomDisplayTick(Level world, BlockPos pos, FluidState state, RandomSource random) {
+        ParticleUtils.spawnParticles(world, pos, ConstantInt.of(5).getValue(), 0.25D, 0.25D, false,
+                new BubbleParticleEffect(MathUtils.unpackRgbVector(getColor(ItemStack.EMPTY)), 1));
 
-        world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, SoundCategory.BLOCKS,
+        world.playLocalSound(pos, SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.BLOCKS,
                 0.5F + world.getRandom().nextFloat(),
                 0.3F + world.getRandom().nextFloat(), true);
     }
@@ -75,7 +76,7 @@ public class SlurryFluid extends SimpleFluid implements Processable {
         if (type == ProcessType.FERMENT || type == ProcessType.MATURE) {
             consumer.accept(OrangeSunshine.getConfig().balancing.slurryHardeningTime, 1,
                     stack -> List.of(getDefaultStack(FluidContainer.of(stack))),
-                    stack -> List.of(Items.DIRT.getDefaultStack())
+                    stack -> List.of(Items.DIRT.getDefaultInstance())
             );
         }
     }

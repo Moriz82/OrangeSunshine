@@ -14,13 +14,13 @@ import moriz.orangesunshine.client.render.shader.ShaderContext;
 import moriz.orangesunshine.fluid.*;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.*;
 import net.minecraft.util.math.*;
 
 /**
@@ -32,7 +32,7 @@ public class MashTubBlockEntityRenderer implements BlockEntityRenderer<MashTubBl
     }
 
     @Override
-    public void render(MashTubBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(MashTubBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         Resovoir tank = entity.getTank(Direction.UP);
         SimpleFluid fluid = tank.getFluidType();
 
@@ -41,7 +41,7 @@ public class MashTubBlockEntityRenderer implements BlockEntityRenderer<MashTubBl
         FluidBoxRenderer.getInstance().scale(1).light(light).overlay(overlay).position(matrices);
 
         if (!fluid.isEmpty()) {
-            float fillPercentage = MathHelper.clamp((float)tank.getLevel() / tank.getCapacity(), 0, 2);
+            float fillPercentage = Mth.clamp((float)tank.getLevel() / tank.getCapacity(), 0, 2);
 
             fluidHeight = 0.3F + fillPercentage * 0.6F;
 
@@ -75,8 +75,8 @@ public class MashTubBlockEntityRenderer implements BlockEntityRenderer<MashTubBl
                 matrices.scale(0.3F, 0.3F, 0.3F);
 
                 int singleDifference = c * 5;
-                float bob = MathHelper.sin((ShaderContext.ticks() + singleDifference) / 8F) * 0.2F;
-                float spin = MathHelper.cos((ShaderContext.ticks() + singleDifference) / 8F) * 0.12F;
+                float bob = Mth.sin((ShaderContext.ticks() + singleDifference) / 8F) * 0.2F;
+                float spin = Mth.cos((ShaderContext.ticks() + singleDifference) / 8F) * 0.12F;
 
                 matrices.translate(0, bob, -0.2F);
                 matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(-50 * spin));

@@ -5,22 +5,23 @@
 
 package moriz.orangesunshine.item;
 
-import moriz.orangesunshine.entity.drug.DrugProperties;
-import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
-import moriz.orangesunshine.recipe.RecipeUtils;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
-
-import java.util.*;
+import com.mojang.datafixers.util.Pair;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
+import moriz.orangesunshine.entity.drug.DrugProperties;
+import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Vector3f;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.level.Level;
 
 /**
  * Created by calebmanley on 4/05/2014.
@@ -30,7 +31,7 @@ import org.joml.Vector3f;
 public class BongItem extends Item {
     public final ArrayList<Consumable> consumables = new ArrayList<>();
 
-    public BongItem(Settings settings) {
+    public BongItem(Item.Properties settings) {
         super(settings);
     }
 
@@ -40,57 +41,55 @@ public class BongItem extends Item {
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.TOOT_HORN;
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return ItemUseAnimation.TOOT_HORN;
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         DrugProperties.of(entity).ifPresent(drugProperties -> {
             getUsedConsumable(drugProperties.asEntity()).ifPresent(consumable -> {
-                consumable.getLeft().decrement(1);
-                drugProperties.addAll(consumable.getRight().drugInfluences().apply(consumable.getLeft()));
-                stack.damage(1, drugProperties.asEntity(), p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-                drugProperties.startBreathingSmoke(10 + world.random.nextInt(10), consumable.getRight().smokeColor);
+                consumable.getFirst().consume(1, entity);
+                drugProperties.addAll(consumable.getSecond().drugInfluences().apply(consumable.getFirst()));
+                stack.hurtAndBreak(1, drugProperties.asEntity(), entity.getUsedItemHand());
+                drugProperties.startBreathingSmoke(10 + level.random.nextInt(10), consumable.getSecond().smokeColor);
             });
         });
 
-        return super.finishUsing(stack, world, entity);
+        return super.finishUsingItem(stack, level, entity);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (!DrugProperties.of(player).isBreathingSmoke() && hasUsableConsumable(player)) {
-            player.setCurrentHand(hand);
-            return TypedActionResult.consume(stack);
+            player.startUsingItem(hand);
+            return InteractionResult.CONSUME;
         }
 
-        return TypedActionResult.fail(stack);
+        return InteractionResult.FAIL;
     }
 
     public Optional<Pair<ItemStack, Consumable>> getUsedConsumable(LivingEntity entity) {
-        if (!(entity instanceof PlayerEntity)) {
+        if (!(entity instanceof Player)) {
             return Optional.empty();
         }
-        if (entity.getOffHandStack().isEmpty()) {
+        if (entity.getOffhandItem().isEmpty()) {
             return Optional.empty();
         }
         for (Consumable consumable : consumables) {
-            if (ItemStack.areItemsEqual(entity.getOffHandStack(), consumable.consumedItem)) {
-                return Optional.of(new Pair<>(entity.getOffHandStack(), consumable));
+            if (ItemStack.isSameItem(entity.getOffhandItem(), consumable.consumedItem)) {
+                return Optional.of(Pair.of(entity.getOffhandItem(), consumable));
             }
         }
         return Optional.empty();
     }
 
     public boolean hasUsableConsumable(LivingEntity entity) {
-        if (!(entity instanceof PlayerEntity)) {
+        if (!(entity instanceof Player)) {
             return false;
         }
         for (Consumable consumable : consumables) {
-            if (ItemStack.areItemsEqual(entity.getOffHandStack(), consumable.consumedItem)) {
+            if (ItemStack.isSameItem(entity.getOffhandItem(), consumable.consumedItem)) {
                 return true;
             }
         }
@@ -98,7 +97,7 @@ public class BongItem extends Item {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 30;
     }
 

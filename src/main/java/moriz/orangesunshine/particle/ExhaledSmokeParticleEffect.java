@@ -1,37 +1,55 @@
 package moriz.orangesunshine.particle;
 
 import org.joml.Vector3f;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.Mth;
 
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
+public class ExhaledSmokeParticleEffect extends DustParticleOptions {
+    public static final MapCodec<ExhaledSmokeParticleEffect> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.INT.fieldOf("color").forGetter(ExhaledSmokeParticleEffect::packedColor),
+            Codec.FLOAT.fieldOf("scale").forGetter(ExhaledSmokeParticleEffect::getScale)
+    ).apply(instance, ExhaledSmokeParticleEffect::new));
 
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.*;
+    public static final StreamCodec<RegistryFriendlyByteBuf, ExhaledSmokeParticleEffect> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT,
+            ExhaledSmokeParticleEffect::packedColor,
+            ByteBufCodecs.FLOAT,
+            ExhaledSmokeParticleEffect::getScale,
+            ExhaledSmokeParticleEffect::new
+    );
 
-public class ExhaledSmokeParticleEffect extends DustParticleEffect {
-    @SuppressWarnings("deprecation")
-    public static final Factory<ExhaledSmokeParticleEffect> FACTORY = new Factory<>(){
-        @Override
-        public ExhaledSmokeParticleEffect read(ParticleType<ExhaledSmokeParticleEffect> particleType, StringReader reader) throws CommandSyntaxException {
-            Vector3f color = AbstractDustParticleEffect.readColor(reader);
-            reader.expect(' ');
-            float f = reader.readFloat();
-            return new ExhaledSmokeParticleEffect(color, f);
-        }
+    private final int packedColor;
 
-        @Override
-        public ExhaledSmokeParticleEffect read(ParticleType<ExhaledSmokeParticleEffect> type, PacketByteBuf buffer) {
-            return new ExhaledSmokeParticleEffect(AbstractDustParticleEffect.readColor(buffer), buffer.readFloat());
-        }
-    };
-
-    public ExhaledSmokeParticleEffect(Vector3f color, float scale) {
-        super(color, scale);
+    public ExhaledSmokeParticleEffect(int packedColor, float scale) {
+        super(packedColor, scale);
+        this.packedColor = packedColor;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public ExhaledSmokeParticleEffect(Vector3f color, float scale) {
+        this(pack(color), scale);
+    }
+
+    public int packedColor() {
+        return packedColor;
+    }
+
+    private static int pack(Vector3f color) {
+        int red = Mth.clamp((int)(color.x() * 255.0F), 0, 255);
+        int green = Mth.clamp((int)(color.y() * 255.0F), 0, 255);
+        int blue = Mth.clamp((int)(color.z() * 255.0F), 0, 255);
+        return (red << 16) | (green << 8) | blue;
+    }
+
     @Override
-    public ParticleType<DustParticleEffect> getType() {
-        return (ParticleType)PSParticles.EXHALED_SMOKE;
+    @SuppressWarnings("unchecked")
+    public ParticleType<DustParticleOptions> getType() {
+        return (ParticleType<DustParticleOptions>)(ParticleType<?>)PSParticles.EXHALED_SMOKE;
     }
 }

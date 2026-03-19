@@ -13,14 +13,14 @@ import moriz.orangesunshine.client.render.MeteorlogicalUtil;
 import moriz.orangesunshine.client.render.RenderUtil;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.biome.Biome.Precipitation;
 
@@ -40,7 +40,7 @@ public class EnvironmentalScreenEffect implements ScreenEffect {
     private float currentHeat;
 
     public float getHeatDistortion() {
-        return wasInWater ? 0 : MathHelper.clamp(((currentHeat - 1) * 0.0015f), 0, 0.01F);
+        return wasInWater ? 0 : Mth.clamp(((currentHeat - 1) * 0.0015f), 0, 0.01F);
     }
 
     public float getWaterDistortion() {
@@ -75,7 +75,7 @@ public class EnvironmentalScreenEffect implements ScreenEffect {
                 timeScreenWet += 4;
             }
 
-            timeScreenWet = MathHelper.clamp(timeScreenWet, 0, 100);
+            timeScreenWet = Mth.clamp(timeScreenWet, 0, 100);
         }
 
         BlockPos pos = entity.getBlockPos();
@@ -89,7 +89,7 @@ public class EnvironmentalScreenEffect implements ScreenEffect {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
         matrices.push();
         RenderSystem.enableBlend();
         RenderSystem.disableDepthTest();

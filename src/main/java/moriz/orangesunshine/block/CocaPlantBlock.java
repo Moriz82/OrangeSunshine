@@ -7,27 +7,29 @@ package moriz.orangesunshine.block;
 
 import com.mojang.serialization.MapCodec;
 
-import net.minecraft.block.*;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class CocaPlantBlock extends CannabisPlantBlock {
-    public static final MapCodec<CocaPlantBlock> CODEC = createCodec(CocaPlantBlock::new);
-    private static final IntProperty AGE_12 = IntProperty.of("age", 0, 12);
+    public static final MapCodec<CocaPlantBlock> CODEC = simpleCodec(CocaPlantBlock::new);
+    private static final IntegerProperty AGE_12 = IntegerProperty.create("age", 0, 12);
 
-    public CocaPlantBlock(Settings settings) {
+    public CocaPlantBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    public MapCodec<? extends CocaPlantBlock> getCodec() {
+    public MapCodec<? extends CocaPlantBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public IntProperty getAgeProperty() {
+    public IntegerProperty getAgeProperty() {
         return AGE_12;
     }
 
@@ -42,7 +44,7 @@ public class CocaPlantBlock extends CannabisPlantBlock {
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isOf(Blocks.FARMLAND) || floor.isOf(this) || floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.GRASS_BLOCK);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+        return floor.is(Blocks.FARMLAND) || floor.is(this) || floor.is(BlockTags.DIRT) || floor.is(Blocks.GRASS_BLOCK);
     }
 }

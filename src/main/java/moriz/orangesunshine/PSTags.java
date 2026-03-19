@@ -5,18 +5,18 @@
 
 package moriz.orangesunshine;
 
-import net.minecraft.block.*;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.registry.*;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public interface PSTags {
     TagKey<Block> BARRELS = of("barrels");
     TagKey<Block> DRYING_TABLES = of("drying_tables");
 
     static TagKey<Block> of(String name) {
-        return TagKey.of(RegistryKeys.BLOCK, OrangeSunshine.id(name));
+        return TagKey.create(Registries.BLOCK, OrangeSunshine.id(name));
     }
 
     interface Items {
@@ -30,7 +30,7 @@ public interface PSTags {
         TagKey<Item> DRUG_CROP_SEEDS = of("drug_crop_seeds");
 
         static TagKey<Item> of(String name) {
-            return TagKey.of(RegistryKeys.ITEM, OrangeSunshine.id(name));
+            return TagKey.create(Registries.ITEM, OrangeSunshine.id(name));
         }
     }
 
@@ -39,7 +39,7 @@ public interface PSTags {
         TagKey<EntityType<?>> SINGLE_ENTITY_HALLUCINATIONS = of("single_entity_hallucinations");
 
         static TagKey<EntityType<?>> of(String name) {
-            return TagKey.of(RegistryKeys.ENTITY_TYPE, OrangeSunshine.id(name));
+            return TagKey.create(Registries.ENTITY_TYPE, OrangeSunshine.id(name));
         }
     }
 

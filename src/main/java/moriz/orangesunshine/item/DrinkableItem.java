@@ -5,23 +5,28 @@
 
 package moriz.orangesunshine.item;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import moriz.orangesunshine.fluid.ConsumableFluid;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.FluidContainer;
-import org.jetbrains.annotations.Nullable;
-
 import moriz.orangesunshine.block.PlacedDrinksBlock;
-import moriz.orangesunshine.fluid.*;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.text.Text;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 
 /**
  * Created by Sollace on Jan 1 2023
@@ -35,8 +40,8 @@ public class DrinkableItem extends Item implements FluidContainer {
     private final int consumptionTime;
     private final ConsumableFluid.ConsumptionType consumptionType;
 
-    public DrinkableItem(Settings settings, int capacity, int consumptionVolume, int consumptionTime, ConsumableFluid.ConsumptionType consumptionType) {
-        super(settings.maxCount(1));
+    public DrinkableItem(Item.Properties settings, int capacity, int consumptionVolume, int consumptionTime, ConsumableFluid.ConsumptionType consumptionType) {
+        super(settings.stacksTo(1));
         this.capacity = capacity;
         this.consumptionVolume = Math.min(capacity, consumptionVolume);
         this.consumptionTime = consumptionTime;
@@ -49,72 +54,74 @@ public class DrinkableItem extends Item implements FluidContainer {
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return getFluid(stack).isEmpty() ? UseAction.NONE
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return getFluid(stack).isEmpty() ? ItemUseAnimation.NONE
                 : consumptionType == ConsumableFluid.ConsumptionType.DRINK
-                ? UseAction.DRINK
-                : UseAction.BOW;
+                ? ItemUseAnimation.DRINK
+                : ItemUseAnimation.BOW;
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
-        return ConsumableFluid.consume(stack, entity, consumptionVolume, !(entity instanceof PlayerEntity p && p.isCreative()), consumptionType);
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        return ConsumableFluid.consume(stack, entity, consumptionVolume, !(entity instanceof Player p && p.getAbilities().instabuild), consumptionType);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
         if (ConsumableFluid.canConsume(stack, player, consumptionVolume, consumptionType)) {
-            player.setCurrentHand(hand);
-            return TypedActionResult.consume(stack);
+            player.startUsingItem(hand);
+            return InteractionResult.CONSUME;
         }
-        return super.use(world, player, hand);
+        return super.use(level, player, hand);
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         return PlacedDrinksBlock.tryPlace(context);
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return consumptionTime;
     }
 
     @Override
-    public Text getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         SimpleFluid fluid = getFluid(stack);
 
         if (!fluid.isEmpty()) {
-            return Text.translatable(getTranslationKey() + ".filled", fluid.getName(stack));
+            return Component.translatable(getDescriptionId() + ".filled", fluid.getName(stack));
         }
 
         return super.getName(stack);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("orangesunshine.drink.levels", getLevel(stack), getMaxCapacity(stack)).formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
+        List<Component> tooltip = new ArrayList<>();
+        tooltip.add(Component.translatable("orangesunshine.drink.levels", getLevel(stack), getMaxCapacity(stack)).withStyle(ChatFormatting.GRAY));
 
         SimpleFluid fluid = getFluid(stack);
-        fluid.appendTooltip(stack, world, tooltip, context);
-        if (context.isAdvanced()) {
-            tooltip.add(Text.literal("contents: " + fluid.getId().toString()).formatted(Formatting.DARK_GRAY));
+        fluid.appendTooltip(stack, null, tooltip, context);
+        if (flag.isAdvanced()) {
+            tooltip.add(Component.literal("contents: " + fluid.getId()).withStyle(ChatFormatting.DARK_GRAY));
         }
+        tooltip.forEach(consumer);
     }
 
     @Override
-    public boolean isItemBarVisible(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return !getFluid(stack).isEmpty() && getFillPercentage(stack) < 1;
     }
 
     @Override
-    public int getItemBarStep(ItemStack stack) {
-        return (int)(ITEM_BAR_STEPS * getFillPercentage(stack));
+    public int getBarWidth(ItemStack stack) {
+        return Math.round(13 * getFillPercentage(stack));
     }
 
     @Override
-    public int getItemBarColor(ItemStack stack) {
+    public int getBarColor(ItemStack stack) {
         return 0xAAAAFF;
     }
 }

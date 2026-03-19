@@ -2,7 +2,7 @@ package moriz.orangesunshine.client.render.effect;
 
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.util.math.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public interface ScreenEffect extends AutoCloseable {
     default boolean shouldApply(float tickDelta) {
@@ -11,7 +11,7 @@ public interface ScreenEffect extends AutoCloseable {
 
     void update(float tickDelta);
 
-    void render(MatrixStack matrices, VertexConsumerProvider vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong);
+    void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong);
 
     static void drawScreen(int screenWidth, int screenHeight) {
         BufferBuilder renderer = Tessellator.getInstance().getBuffer();

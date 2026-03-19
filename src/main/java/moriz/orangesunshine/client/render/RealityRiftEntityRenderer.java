@@ -7,13 +7,13 @@ package moriz.orangesunshine.client.render;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.entity.RealityRiftEntity;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererFactory;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 
 import org.joml.*;
 
@@ -39,7 +39,7 @@ public class RealityRiftEntityRenderer extends EntityRenderer<RealityRiftEntity>
     }
 
     @Override
-    public void render(RealityRiftEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light) {
+    public void render(RealityRiftEntity entity, float yaw, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light) {
         matrices.push();
         matrices.translate(0, entity.getHeight() * 0.5, 0);
 
@@ -92,13 +92,13 @@ public class RealityRiftEntityRenderer extends EntityRenderer<RealityRiftEntity>
         matrices.pop();
     }
 
-    public void renderRift(MatrixStack matrices, VertexConsumerProvider vertices, float partialTicks, float ticks) {
+    public void renderRift(PoseStack matrices, MultiBufferSource vertices, float partialTicks, float ticks) {
         ZeroScreen.render(ticks, (layer, u, v) -> {
             renderLightsScreen(matrices, vertices.getBuffer(layer), u, v, ticks, 1, 0xffffffff, 20);
         });
     }
 
-    public static void renderLightsScreen(MatrixStack matrices, VertexConsumer vertices, float u, float v, float ticks, float alpha, int color, int number) {
+    public static void renderLightsScreen(PoseStack matrices, VertexConsumer vertices, float u, float v, float ticks, float alpha, int color, int number) {
         RANDOM.setSeed(432L);
         matrices.push();
 
@@ -120,14 +120,14 @@ public class RealityRiftEntityRenderer extends EntityRenderer<RealityRiftEntity>
 
             if (lightAlpha > 0.01F) {
                 matrices.multiply(new Quaternionf().rotateXYZ(
-                        RANDOM.nextFloat() * MathHelper.TAU,
-                        RANDOM.nextFloat() * MathHelper.TAU,
-                        RANDOM.nextFloat() * MathHelper.TAU
+                        RANDOM.nextFloat() * Mth.TAU,
+                        RANDOM.nextFloat() * Mth.TAU,
+                        RANDOM.nextFloat() * Mth.TAU
                 ));
                 matrices.multiply(new Quaternionf().rotateXYZ(
-                        RANDOM.nextFloat() * MathHelper.TAU,
-                        RANDOM.nextFloat() * MathHelper.TAU,
-                        RANDOM.nextFloat() * MathHelper.TAU + rotation * MathHelper.HALF_PI * 0.5F
+                        RANDOM.nextFloat() * Mth.TAU,
+                        RANDOM.nextFloat() * Mth.TAU,
+                        RANDOM.nextFloat() * Mth.TAU + rotation * Mth.HALF_PI * 0.5F
                 ));
 
                 float var8 = RANDOM.nextFloat() * 20 + 5;

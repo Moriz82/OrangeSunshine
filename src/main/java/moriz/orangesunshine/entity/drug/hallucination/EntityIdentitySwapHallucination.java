@@ -3,13 +3,11 @@ package moriz.orangesunshine.entity.drug.hallucination;
 import moriz.orangesunshine.util.Pool;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class EntityIdentitySwapHallucination extends Hallucination {
 
@@ -19,7 +17,7 @@ public class EntityIdentitySwapHallucination extends Hallucination {
     @Nullable
     private Selection selection;
 
-    public EntityIdentitySwapHallucination(PlayerEntity player, EntityType<?> targetType, Pool<EntityType<?>> transformedType) {
+    public EntityIdentitySwapHallucination(Player player, EntityType<?> targetType, Pool<EntityType<?>> transformedType) {
         super(player);
         this.targetType = targetType;
         this.transformedType = transformedType;
@@ -28,12 +26,12 @@ public class EntityIdentitySwapHallucination extends Hallucination {
     @Nullable
     public Entity matchOrAttach(Entity entity) {
 
-        if (entity.getType() != targetType || (selection != null && !entity.getUuid().equals(selection.selection().getUuid()))) {
+        if (entity.getType() != targetType || (selection != null && !entity.getUUID().equals(selection.selection().getUUID()))) {
             return null;
         }
 
         if (selection == null) {
-            selection = new Selection(entity, transformedType.get(entity.getWorld().getRandom()));
+            selection = new Selection(entity, transformedType.get(entity.level().getRandom()));
         }
 
         return selection.attachment();
@@ -48,7 +46,7 @@ public class EntityIdentitySwapHallucination extends Hallucination {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertices, Camera camera, float tickDelta, float alpha) {
+    public void render(Object matrices, Object vertices, Object camera, float tickDelta, float alpha) {
     }
 
     @Override
@@ -66,32 +64,29 @@ public class EntityIdentitySwapHallucination extends Hallucination {
 
     record Selection(Entity selection, Entity attachment) {
         Selection(Entity selection, EntityType<?> attachmentType) {
-            this(selection, attachmentType.create(selection.getWorld()));
+            this(selection, attachmentType.create(selection.level(), EntitySpawnReason.LOAD));
             attachment.setSilent(true);
-            attachment.copyFrom(selection);
+            attachment.copyPosition(selection);
         }
 
         public void update() {
-            attachment.age++;
-            attachment.updatePositionAndAngles(
-                    selection.getPos().x, selection.getPos().y, selection.getPos().z,
-                    selection.getYaw(), selection.getPitch()
-            );
-            attachment.setBodyYaw(selection.getBodyYaw());
-
-            attachment.lastRenderX = selection.lastRenderX;
-            attachment.lastRenderY = selection.lastRenderY;
-            attachment.lastRenderZ = selection.lastRenderZ;
-            attachment.prevX = selection.prevX;
-            attachment.prevY = selection.prevY;
-            attachment.prevZ = selection.prevZ;
-            attachment.prevYaw = selection.prevYaw;
-            attachment.prevPitch = selection.prevPitch;
-            attachment.setOnGround(selection.isOnGround());
+            attachment.tickCount++;
+            attachment.copyPosition(selection);
+            attachment.setYRot(selection.getYRot());
+            attachment.setXRot(selection.getXRot());
+            attachment.xo = selection.xo;
+            attachment.yo = selection.yo;
+            attachment.zo = selection.zo;
+            attachment.yRotO = selection.yRotO;
+            attachment.xRotO = selection.xRotO;
+            attachment.setOnGround(selection.onGround());
 
             if (attachment instanceof LivingEntity living) {
-                living.prevHeadYaw = ((LivingEntity)selection).prevHeadYaw;
-                living.headYaw = ((LivingEntity)selection).headYaw;
+                LivingEntity selected = (LivingEntity)selection;
+                living.yHeadRotO = selected.yHeadRotO;
+                living.yHeadRot = selected.yHeadRot;
+                living.yBodyRotO = selected.yBodyRotO;
+                living.setYBodyRot(selected.yBodyRot);
             }
 
             attachment.tick();

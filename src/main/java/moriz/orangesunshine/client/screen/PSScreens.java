@@ -2,7 +2,7 @@ package moriz.orangesunshine.client.screen;
 
 import moriz.orangesunshine.block.entity.FlaskBlockEntity;
 import moriz.orangesunshine.screen.PSScreenHandlers;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.gui.screens.MenuScreens;
 
 /**
  * @author Sollace
@@ -10,12 +10,12 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
  */
 public interface PSScreens {
     static void bootstrap() {
-        HandledScreens.register(PSScreenHandlers.DRYING_TABLE, DryingTableScreen::new);
-        HandledScreens.register(PSScreenHandlers.BARREL, BarrelScreen::new);
-        HandledScreens.register(PSScreenHandlers.DISTILLERY, DistilleryScreen::new);
-        HandledScreens.register(PSScreenHandlers.FLASK, FlaskScreen<FlaskBlockEntity>::new);
-        HandledScreens.register(PSScreenHandlers.MASH_TUB, MushTubScreen::new);
-        HandledScreens.register(PSScreenHandlers.MORTAR_PESTLE, MortarPestleScreen::new);
-        HandledScreens.register(PSScreenHandlers.MIXING_TABLE, MixingTableScreen::new);
+        MenuScreens.register(PSScreenHandlers.DRYING_TABLE, DryingTableScreen::new);
+        MenuScreens.register(PSScreenHandlers.BARREL, BarrelScreen::new);
+        MenuScreens.register(PSScreenHandlers.DISTILLERY, DistilleryScreen::new);
+        MenuScreens.register(PSScreenHandlers.FLASK, FlaskScreen<FlaskBlockEntity>::new);
+        MenuScreens.register(PSScreenHandlers.MASH_TUB, MushTubScreen::new);
+        MenuScreens.register(PSScreenHandlers.MORTAR_PESTLE, MortarPestleScreen::new);
+        MenuScreens.register(PSScreenHandlers.MIXING_TABLE, MixingTableScreen::new);
     }
 }

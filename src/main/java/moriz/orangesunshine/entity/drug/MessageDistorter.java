@@ -7,10 +7,10 @@ package moriz.orangesunshine.entity.drug;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 22.05.14.
@@ -18,14 +18,14 @@ import net.minecraft.util.math.random.Random;
 public class MessageDistorter {
     public static final MessageDistorter INSTANCE = new MessageDistorter();
 
-    public String distortIncomingMessage(PlayerEntity player, String message) {
+    public String distortIncomingMessage(Player player, String message) {
         if (player == null || !OrangeSunshine.getConfig().balancing.messageDistortion.incoming) {
             return message;
         }
         return distortMessage(DrugProperties.of(player), message);
     }
 
-    public String distortOutgoingMessage(PlayerEntity player, String message) {
+    public String distortOutgoingMessage(Player player, String message) {
         if (player == null || !OrangeSunshine.getConfig().balancing.messageDistortion.outgoing) {
             return message;
         }
@@ -48,17 +48,17 @@ public class MessageDistorter {
         return message;
     }
 
-    private String getRandomTranslation(String keyBeggining, Random random) {
+    private String getRandomTranslation(String keyBeggining, RandomSource random) {
         int i = 0;
         while (true) {
-            if (!I18n.hasTranslation(keyBeggining + i)) {
-                return i < 1 ? keyBeggining + i : I18n.translate(keyBeggining + random.nextInt(i));
+            if (!I18n.exists(keyBeggining + i)) {
+                return i < 1 ? keyBeggining + i : I18n.get(keyBeggining + random.nextInt(i));
             }
             i++;
         }
     }
 
-    public String distortMessage(String message, Random random, float alcohol, float zero, float cannabis) {
+    public String distortMessage(String message, RandomSource random, float alcohol, float zero, float cannabis) {
         StringBuilder builder = new StringBuilder();
 
         float randomCaseChance = MathUtils.inverseLerp(alcohol, 0.3f, 1) * 0.06f + MathUtils.inverseLerp(zero, 0, 0.3f);

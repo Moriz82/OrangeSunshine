@@ -5,6 +5,7 @@
 
 package moriz.orangesunshine.block;
 
+import com.mojang.serialization.MapCodec;
 import moriz.orangesunshine.advancement.PSCriteria;
 import moriz.orangesunshine.block.entity.MashTubBlockEntity;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
@@ -15,89 +16,98 @@ import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.item.MashTubItem;
 import moriz.orangesunshine.screen.FluidContraptionScreenHandler;
 import moriz.orangesunshine.screen.PSScreenHandlers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-
-import com.mojang.serialization.MapCodec;
-
-import moriz.orangesunshine.block.entity.*;
-import moriz.orangesunshine.fluid.*;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.fluid.*;
-import net.minecraft.item.*;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.*;
 
 /**
  * Created by lukas on 27.10.14.
  * Updated by Sollace on 12 Jan 2023
  */
-public class MashTubBlock extends BlockWithFluid<MashTubBlockEntity> implements FluidFillable {
-    public static final MapCodec<MashTubBlock> CODEC = createCodec(MashTubBlock::new);
+public class MashTubBlock extends BlockWithFluid<MashTubBlockEntity> implements LiquidBlockContainer {
+    public static final MapCodec<MashTubBlock> CODEC = simpleCodec(MashTubBlock::new);
     public static final int SIZE = 15;
     public static final int BORDER_SIZE = 1;
     public static final int HEIGHT = 16;
 
-    public static final IntProperty LIGHT = Properties.LEVEL_15;
+    public static final IntegerProperty LIGHT = BlockStateProperties.LEVEL;
 
-    static final VoxelShape COLLISSION_SHAPE = VoxelShapes.union(
-            createShape(-8, -0.5F, -8, 32, 16,  1),
-            createShape(-8, -0.5F, 23, 32, 16,  1),
-            createShape(23, -0.5F, -8,  1, 16, 32),
-            createShape(-8, -0.5F, -8,  1, 16, 32),
-            createShape(-8, -0.5F, -8, 32,  1, 32)
+    static final VoxelShape COLLISSION_SHAPE = Shapes.or(
+            createShape(-8, -0.5F, -8, 32, 16, 1),
+            createShape(-8, -0.5F, 23, 32, 16, 1),
+            createShape(23, -0.5F, -8, 1, 16, 32),
+            createShape(-8, -0.5F, -8, 1, 16, 32),
+            createShape(-8, -0.5F, -8, 32, 1, 32)
     );
     static final VoxelShape RAYCAST_SHAPE = createShape(-8, -0.5F, -8, 32, 16, 32);
 
     private static VoxelShape createShape(double x, double y, double z, double width, double height, double depth) {
-        return Block.createCuboidShape(x, y, z, x + width, y + height, z + depth);
+        return Block.box(x, y, z, x + width, y + height, z + depth);
     }
 
-    public MashTubBlock(Settings settings) {
-        super(settings.luminance(LightBlock.STATE_TO_LUMINANCE));
+    public MashTubBlock(BlockBehaviour.Properties settings) {
+        super(settings.lightLevel(state -> state.getValue(LIGHT)));
+        registerDefaultState(defaultBlockState().setValue(LIGHT, 0));
     }
 
     @Override
-    protected MapCodec<? extends MashTubBlock> getCodec() {
+    public MapCodec<? extends MashTubBlock> codec() {
         return CODEC;
     }
 
     @Override
-    @Deprecated
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public boolean hasSidedTransparency(BlockState state) {
+    protected boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
     @Override
-    public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
+    protected float getShadeBrightness(BlockState state, BlockGetter world, BlockPos pos) {
         return 0.2F;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return COLLISSION_SHAPE;
     }
 
     @Override
-    @Deprecated
-    public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
         return RAYCAST_SHAPE;
     }
 
@@ -107,12 +117,12 @@ public class MashTubBlock extends BlockWithFluid<MashTubBlockEntity> implements 
     }
 
     @Override
-    protected ScreenHandlerType<FluidContraptionScreenHandler<MashTubBlockEntity>> getScreenHandlerType() {
+    protected MenuType<FluidContraptionScreenHandler<MashTubBlockEntity>> getScreenHandlerType() {
         return PSScreenHandlers.MASH_TUB;
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         world.getBlockEntity(getBlockEntityPosition(world, pos), getBlockEntityType()).ifPresent(be -> {
             SimpleFluid fluid = be.getTank(Direction.UP).getFluidType();
             fluid.randomDisplayTick(world, pos, fluid.getPhysical().getDefaultState(), random);
@@ -120,40 +130,41 @@ public class MashTubBlock extends BlockWithFluid<MashTubBlockEntity> implements 
     }
 
     @Override
-    protected ActionResult onInteract(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, MashTubBlockEntity blockEntity) {
-        ItemStack heldStack = player.getStackInHand(hand);
+    protected InteractionResult onInteract(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, MashTubBlockEntity blockEntity) {
+        ItemStack heldStack = player.getItemInHand(hand);
         if (!heldStack.isEmpty()) {
-            TypedActionResult<ItemStack> result = blockEntity.depositIngredient(heldStack.copy());
+            MashTubBlockEntity.DepositResult<ItemStack> result = blockEntity.depositIngredient(heldStack.copy());
             if (!player.isCreative()) {
-                player.setStackInHand(hand, result.getValue());
+                player.setItemInHand(hand, result.getValue());
             }
-            if (result.getResult().isAccepted()) {
+            if (result.getResult() != InteractionResult.PASS) {
                 return result.getResult();
             }
         }
 
         if (!blockEntity.solidContents.isEmpty()) {
             PSCriteria.SIMPLY_MASHING.trigger(player, blockEntity.solidContents);
-            Block.dropStack(world, pos, blockEntity.solidContents);
+            Block.popResource(world, pos, blockEntity.solidContents);
             blockEntity.solidContents = ItemStack.EMPTY;
             blockEntity.markForUpdate();
-            return ActionResult.SUCCESS;
+            return world.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+    protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         return MashTubItem.findPlacementPosition(world, pos).isPresent();
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(LIGHT);
     }
 
-    public int getFluidHeight(World world, BlockState state, BlockPos pos, TagKey<Fluid> tag) {
+    public int getFluidHeight(Level world, BlockState state, BlockPos pos, TagKey<Fluid> tag) {
         return world.getBlockEntity(pos, getBlockEntityType())
                 .map(be -> be.getTank(Direction.UP))
                 .filter(tank -> tank.getFluidType().getPhysical().isIn(tag) || (tag == FluidTags.WATER && tank.getFluidType().isCustomFluid()))
@@ -162,48 +173,38 @@ public class MashTubBlock extends BlockWithFluid<MashTubBlockEntity> implements 
     }
 
     @Override
-    public boolean canFillWithFluid(PlayerEntity player, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity player, BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
         return world.getBlockEntity(pos, getBlockEntityType()).filter(be -> {
             Resovoir tank = be.getTank(Direction.UP);
-            return (tank.isEmpty()
-                || tank.getFluidType().getPhysical().isOf(fluid))
-                && tank.getCapacity() - tank.getLevel() >=  FluidVolumes.BUCKET;
+            return (tank.isEmpty() || tank.getFluidType().getPhysical().isOf(fluid))
+                    && tank.getCapacity() - tank.getLevel() >= FluidVolumes.BUCKET;
         }).isPresent();
     }
 
-    @Deprecated
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock()) && !world.isClient) {
-            BlockPos.iterateOutwards(pos, 1, 0, 1).forEach(p -> {
-                if (!p.equals(pos)) {
-                    BlockState neighbourState = world.getBlockState(p);
-                    if (neighbourState.isOf(PSBlocks.MASH_TUB_EDGE)) {
-                        world.removeBlockEntity(p);
-                        world.setBlockState(p, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
-                    }
-                }
-            });
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
+        for (BlockPos neighbourPos : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 0, 1))) {
+            if (!neighbourPos.equals(pos) && world.getBlockState(neighbourPos).is(PSBlocks.MASH_TUB_EDGE)) {
+                world.removeBlockEntity(neighbourPos);
+                world.setBlock(neighbourPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+            }
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+    public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
         return world.getBlockEntity(getBlockEntityPosition(world, pos), getBlockEntityType()).filter(be -> {
-            SimpleFluid f = SimpleFluid.forVanilla(fluidState.getFluid());
-
+            SimpleFluid fluid = SimpleFluid.forVanilla(fluidState.getType());
             Resovoir tank = be.getTank(Direction.UP);
 
-            if (tank.getCapacity() - tank.getLevel() <  FluidVolumes.BUCKET) {
+            if (tank.getCapacity() - tank.getLevel() < FluidVolumes.BUCKET) {
                 return false;
             }
 
-            ItemStack overflow = tank.deposit(f.getDefaultStack(FluidVolumes.BUCKET));
-            if (!FluidContainer.UNLIMITED.getFluid(overflow).isEmpty()) {
-                if (world instanceof World) {
-                    Block.dropStack((World)world, pos, overflow);
-                }
+            ItemStack overflow = tank.deposit(fluid.getDefaultStack(FluidVolumes.BUCKET));
+            if (!FluidContainer.UNLIMITED.getFluid(overflow).isEmpty() && world instanceof Level level) {
+                Block.popResource(level, pos, overflow);
             }
 
             be.markForUpdate();
@@ -211,13 +212,13 @@ public class MashTubBlock extends BlockWithFluid<MashTubBlockEntity> implements 
         }).isPresent();
     }
 
-    protected BlockPos getBlockEntityPosition(BlockView world, BlockPos pos) {
-        return world.getBlockEntity(pos, PSBlockEntities.MASH_TUB_EDGE).map(p -> p.getMasterPos()).orElse(pos);
+    protected BlockPos getBlockEntityPosition(BlockGetter world, BlockPos pos) {
+        return world.getBlockEntity(pos, PSBlockEntities.MASH_TUB_EDGE).map(MashTubWallBlock.MasterPosition::getMasterPos).orElse(pos);
     }
 
     @Override
     @Nullable
-    public <Q extends BlockEntity> BlockEntityTicker<Q> getTicker(World world, BlockState state, BlockEntityType<Q> type) {
-        return world.isClient ? validateTicker(type, getBlockEntityType(), (w, p, s, entity) -> entity.tickAnimations()) : super.getTicker(world, state, type);
+    public <Q extends BlockEntity> BlockEntityTicker<Q> getTicker(Level world, BlockState state, BlockEntityType<Q> type) {
+        return world.isClientSide() ? createTickerHelper(type, getBlockEntityType(), (level, blockPos, blockState, entity) -> entity.tickAnimations()) : super.getTicker(world, state, type);
     }
 }

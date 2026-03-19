@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import moriz.orangesunshine.OrangeSunshine;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public interface HallucinationTypeKeys {
     Set<Identifier> REGISTRY = new HashSet<>();

@@ -5,92 +5,106 @@ import java.util.function.Supplier;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ConnectingBlock;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.Registries;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class VineStemBlock extends FlowerBlock {
     public static final MapCodec<VineStemBlock> CODEC = RecordCodecBuilder.<VineStemBlock>mapCodec(instance -> instance.group(
-            Registries.BLOCK.getCodec().<Supplier<Block>>xmap(block -> () -> block, Supplier::get).fieldOf("lattice").forGetter(b -> b.lattice),
-            AbstractBlock.createSettingsCodec()
+            BuiltInRegistries.BLOCK.byNameCodec().<Supplier<Block>>xmap(block -> () -> block, Supplier::get).fieldOf("lattice").forGetter(b -> b.lattice),
+            propertiesCodec()
     ).apply(instance, VineStemBlock::new));
-    public static final BooleanProperty NORTH = ConnectingBlock.NORTH;
-    public static final BooleanProperty EAST = ConnectingBlock.EAST;
-    public static final BooleanProperty SOUTH = ConnectingBlock.SOUTH;
-    public static final BooleanProperty WEST = ConnectingBlock.WEST;
+    public static final BooleanProperty NORTH = PipeBlock.NORTH;
+    public static final BooleanProperty EAST = PipeBlock.EAST;
+    public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
+    public static final BooleanProperty WEST = PipeBlock.WEST;
 
-    public static final IntProperty AGE = Properties.AGE_4;
-    public static final int MAX_AGE = Properties.AGE_4_MAX;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_4;
+    public static final int MAX_AGE = 4;
 
     private final Supplier<Block> lattice;
 
-    public VineStemBlock(Supplier<Block> lattice, Settings settings) {
-        super(StatusEffects.MINING_FATIGUE, 5, settings);
+    public VineStemBlock(Supplier<Block> lattice, BlockBehaviour.Properties settings) {
+        super(MobEffects.MINING_FATIGUE, 5, settings);
         this.lattice = lattice;
-        setDefaultState(getDefaultState().with(AGE, 0).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false));
+        registerDefaultState(defaultBlockState().setValue(AGE, 0).setValue(NORTH, false).setValue(SOUTH, false).setValue(EAST, false).setValue(WEST, false));
     }
 
     @Override
-    public MapCodec<? extends VineStemBlock> getCodec() {
+    public MapCodec<? extends VineStemBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
 
-        if (state.get(AGE) < MAX_AGE) {
-            world.setBlockState(pos, state.cycle(AGE));
+        if (state.getValue(AGE) < MAX_AGE) {
+            world.setBlock(pos, state.cycle(AGE), Block.UPDATE_ALL);
         }
 
-        for (BlockPos mPos : BlockPos.iterateInSquare(pos, 1, Direction.NORTH, Direction.EAST)) {
+        for (BlockPos mPos : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 0, 1))) {
             BlockState s = world.getBlockState(mPos);
-            if (s.isOf(PSBlocks.LATTICE)) {
-                world.setBlockState(mPos, LatticeBlock.copyStateProperties(lattice.get().getDefaultState(), s));
+            if (s.is(PSBlocks.LATTICE)) {
+                world.setBlock(mPos, LatticeBlock.copyStateProperties(lattice.get().defaultBlockState(), s), Block.UPDATE_ALL);
                 return;
             }
         }
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        World world = ctx.getWorld();
-        BlockPos pos = ctx.getBlockPos();
-        return super.getPlacementState(ctx)
-                .with(NORTH, canConnect(world.getBlockState(pos.north()), Direction.SOUTH))
-                .with(EAST, canConnect(world.getBlockState(pos.east()), Direction.WEST))
-                .with(SOUTH, canConnect(world.getBlockState(pos.south()), Direction.NORTH))
-                .with(WEST, canConnect(world.getBlockState(pos.west()), Direction.EAST));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Level world = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
+        BlockState state = super.getStateForPlacement(ctx);
+        if (state == null) {
+            return null;
+        }
+        return state.setValue(NORTH, canConnect(world.getBlockState(pos.north()), Direction.SOUTH))
+                .setValue(EAST, canConnect(world.getBlockState(pos.east()), Direction.WEST))
+                .setValue(SOUTH, canConnect(world.getBlockState(pos.south()), Direction.NORTH))
+                .setValue(WEST, canConnect(world.getBlockState(pos.west()), Direction.EAST));
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+        ) {
         if (direction.getAxis().isHorizontal()) {
-            return state.with(ConnectingBlock.FACING_PROPERTIES.get(direction), canConnect(neighborState, direction.getOpposite()));
+            return state.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(direction), canConnect(neighborState, direction.getOpposite()));
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.updateShape(state, world, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     public boolean canConnect(BlockState state, Direction dir) {
-        return state.isOf(PSBlocks.MORNING_GLORY_LATTICE);
+        return state.is(PSBlocks.MORNING_GLORY_LATTICE);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(NORTH, EAST, WEST, SOUTH, AGE);
     }
 }

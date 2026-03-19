@@ -4,7 +4,7 @@ import moriz.orangesunshine.particle.ExhaledSmokeParticleEffect;
 import org.joml.Vector3f;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 
 public class ExhaledSmokeParticle extends FireSmokeParticle {
     public ExhaledSmokeParticle(ExhaledSmokeParticleEffect effect, SpriteProvider spriteProvider, ClientWorld world,

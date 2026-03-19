@@ -1,0 +1,90 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
+def fabricOwnedSources = [
+        // Fabric-specific entrypoints (in fabric/src/main/java)
+        'moriz/orangesunshine/fabric/**',
+
+        // Client sources (from ../src/main/java)
+        'moriz/orangesunshine/client/OrangeSunshineClient.java',
+        'moriz/orangesunshine/client/PSClientConfig.java',
+        'moriz/orangesunshine/client/item/**',
+        'moriz/orangesunshine/client/screen/**',
+
+        'moriz/orangesunshine/client/render/FluidBoxRenderer.java',
+        'moriz/orangesunshine/client/render/PSRenderers.java',
+        'moriz/orangesunshine/client/render/RenderUtil.java',
+]
+
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '../src/main/java'
+            include fabricOwnedSources
+        }
+    }
+}
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}") {
+        exclude group: "net.fabricmc.fabric-api", module: "fabric-debug-api-v1"
+    }
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
+    shadowCommon(project(path: ':common', configuration: 'transformProductionFabric')) { transitive = false }
+}
+
+processResources {
+    inputs.properties([
+        version: project.version,
+        minecraft_version: rootProject.minecraft_version,
+        fabric_loader_version: rootProject.fabric_loader_version,
+        fabric_api_version: rootProject.fabric_api_version
+    ])
+
+    filesMatching('fabric.mod.json') {
+        expand([
+            version: project.version,
+            mod_id: rootProject.mod_id,
+            mod_name: rootProject.mod_name,
+            mod_description: rootProject.mod_description,
+            mod_authors: rootProject.mod_authors,
+            mod_license: rootProject.mod_license,
+            mod_homepage: rootProject.mod_homepage,
+            mod_issues: rootProject.mod_issues,
+            mod_sources: rootProject.mod_sources,
+            minecraft_version: rootProject.minecraft_version,
+            fabric_loader_version: rootProject.fabric_loader_version,
+            fabric_api_version: rootProject.fabric_api_version
+        ])
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set('dev-shadow')
+}
+
+remapJar {
+    dependsOn shadowJar
+    inputFile.set(shadowJar.archiveFile)
+    archiveClassifier.set('fabric')
+}
+
+jar {
+    archiveClassifier.set('dev')
+}

@@ -1,20 +1,16 @@
 package moriz.orangesunshine.advancement;
 
-import moriz.orangesunshine.OrangeSunshine;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.advancement.criterion.Criterion;
+public final class PSCriteria {
+    public static final MashingTubEventCriterion SIMPLY_MASHING = new MashingTubEventCriterion();
+    public static final CustomEventCriterion CUSTOM = new CustomEventCriterion();
+    public static final DrugEffectsChangedCriterion DRUG_EFFECTS_CHANGED = new DrugEffectsChangedCriterion();
 
-public interface PSCriteria {
-    MashingTubEventCriterion SIMPLY_MASHING = register("mashed_item", new MashingTubEventCriterion());
-    CustomEventCriterion CUSTOM = register("custom", new CustomEventCriterion());
-    DrugEffectsChangedCriterion DRUG_EFFECTS_CHANGED = register("drug_effects_changed", new DrugEffectsChangedCriterion());
+    public static final CustomEventCriterion.Trigger FEED_VILLAGER = CUSTOM.createTrigger("feed_villager");
+    public static final CustomEventCriterion.Trigger HANGOVER = CUSTOM.createTrigger("get_hangover");
 
-    CustomEventCriterion.Trigger FEED_VILLAGER = CUSTOM.createTrigger("feed_villager");
-    CustomEventCriterion.Trigger HANGOVER = CUSTOM.createTrigger("get_hangover");
-
-    private static <T extends Criterion<?>> T register(String id, T criterion) {
-        return Criteria.register(OrangeSunshine.id(id).toString(), criterion);
+    private PSCriteria() {
     }
 
-    static void bootstrap() { }
+    public static void bootstrap() {
+    }
 }

@@ -1,51 +1,48 @@
 package moriz.orangesunshine.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.screen.MortarPestleScreenHandler;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-public class MortarPestleScreen extends HandledScreen<MortarPestleScreenHandler> {
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+
+public class MortarPestleScreen extends AbstractContainerScreen<MortarPestleScreenHandler> {
     private static final Identifier TEXTURE = OrangeSunshine.id("textures/gui/mortar_pestle.png");
 
-    public MortarPestleScreen(MortarPestleScreenHandler handler, PlayerInventory inventory, Text title) {
+    public MortarPestleScreen(MortarPestleScreenHandler handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
     }
 
     @Override
     protected void init() {
         super.init();
-        titleY = 1000;
-        playerInventoryTitleY = 1000;
+        titleLabelY = 1000;
+        inventoryLabelY = 1000;
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        int x = (width - backgroundWidth) / 2;
-        int y = (height - backgroundHeight) / 2;
+    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
 
-        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
 
         renderProgressArrow(context, x, y);
     }
 
-    private void renderProgressArrow(DrawContext context, int x, int y) {
-        if(handler.isCrafting()) {
-            context.drawTexture(TEXTURE, x + 85, y + 30, 176, 0, 8, handler.getScaledProgress());
+    private void renderProgressArrow(GuiGraphics context, int x, int y) {
+        if (menu.isCrafting()) {
+            context.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 85, y + 30, 176, 0, 8, menu.getScaledProgress(), 256, 256);
         }
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
-        drawMouseoverTooltip(context, mouseX, mouseY);
+        renderTooltip(context, mouseX, mouseY);
     }
 }

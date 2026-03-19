@@ -12,15 +12,15 @@ import moriz.orangesunshine.fluid.*;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
@@ -32,7 +32,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
     }
 
     @Override
-    public void render(BarrelBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertices, int light, int overlay) {
+    public void render(BarrelBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
         matrices.push();
         matrices.translate(0.5F, 0, 0.5F);
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180 - entity.getCachedState().get(BarrelBlock.FACING).asRotation()));

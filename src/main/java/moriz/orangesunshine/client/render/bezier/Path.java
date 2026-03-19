@@ -14,7 +14,7 @@ import com.google.common.base.Suppliers;
 import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import it.unimi.dsi.fastutil.doubles.DoubleList;
 import it.unimi.dsi.fastutil.ints.Int2DoubleFunction;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 final class Path {
     static Bezier createMemoized(Consumer<NodeConsumer> nodeFactory) {
@@ -132,7 +132,7 @@ final class Path {
 
     record Intermediate(Vector3d position, float fontSize, double delta) {
         static Intermediate create(Node prev, Node next, double minDelta, double maxDelta, double betweenDelta) {
-            float delta = (float)MathHelper.lerp(betweenDelta, minDelta, maxDelta);
+            float delta = (float)Mth.lerp(betweenDelta, minDelta, maxDelta);
             return new Intermediate(
                     MathUtils.cubicMix(
                             prev.position(),
@@ -141,7 +141,7 @@ final class Path {
                             next.position(),
                             betweenDelta, new Vector3d()
                     ),
-                    (float)MathHelper.lerp(delta, prev.fontSize(), next.fontSize()),
+                    Mth.lerp(delta, (float)prev.fontSize(), (float)next.fontSize()),
                     delta
             );
         }

@@ -2,36 +2,45 @@ package moriz.orangesunshine.recipe;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.MutableFluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
-public record FluidIngredient (SimpleFluid fluid, int level, NbtCompound attributes) {
-    public static final Codec<FluidIngredient> CODEC = Codecs.xor(
-            SimpleFluid.CODEC.xmap(fluid -> new FluidIngredient(fluid, -1, new NbtCompound()), FluidIngredient::fluid),
-            RecordCodecBuilder.<FluidIngredient>create(instance -> instance.group(
-                    SimpleFluid.CODEC.fieldOf("fluid").forGetter(FluidIngredient::fluid),
-                    Codec.INT.optionalFieldOf("level", -1).forGetter(FluidIngredient::level),
-                    NbtCompound.CODEC.optionalFieldOf("attributes", new NbtCompound()).forGetter(FluidIngredient::attributes)
-            ).apply(instance, FluidIngredient::new))
-        ).xmap(RecipeUtils::iDontCareWhich, Either::right);
+public record FluidIngredient(SimpleFluid fluid, int level, CompoundTag attributes) {
+    private static final MapCodec<FluidIngredient> FULL_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            SimpleFluid.CODEC.fieldOf("fluid").forGetter(FluidIngredient::fluid),
+            Codec.INT.optionalFieldOf("level", -1).forGetter(FluidIngredient::level),
+            CompoundTag.CODEC.optionalFieldOf("attributes", new CompoundTag()).forGetter(FluidIngredient::attributes)
+    ).apply(instance, FluidIngredient::new));
 
-    public FluidIngredient(PacketByteBuf buffer) {
-        this(SimpleFluid.byId(buffer.readIdentifier()), buffer.readVarInt(), buffer.readNbt());
-    }
+    public static final Codec<FluidIngredient> CODEC = Codec.either(
+            SimpleFluid.CODEC,
+            FULL_CODEC.codec()
+    ).xmap(either -> either.map(
+            fluid -> new FluidIngredient(fluid, -1, new CompoundTag()),
+            ingredient -> ingredient
+    ), ingredient -> ingredient.level() == -1 && ingredient.attributes().isEmpty()
+            ? Either.left(ingredient.fluid())
+            : Either.right(ingredient));
 
-    public void write(PacketByteBuf buffer) {
-        buffer.writeIdentifier(fluid.getId());
-        buffer.writeVarInt(level);
-        buffer.writeNbt(attributes);
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, FluidIngredient> STREAM_CODEC = StreamCodec.composite(
+            Identifier.STREAM_CODEC,
+            ingredient -> ingredient.fluid().getId(),
+            ByteBufCodecs.VAR_INT,
+            FluidIngredient::level,
+            ByteBufCodecs.COMPOUND_TAG,
+            FluidIngredient::attributes,
+            (id, level, attributes) -> new FluidIngredient(SimpleFluid.byId(id), level, attributes)
+    );
 
     public boolean test(Resovoir tank) {
         return test(tank.getContents());
@@ -40,7 +49,7 @@ public record FluidIngredient (SimpleFluid fluid, int level, NbtCompound attribu
     public boolean test(MutableFluidContainer container) {
         boolean result = true;
         result &= fluid.isEmpty() || container.getFluid() == fluid;
-        result &= attributes.isEmpty() || NbtHelper.matches(attributes, container.getAttributes(), true);
+        result &= attributes.isEmpty() || NbtUtils.compareNbt(attributes, container.getAttributes(), true);
         result &= level <= 0 || container.getLevel() >= level;
         return result;
     }
@@ -49,4 +58,3 @@ public record FluidIngredient (SimpleFluid fluid, int level, NbtCompound attribu
         return test(MutableFluidContainer.of(stack));
     }
 }
-

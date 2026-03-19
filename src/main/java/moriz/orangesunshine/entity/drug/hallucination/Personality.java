@@ -2,13 +2,13 @@ package moriz.orangesunshine.entity.drug.hallucination;
 
 import java.util.function.Consumer;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 
 public interface Personality {
-    Text getName(Random random);
+    Component getName(RandomSource random);
 
-    void supplyMessage(Random random, Consumer<Text> responseSender);
+    void supplyMessage(RandomSource random, Consumer<Component> responseSender);
 
-    void onMessageReceived(String sender, Text message, Random random, boolean fromPlayer, Consumer<Text> responseSender);
+    void onMessageReceived(String sender, Component message, RandomSource random, boolean fromPlayer, Consumer<Component> responseSender);
 }

@@ -11,19 +11,26 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CrossCollisionBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
-import net.minecraft.block.*;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-
-public class LatticeBlock extends HorizontalConnectingBlock implements Waterloggable {
-    public static final MapCodec<LatticeBlock> CODEC = createCodec(LatticeBlock::new);
+public class LatticeBlock extends CrossCollisionBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<LatticeBlock> CODEC = simpleCodec(LatticeBlock::new);
     private static final Set<Direction> X_DIRECTIONS = Set.of(Direction.EAST, Direction.WEST);
     private static final Set<Direction> Z_DIRECTIONS = Set.of(Direction.NORTH, Direction.SOUTH);
 
@@ -32,69 +39,87 @@ public class LatticeBlock extends HorizontalConnectingBlock implements Waterlogg
             Direction.Axis.Z, Z_DIRECTIONS
     );
 
-    public LatticeBlock(Settings settings) {
+    public LatticeBlock(BlockBehaviour.Properties settings) {
         super(1.6F, 1.6F, 16, 16, 16, settings);
-        setDefaultState(getDefaultState().with(EAST, true).with(WEST, true).with(WATERLOGGED, false));
+        registerDefaultState(defaultBlockState()
+                .setValue(EAST, true)
+                .setValue(WEST, true)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected MapCodec<? extends LatticeBlock> getCodec() {
+    public MapCodec<? extends LatticeBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(NORTH, SOUTH, EAST, WEST, WATERLOGGED);
     }
 
     @Override
-    @Deprecated
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if (state.get(WATERLOGGED).booleanValue()) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+    ) {
+        if (state.getValue(WATERLOGGED)) {
+            scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
-        if (direction.getAxis().getType() == Direction.Type.HORIZONTAL) {
+        if (direction.getAxis().isHorizontal()) {
             Set<Direction> connections = getPossibleConnections(world, pos);
 
             if (connections.isEmpty()) {
-                connections = (state.get(NORTH) || state.get(SOUTH)) ? Z_DIRECTIONS : X_DIRECTIONS;
+                connections = (state.getValue(NORTH) || state.getValue(SOUTH)) ? Z_DIRECTIONS : X_DIRECTIONS;
             }
 
             return applyConnections(state, connections);
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.updateShape(state, world, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        World world = ctx.getWorld();
-        BlockPos pos = ctx.getBlockPos();
-        BlockState placedAgainst = world.getBlockState(pos.offset(ctx.getSide().getOpposite()));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Level world = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
+        BlockState placedAgainst = world.getBlockState(pos.relative(ctx.getClickedFace().getOpposite()));
 
         Set<Direction> connections;
 
-        if (ctx.getSide().getAxis() == Direction.Axis.Y && placedAgainst.getBlock() instanceof LatticeBlock) {
+        if (ctx.getClickedFace().getAxis() == Direction.Axis.Y && placedAgainst.getBlock() instanceof LatticeBlock) {
             connections = getConnections(placedAgainst).collect(Collectors.toSet());
         } else {
             connections = getPossibleConnections(world, pos);
         }
 
         if (connections.isEmpty()) {
-            connections = DEFAULT_CONNECTIONS.getOrDefault(ctx.getHorizontalPlayerFacing().rotateYClockwise().getAxis(), Set.of());
+            connections = DEFAULT_CONNECTIONS.getOrDefault(ctx.getHorizontalDirection().getClockWise().getAxis(), Set.of());
         }
 
-        return applyConnections(super.getPlacementState(ctx), connections)
-                .with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+        BlockState placedState = super.getStateForPlacement(ctx);
+        if (placedState == null) {
+            return null;
+        }
+
+        return applyConnections(placedState, connections)
+                .setValue(WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
-    private Set<Direction> getPossibleConnections(WorldAccess world, BlockPos pos) {
-        return FACING_PROPERTIES.keySet().stream().filter(connection -> canConnect(world, pos, connection)).collect(Collectors.toSet());
+    private Set<Direction> getPossibleConnections(BlockGetter world, BlockPos pos) {
+        return PROPERTY_BY_DIRECTION.keySet().stream()
+                .filter(connection -> canConnect(world, pos, connection))
+                .collect(Collectors.toSet());
     }
 
-    private boolean canConnect(WorldAccess world, BlockPos pos, Direction connectionDirection) {
+    private boolean canConnect(BlockGetter world, BlockPos pos, Direction connectionDirection) {
         Direction neighbourDirection = connectionDirection.getOpposite();
-        BlockPos neighbourPos = pos.offset(connectionDirection);
+        BlockPos neighbourPos = pos.relative(connectionDirection);
         BlockState neighbourState = world.getBlockState(neighbourPos);
 
         if (neighbourState.isAir()) {
@@ -105,7 +130,7 @@ public class LatticeBlock extends HorizontalConnectingBlock implements Waterlogg
             return true;
         }
 
-        BlockPos oppositePos = pos.offset(neighbourDirection);
+        BlockPos oppositePos = pos.relative(neighbourDirection);
         BlockState oppositeState = world.getBlockState(oppositePos);
 
         boolean neighbour = canConnectTo(world, neighbourPos, neighbourState, neighbourDirection);
@@ -114,48 +139,47 @@ public class LatticeBlock extends HorizontalConnectingBlock implements Waterlogg
         return neighbour && opposite;
     }
 
-    protected boolean canConnectTo(WorldAccess world, BlockPos pos, BlockState state, Direction direction) {
+    protected boolean canConnectTo(BlockGetter world, BlockPos pos, BlockState state, Direction direction) {
         return isLattice(state)
-                || (!cannotConnect(state) && state.isSideSolidFullSquare(world, pos, direction))
-                || (state.getBlock() instanceof FenceGateBlock && FenceGateBlock.canWallConnect(state, direction));
+                || (!Block.isExceptionForConnection(state) && state.isFaceSturdy(world, pos, direction))
+                || (state.getBlock() instanceof FenceGateBlock && FenceGateBlock.connectsToDirection(state, direction));
     }
 
     private boolean isLattice(BlockState state) {
         return state.getBlock() instanceof LatticeBlock;
     }
 
-    @Deprecated
     @Override
-    public FluidState getFluidState(BlockState state) {
-        if (state.get(WATERLOGGED).booleanValue()) {
-            return Fluids.WATER.getStill(false);
+    protected FluidState getFluidState(BlockState state) {
+        if (state.getValue(WATERLOGGED)) {
+            return Fluids.WATER.getSource(false);
         }
         return super.getFluidState(state);
     }
 
     public static BlockState copyStateProperties(BlockState newState, BlockState state) {
-        for (var connector : FACING_PROPERTIES.entrySet()) {
-            newState = newState.with(connector.getValue(), state.get(connector.getValue()));
+        for (var connector : PROPERTY_BY_DIRECTION.entrySet()) {
+            newState = newState.setValue(connector.getValue(), state.getValue(connector.getValue()));
         }
-        return newState.with(WATERLOGGED, state.get(WATERLOGGED));
+        return newState.setValue(WATERLOGGED, state.getValue(WATERLOGGED));
     }
 
     public static BlockState applyConnections(BlockState state, Set<Direction> connections) {
-        for (var connector : FACING_PROPERTIES.entrySet()) {
-            state = state.with(connector.getValue(), connections.contains(connector.getKey()));
+        for (var connector : PROPERTY_BY_DIRECTION.entrySet()) {
+            state = state.setValue(connector.getValue(), connections.contains(connector.getKey()));
         }
         return state;
     }
 
     public static Stream<Direction> getConnections(BlockState state) {
-        return FACING_PROPERTIES.entrySet().stream()
-                .filter(connector -> state.get(connector.getValue()))
+        return PROPERTY_BY_DIRECTION.entrySet().stream()
+                .filter(connector -> state.getValue(connector.getValue()))
                 .map(Map.Entry::getKey);
     }
 
     public static Stream<Direction> getFreeConnections(BlockState state) {
-        return FACING_PROPERTIES.entrySet().stream()
-                .filter(connector -> !state.get(connector.getValue()))
+        return PROPERTY_BY_DIRECTION.entrySet().stream()
+                .filter(connector -> !state.getValue(connector.getValue()))
                 .map(Map.Entry::getKey);
     }
 }

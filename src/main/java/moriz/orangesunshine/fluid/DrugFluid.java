@@ -11,12 +11,12 @@ import moriz.orangesunshine.entity.drug.influence.DrugInfluence;
 import moriz.orangesunshine.fluid.alcohol.FluidAppearance;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.item.PSItems;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,13 +35,13 @@ import java.util.function.Function;
  */
 public class DrugFluid extends SimpleFluid implements ConsumableFluid, Combustable {
     protected final List<DrugInfluence> drugInfluences;
-    protected final FoodComponent foodLevel;
+    protected final FoodProperties foodLevel;
 
-    protected final Settings settings;
+    protected final moriz.orangesunshine.fluid.DrugFluid.Settings settings;
 
     protected final Map<String, Identifier> flowTextures = new HashMap<>();
 
-    public DrugFluid(Identifier id, Settings settings) {
+    public DrugFluid(Identifier id, moriz.orangesunshine.fluid.DrugFluid.Settings settings) {
         super(id, settings);
         this.settings = settings;
         this.foodLevel = settings.foodLevel;
@@ -49,7 +49,7 @@ public class DrugFluid extends SimpleFluid implements ConsumableFluid, Combustab
     }
 
     @Nullable
-    public FoodComponent getFoodLevel(ItemStack fluidStack) {
+    public FoodProperties getFoodLevel(ItemStack fluidStack) {
         return foodLevel;
     }
 
@@ -69,9 +69,9 @@ public class DrugFluid extends SimpleFluid implements ConsumableFluid, Combustab
     public boolean canConsume(ItemStack fluidStack, LivingEntity entity, ConsumptionType type) {
         if (type == ConsumptionType.DRINK) {
             return settings.drinkable && (
-                    !(entity instanceof PlayerEntity)
+                    !(entity instanceof Player)
                     || getFoodLevel(fluidStack) == null
-                    || ((PlayerEntity) entity).getHungerManager().isNotFull()
+                    || ((Player)entity).getFoodData().needsFood()
                 );
         }
 
@@ -87,8 +87,8 @@ public class DrugFluid extends SimpleFluid implements ConsumableFluid, Combustab
         });
 
         if (type == ConsumptionType.DRINK) {
-            if (foodLevel != null && entity instanceof PlayerEntity player) {
-                player.getHungerManager().add(foodLevel.getHunger(), foodLevel.getSaturationModifier());
+            if (foodLevel != null && entity instanceof Player player) {
+                player.getFoodData().eat(foodLevel);
             }
         }
     }
@@ -125,7 +125,7 @@ public class DrugFluid extends SimpleFluid implements ConsumableFluid, Combustab
                 alcohol += drugInfluence.getMaxInfluence();
             }
         }
-        return MathHelper.clamp(alcohol, 0.0f, 1.0f);
+        return Mth.clamp(alcohol, 0.0f, 1.0f);
     }
 
     @Override
@@ -138,31 +138,31 @@ public class DrugFluid extends SimpleFluid implements ConsumableFluid, Combustab
         private boolean injectable;
 
         private List<DrugInfluence> drugInfluences = new ArrayList<>();
-        private FoodComponent foodLevel;
+        private FoodProperties foodLevel;
 
         protected Function<ItemStack, FluidAppearance> appearance = stack -> null;
 
-        public Settings drinkable() {
+        public moriz.orangesunshine.fluid.DrugFluid.Settings drinkable() {
             drinkable = true;
             return this;
         }
 
-        public Settings injectable() {
+        public moriz.orangesunshine.fluid.DrugFluid.Settings injectable() {
             injectable = true;
             return this;
         }
 
-        public Settings influence(DrugInfluence... influences) {
+        public moriz.orangesunshine.fluid.DrugFluid.Settings influence(DrugInfluence... influences) {
             drugInfluences.addAll(List.of(influences));
             return this;
         }
 
-        public Settings food(FoodComponent food) {
+        public moriz.orangesunshine.fluid.DrugFluid.Settings food(FoodProperties food) {
             this.foodLevel = food;
             return this;
         }
 
-        public Settings appearance(FluidAppearance appearance) {
+        public moriz.orangesunshine.fluid.DrugFluid.Settings appearance(FluidAppearance appearance) {
             this.appearance = stack -> appearance;
             return this;
         }

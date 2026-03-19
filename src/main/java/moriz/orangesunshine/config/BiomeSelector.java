@@ -7,14 +7,14 @@ import java.util.stream.Stream;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 
 public interface BiomeSelector {
     Predicate<BiomeSelectionContext> ALL = BiomeSelectors.all();
     Predicate<BiomeSelectionContext> NONE = ctx -> false;
-    Predicate<BiomeSelectionContext> COLD = ctx -> ctx.getBiome().getTemperature() < 0.15F;
+    Predicate<BiomeSelectionContext> COLD = ctx -> ctx.getBiome().getBaseTemperature() < 0.15F;
     Predicate<BiomeSelectionContext> DRY = ctx -> !ctx.getBiome().hasPrecipitation();
 
     static Predicate<BiomeSelectionContext> compile(String[] included, String[] excluded, Predicate<BiomeSelectionContext> dynamicInclusion) {
@@ -41,13 +41,13 @@ public interface BiomeSelector {
 
     static Predicate<BiomeSelectionContext> compile(String selector) {
         if (selector.startsWith("#")) {
-            return BiomeSelectors.tag(TagKey.of(RegistryKeys.BIOME, new Identifier(selector.substring(1))));
+            return BiomeSelectors.tag(TagKey.create(Registries.BIOME, Identifier.parse(selector.substring(1))));
         }
 
-        return ofId(new Identifier(selector));
+        return ofId(Identifier.parse(selector));
     }
 
-    static Predicate<BiomeSelectionContext> ofId(Identifier tagId) {
-        return ctx -> ctx.getBiomeRegistryEntry().matchesId(tagId);
+    static Predicate<BiomeSelectionContext> ofId(Identifier biomeId) {
+        return ctx -> ctx.getBiomeRegistryEntry().is(biomeId);
     }
 }

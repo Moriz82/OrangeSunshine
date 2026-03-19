@@ -2,8 +2,8 @@ package moriz.orangesunshine.client.render;
 
 import java.util.Optional;
 
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.Identifier;
 
 public interface RenderLayerUtil {
     static Optional<Identifier> getTexture(RenderLayer layer) {

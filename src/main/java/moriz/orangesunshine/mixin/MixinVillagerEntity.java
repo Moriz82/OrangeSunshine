@@ -10,54 +10,54 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.VillagerDataContainer;
-import net.minecraft.village.VillagerProfession;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
 
-@Mixin(VillagerEntity.class)
-abstract class MixinVillagerEntity extends MerchantEntity implements VillagerDataContainer {
+@Mixin(Villager.class)
+abstract class MixinVillagerEntity extends AbstractVillager {
     MixinVillagerEntity() { super(null, null); }
 
-    @Inject(method = "interactMob",
+    @Inject(method = "mobInteract",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onInteractMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> info) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (stack.isOf(PSItems.HASH_MUFFIN) && !isBaby()) {
-            VillagerProfession profession = getVillagerData().getProfession();
-            if (profession == VillagerProfession.NITWIT || profession == VillagerProfession.NONE) {
-                if (!player.getAbilities().creativeMode) {
-                    stack.decrement(1);
+    private void onInteractMob(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> info) {
+        ItemStack stack = player.getItemInHand(hand);
+        Villager villager = (Villager)(Object)this;
+        var villagerData = villager.getVillagerData();
+        if (stack.is(PSItems.HASH_MUFFIN) && !isBaby()) {
+            if (villagerData.profession().is(net.minecraft.world.entity.npc.villager.VillagerProfession.NITWIT)
+                    || villagerData.profession().is(net.minecraft.world.entity.npc.villager.VillagerProfession.NONE)) {
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
                 }
-                if (!getWorld().isClient) {
-                    getWorld().playSoundFromEntity(null, this, SoundEvents.ENTITY_GENERIC_EAT, getSoundCategory(),
+                if (!level().isClientSide()) {
+                    level().playSound(null, this, SoundEvents.GENERIC_EAT.value(), getSoundSource(),
                             1 + random.nextFloat(),
                             random.nextFloat() * 0.7F + 0.3F
                     );
-                    setVillagerData(getVillagerData().withProfession(PSTradeOffers.DRUG_ADDICT_PROFESSION));
-                    ((VillagerEntity)(Object)this).reinitializeBrain((ServerWorld)getWorld());
+                    villager.setVillagerData(villagerData.withProfession(level().registryAccess(), PSTradeOffers.DRUG_ADDICT_PROFESSION));
+                    villager.refreshBrain((ServerLevel)level());
                     PSCriteria.FEED_VILLAGER.trigger(player);
                 }
-                info.setReturnValue(ActionResult.SUCCESS);
+                info.setReturnValue(InteractionResult.SUCCESS);
             } else {
-                info.setReturnValue(ActionResult.CONSUME);
+                info.setReturnValue(InteractionResult.CONSUME);
             }
         }
     }
 
-    @Inject(method = "afterUsing", at = @At("RETURN"))
-    private void onAfterUsing(TradeOffer offer, CallbackInfo info) {
-        if (getVillagerData().getProfession() == PSTradeOffers.DRUG_ADDICT_PROFESSION) {
-            damage(PSDamageTypes.create(getWorld(), PSDamageTypes.OVERDOSE), (offer.getUses() * offer.getSellItem().getCount()) + 1);
+    @Inject(method = "rewardTradeXp(Lnet/minecraft/world/item/trading/MerchantOffer;)V", at = @At("RETURN"))
+    private void onAfterUsing(MerchantOffer offer, CallbackInfo info) {
+        if (!level().isClientSide() && ((Villager)(Object)this).getVillagerData().profession().is(PSTradeOffers.DRUG_ADDICT_PROFESSION)) {
+            hurtServer((ServerLevel)level(), PSDamageTypes.create(level(), PSDamageTypes.OVERDOSE), (offer.getUses() * offer.getResult().getCount()) + 1);
         }
     }
 }

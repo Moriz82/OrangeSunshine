@@ -19,14 +19,13 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
- * Interop layer with Fabric's "experimental" transfer api.
+ * Interop layer with Fabric's transfer api.
  */
 public final class VariantMarshal {
     static void bootstrap() {
@@ -39,25 +38,23 @@ public final class VariantMarshal {
             }
             return null;
         });
-        FluidStorage.combinedItemApiProvider(Items.BUCKET).register(context -> {
-            return new InsertionOnlyStorage<>() {
-                @Override
-                public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-                    if (resource.getFluid() instanceof PlacedFluid) {
-                        ItemStack stack = VariantMarshal.unpackFluid(context.getItemVariant(), resource, FluidVolumes.BUCKET).asStack();
+        FluidStorage.combinedItemApiProvider(Items.BUCKET).register(context -> new InsertionOnlyStorage<>() {
+            @Override
+            public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+                if (resource.getFluid() instanceof PlacedFluid) {
+                    ItemStack stack = VariantMarshal.unpackFluid(context.getItemVariant(), resource, FluidVolumes.BUCKET).asStack();
 
-                        if (context.exchange(ItemVariant.of(stack), 1, transaction) == 1) {
-                            return FluidVolumes.BUCKET;
-                        }
+                    if (context.exchange(ItemVariant.of(stack), 1, transaction) == 1) {
+                        return FluidVolumes.BUCKET;
                     }
-                    return 0;
                 }
-            };
+                return 0;
+            }
         });
     }
 
     public static FluidVariant packFluid(MutableFluidContainer contents) {
-        return FluidVariant.of(contents.getFluid().getPhysical().getStandingFluid(), contents.getAttributes().copy());
+        return FluidVariant.of(contents.getFluid().getPhysical().getStandingFluid());
     }
 
     public static MutableFluidContainer unpackFluid(ItemVariant container, FluidVariant contents, long level) {
@@ -68,7 +65,7 @@ public final class VariantMarshal {
         return MutableFluidContainer.of(container)
             .withFluid(SimpleFluid.forVanilla(contents.getFluid()))
             .withLevel((int)level)
-            .withAttributes(contents.copyNbt());
+            .withAttributes(FluidContainer.EMPTY_NBT);
     }
 
     public static Optional<ViewBasedFluidContainer> probeContents(ItemStack stack) {
@@ -85,8 +82,8 @@ public final class VariantMarshal {
 
         ViewBasedFluidContainer(ItemStack stack) {
             this.item = stack.getItem();
-            this.blankView = Suppliers.memoize(() -> toMutable(item.getDefaultStack()));
-            empty = Suppliers.memoize(() -> toMutable(stack.copy()).drain(getMaxCapacity()).asStack().getItem());
+            this.blankView = Suppliers.memoize(() -> toMutable(item.getDefaultInstance()));
+            this.empty = Suppliers.memoize(() -> toMutable(stack.copy()).drain(getMaxCapacity()).asStack().getItem());
         }
 
         @Override
@@ -123,8 +120,8 @@ public final class VariantMarshal {
         }
 
         private static class Mutable extends MutableFluidContainer {
-            private ContainerItemContext context;
-            private Storage<FluidVariant> storage;
+            private final ContainerItemContext context;
+            private final Storage<FluidVariant> storage;
             private StorageView<FluidVariant> view;
 
             Mutable(ViewBasedFluidContainer container, ContainerItemContext context, Storage<FluidVariant> storage, StorageView<FluidVariant> view) {
@@ -142,7 +139,7 @@ public final class VariantMarshal {
             @Override
             public MutableFluidContainer copy() {
                 ItemStack stack = asStack();
-                return probeContents(stack).map(i -> i.toMutable(stack)).orElseGet(() -> super.copy());
+                return probeContents(stack).map(i -> i.toMutable(stack)).orElseGet(super::copy);
             }
 
             @Override
@@ -153,13 +150,11 @@ public final class VariantMarshal {
             @Override
             public ItemStack asStack() {
                 commitChanges();
-                // convert whatever it is into a stack
                 return context.getItemVariant().toStack((int)context.getAmount());
             }
 
             @Override
-            public MutableFluidContainer withAttributes(NbtCompound attributes) {
-                // Attribute transfers not supported
+            public MutableFluidContainer withAttributes(CompoundTag attributes) {
                 return this;
             }
 
@@ -172,14 +167,11 @@ public final class VariantMarshal {
 
                 if (oldLevel != newLevel || !oldFluid.equals(newFluid)) {
                     try (var transaction = Transaction.openOuter()) {
-                        // drain everything out
                         view.extract(oldFluid, oldLevel, transaction);
-                        // insert new contents
                         if (!isEmpty()) {
                             storage.insert(newFluid, newLevel, transaction);
                         }
                         view = storage.iterator().next();
-                        // transaction
                         transaction.commit();
                     }
                 }
@@ -187,7 +179,7 @@ public final class VariantMarshal {
         }
     }
 
-    public interface StorageMarshal extends Inventory, SingleSlotStorage<FluidVariant>, FluidStore {
+    public interface StorageMarshal extends SingleSlotStorage<FluidVariant>, FluidStore {
         @Override
         default boolean isEmpty() {
             return getContents().isEmpty();
@@ -212,7 +204,7 @@ public final class VariantMarshal {
                 return 0;
             }
 
-            MutableFluidContainer outputContainer = FluidContainer.UNLIMITED.toMutable(Items.STONE.getDefaultStack());
+            MutableFluidContainer outputContainer = FluidContainer.UNLIMITED.toMutable(Items.STONE.getDefaultInstance());
             drain((int)maxAmount, outputContainer, null);
             return outputContainer.getLevel();
         }

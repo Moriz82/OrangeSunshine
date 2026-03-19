@@ -1,18 +1,19 @@
 package moriz.orangesunshine.chemistry;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+
+import moriz.orangesunshine.OrangeSunshine;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 @MethodsReturnNonnullByDefault
 public class CompoundItem extends Item implements MatterStateItem {
@@ -24,7 +25,7 @@ public class CompoundItem extends Item implements MatterStateItem {
     private final int color;
 
     public CompoundItem(String pCompoundName, MatterState pMatterState, Map<String, Integer> pComponents, String pColor) {
-        super(new FabricItemSettings());
+        super(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, OrangeSunshine.id(pCompoundName))));
         this.compoundName = pCompoundName;
         this.matterState = pMatterState;
         this.components = pComponents;
@@ -32,9 +33,9 @@ public class CompoundItem extends Item implements MatterStateItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(Text.literal(getAbbreviation()).setStyle(Style.EMPTY.withColor(Formatting.DARK_AQUA)));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, consumer, flag);
+        consumer.accept(Component.literal(getAbbreviation()).withStyle(ChatFormatting.DARK_AQUA));
     }
 
     public String getChemicalName() {

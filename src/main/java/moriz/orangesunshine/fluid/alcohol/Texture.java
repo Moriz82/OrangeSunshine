@@ -3,7 +3,8 @@ package moriz.orangesunshine.fluid.alcohol;
 import java.util.Locale;
 import java.util.Map;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 public enum Texture {
     THIN,
@@ -22,13 +23,13 @@ public enum Texture {
 
     public Texture applyState(int distillation, int fermentation, int maturation) {
         Texture[] phases = Texture.MATURATION_PHASES.get(this);
-        int combinedProgress = (int)((fermentation + maturation) / 32F) * phases.length;
+        int combinedProgress = Mth.clamp((int)(((fermentation + maturation) / 32F) * phases.length), 0, phases.length - 1);
         return phases[combinedProgress];
     }
 
-    private final Text name = Text.translatable("orangesunshine.alcohol.texture." + name().toLowerCase(Locale.ROOT));
+    private final Component name = Component.translatable("orangesunshine.alcohol.texture." + name().toLowerCase(Locale.ROOT));
 
-    public Text getName() {
+    public Component getName() {
         return name;
     }
 }

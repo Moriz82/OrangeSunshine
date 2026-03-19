@@ -7,89 +7,60 @@ package moriz.orangesunshine.entity.drug.hallucination;
 
 import java.util.Optional;
 
-import moriz.orangesunshine.OrangeSunshine;
-import moriz.orangesunshine.client.render.RastaHeadModel;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.control.LookControl;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
 public class RastaHeadHallucination extends AbstractEntityHallucination {
-    private static final Identifier TEXTURE = OrangeSunshine.id("textures/drug/cannabis/rasta_head_hallucination.png");
-
     private final LookControl lookControl;
-
-    private final Model modelRastaHead = new RastaHeadModel();
 
     private final float distance;
 
     private final float planeRotationX;
     private final float planeRotationZ;
 
-    public RastaHeadHallucination(PlayerEntity playerEntity) {
-        super(playerEntity, EntityType.PIG.create(playerEntity.getWorld()));
+    public RastaHeadHallucination(Player playerEntity) {
+        super(playerEntity, EntityType.PIG.create(playerEntity.level(), EntitySpawnReason.LOAD));
 
         maxAge = (random.nextInt(59) + 120) * 20;
         scale = 1 + random.nextFloat() / 2F;
         distance = 2 + random.nextFloat() * 5;
 
-        planeRotationX = random.nextFloat() * MathHelper.HALF_PI;
-        planeRotationZ = random.nextFloat() * MathHelper.HALF_PI;
+        planeRotationX = random.nextFloat() * Mth.HALF_PI;
+        planeRotationZ = random.nextFloat() * Mth.HALF_PI;
 
-        entity.setPosition(playerEntity.getPos());
-        lookControl = ((MobEntity)entity).getLookControl();
+        entity.setPos(playerEntity.position());
+        lookControl = ((Mob)entity).getLookControl();
 
         chatBot = Optional.of(new ChatBot(new RastaheadPersonality(), playerEntity));
     }
 
     @Override
     protected void animateEntity() {
-        this.lookControl.lookAt(player);
+        this.lookControl.setLookAt(player);
         this.lookControl.tick();
 
-        int seed = player.age + (entity.getId() * 3);
+        int seed = player.tickCount + (entity.getId() * 3);
 
-        Vec3d offset = new Vec3d(
-                MathHelper.sin(seed / 50F) * distance,
-                MathHelper.sin(seed / 10F) + (entity.getId() % 5) - 1,
-                MathHelper.cos(seed / 50F) * distance
-        ).rotateY(planeRotationX).rotateZ(planeRotationZ);
+        Vec3 offset = new Vec3(
+                Mth.sin(seed / 50F) * distance,
+                Mth.sin(seed / 10F) + (entity.getId() % 5) - 1,
+                Mth.cos(seed / 50F) * distance
+        ).yRot(planeRotationX).zRot(planeRotationZ);
 
-        Vec3d wanted = player.getEyePos().add(offset);
+        Vec3 wanted = player.getEyePosition().add(offset);
 
-        double totalDist = wanted.distanceTo(entity.getPos());
+        double totalDist = wanted.distanceTo(entity.position());
 
-        Vec3d vel = entity.getVelocity().multiply(0.9D);
+        Vec3 vel = entity.getDeltaMovement().scale(0.9D);
 
-        vel = wanted.subtract(entity.getPos()).normalize().multiply(Math.log((float)totalDist));
+        vel = wanted.subtract(entity.position()).normalize().scale(Math.log((float)totalDist));
 
-        entity.setVelocity(vel);
-        entity.setPosition(entity.getPos().add(vel));
-    }
-
-    @Override
-    protected RenderLayer getRenderLayer(RenderLayer layer) {
-        return layer;
-    }
-
-    @Override
-    protected void renderModel(MatrixStack matrices, VertexConsumerProvider vertices, double x, double y, double z, float pitch, float yaw, float tickDelta) {
-        yaw = 180 - MathHelper.lerp(tickDelta, ((LivingEntity)entity).prevHeadYaw, ((LivingEntity)entity).headYaw);
-
-        matrices.translate(x, y, z);
-        matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(180));
-        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(pitch));
-        matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(yaw));
-
-        var dispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
-        modelRastaHead.render(matrices, vertices.getBuffer(modelRastaHead.getLayer(TEXTURE)), dispatcher.getLight(entity, tickDelta), 0, 1, 1, 1, 1);
+        entity.setDeltaMovement(vel);
+        entity.setPos(entity.position().add(vel));
     }
 }

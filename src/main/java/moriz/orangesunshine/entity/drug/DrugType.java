@@ -9,9 +9,9 @@ import moriz.orangesunshine.PSSounds;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.entity.drug.type.*;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Function;
 
@@ -21,7 +21,10 @@ import moriz.orangesunshine.entity.drug.type.*;
  * Created by lukas on 22.10.14.
  */
 public record DrugType (Identifier id, Function<DrugType, Drug> constructor) {
-    public static final Registry<DrugType> REGISTRY = FabricRegistryBuilder.createSimple(RegistryKey.<DrugType>ofRegistry(OrangeSunshine.id("drugs"))).buildAndRegister();
+    @SuppressWarnings("unchecked")
+    public static final Registry<DrugType> REGISTRY = (Registry<DrugType>)(Registry<?>)FabricRegistryBuilder
+            .createSimple(ResourceKey.createRegistryKey(OrangeSunshine.id("drugs")))
+            .buildAndRegister();
     public static final DrugType ALCOHOL = register("alcohol", type -> new AlcoholDrug(type, 1, 0.0002d));
     public static final DrugType CANNABIS = register("cannabis", type -> new CannabisDrug(1, 0.0002d));
     public static final DrugType BROWN_SHROOMS = register("brown_shrooms", type -> new BrownShroomsDrug(1, 0.0002d));

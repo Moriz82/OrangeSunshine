@@ -3,27 +3,27 @@ package moriz.orangesunshine.entity.drug.hallucination;
 import java.util.*;
 
 import moriz.orangesunshine.entity.drug.DrugProperties;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.message.MessageType;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.sounds.SoundEvents;
 
 public class ChatBot {
     private final Personality personality;
-    private final PlayerEntity player;
+    private final Player player;
 
     private final List<Character> characters = new ArrayList<>();
 
     private final Queue<Runnable> incomingMessageQueue = new LinkedList<>();
 
-    public ChatBot(Personality personality, PlayerEntity player) {
+    public ChatBot(Personality personality, Player player) {
         this.personality = personality;
         this.player = player;
     }
 
     public void tick() {
-        if (!player.getWorld().isClient) {
+        if (!player.level().isClientSide()) {
             return;
         }
 
@@ -39,30 +39,29 @@ public class ChatBot {
         characters.removeIf(Character::tick);
     }
 
-    private void emitMessage(String sender, Text message) {
+    private void emitMessage(String sender, Component message) {
         HallucinationManager hallucinations = DrugProperties.of(player).getHallucinations();
 
         if (hallucinations.getEntities().getForcedAlpha(1) > 0 || hallucinations.getHallucinationStrength(1) > 0) {
-            player.sendMessage(message);
+            player.displayClientMessage(message, false);
             incomingMessageQueue.add(() -> {
                 getResponsiveCharacters(sender, message).forEach(character -> character.wakeUp(sender, message, false));
             });
 
-            if (player.getWorld().getRandom().nextFloat() < 0.3F || message.getString().contains("!")) {
-                float x = player.getWorld().getRandom().nextFloat();
-                float z = player.getWorld().getRandom().nextFloat();
-                player.animateDamage((float)(MathHelper.atan2(z, x) * 57.2957763671875 - player.getYaw()));
-                player.playSound(SoundEvents.ENTITY_PLAYER_HURT, 1, 1);
-                player.takeKnockback(0.2F, x, z);
+            if (player.level().getRandom().nextFloat() < 0.3F || message.getString().contains("!")) {
+                float x = player.level().getRandom().nextFloat();
+                float z = player.level().getRandom().nextFloat();
+                player.playSound(SoundEvents.PLAYER_HURT, 1, 1);
+                player.knockback(0.2F, x, z);
             }
         }
     }
 
-    public void onMessageReceived(String sender, Text message) {
+    public void onMessageReceived(String sender, Component message) {
         getResponsiveCharacters(sender, message).forEach(character -> character.wakeUp(sender, message, true));
     }
 
-    private List<Character> getResponsiveCharacters(String sender, Text message) {
+    private List<Character> getResponsiveCharacters(String sender, Component message) {
         String txt = message.getString();
         var allCharacters = characters.stream().filter(character -> !sender.contentEquals(character.name.getString())).toList();
         if (allCharacters.isEmpty()) {
@@ -81,8 +80,8 @@ public class ChatBot {
 
         private final Queue<DelayedMessage> messageQueue = new LinkedList<>();
 
-        private final Text name = personality.getName(player.getRandom());
-        private final MessageType.Parameters parameters = MessageType.params(MessageType.CHAT, player.getWorld().getRegistryManager(), name);
+        private final Component name = personality.getName(player.getRandom());
+        private final ChatType.Bound parameters = ChatType.bind(ChatType.CHAT, player.level().registryAccess(), name);
 
         public boolean tick() {
             if (sleepTicks-- > 0) {
@@ -98,7 +97,7 @@ public class ChatBot {
                     personality.supplyMessage(player.getRandom(), line -> {
                         messageQueue.add(new DelayedMessage(line));
                     });
-                    sleepTicks = player.getRandom().nextBetween(5, 100);
+                    sleepTicks = Mth.nextInt(player.getRandom(), 5, 100);
                     idleTicks = 0;
                 }
             }
@@ -108,33 +107,33 @@ public class ChatBot {
                 if (message.tick()) {
                     messageQueue.poll();
                 }
-                sleepTicks = player.getRandom().nextBetween(2, 20);
+                sleepTicks = Mth.nextInt(player.getRandom(), 2, 20);
             }
 
             return false;
         }
 
-        public void wakeUp(String sender, Text message, boolean fromPlayer) {
+        public void wakeUp(String sender, Component message, boolean fromPlayer) {
             messageQueue.clear();
             personality.onMessageReceived(sender, message, player.getRandom(), fromPlayer, line -> {
                 messageQueue.add(new DelayedMessage(line));
             });
             idleTicks = 0;
-            sleepTicks = player.getRandom().nextBetween(1, 5);
+            sleepTicks = Mth.nextInt(player.getRandom(), 1, 5);
         }
 
         class DelayedMessage {
-            Text message;
+            Component message;
             int delay;
 
-            public DelayedMessage(Text message) {
+            public DelayedMessage(Component message) {
                 this.message = message;
-                this.delay = player.getRandom().nextBetween(2, 20);
+                this.delay = Mth.nextInt(player.getRandom(), 2, 20);
             }
 
             public boolean tick() {
                 if (--delay <= 0) {
-                    emitMessage(name.getString(), parameters.applyChatDecoration(message));
+                    emitMessage(name.getString(), parameters.decorate(message));
                     return true;
                 }
                 return false;

@@ -5,7 +5,9 @@
 
 package moriz.orangesunshine.item;
 
-import net.minecraft.item.*;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Created by lukas on 18.10.14.
@@ -13,13 +15,13 @@ import net.minecraft.item.*;
 public class SpecialFoodItem extends Item {
     public int eatSpeed;
 
-    public SpecialFoodItem(Settings settings, int eatSpeed) {
+    public SpecialFoodItem(Item.Properties settings, int eatSpeed) {
         super(settings);
         this.eatSpeed = eatSpeed;
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return eatSpeed;
     }
 }
