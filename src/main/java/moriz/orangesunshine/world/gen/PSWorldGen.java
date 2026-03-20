@@ -6,7 +6,6 @@
 package moriz.orangesunshine.world.gen;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 import moriz.orangesunshine.OrangeSunshine;
@@ -20,9 +19,6 @@ import moriz.orangesunshine.config.BiomeSelector;
 import moriz.orangesunshine.config.PSConfig;
 import moriz.orangesunshine.world.gen.structure.MutableStructurePool;
 import net.fabricmc.fabric.api.biome.v1.*;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -57,15 +53,11 @@ import net.minecraft.world.level.levelgen.placement.RarityFilter;
  * Created by lukas on 25.04.14.
  * Updated by Sollace on 16 Jan 2023
  */
-public class PSWorldGen extends FabricDynamicRegistryProvider {
+public class PSWorldGen {
     public static final TilledPatchFeature TILLED_PATCH_FEATURE = Registry.register(BuiltInRegistries.FEATURE, OrangeSunshine.id("tilled_patch"), new TilledPatchFeature());
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> JUNIPER_TREE_CONFIG = createConfiguredFeature("juniper_tree");
     public static final ResourceKey<PlacedFeature> JUNIPER_TREE_PLACEMENT = createPlacement("juniper_tree_checked");
-
-    public PSWorldGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture);
-    }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> createConfiguredFeature(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, OrangeSunshine.id(name));
@@ -211,16 +203,5 @@ public class PSWorldGen extends FabricDynamicRegistryProvider {
         ModOreGeneration.generateOres();
 
         MutableStructurePool.bootstrap();
-    }
-
-    @Override
-    protected void configure(HolderLookup.Provider registries, Entries entries) {
-        entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE));
-        entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE));
-    }
-
-    @Override
-    public String getName() {
-        return "World Gen";
     }
 }

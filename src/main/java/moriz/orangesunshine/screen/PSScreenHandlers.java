@@ -9,9 +9,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 
@@ -20,31 +20,24 @@ import net.minecraft.world.inventory.MenuType;
  * @since 12 Jan 2023
  */
 public interface PSScreenHandlers {
-    MenuType<DryingTableScreenHandler> DRYING_TABLE = register("drying_table", new ExtendedScreenHandlerType<>(DryingTableScreenHandler::new, BlockPosData.STREAM_CODEC));
+    MenuType<DryingTableScreenHandler> DRYING_TABLE = register("drying_table",
+            new MenuType<>((syncId, inventory) -> new DryingTableScreenHandler(syncId, inventory, new BlockPosData(BlockPos.ZERO)), FeatureFlagSet.of()));
 
-    MenuType<FluidContraptionScreenHandler<BarrelBlockEntity>> BARREL = register("barrel", new ExtendedScreenHandlerType<>(
-            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.BARREL, sync, inventory, data),
-            BlockSideData.STREAM_CODEC
-    ));
-    MenuType<FluidContraptionScreenHandler<DistilleryBlockEntity>> DISTILLERY = register("distillery", new ExtendedScreenHandlerType<>(
-            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.DISTILLERY, sync, inventory, data),
-            BlockSideData.STREAM_CODEC
-    ));
-    MenuType<FluidContraptionScreenHandler<FlaskBlockEntity>> FLASK = register("flask", new ExtendedScreenHandlerType<>(
-            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.FLASK, sync, inventory, data),
-            BlockSideData.STREAM_CODEC
-    ));
-    MenuType<FluidContraptionScreenHandler<MashTubBlockEntity>> MASH_TUB = register("mash_tub", new ExtendedScreenHandlerType<>(
-            (sync, inventory, data) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.MASH_TUB, sync, inventory, data),
-            BlockSideData.STREAM_CODEC
-    ));
+    MenuType<FluidContraptionScreenHandler<BarrelBlockEntity>> BARREL = register("barrel",
+            new MenuType<>((syncId, inventory) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.BARREL, syncId, inventory, new BlockSideData(BlockPos.ZERO, Direction.NORTH)), FeatureFlagSet.of()));
+    MenuType<FluidContraptionScreenHandler<DistilleryBlockEntity>> DISTILLERY = register("distillery",
+            new MenuType<>((syncId, inventory) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.DISTILLERY, syncId, inventory, new BlockSideData(BlockPos.ZERO, Direction.NORTH)), FeatureFlagSet.of()));
+    MenuType<FluidContraptionScreenHandler<FlaskBlockEntity>> FLASK = register("flask",
+            new MenuType<>((syncId, inventory) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.FLASK, syncId, inventory, new BlockSideData(BlockPos.ZERO, Direction.NORTH)), FeatureFlagSet.of()));
+    MenuType<FluidContraptionScreenHandler<MashTubBlockEntity>> MASH_TUB = register("mash_tub",
+            new MenuType<>((syncId, inventory) -> new FluidContraptionScreenHandler<>(PSScreenHandlers.MASH_TUB, syncId, inventory, new BlockSideData(BlockPos.ZERO, Direction.NORTH)), FeatureFlagSet.of()));
     MenuType<MortarPestleScreenHandler> MORTAR_PESTLE =
             Registry.register(BuiltInRegistries.MENU, OrangeSunshine.id("mortar_pestle"),
-                    new ExtendedScreenHandlerType<>(MortarPestleScreenHandler::new, BlockPosData.STREAM_CODEC));
+                    new MenuType<>((syncId, inventory) -> new MortarPestleScreenHandler(syncId, inventory, new BlockPosData(BlockPos.ZERO)), FeatureFlagSet.of()));
 
     MenuType<MixingTableScreenHandler> MIXING_TABLE =
             Registry.register(BuiltInRegistries.MENU, OrangeSunshine.id("mixing_table"),
-                    new ExtendedScreenHandlerType<>(MixingTableScreenHandler::new, BlockPosData.STREAM_CODEC));
+                    new MenuType<>((syncId, inventory) -> new MixingTableScreenHandler(syncId, inventory, new BlockPosData(BlockPos.ZERO)), FeatureFlagSet.of()));
 
     static <T extends AbstractContainerMenu> MenuType<T> register(String name, MenuType<T> type) {
         return Registry.register(BuiltInRegistries.MENU, OrangeSunshine.id(name), type);

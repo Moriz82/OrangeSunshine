@@ -7,7 +7,6 @@ package moriz.orangesunshine;
 
 import moriz.orangesunshine.advancement.PSCriteria;
 import moriz.orangesunshine.block.PSBlocks;
-import moriz.orangesunshine.command.PSCommands;
 import moriz.orangesunshine.config.JsonConfig;
 import moriz.orangesunshine.config.PSConfig;
 import moriz.orangesunshine.entity.PSEntities;
@@ -19,7 +18,6 @@ import moriz.orangesunshine.network.Channel;
 import moriz.orangesunshine.particle.PSParticles;
 import moriz.orangesunshine.recipe.PSRecipes;
 import moriz.orangesunshine.screen.PSScreenHandlers;
-import moriz.orangesunshine.world.gen.PSWorldGen;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.HitResult;
 
@@ -70,14 +68,11 @@ public class OrangeSunshine {
         PSFluids.bootstrap();
         PSRecipes.bootstrap();
         PSEntities.bootstrap();
-        PSWorldGen.bootstrap();
         PSGameRules.bootstrap();
-        PSCommands.bootstrap();
         PSSounds.bootstrap();
         PSScreenHandlers.bootstrap();
         Channel.bootstrap();
         PSCriteria.bootstrap();
         PSParticles.bootstrap();
-        PSDamageTypes.bootstrap();
     }
 }

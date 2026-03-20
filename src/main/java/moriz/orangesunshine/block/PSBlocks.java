@@ -177,8 +177,5 @@ public interface PSBlocks {
 
     static void bootstrap() {
         PSBlockEntities.bootstrap();
-
-        BlockEntityTypeSupportHelper.of(BlockEntityType.SIGN).addSupportedBlocks(JUNIPER_SIGN, JUNIPER_WALL_SIGN);
-        BlockEntityTypeSupportHelper.of(BlockEntityType.HANGING_SIGN).addSupportedBlocks(JUNIPER_HANGING_SIGN, JUNIPER_WALL_HANGING_SIGN);
     }
 }

@@ -1,15 +1,10 @@
 package moriz.orangesunshine.recipe;
 
 import moriz.orangesunshine.OrangeSunshine;
-import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 
 /**
  * @author Sollace
@@ -44,22 +39,5 @@ public interface PSRecipes {
                 });
     }
 
-    static void bootstrap() {
-        LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-            if (!"minecraft".contentEquals(key.identifier().getNamespace())) {
-                return;
-            }
-
-            final boolean isVillagerChest = key.identifier().getPath().contains("village");
-            if ((isVillagerChest || OrangeSunshine.getConfig().balancing.worldGeneration.villageChests)
-                    || (!isVillagerChest || OrangeSunshine.getConfig().balancing.worldGeneration.dungeonChests)) {
-                tableBuilder.withPool(LootPool.lootPool().add(NestedLootTable.lootTableReference(
-                        net.minecraft.resources.ResourceKey.create(
-                                Registries.LOOT_TABLE,
-                                Identifier.fromNamespaceAndPath("orangesunshinemc", key.identifier().getPath())
-                        )
-                )));
-            }
-        });
-    }
+    static void bootstrap() { }
 }

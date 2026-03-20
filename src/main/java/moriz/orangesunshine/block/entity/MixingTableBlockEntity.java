@@ -3,14 +3,13 @@ package moriz.orangesunshine.block.entity;
 import moriz.orangesunshine.recipe.MixingTableRecipe;
 import moriz.orangesunshine.screen.MixingTableScreenHandler;
 import moriz.orangesunshine.screen.PSScreenHandlers;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -26,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MixingTableBlockEntity extends SyncedBlockEntity
-        implements ExtendedScreenHandlerFactory<PSScreenHandlers.BlockPosData>, ImplementedInventory {
+        implements MenuProvider, ImplementedInventory {
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
@@ -77,11 +76,6 @@ public class MixingTableBlockEntity extends SyncedBlockEntity
     }
 
     @Override
-    public PSScreenHandlers.BlockPosData getScreenOpeningData(ServerPlayer player) {
-        return new PSScreenHandlers.BlockPosData(getBlockPos());
-    }
-
-    @Override
     public Component getDisplayName() {
         return Component.literal("Mixing Table");
     }
@@ -111,6 +105,10 @@ public class MixingTableBlockEntity extends SyncedBlockEntity
     @Override
     public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory, Player player) {
         return new MixingTableScreenHandler(syncId, playerInventory, this, propertyDelegate);
+    }
+
+    public PSScreenHandlers.BlockPosData getScreenOpeningData() {
+        return new PSScreenHandlers.BlockPosData(getBlockPos());
     }
 
     @Override

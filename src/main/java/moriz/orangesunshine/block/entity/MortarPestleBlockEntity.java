@@ -4,14 +4,13 @@ import moriz.orangesunshine.recipe.MortarPestleRecipe;
 import moriz.orangesunshine.recipe.PSRecipes;
 import moriz.orangesunshine.screen.MortarPestleScreenHandler;
 import moriz.orangesunshine.screen.PSScreenHandlers;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MortarPestleBlockEntity extends SyncedBlockEntity
-        implements ExtendedScreenHandlerFactory<PSScreenHandlers.BlockPosData>, ImplementedInventory {
+        implements MenuProvider, ImplementedInventory {
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
@@ -75,11 +74,6 @@ public class MortarPestleBlockEntity extends SyncedBlockEntity
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
-    }
-
-    @Override
-    public PSScreenHandlers.BlockPosData getScreenOpeningData(ServerPlayer player) {
-        return new PSScreenHandlers.BlockPosData(getBlockPos());
     }
 
     @Override

@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
  * @author Sollace
  * @since 3 Jan 2023
  */
-public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal, FluidStore {
+public class Resovoir implements NbtSerialisable, FluidStore {
     private final FluidContainer container;
     private MutableFluidContainer stack;
 
@@ -42,7 +42,11 @@ public class Resovoir implements NbtSerialisable, VariantMarshal.StorageMarshal,
     }
 
     public boolean isEmpty() {
-        return VariantMarshal.StorageMarshal.super.isEmpty();
+        return getContents().isEmpty();
+    }
+
+    public int getCapacity() {
+        return getContents().getCapacity();
     }
 
     public int getMaxStackSize() {

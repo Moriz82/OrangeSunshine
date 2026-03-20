@@ -23,7 +23,7 @@ public class FluidContainerRegistry {
     private static final Map<Item, Map<SimpleFluid, Item>> REFILL_MAPPING = new HashMap<>();
 
     public static Optional<FluidContainer> getContainer(Item item) {
-        return Optional.ofNullable(ENTRIES.get(item)).map(Supplier::get).or(() -> VariantMarshal.probeContents(item.getDefaultInstance()));
+        return Optional.ofNullable(ENTRIES.get(item)).map(Supplier::get);
     }
 
     public static void registerRefillMapping(Item emptyForm, SimpleFluid fluid, Item filledForm) {
@@ -92,6 +92,5 @@ public class FluidContainerRegistry {
         registerRefillMapping(Items.GLASS_BOTTLE, SimpleFluid.forVanilla(Fluids.WATER), Items.POTION);
         registerRefillMapping(Items.GLASS_BOTTLE, PSFluids.HONEY, Items.HONEY_BOTTLE);
 
-        VariantMarshal.bootstrap();
     }
 }

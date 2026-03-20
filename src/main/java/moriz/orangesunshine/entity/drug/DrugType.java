@@ -8,7 +8,8 @@ package moriz.orangesunshine.entity.drug;
 import moriz.orangesunshine.PSSounds;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.entity.drug.type.*;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import com.mojang.serialization.Lifecycle;
+import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
@@ -21,10 +22,8 @@ import moriz.orangesunshine.entity.drug.type.*;
  * Created by lukas on 22.10.14.
  */
 public record DrugType (Identifier id, Function<DrugType, Drug> constructor) {
-    @SuppressWarnings("unchecked")
-    public static final Registry<DrugType> REGISTRY = (Registry<DrugType>)(Registry<?>)FabricRegistryBuilder
-            .createSimple(ResourceKey.createRegistryKey(OrangeSunshine.id("drugs")))
-            .buildAndRegister();
+    public static final Registry<DrugType> REGISTRY = new MappedRegistry<>(
+            ResourceKey.createRegistryKey(OrangeSunshine.id("drugs")), Lifecycle.stable());
     public static final DrugType ALCOHOL = register("alcohol", type -> new AlcoholDrug(type, 1, 0.0002d));
     public static final DrugType CANNABIS = register("cannabis", type -> new CannabisDrug(1, 0.0002d));
     public static final DrugType BROWN_SHROOMS = register("brown_shrooms", type -> new BrownShroomsDrug(1, 0.0002d));

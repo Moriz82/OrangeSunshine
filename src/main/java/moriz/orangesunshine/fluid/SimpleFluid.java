@@ -19,15 +19,11 @@ import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.PSTags;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.MutableFluidContainer;
-import moriz.orangesunshine.fluid.container.VariantMarshal;
 import moriz.orangesunshine.fluid.physical.FluidStateManager;
 import moriz.orangesunshine.fluid.physical.PhysicalFluid;
 import moriz.orangesunshine.fluid.physical.PlacedFluid;
 import org.jetbrains.annotations.Nullable;
 
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -80,12 +76,6 @@ public class SimpleFluid {
         this.empty = empty;
         physical = new PhysicalFluid(id, this);
         REGISTRY.put(id, this);
-        FluidVariantAttributes.register(physical.getStandingFluid(), new FluidVariantAttributeHandler() {
-            @Override
-            public Component getName(FluidVariant fluidVariant) {
-                return SimpleFluid.this.getName(VariantMarshal.unpackFluid(Items.STONE.getDefaultInstance(), fluidVariant, 1).asStack());
-            }
-        });
     }
 
     private SimpleFluid(Identifier id, int color, PhysicalFluid physical) {

@@ -13,9 +13,6 @@ import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.util.NbtSerialisable;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -39,8 +36,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  */
 public class FlaskBlockEntity extends SyncedBlockEntity
         implements BlockWithFluid.DirectionalFluidResovoir,
-        Resovoir.ChangeListener, WorldlyContainer,
-                   SidedStorageBlockEntity {
+        Resovoir.ChangeListener, WorldlyContainer {
     private static final int[] NO_SLOT_ID = {};
     private static final int[] INPUT_SLOT_ID = {0};
     private static final int[] OUTPUT_SLOT_ID = {1};
@@ -262,11 +258,6 @@ public class FlaskBlockEntity extends SyncedBlockEntity
         }
 
         return false;
-    }
-
-    @Override
-    public Storage<FluidVariant> getFluidStorage(Direction side) {
-        return getTank(side);
     }
 
     class IoInventory extends SimpleContainer {
