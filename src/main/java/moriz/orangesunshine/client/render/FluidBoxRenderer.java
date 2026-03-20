@@ -5,7 +5,7 @@ import moriz.orangesunshine.util.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 
@@ -13,7 +13,7 @@ public final class FluidBoxRenderer {
     private FluidBoxRenderer() {
     }
 
-    public record FluidAppearance(Identifier texture, TextureAtlasSprite sprite, int color) {
+    public record FluidAppearance(ResourceLocation texture, TextureAtlasSprite sprite, int color) {
         public static FluidAppearance of(SimpleFluid fluid, ItemStack stack) {
             Minecraft client = Minecraft.getInstance();
             TextureAtlas atlas = (TextureAtlas) client.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS);
@@ -21,7 +21,7 @@ public final class FluidBoxRenderer {
                     .map(atlas::getSprite)
                     .orElseGet(() -> client.getBlockRenderer().getBlockModelShaper().getParticleIcon(Blocks.WATER.defaultBlockState()));
 
-            Identifier texture = sprite.atlasLocation();
+            ResourceLocation texture = sprite.atlasLocation();
             return new FluidAppearance(texture, sprite, fluid.getColor(stack));
         }
 
