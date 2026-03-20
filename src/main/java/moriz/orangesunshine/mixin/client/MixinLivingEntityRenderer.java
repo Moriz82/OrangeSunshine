@@ -44,7 +44,7 @@ abstract class MixinLivingEntityRenderer {
     @ModifyVariable(method = "setupRotations", at = @At("HEAD"), ordinal = 1, argsOnly = true, require = 0)
     private float changeBodyYaw(float bodyYaw, LivingEntity entity) {
         if (entity instanceof VillagerDataHolder v
-                && v.getVillagerData().getProfession() == PSTradeOffers.DRUG_ADDICT_PROFESSION) {
+                && v.getVillagerData().profession().is(PSTradeOffers.DRUG_ADDICT_PROFESSION)) {
             bodyYaw += AddictTaskListProvider.getShakeAmount(entity);
         }
         return bodyYaw;
