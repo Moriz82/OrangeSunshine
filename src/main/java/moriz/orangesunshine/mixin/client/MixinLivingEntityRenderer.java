@@ -1,19 +1,15 @@
 package moriz.orangesunshine.mixin.client;
 
 import moriz.orangesunshine.client.render.DrugRenderer;
-import moriz.orangesunshine.entity.AddictTaskListProvider;
-import moriz.orangesunshine.entity.PSTradeOffers;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.npc.villager.VillagerDataHolder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntityRenderer.class)
@@ -38,15 +34,5 @@ abstract class MixinLivingEntityRenderer {
                 DrugRenderer.INSTANCE.poseModel(player, model, partialTick);
             }
         }
-    }
-
-    /** Make addicted villagers sway/shake. */
-    @ModifyVariable(method = "setupRotations", at = @At("HEAD"), ordinal = 1, argsOnly = true, require = 0)
-    private float changeBodyYaw(float bodyYaw, LivingEntity entity) {
-        if (entity instanceof VillagerDataHolder v
-                && v.getVillagerData().profession().is(PSTradeOffers.DRUG_ADDICT_PROFESSION)) {
-            bodyYaw += AddictTaskListProvider.getShakeAmount(entity);
-        }
-        return bodyYaw;
     }
 }
