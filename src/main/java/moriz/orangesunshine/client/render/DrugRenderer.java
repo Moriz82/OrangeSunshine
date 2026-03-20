@@ -49,8 +49,8 @@ public class DrugRenderer {
         Camera camera = mc.gameRenderer.getMainCamera();
         DriftingCamera driftingCam = properties.getHallucinations().getCamera();
 
-        matrices.mulPose(Axis.XP.rotationDegrees(camera.getXRot()));
-        matrices.mulPose(Axis.YP.rotationDegrees(camera.getYRot() + 180.0f));
+        matrices.mulPose(Axis.XP.rotationDegrees(camera.xRot()));
+        matrices.mulPose(Axis.YP.rotationDegrees(camera.yRot() + 180.0f));
 
         Vec3 cameraOffset = driftingCam.getPosition();
         Vec3 prevCameraOffset = driftingCam.getPrevPosition();
@@ -68,8 +68,8 @@ public class DrugRenderer {
             (float) Mth.lerp(tickDelta, prevCameraRoll.z, cameraRoll.z)
         ));
 
-        matrices.mulPose(Axis.YN.rotationDegrees(camera.getYRot() + 180.0f));
-        matrices.mulPose(Axis.XN.rotationDegrees(camera.getXRot()));
+        matrices.mulPose(Axis.YN.rotationDegrees(camera.yRot() + 180.0f));
+        matrices.mulPose(Axis.XN.rotationDegrees(camera.xRot()));
 
         if (wobblyness > 0) {
             float f4 = Mth.square(5F / (wobblyness * wobblyness + 5F) - wobblyness * 0.04F);
@@ -136,10 +136,10 @@ public class DrugRenderer {
         head.yRot += DrugEffectInterpreter.getCameraShiftY(properties, tick);
         head.zRot  = DrugEffectInterpreter.getAlcohol(properties);
 
-        if (model instanceof PlayerModel<?> pem) {
-            pem.hat.copyFrom(head);
-            pem.leftSleeve.copyFrom(leftArm);
-            pem.rightSleeve.copyFrom(rightArm);
+        if (model instanceof PlayerModel pem) {
+            pem.hat.loadPose(head.storePose());
+            pem.leftSleeve.loadPose(leftArm.storePose());
+            pem.rightSleeve.loadPose(rightArm.storePose());
         }
     }
 
