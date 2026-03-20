@@ -1,7 +1,6 @@
 package moriz.orangesunshine.chemistry;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -37,7 +36,6 @@ public class MixtureItem extends Item implements MatterStateItem {
         super.appendHoverText(stack, context, display, consumer, flag);
         consumer.accept(Component.literal(getAbbreviation()).withStyle(ChatFormatting.DARK_AQUA));
     }
-
 
     public String getChemicalName() {
         return this.compoundName;

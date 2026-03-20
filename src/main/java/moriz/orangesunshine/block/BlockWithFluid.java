@@ -11,8 +11,6 @@ import moriz.orangesunshine.block.entity.FlaskBlockEntity;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import moriz.orangesunshine.fluid.container.Resovoir;
 import moriz.orangesunshine.screen.FluidContraptionScreenHandler;
-import moriz.orangesunshine.screen.PSScreenHandlers;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -107,7 +105,7 @@ public abstract class BlockWithFluid<T extends FlaskBlockEntity> extends BaseEnt
             }
 
             if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.openMenu(new ExtendedScreenHandlerFactory<PSScreenHandlers.BlockSideData>() {
+                serverPlayer.openMenu(new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
                         return BlockWithFluid.this.getName();
@@ -116,11 +114,6 @@ public abstract class BlockWithFluid<T extends FlaskBlockEntity> extends BaseEnt
                     @Override
                     public AbstractContainerMenu createMenu(int syncId, Inventory inventory, Player openingPlayer) {
                         return new FluidContraptionScreenHandler<>(getScreenHandlerType(), syncId, inventory, be, hit.getDirection());
-                    }
-
-                    @Override
-                    public PSScreenHandlers.BlockSideData getScreenOpeningData(ServerPlayer player) {
-                        return new PSScreenHandlers.BlockSideData(be.getBlockPos(), hit.getDirection());
                     }
                 });
                 return InteractionResult.SUCCESS_SERVER;

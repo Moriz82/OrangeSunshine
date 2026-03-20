@@ -2,24 +2,28 @@ package moriz.orangesunshine.mixin.client;
 
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.sounds.SoundEngine;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.SoundSystem;
-import net.minecraft.entity.Entity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.MathHelper;
-
-@Mixin(SoundSystem.class)
+@Mixin(SoundEngine.class)
 abstract class MixinSoundSystem {
-    @Inject(method = "getSoundVolume", at = @At("RETURN"), cancellable = true)
-    private void getSoundVolume(@Nullable SoundCategory category, CallbackInfoReturnable<Float> info) {
-        DrugProperties.of((Entity)MinecraftClient.getInstance().player).ifPresent(properties -> {
-            info.setReturnValue(MathHelper.clamp(info.getReturnValueF() * properties.getModifier(Drug.SOUND_VOLUME), 0, 1));
-        });
+    /** Scale the game's sound volume up or down based on active drug modifiers. */
+    @Inject(method = "getVolume", at = @At("RETURN"), cancellable = true, require = 0)
+    private void onGetVolume(@Nullable SoundSource category, CallbackInfoReturnable<Float> info) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
+        DrugProperties.of((Entity) mc.player).ifPresent(properties ->
+            info.setReturnValue(
+                Mth.clamp(info.getReturnValueF() * properties.getModifier(Drug.SOUND_VOLUME), 0, 1)
+            )
+        );
     }
 }

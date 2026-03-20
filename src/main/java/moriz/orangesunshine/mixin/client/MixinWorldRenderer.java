@@ -1,34 +1,35 @@
 package moriz.orangesunshine.mixin.client;
 
 import moriz.orangesunshine.client.render.RenderPhase;
+import net.minecraft.client.renderer.LevelRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.render.WorldRenderer;
-
-@Mixin(WorldRenderer.class)
+/**
+ * Tracks which render phase (sky, clouds, world, etc.) is currently active so that
+ * the geometry-shader system can apply effects selectively.
+ */
+@Mixin(LevelRenderer.class)
 abstract class MixinWorldRenderer {
-    private static final String SKY = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V";
-    private static final String CLOUDS = "renderClouds(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FDDD)V";
 
-    @Inject(method = SKY, at = @At("HEAD"))
+    @Inject(method = "renderSky", at = @At("HEAD"), require = 0)
     private void beforeRenderSky(CallbackInfo info) {
         RenderPhase.SKY.push();
     }
 
-    @Inject(method = SKY, at = @At("RETURN"))
+    @Inject(method = "renderSky", at = @At("RETURN"), require = 0)
     private void afterRenderSky(CallbackInfo info) {
         RenderPhase.pop();
     }
 
-    @Inject(method = CLOUDS, at = @At("HEAD"))
+    @Inject(method = "renderClouds", at = @At("HEAD"), require = 0)
     private void beforeRenderClouds(CallbackInfo info) {
         RenderPhase.CLOUDS.push();
     }
 
-    @Inject(method = CLOUDS, at = @At("RETURN"))
+    @Inject(method = "renderClouds", at = @At("RETURN"), require = 0)
     private void afterRenderClouds(CallbackInfo info) {
         RenderPhase.pop();
     }

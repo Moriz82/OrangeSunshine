@@ -40,9 +40,32 @@ def forgeBaseLwjglJars = providers.provider {
     }.collect { it.file }
 }
 
+// Strip sections unknown to dev-launch-injector 0.2.1 (clientdataArgs, dataArgs)
+tasks.matching { it.name == 'configureLaunch' }.configureEach {
+    doLast {
+        def cfg = new File(project.file('.gradle/loom-cache'), 'launch.cfg')
+        if (cfg.exists()) {
+            def lines = cfg.readLines()
+            def out = []
+            def skip = false
+            for (def line : lines) {
+                if (!line.startsWith('\t') && !line.isEmpty()) {
+                    skip = line in ['clientdataArgs', 'dataArgs']
+                }
+                if (!skip) out << line
+            }
+            cfg.text = out.join('\n') + '\n'
+        }
+    }
+}
+
 tasks.matching { it.name in ['runClient', 'runServer'] }.configureEach {
     classpath = classpath.filter { it.name != 'fabric-log4j-util-1.0.2.jar' }
     classpath += files(forgeBaseLwjglJars)
+}
+
+tasks.named('runClient').configure {
+    jvmArgs '-Dfml.earlyWindowControl=0'
 }
 
 processResources {

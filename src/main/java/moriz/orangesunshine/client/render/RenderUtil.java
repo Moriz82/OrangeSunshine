@@ -1,5 +1,7 @@
 package moriz.orangesunshine.client.render;
 
+import java.util.Random;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,5 +21,9 @@ public final class RenderUtil {
                 context.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, x + tileX, y + tileY, tileWidth, tileHeight, color);
             }
         }
+    }
+
+    public static Random random(long seed) {
+        return new Random(seed);
     }
 }

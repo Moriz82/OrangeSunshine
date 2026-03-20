@@ -19,13 +19,10 @@
     ],
     "client": [
       "client.MixinCamera",
-      "client.MixinChatMessages",
       "client.MixinEntityRenderDispatcher",
       "client.MixinChatScreen",
       "client.MixinMouse",
-      "client.MixinGLImportProcessor",
       "client.MixinShaderProgram",
-      "client.MixinShaderStage",
       "client.MixinSoundSystem",
       "client.MixinGameRenderer",
       "client.MixinWorldRenderer",

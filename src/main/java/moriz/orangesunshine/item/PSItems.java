@@ -84,7 +84,6 @@ public interface PSItems {
     Item COCA_LEAVES = register("coca_leaves");
     Item DRIED_COCA_LEAVES = register("dried_coca_leaves");
 
-
     ////////////////////////// JIMSONWEED /////////////////////////////
     Item JIMSONWEED_SEEDS = register("jimsonweed_seeds", new BlockItem(PSBlocks.JIMSONWEEED, new Properties().setId(itemKey("jimsonweed_seeds"))));
     Item JIMSONWEED_SEED_POD = register("jimsonweed_seed_pod");
@@ -171,7 +170,6 @@ public interface PSItems {
             new Properties().setId(itemKey("orangesunshine_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.006, 0.4F)
     ));
-
 
     //</editor-fold>
 
@@ -338,7 +336,6 @@ public interface PSItems {
             .consumes(new BongItem.Consumable(DRIED_JIMSONWEED_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.IMMEDIATE, 0.5, 0.1, 0.1F)))
             .consumes(new BongItem.Consumable(HARMONIUM.getDefaultInstance(), stack -> new HarmoniumDrugInfluence(DrugInfluence.DelayType.IMMEDIATE, 0.04, 0.01, 0.9F, MathUtils.unpackRgb(HARMONIUM.getColor(stack)))));
 
-
     ////////////////////////// TOBACCO /////////////////////////////
     SmokeableItem CIGARETTE = register("cigarette", new SmokeableItem(
             new Properties().setId(itemKey("cigarette")).durability(1), 2, SmokeableItem.WHITE,
@@ -414,7 +411,6 @@ public interface PSItems {
     static MixtureItem registerMixture(MixtureItem item){
         return register(item.getChemicalName(), item);
     }
-
 
     static void bootstrap() { }
 }

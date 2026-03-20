@@ -10,8 +10,6 @@ import moriz.orangesunshine.block.entity.BlockEntityTypeSupportHelper;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
 import moriz.orangesunshine.item.PSItems;
 import moriz.orangesunshine.world.gen.PSSaplingGenerators;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
@@ -39,7 +37,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-
 
 public interface PSBlocks {
     Block MASH_TUB = register("mash_tub", new MashTubBlock(Properties.of().setId(blockKey("mash_tub"))
@@ -183,17 +180,5 @@ public interface PSBlocks {
 
         BlockEntityTypeSupportHelper.of(BlockEntityType.SIGN).addSupportedBlocks(JUNIPER_SIGN, JUNIPER_WALL_SIGN);
         BlockEntityTypeSupportHelper.of(BlockEntityType.HANGING_SIGN).addSupportedBlocks(JUNIPER_HANGING_SIGN, JUNIPER_WALL_HANGING_SIGN);
-
-        FlammableBlockRegistry.getDefaultInstance().add(JUNIPER_LOG, 5, 5);
-        FlammableBlockRegistry.getDefaultInstance().add(STRIPPED_JUNIPER_LOG, 5, 5);
-        FlammableBlockRegistry.getDefaultInstance().add(JUNIPER_WOOD, 5, 5);
-        FlammableBlockRegistry.getDefaultInstance().add(STRIPPED_JUNIPER_WOOD, 5, 5);
-        FlammableBlockRegistry.getDefaultInstance().add(JUNIPER_LEAVES, 30, 60);
-        FlammableBlockRegistry.getDefaultInstance().add(LATTICE, 5, 20);
-        FlammableBlockRegistry.getDefaultInstance().add(WINE_GRAPE_LATTICE, 5, 20);
-        FlammableBlockRegistry.getDefaultInstance().add(MORNING_GLORY_LATTICE, 5, 20);
-
-        StrippableBlockRegistry.register(JUNIPER_LOG, STRIPPED_JUNIPER_LOG);
-        StrippableBlockRegistry.register(JUNIPER_WOOD, STRIPPED_JUNIPER_WOOD);
     }
 }

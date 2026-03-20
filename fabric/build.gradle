@@ -12,9 +12,14 @@ def fabricOwnedSources = [
         'moriz/orangesunshine/client/item/**',
         'moriz/orangesunshine/client/screen/**',
 
+        'moriz/orangesunshine/client/render/DrugEffectInterpreter.java',
+        'moriz/orangesunshine/client/render/DrugRenderer.java',
         'moriz/orangesunshine/client/render/FluidBoxRenderer.java',
         'moriz/orangesunshine/client/render/PSRenderers.java',
         'moriz/orangesunshine/client/render/RenderUtil.java',
+
+        // Client mixins
+        'moriz/orangesunshine/mixin/client/**',
 ]
 
 architectury {

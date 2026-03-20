@@ -1,7 +1,6 @@
 package moriz.orangesunshine.chemistry;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 

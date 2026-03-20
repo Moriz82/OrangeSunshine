@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 import com.mojang.serialization.MapCodec;
 import moriz.orangesunshine.block.entity.DryingTableBlockEntity;
 import moriz.orangesunshine.block.entity.PSBlockEntities;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -20,6 +19,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -71,7 +71,7 @@ public class DryingTableBlock extends BaseEntityBlock implements EntityBlock {
     private InteractionResult openMenu(Level world, BlockPos pos, Player player) {
         return world.getBlockEntity(pos, PSBlockEntities.DRYING_TABLE).<InteractionResult>map(be -> {
             if (!world.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.openMenu(new ExtendedScreenHandlerFactory<BlockPos>() {
+                serverPlayer.openMenu(new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
                         return DryingTableBlock.this.getName();
@@ -80,11 +80,6 @@ public class DryingTableBlock extends BaseEntityBlock implements EntityBlock {
                     @Override
                     public AbstractContainerMenu createMenu(int syncId, Inventory inv, Player openingPlayer) {
                         return new DryingTableScreenHandler(syncId, inv, be);
-                    }
-
-                    @Override
-                    public BlockPos getScreenOpeningData(ServerPlayer player) {
-                        return pos;
                     }
                 });
                 return InteractionResult.SUCCESS_SERVER;
