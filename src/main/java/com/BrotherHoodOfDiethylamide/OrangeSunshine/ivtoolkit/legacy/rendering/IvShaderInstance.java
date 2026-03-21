@@ -98,8 +98,12 @@ public class IvShaderInstance
         }
 
         OpenGlHelper.glLinkProgram(shaderID);
-        if (OpenGlHelper.glGetProgrami(shaderID, OpenGlHelper.GL_LINK_STATUS) == GL11.GL_FALSE)
+        if (OpenGlHelper.glGetProgrami(shaderID, OpenGlHelper.GL_LINK_STATUS) == GL11.GL_FALSE) {
             logger.error(OpenGlHelper.glGetProgramInfoLog(shaderID, 0x8000));
+            OpenGlHelper.glDeleteProgram(shaderID);
+            shaderID = 0;
+            return;
+        }
 
         IvOpenGLHelper.glValidateProgram(shaderID);
         if (OpenGlHelper.glGetProgrami(shaderID, IvOpenGLHelper.GL_VALIDATE_STATUS) == GL11.GL_FALSE)

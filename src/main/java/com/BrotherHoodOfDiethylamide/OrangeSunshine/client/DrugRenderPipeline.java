@@ -42,6 +42,8 @@ import org.lwjgl.opengl.GL11;
 public class DrugRenderPipeline {
 
     private static boolean allocated = false;
+    private static boolean allocationFailed = false;  // stop retrying after permanent failure
+    static boolean allShadersWorking = false;          // package-private for DrugDebugOverlay
 
     // -------------------------------------------------------------------------
     // 2D post-process: fires after world is rendered, before HUD
@@ -52,24 +54,32 @@ public class DrugRenderPipeline {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.world == null || mc.player == null) return;
 
+        if (allocationFailed) return;
+
         if (!allocated) {
             try {
                 PSRenderStates.allocate();
                 allocated = true;
                 OrangeSunshine.logger.info("[DrugRenderPipeline] PSRenderStates allocated successfully");
-                // Log shader compilation results so we can diagnose failures
+                allShadersWorking = true;
                 for (EffectWrapper ew : PSRenderStates.effectWrappers) {
                     if (ew instanceof ShaderWrapper) {
                         int id = ((ShaderWrapper) ew).shaderInstance.getShaderID();
                         OrangeSunshine.logger.info("[DrugRenderPipeline]   " + ew.getClass().getSimpleName()
-                                + " shaderID=" + id + (id > 0 ? " OK" : " FAILED - effects disabled for this wrapper"));
+                                + " shaderID=" + id + (id > 0 ? " OK" : " FAILED"));
+                        if (id <= 0) allShadersWorking = false;
                     }
                 }
                 boolean pingPongOk = PSRenderStates.realtimePingPong != null
                         && PSRenderStates.realtimePingPong.setupRealtimeFB;
                 OrangeSunshine.logger.info("[DrugRenderPipeline]   pingPong FBO: " + (pingPongOk ? "OK" : "FAILED"));
+                if (!pingPongOk) allShadersWorking = false;
+                OrangeSunshine.logger.info("[DrugRenderPipeline] allShadersWorking=" + allShadersWorking
+                        + "; GL overlay fallback " + (allShadersWorking ? "inactive" : "ACTIVE"));
             } catch (Exception e) {
-                OrangeSunshine.logger.error("[DrugRenderPipeline] Failed to allocate PSRenderStates", e);
+                OrangeSunshine.logger.error("[DrugRenderPipeline] Failed to allocate PSRenderStates (will not retry)", e);
+                allocationFailed = true;
+                allShadersWorking = false;
                 return;
             }
         }

@@ -193,6 +193,9 @@ public class IvOpenGLTexturePingPong
 //            glDrawBuffer(GL_BACK);
 //            glReadBuffer(GL_BACK);
             GlStateManager.popAttrib();
+            // Post-processing leaves texture unit and shader in wrong state on some drivers
+            OpenGlHelper.glUseProgram(0);
+            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
             OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, parentFrameBuffer);
 
             activeBuffer = 1 - activeBuffer;

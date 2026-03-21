@@ -40,6 +40,7 @@ public class ShaderSimpleEffects extends IvShaderInstance2D
         setUniformInts("tex0", 0);
 
         setUniformFloats("totalAlpha", 1.0f);
+        setUniformFloats("ticks", ticks);
 
         setUniformFloats("slowColorRotation", slowColorRotation);
         setUniformFloats("quickColorRotation", quickColorRotation);

@@ -40,12 +40,14 @@ public class WrapperSimpleEffects extends ShaderWrapper<ShaderSimpleEffects>
             shaderInstance.desaturation = 0.0f;
             shaderInstance.colorIntensification = 0.0f;
         }
-        // Direct DrugEffects bypass: immediately apply ADSR saturation values
+        // Direct DrugEffects bypass: immediately apply ADSR saturation + hue values
         com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects _de =
             com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug.getDrugEffects();
         float _sat = _de.SATURATION.getValue();
         if (_sat < 0) shaderInstance.desaturation = Math.max(shaderInstance.desaturation, -_sat);
         if (_sat > 0) shaderInstance.colorIntensification = Math.max(shaderInstance.colorIntensification, _sat * 0.3f);
+        float _hue = _de.HUE_AMPLITUDE.getValue();
+        if (_hue > 0.05f) shaderInstance.slowColorRotation = Math.max(shaderInstance.slowColorRotation, Math.min(_hue * 0.5f, 0.9f));
     }
 
     @Override

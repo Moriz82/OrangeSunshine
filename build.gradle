@@ -40,6 +40,9 @@ minecraft {
             if (project.hasProperty('runTests')) {
                 property 'orangesunshine.runTests', 'true'
             }
+            if (project.hasProperty('visualTests')) {
+                property 'orangesunshine.visualTests', 'true'
+            }
         }
 
         server {

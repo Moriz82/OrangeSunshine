@@ -448,8 +448,14 @@ public class PSRenderStates
         realtimePingPong.setParentFrameBuffer(getMCFBO());
         realtimePingPong.preTick(screenWidth, screenHeight);
 
-        for (EffectWrapper effectWrapper : effectWrappers)
-            effectWrapper.apply(partialTicks, realtimePingPong, didDepthPass ? depthBuffer : null);
+        for (EffectWrapper effectWrapper : effectWrappers) {
+            try {
+                effectWrapper.apply(partialTicks, realtimePingPong, didDepthPass ? depthBuffer : null);
+            } catch (Exception e) {
+                OrangeSunshine.logger.error("[PSRenderStates] Wrapper " + effectWrapper.getClass().getSimpleName() + " threw", e);
+            }
+        }
+        OpenGlHelper.glUseProgram(0);
 
         realtimePingPong.postTick();
 

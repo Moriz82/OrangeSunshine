@@ -36,17 +36,26 @@ public class IvOpenGLHelper
 
     public static void glValidateProgram(int program)
     {
-        Field useARBField = IvReflection.findField(OpenGlHelper.class, "field_153214_y");
-        useARBField.setAccessible(true);
+        // Try the SRG (obf) field name first, then deobf name, then fall back to GL20 directly.
         boolean useARB = false;
-
         try
         {
-            useARB = useARBField.getBoolean(null);
+            Field f = IvReflection.findField(OpenGlHelper.class, "field_153214_y");
+            f.setAccessible(true);
+            useARB = f.getBoolean(null);
         }
-        catch (IllegalAccessException e)
+        catch (Exception e1)
         {
-            e.printStackTrace();
+            try
+            {
+                Field f = IvReflection.findField(OpenGlHelper.class, "arbShaders");
+                f.setAccessible(true);
+                useARB = f.getBoolean(null);
+            }
+            catch (Exception e2)
+            {
+                // Neither field found — default to GL20 (safe fallback)
+            }
         }
 
         if (useARB)
