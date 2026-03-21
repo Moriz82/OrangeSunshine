@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "ggg",
+    " g "
+  ],
+  "key": {
+    "g": {"item": "minecraft:glass_pane"}
+  },
+  "result": {"item": "orangesunshine:syringe", "count": 4}
+}

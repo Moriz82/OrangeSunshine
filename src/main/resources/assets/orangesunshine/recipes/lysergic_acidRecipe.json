@@ -1,20 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "rrr",
-    "rWr",
-    "rrr"
+    "eee",
+    "eAe",
+    "eee"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:potion"
+    "A": {
+      "item": "orangesunshine:ammonia"
     },
-    "r": {
-      "item": "orangesunshine:rye"
+    "e": {
+      "item": "orangesunshine:ergotamine"
     }
   },
   "result": {
     "item": "orangesunshine:lysergic_acid"
   }
 }
-

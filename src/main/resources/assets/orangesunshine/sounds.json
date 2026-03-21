@@ -1,0 +1,35 @@
+{
+  "item.bong_hit": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/bong_hit",
+        "volume": 1.0,
+        "pitch": 1.0,
+        "stream": false
+      }
+    ]
+  },
+  "item.joint_inhale": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/joint_inhale",
+        "volume": 0.5,
+        "pitch": 1.0,
+        "stream": false
+      }
+    ]
+  },
+  "item.joint_exhale": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "orangesunshine:item/joint_exhale",
+        "volume": 0.5,
+        "pitch": 1.0,
+        "stream": false
+      }
+    ]
+  }
+}

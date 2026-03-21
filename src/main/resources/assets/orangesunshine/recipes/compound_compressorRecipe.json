@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iPi",
+    "iii"
+  ],
+  "key": {
+    "i": {"item": "minecraft:iron_ingot"},
+    "P": {"item": "minecraft:piston"}
+  },
+  "result": {"item": "orangesunshine:compound_compressor"}
+}

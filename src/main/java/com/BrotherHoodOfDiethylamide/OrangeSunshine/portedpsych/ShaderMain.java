@@ -115,6 +115,18 @@ public class ShaderMain extends IvShaderInstance3D implements ShaderWorld
             contrastColorization[3] = IvMathHelper.clamp(0.0f, contrastColorization[3], 1.0f);
             setUniformFloats("worldColorization", contrastColorization);
 
+            // Direct DrugEffects bypass: immediately apply ADSR envelope values to shader,
+            // bypassing the slow/random portedpsych hallucination selection system.
+            com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects _de =
+                com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug.getDrugEffects();
+            bigWaveStrength = Math.max(bigWaveStrength, _de.BIG_WAVES.getValue() * 0.6f);
+            smallWaveStrength = Math.max(smallWaveStrength, _de.SMALL_WAVES.getValue() * 0.5f);
+            wiggleWaveStrength = Math.max(wiggleWaveStrength, _de.WIGGLE_WAVES.getValue() * 0.7f);
+            distantWorldDeformationStrength = Math.max(distantWorldDeformationStrength, _de.WORLD_DEFORMATION.getValue());
+            float _sat = _de.SATURATION.getValue();
+            if (_sat < 0) desaturation = Math.max(desaturation, -_sat);
+            if (_sat > 0) colorIntensification = Math.max(colorIntensification, _sat * 0.3f);
+
             if (shouldDoShadows)
             {
                 setUniformMatrix("inverseViewMatrix", PsycheShadowHelper.getInverseViewMatrix(partialTicks));

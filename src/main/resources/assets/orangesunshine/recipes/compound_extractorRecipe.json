@@ -1,20 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "rrr",
-    "rFr",
-    "rrr"
+    "iii",
+    "iFi",
+    "iii"
   ],
   "key": {
     "F": {
       "item": "minecraft:furnace"
     },
-    "r": {
-      "item": "orangesunshine:rye"
+    "i": {
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "item": "orangesunshine:compound_extractor_idle"
+    "item": "orangesunshine:compound_extractor"
   }
 }
-

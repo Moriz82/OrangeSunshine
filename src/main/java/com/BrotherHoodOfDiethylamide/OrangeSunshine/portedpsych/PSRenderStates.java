@@ -437,6 +437,11 @@ public class PSRenderStates
         int screenWidth = mc.displayWidth;
         int screenHeight = mc.displayHeight;
 
+        // Reset to texture unit 0 — after 3D world render, MC leaves unit 1 (lightmap) active.
+        // The ping-pong system binds textures assuming unit 0; a mismatch makes the shader
+        // sample from the wrong unit, producing no visible post-process effect.
+        net.minecraft.client.renderer.GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+
         IvOpenGLHelper.setUpOpenGLStandard2D(screenWidth, screenHeight);
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
 

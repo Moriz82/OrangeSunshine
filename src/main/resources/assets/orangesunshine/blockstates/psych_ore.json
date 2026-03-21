@@ -1,9 +1,5 @@
 {
-  "variants":
-  {
-    "normal":
-    {
-      "model": "orangesunshine:psych_ore"
-    }
+  "variants": {
+    "normal": { "model": "orangesunshine:psych_ore" }
   }
 }

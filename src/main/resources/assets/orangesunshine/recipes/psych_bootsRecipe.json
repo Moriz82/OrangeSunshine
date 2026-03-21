@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "o o",
+    "o o"
+  ],
+  "key": {"o": {"item": "orangesunshine:psych_ingot"}},
+  "result": {"item": "orangesunshine:psych_boots"}
+}

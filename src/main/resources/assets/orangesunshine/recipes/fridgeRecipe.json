@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "i i",
+    "ici"
+  ],
+  "key": {
+    "i": {"item": "minecraft:iron_ingot"},
+    "c": {"item": "minecraft:chest"}
+  },
+  "result": {"item": "orangesunshine:fridge"}
+}

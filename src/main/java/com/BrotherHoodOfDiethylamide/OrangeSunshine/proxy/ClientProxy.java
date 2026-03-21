@@ -1,13 +1,12 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.proxy;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.model.ModelLoader;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.client.DrugEffectsBridge;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
-
-
-    public void registerItemRenderer(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
+    @Override
+    public void init() {
+        MinecraftForge.EVENT_BUS.register(new DrugEffectsBridge());
+        // DrugDebugOverlay is auto-registered via @Mod.EventBusSubscriber
     }
 }

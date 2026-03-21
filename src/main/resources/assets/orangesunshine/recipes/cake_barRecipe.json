@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:cake"},
+    {"item": "orangesunshine:weed_extract"}
+  ],
+  "result": {"item": "orangesunshine:cake_bar"}
+}

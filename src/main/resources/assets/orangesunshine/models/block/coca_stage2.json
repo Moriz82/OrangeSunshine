@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "orangesunshine:blocks/coca_stage2"
+  }
+}

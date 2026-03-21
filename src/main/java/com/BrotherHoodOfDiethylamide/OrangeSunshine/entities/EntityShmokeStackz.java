@@ -1,7 +1,7 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.entities;
 
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.utils.RegistryHandler;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.entity.ModVillagers;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,7 +23,7 @@ public class EntityShmokeStackz extends EntityVillager
     {
         super(worldIn);
         this.setSize(0.9F, 2.8F);
-        this.setProfession(RegistryHandler.shmokestackz);
+        if (ModVillagers.SHMOKE_STACKZ != null) this.setProfession(ModVillagers.SHMOKE_STACKZ);
     }
 
     @Override

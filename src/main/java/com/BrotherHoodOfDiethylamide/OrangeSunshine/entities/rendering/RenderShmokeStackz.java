@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderShmokeStackz extends RenderLiving<EntityShmokeStackz>
 {
-    public static final ResourceLocation TEXTURES = new ResourceLocation(OrangeSunshine.MODID+"\\textures\\entity\\shmoke_stackz.png");
+    public static final ResourceLocation TEXTURES = new ResourceLocation(OrangeSunshine.MODID, "textures/entity/shmoke_stackz.png");
 
     public RenderShmokeStackz(RenderManager manager)
     {

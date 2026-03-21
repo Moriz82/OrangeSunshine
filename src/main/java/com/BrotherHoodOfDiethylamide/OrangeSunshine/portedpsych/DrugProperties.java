@@ -100,7 +100,8 @@ import java.util.*;
 
     public float getDrugValue(String drugName)
     {
-        return (float) drugs.get(drugName).getActiveValue();
+        Drug drug = drugs.get(drugName);
+        return drug != null ? (float) drug.getActiveValue() : 0f;
     }
 
     public void addToDrug(String drugName, double effect)

@@ -1,20 +1,16 @@
 {
-    "variants": {
-        "age=0": {"model": "orangesunshine:weed_crop"},
-        "age=1": {"model": "orangesunshine:weed_crop"},
-        "age=2": {"model": "orangesunshine:weed_crop"},
-        "age=3": {"model": "orangesunshine:weed_crop"},
-        "age=4": {"model": "orangesunshine:weed_crop"},
-        "age=5": {"model": "orangesunshine:weed_crop"},
-        "age=6": {"model": "orangesunshine:weed_crop"},
-        "age=7": {"model": "orangesunshine:weed_crop"},
-        "age=8": {"model": "orangesunshine:weed_crop"},
-        "age=9": {"model": "orangesunshine:weed_crop"},
-        "age=10": {"model": "orangesunshine:weed_crop"},
-        "age=11": {"model": "orangesunshine:weed_crop"},
-        "age=12": {"model": "orangesunshine:weed_crop"},
-        "age=13": {"model": "orangesunshine:weed_crop"},
-        "age=14": {"model": "orangesunshine:weed_crop"},
-        "age=15": {"model": "orangesunshine:weed_crop"}
-    }
+  "variants": {
+    "age=0,height=0": { "model": "orangesunshine:weed_stage0" },
+    "age=1,height=0": { "model": "orangesunshine:weed_stage1" },
+    "age=2,height=0": { "model": "orangesunshine:weed_stage2" },
+    "age=3,height=0": { "model": "orangesunshine:weed_stage3" },
+    "age=0,height=1": { "model": "orangesunshine:weed_stage3" },
+    "age=1,height=1": { "model": "orangesunshine:weed_stage3" },
+    "age=2,height=1": { "model": "orangesunshine:weed_stage3" },
+    "age=3,height=1": { "model": "orangesunshine:weed_stage3" },
+    "age=0,height=2": { "model": "orangesunshine:weed_stage3" },
+    "age=1,height=2": { "model": "orangesunshine:weed_stage3" },
+    "age=2,height=2": { "model": "orangesunshine:weed_stage3" },
+    "age=3,height=2": { "model": "orangesunshine:weed_stage3" }
+  }
 }

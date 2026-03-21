@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "orangesunshine:blocks/ayahuasca_stage2"
+  }
+}

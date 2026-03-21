@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0,height=0": { "model": "orangesunshine:coca_stage0" },
+    "age=1,height=0": { "model": "orangesunshine:coca_stage1" },
+    "age=2,height=0": { "model": "orangesunshine:coca_stage2" },
+    "age=3,height=0": { "model": "orangesunshine:coca_stage3" },
+    "age=0,height=1": { "model": "orangesunshine:coca_stage3" },
+    "age=1,height=1": { "model": "orangesunshine:coca_stage3" },
+    "age=2,height=1": { "model": "orangesunshine:coca_stage3" },
+    "age=3,height=1": { "model": "orangesunshine:coca_stage3" },
+    "age=0,height=2": { "model": "orangesunshine:coca_stage3" },
+    "age=1,height=2": { "model": "orangesunshine:coca_stage3" },
+    "age=2,height=2": { "model": "orangesunshine:coca_stage3" },
+    "age=3,height=2": { "model": "orangesunshine:coca_stage3" }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "orangesunshine:dried_tobacco"},
+    {"item": "orangesunshine:rolling_paper"}
+  ],
+  "result": {"item": "orangesunshine:cigarette"}
+}

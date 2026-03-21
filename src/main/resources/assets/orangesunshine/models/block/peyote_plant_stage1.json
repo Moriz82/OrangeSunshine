@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "orangesunshine:blocks/peyote_plant_stage1"
+  }
+}

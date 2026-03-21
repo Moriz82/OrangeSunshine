@@ -1,43 +1,128 @@
-itemGroup.orangesunshine.name=Orange Sunshine
+itemGroup.Orange Sunshine=Orange Sunshine
 
-tile.psych_ore.name=Psych Ore
-item.psych_ingot.name=Psych Ingot
+# Blocks
+tile.orangesunshine.psych_ore.name=Psych Ore
+tile.orangesunshine.drying_table.name=Drying Table
+tile.orangesunshine.fridge.name=Fridge
+tile.orangesunshine.compound_compressor.name=Compound Compressor
+tile.orangesunshine.compound_extractor.name=Compound Extractor
+tile.orangesunshine.weed_crop.name=Weed Plant
+tile.orangesunshine.coca_crop.name=Coca Plant
+tile.orangesunshine.tobacco_crop.name=Tobacco Plant
+tile.orangesunshine.ayahuasca_crop.name=Ayahuasca Vine
+tile.orangesunshine.peyote_crop.name=Peyote Cactus
+tile.orangesunshine.san_pedro_crop.name=San Pedro Cactus
+tile.orangesunshine.red_shrooms_crop.name=Red Mushroom Crop
+tile.orangesunshine.brown_shrooms_crop.name=Brown Mushroom Crop
+tile.orangesunshine.cut_poppy.name=Cut Poppy
+tile.orangesunshine.coke_cake.name=Coke Cake
 
-entity.shmoke_stackz.name=Shmoke Stackz
-entity.shmokestackz.name=Shmoke Stackz
-entity.Villager.shmoke_stackz.name=Shmoke Stackz
-entity.Villager.Shmoke_Stackz=Shmoke Stackz
-
-item.weed.name=Weed
-item.weed_seed.name=Weed Seed
-item.rolling_paper.name=Rolling Paper
-item.weed_joint.name=Weed Joint
-item.weed_extract.name=Weed Extract
-
-item.rye.name=Rye
-item.rye_seed.name=Rye Seed
-item.lysergic_acid.name=Lysergic Acid
-item.lsd.name=Lysergic Acid Dithylamide
-item.orangesunshine.name=ALD-52
-item.blotter.name=Blotter Paper
-item.lsd_blotter.name=LSD
-item.orangesunshine_blotter.name=OrangeSunshine
-
-item.mushroom_cubensis.name=Psilocybe Cubensis
-item.mushroom_seed.name=Mushroom Spores
-item.psilocybin.name=Psilocybin
-
-tile.compound_extractor_idle.name=Compound Extractor
-tile.compound_extractor_active.name=Compound Extractor
+# GUI container names
+container.drying_table=Drying Table
+container.fridge=Fridge
+container.compound_compressor=Compound Compressor
 container.compound_extractor=Compound Extractor
 
-item.psych_helmet.name=Psych Helmet
-item.psych_chest.name=Psych Chest
-item.psych_legs.name=Psych Legs
-item.psych_boots.name=Psych Boots
+# Mushrooms
+item.orangesunshine.red_shrooms.name=Red Shrooms
+item.orangesunshine.brown_shrooms.name=Brown Shrooms
+item.orangesunshine.dried_red_shrooms.name=Dried Red Mushroom
+item.orangesunshine.dried_brown_shrooms.name=Dried Brown Mushroom
 
-item.psych_sword.name=Psych Sword
-item.psych_pic.name=Psych Pickaxe
-item.psych_axe.name=Psych Axe
-item.psych_shovel.name=Psych Shovel
-item.psych_hoe.name=Psych Hoe
+# Cocaine
+item.orangesunshine.cocaine_rock.name=Crack Cocaine
+item.orangesunshine.cocaine_powder.name=Powder Cocaine
+item.orangesunshine.cocaine_dust.name=Cocaine Dust
+item.orangesunshine.coca_mulch.name=Coca Mulch
+item.orangesunshine.coca_leaf.name=Coca Leaf
+
+# Weed
+item.orangesunshine.hash_muffin.name=Hash Muffin
+item.orangesunshine.weed_joint.name=Weed Joint
+item.orangesunshine.dried_weed_leaf.name=Dried Weed Leaf
+item.orangesunshine.weed_leaf.name=Weed Leaf
+item.orangesunshine.dried_weed_bud.name=Dried Weed Bud
+item.orangesunshine.weed_bud.name=Weed Bud
+item.orangesunshine.weed_extract.name=Weed Extract
+item.orangesunshine.cake_bar.name=Cake Bar
+
+# Psychedelics
+item.orangesunshine.lsd_bottle.name=LSD (Liquid)
+item.orangesunshine.lsd_blotter.name=LSD Blotter
+item.orangesunshine.orangesunshine_bottle.name=Orange Sunshine (Liquid)
+item.orangesunshine.orangesunshine_blotter.name=Orange Sunshine Blotter
+item.orangesunshine.dmt.name=DMT
+item.orangesunshine.dmt_5_meo.name=5-MeO-DMT
+item.orangesunshine.ayahuasca.name=Ayahuasca
+item.orangesunshine.peyote.name=Peyote Button
+item.orangesunshine.peyote_seeds.name=Peyote Seeds
+item.orangesunshine.san_pedro.name=San Pedro Cactus
+item.orangesunshine.san_pedro_seeds.name=San Pedro Seeds
+item.orangesunshine.mescaline.name=Mescaline
+
+# Party Drugs
+item.orangesunshine.mdma.name=MDMA
+item.orangesunshine.mda.name=MDA
+item.orangesunshine.pma.name=PMA
+item.orangesunshine.codeine.name=Codeine Syrup
+
+# Nicotine
+item.orangesunshine.tobacco.name=Tobacco
+item.orangesunshine.dried_tobacco.name=Dried Tobacco
+item.orangesunshine.nic.name=Liquid Nicotine
+item.orangesunshine.tobacco_seeds.name=Tobacco Seeds
+item.orangesunshine.cigarette.name=Cigarette
+item.orangesunshine.cigar.name=Cigar
+item.orangesunshine.sourin_air.name=Sourin Air Vape
+
+# Opioids
+item.orangesunshine.morphine_bottle.name=Morphine
+item.orangesunshine.opium_bottle_0.name=Opium (Raw)
+item.orangesunshine.opium_bottle_1.name=Opium (Stage 1)
+item.orangesunshine.opium_bottle_2.name=Opium (Stage 2)
+item.orangesunshine.opium_bottle_3.name=Refined Opium
+
+# Syringes / Glassware
+item.orangesunshine.naloxone.name=Naloxone
+item.orangesunshine.furosemide.name=Furosemide
+item.orangesunshine.cocaine_syringe.name=Cocaine Syringe
+item.orangesunshine.morphine_syringe.name=Morphine Syringe
+item.orangesunshine.bong.name=Bong
+item.orangesunshine.smoking_pipe.name=Smoking Pipe
+item.orangesunshine.rig.name=Dab Rig
+
+# Crafting Materials
+item.orangesunshine.blotter.name=Blotter Paper
+item.orangesunshine.rolling_paper.name=Rolling Paper
+item.orangesunshine.syringe.name=Empty Syringe
+item.orangesunshine.de_ionized_water.name=De-ionized Water
+item.orangesunshine.vinegar.name=Vinegar
+item.orangesunshine.root_bark.name=Root Bark
+item.orangesunshine.strainer.name=Strainer
+item.orangesunshine.sodium_hydroxide.name=Sodium Hydroxide
+item.orangesunshine.bark_solution_1.name=Bark Solution (Stage 1)
+item.orangesunshine.bark_solution_2.name=Bark Solution (Stage 2)
+item.orangesunshine.bark_solution_3.name=Bark Solution (Stage 3)
+item.orangesunshine.bark_solution_4.name=Bark Solution (Stage 4)
+item.orangesunshine.bark_solution_5.name=Bark Solution (Stage 5)
+item.orangesunshine.ergotamine.name=Ergotamine
+item.orangesunshine.ergorot_infected_wheat.name=Ergot Infected Wheat
+item.orangesunshine.lysergic_acid.name=Lysergic Acid
+item.orangesunshine.ammonia.name=Ammonia
+item.orangesunshine.diethylamine.name=Diethylamine
+
+# Ore & Tools
+item.orangesunshine.psych_ingot.name=Psych Ingot
+item.orangesunshine.psych_sword.name=Psych Sword
+item.orangesunshine.psych_pic.name=Psych Pickaxe
+item.orangesunshine.psych_axe.name=Psych Axe
+item.orangesunshine.psych_shovel.name=Psych Shovel
+item.orangesunshine.psych_hoe.name=Psych Hoe
+item.orangesunshine.psych_helmet.name=Psych Helmet
+item.orangesunshine.psych_chest.name=Psych Chestplate
+item.orangesunshine.psych_leggings.name=Psych Leggings
+item.orangesunshine.psych_boots.name=Psych Boots
+
+# Entity
+entity.orangesunshine.shmoke_stackz.name=Shmoke Stackz
+entity.Villager.orangesunshine_shmoke_stackz.name=Drug Dealer

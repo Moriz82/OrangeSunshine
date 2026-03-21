@@ -1,6 +1,6 @@
 package com.BrotherHoodOfDiethylamide.OrangeSunshine.world;
 
-import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ComplexBlocks;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.blocks.ModBlocks;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,7 @@ public class WorldGenCustomOres implements IWorldGenerator
 
     public WorldGenCustomOres()
     {
-        PsychOreGen = new WorldGenMinable(ComplexBlocks.psychOre.getDefaultState(), 3, BlockMatcher.forBlock(Blocks.STONE));
+        PsychOreGen = new WorldGenMinable(ModBlocks.PSYCH_ORE.getDefaultState(), 3, BlockMatcher.forBlock(Blocks.STONE));
     }
 
     @Override

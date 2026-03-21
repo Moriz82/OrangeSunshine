@@ -1,0 +1,10 @@
+{
+  "parent": "block/orientable",
+  "ambientocclusion": true,
+  "textures": {
+    "top": "orangesunshine:blocks/compound_compressor_top",
+    "bottom": "orangesunshine:blocks/compound_compressor_bottom",
+    "side": "orangesunshine:blocks/compound_compressor_side",
+    "front": "orangesunshine:blocks/compound_compressor_front"
+  }
+}

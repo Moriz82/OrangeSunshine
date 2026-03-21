@@ -1,0 +1,10 @@
+{
+  "parent": "block/orientable",
+  "ambientocclusion": true,
+  "textures": {
+    "top": "orangesunshine:blocks/fridge_top",
+    "bottom": "orangesunshine:blocks/fridge_bottom",
+    "side": "orangesunshine:blocks/fridge_side",
+    "front": "orangesunshine:blocks/fridge_front"
+  }
+}

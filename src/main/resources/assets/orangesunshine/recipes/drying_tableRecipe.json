@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ppp",
+    "psp",
+    "ppp"
+  ],
+  "key": {
+    "p": {"type": "forge:ore_dict", "ore": "plankWood"},
+    "s": {"item": "minecraft:stick"}
+  },
+  "result": {"item": "orangesunshine:drying_table"}
+}
