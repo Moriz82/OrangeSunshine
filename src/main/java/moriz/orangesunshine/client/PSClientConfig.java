@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import moriz.orangesunshine.entity.drug.DrugType;
-import org.joml.Vector2f;
+import org.joml.Vec2;
 
 import net.minecraft.resources.Identifier;
 
@@ -64,7 +64,7 @@ public class PSClientConfig {
 
         public boolean waterOverlayEnabled = true;
         public boolean hurtOverlayEnabled = true;
-        public Vector2f digitalEffectPixelRescale = new Vector2f(0.05F, 0.05F);
+        public Vec2 digitalEffectPixelRescale = new Vec2(0.05F, 0.05F);
 
         private transient float[] digitalEffectPixelRescaleF;
 

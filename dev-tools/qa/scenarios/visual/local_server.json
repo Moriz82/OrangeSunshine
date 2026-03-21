@@ -1,0 +1,26 @@
+{
+  "name": "local-server-visual-checklist",
+  "environment": "local_server",
+  "steps": [
+    {
+      "id": "01-connect-local-server",
+      "instruction": "Connect to local server (127.0.0.1), confirm block entities and commands execute without startup artifacts.",
+      "screenshot": "01-connect-local-server.png"
+    },
+    {
+      "id": "02-plant-generation",
+      "instruction": "Walk to a farmable biome and inspect naturally generated plants for stage and tint consistency.",
+      "screenshot": "02-plant-generation.png"
+    },
+    {
+      "id": "03-processing-network",
+      "instruction": "Build one complete chain (Drying -> Mixing -> Distilling) and verify model transitions, animation timing, and inventory outputs visually.",
+      "screenshot": "03-processing-network.png"
+    },
+    {
+      "id": "04-hallucination-huds",
+      "instruction": "Trigger a short hallucination/influence sample and capture drift overlay / HUD markers / particles.",
+      "screenshot": "04-hallucination-huds.png"
+    }
+  ]
+}

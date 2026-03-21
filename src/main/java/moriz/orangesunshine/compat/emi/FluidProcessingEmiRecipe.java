@@ -16,8 +16,8 @@ import moriz.orangesunshine.fluid.Processable;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.FluidContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class FluidProcessingEmiRecipe implements EmiRecipe, PSRecipe {
 
@@ -117,8 +117,8 @@ public class FluidProcessingEmiRecipe implements EmiRecipe, PSRecipe {
     public void addWidgets(WidgetHolder widgets) {
         widgets.addTexture(EmiTexture.EMPTY_ARROW, 50, 5);
         widgets.addAnimatedTexture(EmiTexture.FULL_ARROW, 50, 5, time / 20, true, false, false)
-                    .tooltipText(List.of(Text.translatable("emi.cooking.time", time / 20F)));
-        widgets.addText(Text.literal(change + "x"), 45, 14, -1, true);
+                    .tooltipText(List.of(Component.translatable("emi.cooking.time", time / 20F)));
+        widgets.addText(Component.literal(change + "x"), 45, 14, -1, true);
         widgets.addSlot(inputFluid, 19, 5);
         widgets.addSlot(outputFluid, 85, 5).recipeContext(this);
         widgets.addSlot(receptical, 105, 5);

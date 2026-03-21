@@ -1,0 +1,500 @@
+Compiled from "LevelRenderer.java"
+public class net.minecraft.client.renderer.LevelRenderer implements net.minecraft.server.packs.resources.ResourceManagerReloadListener,java.lang.AutoCloseable {
+  public static final int SECTION_SIZE;
+
+  public static final int HALF_SECTION_SIZE;
+
+  public static final int NEARBY_SECTION_DISTANCE_IN_BLOCKS;
+
+  public final net.minecraft.client.renderer.debug.DebugRenderer debugRenderer;
+
+  public final net.minecraft.client.renderer.debug.GameTestBlockHighlightRenderer gameTestBlockHighlightRenderer;
+
+  public net.minecraft.client.renderer.LevelRenderer(net.minecraft.client.Minecraft, net.minecraft.client.renderer.entity.EntityRenderDispatcher, net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher, net.minecraft.client.renderer.RenderBuffers, net.minecraft.client.renderer.state.LevelRenderState, net.minecraft.client.renderer.feature.FeatureRenderDispatcher);
+    Code:
+         0: aload_0
+         1: invokespecial #203                // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: new           #205                // class net/minecraft/client/renderer/CloudRenderer
+         8: dup
+         9: invokespecial #206                // Method net/minecraft/client/renderer/CloudRenderer."<init>":()V
+        12: putfield      #208                // Field cloudRenderer:Lnet/minecraft/client/renderer/CloudRenderer;
+        15: aload_0
+        16: new           #210                // class net/minecraft/client/renderer/WorldBorderRenderer
+        19: dup
+        20: invokespecial #211                // Method net/minecraft/client/renderer/WorldBorderRenderer."<init>":()V
+        23: putfield      #213                // Field worldBorderRenderer:Lnet/minecraft/client/renderer/WorldBorderRenderer;
+        26: aload_0
+        27: new           #215                // class net/minecraft/client/renderer/WeatherEffectRenderer
+        30: dup
+        31: invokespecial #216                // Method net/minecraft/client/renderer/WeatherEffectRenderer."<init>":()V
+        34: putfield      #218                // Field weatherEffectRenderer:Lnet/minecraft/client/renderer/WeatherEffectRenderer;
+        37: aload_0
+        38: new           #220                // class net/minecraft/client/renderer/state/ParticlesRenderState
+        41: dup
+        42: invokespecial #221                // Method net/minecraft/client/renderer/state/ParticlesRenderState."<init>":()V
+        45: putfield      #223                // Field particlesRenderState:Lnet/minecraft/client/renderer/state/ParticlesRenderState;
+        48: aload_0
+        49: new           #225                // class net/minecraft/client/renderer/debug/DebugRenderer
+        52: dup
+        53: invokespecial #226                // Method net/minecraft/client/renderer/debug/DebugRenderer."<init>":()V
+        56: putfield      #228                // Field debugRenderer:Lnet/minecraft/client/renderer/debug/DebugRenderer;
+        59: aload_0
+        60: new           #230                // class net/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer
+        63: dup
+        64: invokespecial #231                // Method net/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer."<init>":()V
+        67: putfield      #233                // Field gameTestBlockHighlightRenderer:Lnet/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer;
+        70: aload_0
+        71: new           #235                // class net/minecraft/client/renderer/SectionOcclusionGraph
+        74: dup
+        75: invokespecial #236                // Method net/minecraft/client/renderer/SectionOcclusionGraph."<init>":()V
+        78: putfield      #238                // Field sectionOcclusionGraph:Lnet/minecraft/client/renderer/SectionOcclusionGraph;
+        81: aload_0
+        82: new           #240                // class it/unimi/dsi/fastutil/objects/ObjectArrayList
+        85: dup
+        86: sipush        10000
+        89: invokespecial #243                // Method it/unimi/dsi/fastutil/objects/ObjectArrayList."<init>":(I)V
+        92: putfield      #245                // Field visibleSections:Lit/unimi/dsi/fastutil/objects/ObjectArrayList;
+        95: aload_0
+        96: new           #240                // class it/unimi/dsi/fastutil/objects/ObjectArrayList
+        99: dup
+       100: bipush        50
+       102: invokespecial #243                // Method it/unimi/dsi/fastutil/objects/ObjectArrayList."<init>":(I)V
+       105: putfield      #247                // Field nearbyVisibleSections:Lit/unimi/dsi/fastutil/objects/ObjectArrayList;
+       108: aload_0
+       109: new           #249                // class it/unimi/dsi/fastutil/ints/Int2ObjectOpenHashMap
+       112: dup
+       113: invokespecial #250                // Method it/unimi/dsi/fastutil/ints/Int2ObjectOpenHashMap."<init>":()V
+       116: putfield      #252                // Field destroyingBlocks:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+       119: aload_0
+       120: new           #254                // class it/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap
+       123: dup
+       124: invokespecial #255                // Method it/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap."<init>":()V
+       127: putfield      #257                // Field destructionProgress:Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;
+       130: aload_0
+       131: new           #259                // class net/minecraft/client/renderer/LevelTargetBundle
+       134: dup
+       135: invokespecial #260                // Method net/minecraft/client/renderer/LevelTargetBundle."<init>":()V
+       138: putfield      #262                // Field targets:Lnet/minecraft/client/renderer/LevelTargetBundle;
+       141: aload_0
+       142: ldc_w         #263                // int -2147483648
+       145: putfield      #265                // Field lastCameraSectionX:I
+       148: aload_0
+       149: ldc_w         #263                // int -2147483648
+       152: putfield      #267                // Field lastCameraSectionY:I
+       155: aload_0
+       156: ldc_w         #263                // int -2147483648
+       159: putfield      #269                // Field lastCameraSectionZ:I
+       162: aload_0
+       163: ldc2_w        #270                // double 4.9E-324d
+       166: putfield      #273                // Field prevCamX:D
+       169: aload_0
+       170: ldc2_w        #270                // double 4.9E-324d
+       173: putfield      #275                // Field prevCamY:D
+       176: aload_0
+       177: ldc2_w        #270                // double 4.9E-324d
+       180: putfield      #277                // Field prevCamZ:D
+       183: aload_0
+       184: ldc2_w        #270                // double 4.9E-324d
+       187: putfield      #279                // Field prevCamRotX:D
+       190: aload_0
+       191: ldc2_w        #270                // double 4.9E-324d
+       194: putfield      #281                // Field prevCamRotY:D
+       197: aload_0
+       198: iconst_m1
+       199: putfield      #283                // Field lastViewDistance:I
+       202: aload_0
+       203: new           #90                 // class net/minecraft/gizmos/SimpleGizmoCollector
+       206: dup
+       207: invokespecial #284                // Method net/minecraft/gizmos/SimpleGizmoCollector."<init>":()V
+       210: putfield      #286                // Field collectedGizmos:Lnet/minecraft/gizmos/SimpleGizmoCollector;
+       213: aload_0
+       214: new           #15                 // class net/minecraft/client/renderer/LevelRenderer$FinalizedGizmos
+       217: dup
+       218: new           #288                // class net/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives
+       221: dup
+       222: invokespecial #289                // Method net/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives."<init>":()V
+       225: new           #288                // class net/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives
+       228: dup
+       229: invokespecial #289                // Method net/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives."<init>":()V
+       232: invokespecial #292                // Method net/minecraft/client/renderer/LevelRenderer$FinalizedGizmos."<init>":(Lnet/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives;Lnet/minecraft/client/renderer/gizmos/DrawableGizmoPrimitives;)V
+       235: putfield      #294                // Field finalizedGizmos:Lnet/minecraft/client/renderer/LevelRenderer$FinalizedGizmos;
+       238: aload_0
+       239: aload_1
+       240: putfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       243: aload_0
+       244: aload_2
+       245: putfield      #298                // Field entityRenderDispatcher:Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;
+       248: aload_0
+       249: aload_3
+       250: putfield      #300                // Field blockEntityRenderDispatcher:Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;
+       253: aload_0
+       254: aload         4
+       256: putfield      #302                // Field renderBuffers:Lnet/minecraft/client/renderer/RenderBuffers;
+       259: aload_0
+       260: aload         6
+       262: invokevirtual #308                // Method net/minecraft/client/renderer/feature/FeatureRenderDispatcher.getSubmitNodeStorage:()Lnet/minecraft/client/renderer/SubmitNodeStorage;
+       265: putfield      #310                // Field submitNodeStorage:Lnet/minecraft/client/renderer/SubmitNodeStorage;
+       268: aload_0
+       269: aload         5
+       271: putfield      #312                // Field levelRenderState:Lnet/minecraft/client/renderer/state/LevelRenderState;
+       274: aload_0
+       275: aload         6
+       277: putfield      #314                // Field featureRenderDispatcher:Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;
+       280: return
+
+  public void close();
+    Code:
+         0: aload_0
+         1: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+         4: ifnull        14
+         7: aload_0
+         8: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        11: invokevirtual #330                // Method com/mojang/blaze3d/pipeline/RenderTarget.destroyBuffers:()V
+        14: aload_0
+        15: getfield      #332                // Field skyRenderer:Lnet/minecraft/client/renderer/SkyRenderer;
+        18: ifnull        28
+        21: aload_0
+        22: getfield      #332                // Field skyRenderer:Lnet/minecraft/client/renderer/SkyRenderer;
+        25: invokevirtual #336                // Method net/minecraft/client/renderer/SkyRenderer.close:()V
+        28: aload_0
+        29: getfield      #338                // Field chunkLayerSampler:Lcom/mojang/blaze3d/textures/GpuSampler;
+        32: ifnull        42
+        35: aload_0
+        36: getfield      #338                // Field chunkLayerSampler:Lcom/mojang/blaze3d/textures/GpuSampler;
+        39: invokevirtual #341                // Method com/mojang/blaze3d/textures/GpuSampler.close:()V
+        42: aload_0
+        43: getfield      #208                // Field cloudRenderer:Lnet/minecraft/client/renderer/CloudRenderer;
+        46: invokevirtual #342                // Method net/minecraft/client/renderer/CloudRenderer.close:()V
+        49: return
+
+  public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager);
+    Code:
+         0: aload_0
+         1: invokevirtual #347                // Method initOutline:()V
+         4: aload_0
+         5: getfield      #332                // Field skyRenderer:Lnet/minecraft/client/renderer/SkyRenderer;
+         8: ifnull        18
+        11: aload_0
+        12: getfield      #332                // Field skyRenderer:Lnet/minecraft/client/renderer/SkyRenderer;
+        15: invokevirtual #336                // Method net/minecraft/client/renderer/SkyRenderer.close:()V
+        18: aload_0
+        19: new           #334                // class net/minecraft/client/renderer/SkyRenderer
+        22: dup
+        23: aload_0
+        24: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        27: invokevirtual #353                // Method net/minecraft/client/Minecraft.getTextureManager:()Lnet/minecraft/client/renderer/texture/TextureManager;
+        30: aload_0
+        31: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        34: invokevirtual #357                // Method net/minecraft/client/Minecraft.getAtlasManager:()Lnet/minecraft/client/resources/model/AtlasManager;
+        37: invokespecial #360                // Method net/minecraft/client/renderer/SkyRenderer."<init>":(Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/resources/model/AtlasManager;)V
+        40: putfield      #332                // Field skyRenderer:Lnet/minecraft/client/renderer/SkyRenderer;
+        43: return
+
+  public void initOutline();
+    Code:
+         0: aload_0
+         1: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+         4: ifnull        14
+         7: aload_0
+         8: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        11: invokevirtual #330                // Method com/mojang/blaze3d/pipeline/RenderTarget.destroyBuffers:()V
+        14: aload_0
+        15: new           #364                // class com/mojang/blaze3d/pipeline/TextureTarget
+        18: dup
+        19: ldc_w         #366                // String Entity Outline
+        22: aload_0
+        23: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        26: invokevirtual #370                // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+        29: invokevirtual #376                // Method com/mojang/blaze3d/platform/Window.getWidth:()I
+        32: aload_0
+        33: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        36: invokevirtual #370                // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+        39: invokevirtual #379                // Method com/mojang/blaze3d/platform/Window.getHeight:()I
+        42: iconst_1
+        43: invokespecial #382                // Method com/mojang/blaze3d/pipeline/TextureTarget."<init>":(Ljava/lang/String;IIZ)V
+        46: putfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        49: return
+
+  public void doEntityOutline();
+    Code:
+         0: aload_0
+         1: invokevirtual #435                // Method shouldShowEntityOutlines:()Z
+         4: ifeq          24
+         7: aload_0
+         8: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        11: aload_0
+        12: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        15: invokevirtual #439                // Method net/minecraft/client/Minecraft.getMainRenderTarget:()Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        18: invokevirtual #443                // Method com/mojang/blaze3d/pipeline/RenderTarget.getColorTextureView:()Lcom/mojang/blaze3d/textures/GpuTextureView;
+        21: invokevirtual #447                // Method com/mojang/blaze3d/pipeline/RenderTarget.blitAndBlendToTexture:(Lcom/mojang/blaze3d/textures/GpuTextureView;)V
+        24: return
+
+  protected boolean shouldShowEntityOutlines();
+    Code:
+         0: aload_0
+         1: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+         4: getfield      #451                // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+         7: invokevirtual #456                // Method net/minecraft/client/renderer/GameRenderer.isPanoramicMode:()Z
+        10: ifne          34
+        13: aload_0
+        14: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        17: ifnull        34
+        20: aload_0
+        21: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        24: getfield      #460                // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        27: ifnull        34
+        30: iconst_1
+        31: goto          35
+        34: iconst_0
+        35: ireturn
+
+  public void setLevel(net.minecraft.client.multiplayer.ClientLevel);
+    Code:
+         0: aload_0
+         1: ldc_w         #263                // int -2147483648
+         4: putfield      #265                // Field lastCameraSectionX:I
+         7: aload_0
+         8: ldc_w         #263                // int -2147483648
+        11: putfield      #267                // Field lastCameraSectionY:I
+        14: aload_0
+        15: ldc_w         #263                // int -2147483648
+        18: putfield      #269                // Field lastCameraSectionZ:I
+        21: aload_0
+        22: aload_1
+        23: putfield      #464                // Field level:Lnet/minecraft/client/multiplayer/ClientLevel;
+        26: aload_1
+        27: ifnull        37
+        30: aload_0
+        31: invokevirtual #467                // Method allChanged:()V
+        34: goto          94
+        37: aload_0
+        38: getfield      #298                // Field entityRenderDispatcher:Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;
+        41: invokevirtual #472                // Method net/minecraft/client/renderer/entity/EntityRenderDispatcher.resetCamera:()V
+        44: aload_0
+        45: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+        48: ifnull        63
+        51: aload_0
+        52: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+        55: invokevirtual #479                // Method net/minecraft/client/renderer/ViewArea.releaseAllBuffers:()V
+        58: aload_0
+        59: aconst_null
+        60: putfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+        63: aload_0
+        64: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        67: ifnull        77
+        70: aload_0
+        71: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        74: invokevirtual #484                // Method net/minecraft/client/renderer/chunk/SectionRenderDispatcher.dispose:()V
+        77: aload_0
+        78: aconst_null
+        79: putfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        82: aload_0
+        83: getfield      #238                // Field sectionOcclusionGraph:Lnet/minecraft/client/renderer/SectionOcclusionGraph;
+        86: aconst_null
+        87: invokevirtual #488                // Method net/minecraft/client/renderer/SectionOcclusionGraph.waitAndReset:(Lnet/minecraft/client/renderer/ViewArea;)V
+        90: aload_0
+        91: invokevirtual #491                // Method clearVisibleSections:()V
+        94: aload_0
+        95: getfield      #233                // Field gameTestBlockHighlightRenderer:Lnet/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer;
+        98: invokevirtual #494                // Method net/minecraft/client/renderer/debug/GameTestBlockHighlightRenderer.clear:()V
+       101: return
+
+  public void allChanged();
+    Code:
+         0: aload_0
+         1: getfield      #464                // Field level:Lnet/minecraft/client/multiplayer/ClientLevel;
+         4: ifnonnull     8
+         7: return
+         8: aload_0
+         9: getfield      #464                // Field level:Lnet/minecraft/client/multiplayer/ClientLevel;
+        12: invokevirtual #501                // Method net/minecraft/client/multiplayer/ClientLevel.clearTintCaches:()V
+        15: aload_0
+        16: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        19: ifnonnull     62
+        22: aload_0
+        23: new           #24                 // class net/minecraft/client/renderer/chunk/SectionRenderDispatcher
+        26: dup
+        27: aload_0
+        28: getfield      #464                // Field level:Lnet/minecraft/client/multiplayer/ClientLevel;
+        31: aload_0
+        32: invokestatic  #507                // Method net/minecraft/util/Util.backgroundExecutor:()Lnet/minecraft/TracingExecutor;
+        35: aload_0
+        36: getfield      #302                // Field renderBuffers:Lnet/minecraft/client/renderer/RenderBuffers;
+        39: aload_0
+        40: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        43: invokevirtual #511                // Method net/minecraft/client/Minecraft.getBlockRenderer:()Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;
+        46: aload_0
+        47: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        50: invokevirtual #515                // Method net/minecraft/client/Minecraft.getBlockEntityRenderDispatcher:()Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;
+        53: invokespecial #518                // Method net/minecraft/client/renderer/chunk/SectionRenderDispatcher."<init>":(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/renderer/LevelRenderer;Lnet/minecraft/TracingExecutor;Lnet/minecraft/client/renderer/RenderBuffers;Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;)V
+        56: putfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        59: goto          73
+        62: aload_0
+        63: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        66: aload_0
+        67: getfield      #464                // Field level:Lnet/minecraft/client/multiplayer/ClientLevel;
+        70: invokevirtual #520                // Method net/minecraft/client/renderer/chunk/SectionRenderDispatcher.setLevel:(Lnet/minecraft/client/multiplayer/ClientLevel;)V
+        73: aload_0
+        74: getfield      #208                // Field cloudRenderer:Lnet/minecraft/client/renderer/CloudRenderer;
+        77: invokevirtual #523                // Method net/minecraft/client/renderer/CloudRenderer.markForRebuild:()V
+        80: aload_0
+        81: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        84: getfield      #408                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+        87: invokevirtual #526                // Method net/minecraft/client/Options.cutoutLeaves:()Lnet/minecraft/client/OptionInstance;
+        90: invokevirtual #530                // Method net/minecraft/client/OptionInstance.get:()Ljava/lang/Object;
+        93: checkcast     #416                // class java/lang/Boolean
+        96: invokevirtual #533                // Method java/lang/Boolean.booleanValue:()Z
+        99: invokestatic  #539                // Method net/minecraft/client/renderer/ItemBlockRenderTypes.setCutoutLeaves:(Z)V
+       102: aload_0
+       103: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       106: getfield      #408                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+       109: invokevirtual #526                // Method net/minecraft/client/Options.cutoutLeaves:()Lnet/minecraft/client/OptionInstance;
+       112: invokevirtual #530                // Method net/minecraft/client/OptionInstance.get:()Ljava/lang/Object;
+       115: checkcast     #416                // class java/lang/Boolean
+       118: invokevirtual #533                // Method java/lang/Boolean.booleanValue:()Z
+       121: invokestatic  #542                // Method net/minecraft/world/level/block/LeavesBlock.setCutoutLeaves:(Z)V
+       124: aload_0
+       125: aload_0
+       126: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       129: getfield      #408                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+       132: invokevirtual #545                // Method net/minecraft/client/Options.getEffectiveRenderDistance:()I
+       135: putfield      #283                // Field lastViewDistance:I
+       138: aload_0
+       139: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+       142: ifnull        152
+       145: aload_0
+       146: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+       149: invokevirtual #479                // Method net/minecraft/client/renderer/ViewArea.releaseAllBuffers:()V
+       152: aload_0
+       153: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+       156: invokevirtual #548                // Method net/minecraft/client/renderer/chunk/SectionRenderDispatcher.clearCompileQueue:()V
+       159: aload_0
+       160: new           #476                // class net/minecraft/client/renderer/ViewArea
+       163: dup
+       164: aload_0
+       165: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+       168: aload_0
+       169: getfield      #464                // Field level:Lnet/minecraft/client/multiplayer/ClientLevel;
+       172: aload_0
+       173: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       176: getfield      #408                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+       179: invokevirtual #545                // Method net/minecraft/client/Options.getEffectiveRenderDistance:()I
+       182: aload_0
+       183: invokespecial #551                // Method net/minecraft/client/renderer/ViewArea."<init>":(Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;Lnet/minecraft/world/level/Level;ILnet/minecraft/client/renderer/LevelRenderer;)V
+       186: putfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+       189: aload_0
+       190: getfield      #238                // Field sectionOcclusionGraph:Lnet/minecraft/client/renderer/SectionOcclusionGraph;
+       193: aload_0
+       194: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+       197: invokevirtual #488                // Method net/minecraft/client/renderer/SectionOcclusionGraph.waitAndReset:(Lnet/minecraft/client/renderer/ViewArea;)V
+       200: aload_0
+       201: invokevirtual #491                // Method clearVisibleSections:()V
+       204: aload_0
+       205: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       208: getfield      #451                // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+       211: invokevirtual #555                // Method net/minecraft/client/renderer/GameRenderer.getMainCamera:()Lnet/minecraft/client/Camera;
+       214: astore_1
+       215: aload_0
+       216: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+       219: aload_1
+       220: invokevirtual #561                // Method net/minecraft/client/Camera.position:()Lnet/minecraft/world/phys/Vec3;
+       223: invokestatic  #567                // Method net/minecraft/core/SectionPos.of:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/SectionPos;
+       226: invokevirtual #571                // Method net/minecraft/client/renderer/ViewArea.repositionCamera:(Lnet/minecraft/core/SectionPos;)V
+       229: return
+
+  public void resize(int, int);
+    Code:
+         0: aload_0
+         1: invokevirtual #577                // Method needsUpdate:()V
+         4: aload_0
+         5: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+         8: ifnull        20
+        11: aload_0
+        12: getfield      #325                // Field entityOutlineTarget:Lcom/mojang/blaze3d/pipeline/RenderTarget;
+        15: iload_1
+        16: iload_2
+        17: invokevirtual #579                // Method com/mojang/blaze3d/pipeline/RenderTarget.resize:(II)V
+        20: return
+
+  public java.lang.String getSectionStatistics();
+    Code:
+         0: aload_0
+         1: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+         4: ifnonnull     9
+         7: aconst_null
+         8: areturn
+         9: aload_0
+        10: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+        13: getfield      #587                // Field net/minecraft/client/renderer/ViewArea.sections:[Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;
+        16: arraylength
+        17: istore_1
+        18: aload_0
+        19: invokevirtual #590                // Method countRenderedSections:()I
+        22: istore_2
+        23: getstatic     #596                // Field java/util/Locale.ROOT:Ljava/util/Locale;
+        26: ldc_w         #598                // String C: %d/%d %sD: %d, %s
+        29: iconst_5
+        30: anewarray     #4                  // class java/lang/Object
+        33: dup
+        34: iconst_0
+        35: iload_2
+        36: invokestatic  #603                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        39: aastore
+        40: dup
+        41: iconst_1
+        42: iload_1
+        43: invokestatic  #603                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        46: aastore
+        47: dup
+        48: iconst_2
+        49: aload_0
+        50: getfield      #296                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        53: getfield      #606                // Field net/minecraft/client/Minecraft.smartCull:Z
+        56: ifeq          65
+        59: ldc_w         #608                // String (s)
+        62: goto          68
+        65: ldc_w         #614                // String
+        68: aastore
+        69: dup
+        70: iconst_3
+        71: aload_0
+        72: getfield      #283                // Field lastViewDistance:I
+        75: invokestatic  #603                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        78: aastore
+        79: dup
+        80: iconst_4
+        81: aload_0
+        82: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        85: ifnonnull     94
+        88: ldc_w         #616                // String null
+        91: goto          101
+        94: aload_0
+        95: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+        98: invokevirtual #619                // Method net/minecraft/client/renderer/chunk/SectionRenderDispatcher.getStats:()Ljava/lang/String;
+       101: aastore
+       102: invokestatic  #623                // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+       105: areturn
+
+  public net.minecraft.client.renderer.chunk.SectionRenderDispatcher getSectionRenderDispatcher();
+    Code:
+         0: aload_0
+         1: getfield      #481                // Field sectionRenderDispatcher:Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher;
+         4: areturn
+
+  public double getTotalSections();
+    Code:
+         0: aload_0
+         1: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+         4: ifnonnull     11
+         7: dconst_0
+         8: goto          20
+        11: aload_0
+        12: getfield      #474                // Field viewArea:Lnet/minecraft/client/renderer/ViewArea;
+        15: getfield      #587                // Field net/minecraft/client/renderer/ViewArea.sections:[Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;
+        18: arraylength
+        19: i2d
+        20: dreturn
+
+  public double getLastViewDistance();
+    Code:

@@ -1,0 +1,64 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources UP-TO-DATE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+
+> Task :fabric:compileJava FAILED
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:11: error: package moriz.orangesunshine.client.render.shader does not exist
+import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
+                                                ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:35: error: no suitable method found for blitSprite(RenderPipeline,TextureAtlasSprite,int,int,int,int,float)
+        context.blitSprite(RenderPipelines.GUI, sprite, 0, 0, width, height, alpha);
+               ^
+    method GuiGraphics.blitSprite(RenderPipeline,Identifier,int,int,int,int,float) is not applicable
+      (argument mismatch; TextureAtlasSprite cannot be converted to Identifier)
+    method GuiGraphics.blitSprite(RenderPipeline,Identifier,int,int,int,int,int) is not applicable
+      (argument mismatch; TextureAtlasSprite cannot be converted to Identifier)
+    method GuiGraphics.blitSprite(RenderPipeline,TextureAtlasSprite,int,int,int,int,int) is not applicable
+      (argument mismatch; possible lossy conversion from float to int)
+Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+2 errors
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':fabric:compileJava'.
+> Compilation failed; see the compiler output below.
+  Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java uses unchecked or unsafe operations.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:35: error: no suitable method found for blitSprite(RenderPipeline,TextureAtlasSprite,int,int,int,int,float)
+          context.blitSprite(RenderPipelines.GUI, sprite, 0, 0, width, height, alpha);
+                 ^
+      method GuiGraphics.blitSprite(RenderPipeline,Identifier,int,int,int,int,float) is not applicable
+        (argument mismatch; TextureAtlasSprite cannot be converted to Identifier)
+      method GuiGraphics.blitSprite(RenderPipeline,Identifier,int,int,int,int,int) is not applicable
+        (argument mismatch; TextureAtlasSprite cannot be converted to Identifier)
+      method GuiGraphics.blitSprite(RenderPipeline,TextureAtlasSprite,int,int,int,int,int) is not applicable
+        (argument mismatch; possible lossy conversion from float to int)
+  Note: Recompile with -Xlint:unchecked for details.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:11: error: package moriz.orangesunshine.client.render.shader does not exist
+  import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
+                                                  ^
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java uses or overrides a deprecated API.
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  2 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 8s
+4 actionable tasks: 1 executed, 3 up-to-date

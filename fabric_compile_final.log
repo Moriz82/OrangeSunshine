@@ -1,0 +1,282 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources UP-TO-DATE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+
+> Task :fabric:compileJava FAILED
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:11: error: package moriz.orangesunshine.client.render.shader does not exist
+import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
+                                                ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:20: error: cannot find symbol
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  symbol:   class DrawContext
+  location: package net.minecraft.client.gui
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:44: error: cannot find symbol
+    private final EnvironmentalScreenEffect environmentalEffects = new EnvironmentalScreenEffect();
+                  ^
+  symbol:   class EnvironmentalScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:45: error: cannot find symbol
+    private final ScreenEffect screenEffects = CompoundScreenEffect.of(
+                  ^
+  symbol:   class ScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+    private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                  ^
+  symbol:   class PostEffectRenderer
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:59: error: cannot find symbol
+    public ScreenEffect getScreenEffects() {
+           ^
+  symbol:   class ScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:63: error: cannot find symbol
+    public PostEffectRenderer getPostEffects() {
+           ^
+  symbol:   class PostEffectRenderer
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:67: error: cannot find symbol
+    public EnvironmentalScreenEffect getEnvironmentalEffects() {
+           ^
+  symbol:   class EnvironmentalScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:195: error: cannot find symbol
+    public void onRenderOverlay(DrawContext context, float tickDelta) {
+                                ^
+  symbol:   class DrawContext
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:10: error: package moriz.orangesunshine.client.render.effect does not exist
+import moriz.orangesunshine.client.render.effect.*;
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:5: error: cannot find symbol
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  symbol:   class DrawContext
+  location: package net.minecraft.client.gui
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:16: error: cannot find symbol
+    private void onRenderHud(DrawContext context, DeltaTracker deltaTracker, CallbackInfo ci) {
+                             ^
+  symbol:   class DrawContext
+  location: class MixinInGameHud
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:44: error: cannot find symbol
+    private final EnvironmentalScreenEffect environmentalEffects = new EnvironmentalScreenEffect();
+                                                                       ^
+  symbol:   class EnvironmentalScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:46: error: cannot find symbol
+            new LensFlareScreenEffect(),
+                ^
+  symbol:   class LensFlareScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:47: error: cannot find symbol
+            new WarmthOverlayScreenEffect(),
+                ^
+  symbol:   class WarmthOverlayScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:48: error: cannot find symbol
+            new AlcoholOverlayScreenEffect(),
+                ^
+  symbol:   class AlcoholOverlayScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:49: error: cannot find symbol
+            new PowerOverlayScreenEffect(),
+                ^
+  symbol:   class PowerOverlayScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:51: error: cannot find symbol
+            new TirednessScreenEffect(),
+                ^
+  symbol:   class TirednessScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:52: error: cannot find symbol
+            new MotionBlurScreenEffect()
+                ^
+  symbol:   class MotionBlurScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:45: error: cannot find symbol
+    private final ScreenEffect screenEffects = CompoundScreenEffect.of(
+                                               ^
+  symbol:   variable CompoundScreenEffect
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+    private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                                                       ^
+  symbol:   class PostEffectRenderer
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:83: error: cannot find symbol
+        screenEffects.update(mc.getTimer().getGameTimeDeltaTicks());
+                               ^
+  symbol:   method getTimer()
+  location: variable mc of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:101: error: cannot find symbol
+        matrices.mulPose(Axis.XP.rotationDegrees(camera.getXRot()));
+                                                       ^
+  symbol:   method getXRot()
+  location: variable camera of type Camera
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:102: error: cannot find symbol
+        matrices.mulPose(Axis.YP.rotationDegrees(camera.getYRot() + 180.0f));
+                                                       ^
+  symbol:   method getYRot()
+  location: variable camera of type Camera
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:120: error: cannot find symbol
+        matrices.mulPose(Axis.YN.rotationDegrees(camera.getYRot() + 180.0f));
+                                                       ^
+  symbol:   method getYRot()
+  location: variable camera of type Camera
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:121: error: cannot find symbol
+        matrices.mulPose(Axis.XN.rotationDegrees(camera.getXRot()));
+                                                       ^
+  symbol:   method getXRot()
+  location: variable camera of type Camera
+26 errors
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':fabric:compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:11: error: package moriz.orangesunshine.client.render.shader does not exist
+  import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
+                                                  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:10: error: package moriz.orangesunshine.client.render.effect does not exist
+  import moriz.orangesunshine.client.render.effect.*;
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:83: error: cannot find symbol
+          screenEffects.update(mc.getTimer().getGameTimeDeltaTicks());
+                                 ^
+    symbol:   method getTimer()
+    location: variable mc of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:101: error: cannot find symbol
+          matrices.mulPose(Axis.XP.rotationDegrees(camera.getXRot()));
+                                                         ^
+    symbol:   method getXRot()
+    location: variable camera of type Camera
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:102: error: cannot find symbol
+          matrices.mulPose(Axis.YP.rotationDegrees(camera.getYRot() + 180.0f));
+                                                         ^
+    symbol:   method getYRot()
+    location: variable camera of type Camera
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:120: error: cannot find symbol
+          matrices.mulPose(Axis.YN.rotationDegrees(camera.getYRot() + 180.0f));
+                                                         ^
+    symbol:   method getYRot()
+    location: variable camera of type Camera
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:121: error: cannot find symbol
+          matrices.mulPose(Axis.XN.rotationDegrees(camera.getXRot()));
+                                                         ^
+    symbol:   method getXRot()
+    location: variable camera of type Camera
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:20: error: cannot find symbol
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    symbol:   class DrawContext
+    location: package net.minecraft.client.gui
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:44: error: cannot find symbol
+      private final EnvironmentalScreenEffect environmentalEffects = new EnvironmentalScreenEffect();
+                    ^
+    symbol:   class EnvironmentalScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:45: error: cannot find symbol
+      private final ScreenEffect screenEffects = CompoundScreenEffect.of(
+                    ^
+    symbol:   class ScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+      private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                    ^
+    symbol:   class PostEffectRenderer
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:59: error: cannot find symbol
+      public ScreenEffect getScreenEffects() {
+             ^
+    symbol:   class ScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:63: error: cannot find symbol
+      public PostEffectRenderer getPostEffects() {
+             ^
+    symbol:   class PostEffectRenderer
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:67: error: cannot find symbol
+      public EnvironmentalScreenEffect getEnvironmentalEffects() {
+             ^
+    symbol:   class EnvironmentalScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:195: error: cannot find symbol
+      public void onRenderOverlay(DrawContext context, float tickDelta) {
+                                  ^
+    symbol:   class DrawContext
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:5: error: cannot find symbol
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    symbol:   class DrawContext
+    location: package net.minecraft.client.gui
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:16: error: cannot find symbol
+      private void onRenderHud(DrawContext context, DeltaTracker deltaTracker, CallbackInfo ci) {
+                               ^
+    symbol:   class DrawContext
+    location: class MixinInGameHud
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:44: error: cannot find symbol
+      private final EnvironmentalScreenEffect environmentalEffects = new EnvironmentalScreenEffect();
+                                                                         ^
+    symbol:   class EnvironmentalScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:46: error: cannot find symbol
+              new LensFlareScreenEffect(),
+                  ^
+    symbol:   class LensFlareScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:47: error: cannot find symbol
+              new WarmthOverlayScreenEffect(),
+                  ^
+    symbol:   class WarmthOverlayScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:48: error: cannot find symbol
+              new AlcoholOverlayScreenEffect(),
+                  ^
+    symbol:   class AlcoholOverlayScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:49: error: cannot find symbol
+              new PowerOverlayScreenEffect(),
+                  ^
+    symbol:   class PowerOverlayScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:51: error: cannot find symbol
+              new TirednessScreenEffect(),
+                  ^
+    symbol:   class TirednessScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:52: error: cannot find symbol
+              new MotionBlurScreenEffect()
+                  ^
+    symbol:   class MotionBlurScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:45: error: cannot find symbol
+      private final ScreenEffect screenEffects = CompoundScreenEffect.of(
+                                                 ^
+    symbol:   variable CompoundScreenEffect
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+      private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                                                         ^
+    symbol:   class PostEffectRenderer
+    location: class DrugRenderer
+  26 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 7s
+4 actionable tasks: 1 executed, 3 up-to-date

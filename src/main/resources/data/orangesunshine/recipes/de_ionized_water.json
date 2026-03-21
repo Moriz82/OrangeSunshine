@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:water_bucket"
+  },
+  "result": "orangesunshine:de_ionized_water",
+  "experience": 0.3,
+  "cookingtime": 200
+}

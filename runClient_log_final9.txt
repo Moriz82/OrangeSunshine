@@ -1,0 +1,55 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava FAILED
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:177: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+        registerTilledPatch("cannabis", PSBlocks.CANNABIS, false, genConf.cannabis);
+                                                ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:178: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+        registerTilledPatch("hop", PSBlocks.HOP, false, genConf.hop);
+                                           ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:179: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+        registerTilledPatch("tobacco", PSBlocks.TOBACCO, false, genConf.tobacco);
+                                               ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:181: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+        registerTilledPatch("coca", PSBlocks.COCA, true, genConf.coca);
+                                            ^
+Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/entity/RealityRiftEntity.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+4 errors
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':common:compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:177: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+          registerTilledPatch("cannabis", PSBlocks.CANNABIS, false, genConf.cannabis);
+                                                  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:178: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+          registerTilledPatch("hop", PSBlocks.HOP, false, genConf.hop);
+                                             ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:179: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+          registerTilledPatch("tobacco", PSBlocks.TOBACCO, false, genConf.tobacco);
+                                                 ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/world/gen/PSWorldGen.java:181: error: incompatible types: Block cannot be converted to CannabisPlantBlock
+          registerTilledPatch("coca", PSBlocks.COCA, true, genConf.coca);
+                                              ^
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/entity/RealityRiftEntity.java uses or overrides a deprecated API.
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  4 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 8s
+1 actionable task: 1 executed

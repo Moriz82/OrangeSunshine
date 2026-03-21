@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:de_ionized_water"
+    },
+    {
+      "item": "orangesunshine:ergotamine"
+    },
+    {
+      "item": "orangesunshine:strainer"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:lysergic_acid"
+  }
+}

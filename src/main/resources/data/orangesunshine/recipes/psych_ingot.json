@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:psych_ore"
+  },
+  "result": "orangesunshine:psych_ingot",
+  "experience": 0.3,
+  "cookingtime": 200
+}

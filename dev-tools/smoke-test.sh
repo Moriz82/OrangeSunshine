@@ -3,14 +3,15 @@
 # OrangeSunshine dev smoke-test pipeline
 #
 # Usage:
-#   ./dev-tools/smoke-test.sh [--skip-build] [--client]
+#   ./dev-tools/smoke-test.sh [--skip-build] [--client] [--loader <fabric|forge|neoforge>] [--scenario-dir <path>]
 #
 # Modes:
-#   (default)     Run :fabric:runServer, wait for startup,
-#                 run RCON test commands, analyse logs.
-#   --client      Run :fabric:runClient on DISPLAY=:0 instead,
+#   (default)     Run <loader>:runServer, wait for startup,
+#                 run RCON test commands and optional scenario checks,
+#                 then analyse logs.
+#   --client      Run <loader>:runClient on DISPLAY=:0 instead,
 #                 then analyse the client log.
-#   --skip-build  Skip the build step (use cached jar).
+#   --skip-build  Skip the build step (use cached classes/jars).
 # ============================================================
 
 set -euo pipefail
@@ -22,18 +23,96 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 RCON_PORT=25575
 RCON_PASS="devtest"
-SERVER_LOG="fabric/run/logs/latest.log"
-SERVER_PID_FILE="/tmp/os-smoke-server.pid"
 STARTUP_TIMEOUT=120   # seconds to wait for server "Done"
 MODE="server"
+LOADER="fabric"
 SKIP_BUILD=0
+SCENARIO_DIR=""
+ARTIFACT_PREFIX=""
 
-for arg in "$@"; do
-    case "$arg" in
-        --client)     MODE="client" ;;
-        --skip-build) SKIP_BUILD=1 ;;
+usage() {
+    cat <<EOF
+Usage: dev-tools/smoke-test.sh [options]
+
+Options:
+  --client                 run client mode for selected loader
+  --skip-build             skip compile step
+  --loader <fabric|forge|neoforge>  select loader module (default: fabric)
+  --scenario-dir <path>    run scenario JSON files from directory
+  --artifact-prefix <path>  prefix used for logs and scenario JSON reports
+  --help                   show this help
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --client)
+            MODE="client"
+            shift
+            ;;
+        --skip-build)
+            SKIP_BUILD=1
+            shift
+            ;;
+        --loader)
+            if [[ $# -lt 2 ]]; then
+                echo "--loader requires one argument"
+                usage
+                exit 1
+            fi
+            LOADER="$2"
+            shift 2
+            ;;
+        --scenario-dir)
+            if [[ $# -lt 2 ]]; then
+                echo "--scenario-dir requires one argument"
+                usage
+                exit 1
+            fi
+            SCENARIO_DIR="$2"
+            shift 2
+            ;;
+        --artifact-prefix)
+            if [[ $# -lt 2 ]]; then
+                echo "--artifact-prefix requires one argument"
+                usage
+                exit 1
+            fi
+            ARTIFACT_PREFIX="$2"
+            shift 2
+            ;;
+        --help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            exit 1
+            ;;
     esac
 done
+
+case "$LOADER" in
+    fabric|forge|neoforge)
+        ;;
+    *)
+        echo "Unsupported loader '$LOADER'. Use fabric, forge, or neoforge"
+        exit 1
+        ;;
+esac
+
+PROJECT="$LOADER"
+TASK_COMPILE=":${PROJECT}:compileJava"
+TASK_SERVER=":${PROJECT}:runServer"
+TASK_CLIENT=":${PROJECT}:runClient"
+SERVER_LOG="${PROJECT}/run/logs/latest.log"
+SERVER_PID_FILE="/tmp/os-smoke-${PROJECT}.pid"
+SERVER_PROPERTIES_FILE="${PROJECT}/run/server.properties"
+CLIENT_LOG="${SERVER_LOG}"
+
+mkdir -p "$(dirname "$SERVER_LOG")"
+mkdir -p "$(dirname "$SERVER_PROPERTIES_FILE")"
 
 # ── colours ──────────────────────────────────────────────────
 RED='\033[0;31m'; GRN='\033[0;32m'; YEL='\033[1;33m'; NC='\033[0m'
@@ -42,10 +121,62 @@ fail() { echo -e "${RED}[FAIL]${NC} $*"; FAILURES=$((FAILURES+1)); }
 info() { echo -e "${YEL}[INFO]${NC} $*"; }
 FAILURES=0
 
+upsert_property() {
+    local file="$1"
+    local key="$2"
+    local value="$3"
+
+    local tmp_file
+    tmp_file="$(mktemp)"
+
+    if [[ ! -f "$file" ]]; then
+        : > "$file"
+    fi
+
+    awk -v key="$key" -v value="$value" '
+    {
+        if (index($0, key "=") == 1) {
+            print key "=" value
+            seen = 1
+        } else {
+            print $0
+        }
+    }
+    END {
+        if (!seen) {
+            print key "=" value
+        }
+    }
+    ' "$file" > "$tmp_file"
+    mv "$tmp_file" "$file"
+}
+
+run_scenario_file() {
+    local scenario_file="$1"
+    local report_file=""
+
+    if [[ -n "$ARTIFACT_PREFIX" ]]; then
+        local base="$(basename "$scenario_file")"
+        report_file="${ARTIFACT_PREFIX}/${base%.json}.result.json"
+    fi
+
+    if python3 dev-tools/qa/run_scenario.py \
+        --loader "$LOADER" \
+        --scenario "$scenario_file" \
+        --host 127.0.0.1 \
+        --port "$RCON_PORT" \
+        --password "$RCON_PASS" \
+        ${report_file:+--report "$report_file"}; then
+        ok "Scenario pass: $(basename "$scenario_file")"
+    else
+        fail "Scenario failed: $(basename "$scenario_file")"
+    fi
+}
+
 # ── 1. Build ─────────────────────────────────────────────────
 if [[ $SKIP_BUILD -eq 0 ]]; then
-    info "Building :fabric:compileJava …"
-    if bash ./gradlew :fabric:compileJava --console=plain -q; then
+    info "Building ${TASK_COMPILE} …"
+    if bash ./gradlew "$TASK_COMPILE" --console=plain -q; then
         ok "Build succeeded"
     else
         fail "Build failed — aborting"
@@ -55,19 +186,16 @@ fi
 
 # ── 2. Prepare dev server.properties ─────────────────────────
 if [[ "$MODE" == "server" ]]; then
-    SP="fabric/run/server.properties"
     # patch settings needed for dev testing
-    sed -i \
-        -e "s/^online-mode=.*/online-mode=false/" \
-        -e "s/^enable-rcon=.*/enable-rcon=true/" \
-        -e "s/^rcon\.password=.*/rcon.password=${RCON_PASS}/" \
-        -e "s/^rcon\.port=.*/rcon.port=${RCON_PORT}/" \
-        -e "s/^enforce-secure-profile=.*/enforce-secure-profile=false/" \
-        "$SP"
+    upsert_property "$SERVER_PROPERTIES_FILE" "online-mode" "false"
+    upsert_property "$SERVER_PROPERTIES_FILE" "enable-rcon" "true"
+    upsert_property "$SERVER_PROPERTIES_FILE" "rcon.password" "$RCON_PASS"
+    upsert_property "$SERVER_PROPERTIES_FILE" "rcon.port" "$RCON_PORT"
+    upsert_property "$SERVER_PROPERTIES_FILE" "enforce-secure-profile" "false"
+
     ok "server.properties patched for dev"
     # truncate stale log so we don't false-positive on old "Done" line
-    mkdir -p fabric/run/logs
-    > "$SERVER_LOG"
+    : > "$SERVER_LOG"
 fi
 
 # ── 3. Kill any existing server ───────────────────────────────
@@ -90,8 +218,8 @@ trap cleanup EXIT
 
 # ── 4. Start server / client ──────────────────────────────────
 if [[ "$MODE" == "server" ]]; then
-    info "Starting Fabric dev server …"
-    bash ./gradlew :fabric:runServer --console=plain > /tmp/os-smoke-gradle.log 2>&1 &
+    info "Starting ${PROJECT} dev server …"
+    bash ./gradlew "$TASK_SERVER" --console=plain > /tmp/os-smoke-gradle.log 2>&1 &
     GRADLE_PID=$!
     echo "$GRADLE_PID" > "$SERVER_PID_FILE"
 
@@ -118,13 +246,12 @@ if [[ "$MODE" == "server" ]]; then
 
 else
     # client mode — just launch and monitor log
-    info "Starting Fabric dev client on DISPLAY=:0 …"
-    DISPLAY=:0 bash ./gradlew :fabric:runClient --console=plain > /tmp/os-smoke-gradle.log 2>&1 &
+    info "Starting ${PROJECT} dev client on DISPLAY=:0 …"
+    DISPLAY=:0 bash ./gradlew "$TASK_CLIENT" --console=plain > /tmp/os-smoke-gradle.log 2>&1 &
     GRADLE_PID=$!
     echo "$GRADLE_PID" > "$SERVER_PID_FILE"
 
     info "Waiting for client window (up to ${STARTUP_TIMEOUT}s) …"
-    CLIENT_LOG="fabric/run/logs/latest.log"
     ELAPSED=0
     while ! grep -qE "Backend library|OpenGL|LWJGL|Initializing game" "$CLIENT_LOG" 2>/dev/null; do
         if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
@@ -143,7 +270,7 @@ else
     info "Client check window complete"
 fi
 
-# ── 5. RCON test suite (server mode only) ────────────────────
+# ── 5. RCON test suite + scenario checks (server mode only) ────
 if [[ "$MODE" == "server" ]]; then
     RCON="python3 ${ROOT}/dev-tools/rcon.py --password ${RCON_PASS} --port ${RCON_PORT}"
 
@@ -185,6 +312,18 @@ if [[ "$MODE" == "server" ]]; then
         fi
     done
 
+    # 5e. Scenario checks via external scenario files
+    if [[ -n "$SCENARIO_DIR" ]]; then
+        info "Running scenario suite: $SCENARIO_DIR"
+        if [[ ! -d "$SCENARIO_DIR" ]]; then
+            fail "Scenario directory not found: $SCENARIO_DIR"
+        else
+            while IFS= read -r -d '' SCENARIO_FILE; do
+                run_scenario_file "$SCENARIO_FILE"
+            done < <(find "$SCENARIO_DIR" -type f -name "*.json" -print0 | sort -z)
+        fi
+    fi
+
     # 5d. Trigger server stop cleanly
     info "Sending stop command …"
     $RCON "stop" 2>&1 || true
@@ -196,13 +335,18 @@ info "--- Log Analysis ---"
 if [[ "$MODE" == "server" ]]; then
     LOG="$SERVER_LOG"
 else
-    LOG="fabric/run/logs/latest.log"
+    LOG="$CLIENT_LOG"
 fi
 
 if python3 dev-tools/check-logs.py "$LOG"; then
     ok "Log analysis clean"
 else
     fail "Log analysis found errors"
+fi
+
+if [[ -n "$ARTIFACT_PREFIX" ]]; then
+    mkdir -p "$ARTIFACT_PREFIX"
+    cp "$LOG" "$ARTIFACT_PREFIX/latest.log" 2>/dev/null || true
 fi
 
 # ── 7. Final result ───────────────────────────────────────────

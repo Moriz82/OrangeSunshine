@@ -1,25 +1,17 @@
 package moriz.orangesunshine.client.render.shader;
 
 import org.jetbrains.annotations.Nullable;
-
-import com.mojang.datafixers.util.Pair;
-
-import net.minecraft.client.gl.ShaderProgram;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.renderer.ShaderInstance;
 
 public class PSShaders {
     @Nullable
-    private static ShaderProgram renderTypeZeroMatterProgram;
+    private static ShaderInstance renderTypeZeroMatterProgram;
 
-    public static ShaderProgram getRenderTypeZeroMatterProgram() {
+    public static ShaderInstance getRenderTypeZeroMatterProgram() {
         return renderTypeZeroMatterProgram;
     }
 
     public static void bootstrap() {
-        CoreShaderRegistrationCallback.EVENT.register((manager, shaderList) -> {
-            shaderList.add(Pair.of(new ShaderProgram(new ModdedResourceFactory(manager, "orangesunshine"), "rendertype_zero_matter", VertexFormats.POSITION_COLOR), program -> {
-                renderTypeZeroMatterProgram = program;
-            }));
-        });
+        renderTypeZeroMatterProgram = null;
     }
 }

@@ -1,0 +1,964 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/moriz/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/lib/native-platform-0.22-milestone-26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:3: error: cannot find symbol
+import moriz.orangesunshine.client.render.RenderUtil;
+                                         ^
+  symbol:   class RenderUtil
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:10: error: package net.minecraft.client.renderer.r does not exist
+import net.minecraft.client.renderer.r.MultiBufferSource;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:4: error: package net.minecraft.client.renderer.VertexFormat does not exist
+import net.minecraft.client.renderer.VertexFormat.DrawMode;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:34: error: cannot find symbol
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                           ^
+  symbol:   class MultiBufferSource
+  location: class DrugOverlayScreenEffect<D>
+  where D is a type-variable:
+    D extends Drug declared in class DrugOverlayScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:46: error: cannot find symbol
+    protected abstract void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenheight, float ticks, DrugProperties properties, D drug);
+                                                       ^
+  symbol:   class MultiBufferSource
+  location: class DrugOverlayScreenEffect<D>
+  where D is a type-variable:
+    D extends Drug declared in class DrugOverlayScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/CompoundScreenEffect.java:7: error: package net.minecraft.client.renderer.r does not exist
+import net.minecraft.client.renderer.r.MultiBufferSource;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/CompoundScreenEffect.java:44: error: cannot find symbol
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                           ^
+  symbol:   class MultiBufferSource
+  location: class CompoundScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:11: error: cannot find symbol
+import moriz.orangesunshine.client.OrangeSunshineClient;
+                                  ^
+  symbol:   class OrangeSunshineClient
+  location: package moriz.orangesunshine.client
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:12: error: cannot find symbol
+import moriz.orangesunshine.client.render.MeteorlogicalUtil;
+                                         ^
+  symbol:   class MeteorlogicalUtil
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:13: error: cannot find symbol
+import moriz.orangesunshine.client.render.RenderUtil;
+                                         ^
+  symbol:   class RenderUtil
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:17: error: package net.minecraft.client.renderer.r does not exist
+import net.minecraft.client.renderer.r.MultiBufferSource;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:20: error: package net.minecraft.registry.tag does not exist
+import net.minecraft.registry.tag.FluidTags;
+                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:24: error: package net.minecraft.world.Heightmap does not exist
+import net.minecraft.world.Heightmap.Type;
+                                    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:25: error: package net.minecraft.world.biome.Biome does not exist
+import net.minecraft.world.biome.Biome.Precipitation;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:92: error: cannot find symbol
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                           ^
+  symbol:   class MultiBufferSource
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:11: error: cannot find symbol
+import moriz.orangesunshine.client.render.MeteorlogicalUtil;
+                                         ^
+  symbol:   class MeteorlogicalUtil
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:12: error: cannot find symbol
+import moriz.orangesunshine.client.render.PsycheMatrixHelper;
+                                         ^
+  symbol:   class PsycheMatrixHelper
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:13: error: cannot find symbol
+import moriz.orangesunshine.client.render.RenderUtil;
+                                         ^
+  symbol:   class RenderUtil
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:17: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:18: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:21: error: cannot find symbol
+import moriz.orangesunshine.client.OrangeSunshineClient;
+                                  ^
+  symbol:   class OrangeSunshineClient
+  location: package moriz.orangesunshine.client
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:27: error: cannot find symbol
+import net.minecraft.util.FastColor;
+                         ^
+  symbol:   class FastColor
+  location: package net.minecraft.util
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:48: error: cannot find symbol
+    private static final Identifier[] FLARES = IntStream.range(0, FLARE_SIZES.length)
+                         ^
+  symbol:   class Identifier
+  location: class LensFlareScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:52: error: cannot find symbol
+    private static final Identifier BLINDNESS_OVERLAY = OrangeSunshine.id("textures/environment/lense_flare/sun_blindness.png");
+                         ^
+  symbol:   class Identifier
+  location: class LensFlareScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:15: error: cannot find symbol
+import com.mojang.blaze3d.platform.GlConst;
+                                  ^
+  symbol:   class GlConst
+  location: package com.mojang.blaze3d.platform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:16: error: cannot find symbol
+import com.mojang.blaze3d.platform.GlStateManager;
+                                  ^
+  symbol:   class GlStateManager
+  location: package com.mojang.blaze3d.platform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:17: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:18: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:21: error: cannot find symbol
+import moriz.orangesunshine.client.OrangeSunshineClient;
+                                  ^
+  symbol:   class OrangeSunshineClient
+  location: package moriz.orangesunshine.client
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:23: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.Framebuffer;
+                              ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:24: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.SimpleFramebuffer;
+                              ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:25: error: package net.minecraft.client.renderer.r does not exist
+import net.minecraft.client.renderer.r.GameRenderer;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:26: error: package net.minecraft.client.renderer.r does not exist
+import net.minecraft.client.renderer.r.MultiBufferSource;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:55: error: cannot find symbol
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                           ^
+  symbol:   class MultiBufferSource
+  location: class MotionBlurScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:135: error: cannot find symbol
+        private final SimpleFramebuffer output;
+                      ^
+  symbol:   class SimpleFramebuffer
+  location: class MotionBlurScreenEffect.GlTexture
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/PowerOverlayScreenEffect.java:6: error: cannot find symbol
+import com.mojang.blaze3d.platform.GlStateManager;
+                                  ^
+  symbol:   class GlStateManager
+  location: package com.mojang.blaze3d.platform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/PowerOverlayScreenEffect.java:15: error: package net.minecraft.client.renderer.VertexFormat does not exist
+import net.minecraft.client.renderer.VertexFormat.DrawMode;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:12: error: cannot find symbol
+import moriz.orangesunshine.client.render.RenderUtil;
+                                         ^
+  symbol:   class RenderUtil
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:17: error: package net.minecraft.client.renderer.r does not exist
+import net.minecraft.client.renderer.r.MultiBufferSource;
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:20: error: package net.minecraft.sound does not exist
+import net.minecraft.sound.SoundCategory;
+                          ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:66: error: cannot find symbol
+    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                           ^
+  symbol:   class MultiBufferSource
+  location: class TirednessScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/WarmthOverlayScreenEffect.java:12: error: package net.minecraft.client.renderer.VertexFormat does not exist
+import net.minecraft.client.renderer.VertexFormat.DrawMode;
+                                                 ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:36: error: cannot find symbol
+        matrices.push();
+                ^
+  symbol:   method push()
+  location: variable matrices of type PoseStack
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:37: error: cannot find symbol
+        RenderSystem.enableBlend();
+                    ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:38: error: cannot find symbol
+        RenderSystem.disableDepthTest();
+                    ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:39: error: cannot find symbol
+        RenderSystem.depthMask(false);
+                    ^
+  symbol:   method depthMask(boolean)
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:40: error: cannot find symbol
+        RenderSystem.defaultBlendFunc();
+                    ^
+  symbol:   method defaultBlendFunc()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:42: error: cannot find symbol
+        RenderSystem.enableDepthTest();
+                    ^
+  symbol:   method enableDepthTest()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:43: error: cannot find symbol
+        matrices.pop();
+                ^
+  symbol:   method pop()
+  location: variable matrices of type PoseStack
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:29: error: cannot find symbol
+        TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                           ^
+  symbol:   method getBlockRenderManager()
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:29: error: cannot find symbol
+        TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                                                                                           ^
+  symbol:   method getDefaultState()
+  location: variable NETHER_PORTAL of type Block
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:30: error: cannot find symbol
+        RenderUtil.drawOverlay(matrices, overlayAlpha * 0.25f, width, height, InventoryMenu.BLOCK_ATLAS,
+                                                                                           ^
+  symbol:   variable BLOCK_ATLAS
+  location: class InventoryMenu
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:30: error: cannot find symbol
+        RenderUtil.drawOverlay(matrices, overlayAlpha * 0.25f, width, height, InventoryMenu.BLOCK_ATLAS,
+        ^
+  symbol:   variable RenderUtil
+  location: class AlcoholOverlayScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:31: error: cannot find symbol
+                sprite.getMinU(),
+                      ^
+  symbol:   method getMinU()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:32: error: cannot find symbol
+                sprite.getMinV(),
+                      ^
+  symbol:   method getMinV()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:33: error: cannot find symbol
+                sprite.getMaxU(),
+                      ^
+  symbol:   method getMaxU()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:34: error: cannot find symbol
+                sprite.getMaxV(),
+                      ^
+  symbol:   method getMaxV()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:17: error: cannot find symbol
+        BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+        ^
+  symbol:   class BufferBuilder
+  location: interface ScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:17: error: cannot find symbol
+        BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+                                 ^
+  symbol:   variable Tessellator
+  location: interface ScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:18: error: cannot find symbol
+        renderer.begin(DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+                       ^
+  symbol:   variable DrawMode
+  location: interface ScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:18: error: cannot find symbol
+        renderer.begin(DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+                                       ^
+  symbol:   variable VertexFormats
+  location: interface ScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:23: error: cannot find symbol
+        Tessellator.getInstance().draw();
+        ^
+  symbol:   variable Tessellator
+  location: interface ScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/CompoundScreenEffect.java:46: error: cannot find symbol
+            if (effect.shouldApply(client.getTickDelta())) {
+                                         ^
+  symbol:   method getTickDelta()
+  location: variable client of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:59: error: cannot find symbol
+        if (OrangeSunshineClient.getConfig().visual.hurtOverlayEnabled) {
+            ^
+  symbol:   variable OrangeSunshineClient
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:63: error: cannot find symbol
+        wasInWater = entity.getWorld().getFluidState(BlockPos.ofFloored(entity.getEyePos())).isIn(FluidTags.WATER);
+                                                                                                  ^
+  symbol:   variable FluidTags
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:63: error: cannot find symbol
+        wasInWater = entity.getWorld().getFluidState(BlockPos.ofFloored(entity.getEyePos())).isIn(FluidTags.WATER);
+                           ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:63: error: cannot find symbol
+        wasInWater = entity.getWorld().getFluidState(BlockPos.ofFloored(entity.getEyePos())).isIn(FluidTags.WATER);
+                                                                              ^
+  symbol:   method getEyePos()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:64: error: cannot find symbol
+        wasInRain = entity.getWorld().getRainGradient(tickDelta) > 0
+                          ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                         ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                                                    ^
+  symbol:   method getBlockPos()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                                                                                                   ^
+  symbol:   method getBlockPos()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                                                                                                                      ^
+  symbol:   variable Precipitation
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:66: error: cannot find symbol
+                && entity.getWorld().getTopPosition(Type.MOTION_BLOCKING, entity.getBlockPos()).getY() <= entity.getY();
+                                                    ^
+  symbol:   variable Type
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:66: error: cannot find symbol
+                && entity.getWorld().getTopPosition(Type.MOTION_BLOCKING, entity.getBlockPos()).getY() <= entity.getY();
+                         ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:66: error: cannot find symbol
+                && entity.getWorld().getTopPosition(Type.MOTION_BLOCKING, entity.getBlockPos()).getY() <= entity.getY();
+                                                                                ^
+  symbol:   method getBlockPos()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:68: error: cannot find symbol
+        if (OrangeSunshineClient.getConfig().visual.waterOverlayEnabled) {
+            ^
+  symbol:   variable OrangeSunshineClient
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:81: error: cannot find symbol
+        BlockPos pos = entity.getBlockPos();
+                             ^
+  symbol:   method getBlockPos()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:82: error: cannot find symbol
+        float newHeat = wasInWater ? 0 : entity.getWorld().getBiome(pos).value().getTemperature();
+                                               ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:83: error: cannot find symbol
+        if (!entity.getWorld().getDimension().hasCeiling()) {
+                   ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:84: error: cannot find symbol
+            newHeat *= MeteorlogicalUtil.getSunIntensity(entity.getWorld());
+                       ^
+  symbol:   variable MeteorlogicalUtil
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:84: error: cannot find symbol
+            newHeat *= MeteorlogicalUtil.getSunIntensity(entity.getWorld());
+                                                               ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:85: error: cannot find symbol
+            newHeat *= MeteorlogicalUtil.getSkyLightIntensity(entity.getWorld(), BlockPos.ofFloored(entity.getEyePos()));
+                       ^
+  symbol:   variable MeteorlogicalUtil
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:85: error: cannot find symbol
+            newHeat *= MeteorlogicalUtil.getSkyLightIntensity(entity.getWorld(), BlockPos.ofFloored(entity.getEyePos()));
+                                                                    ^
+  symbol:   method getWorld()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:85: error: cannot find symbol
+            newHeat *= MeteorlogicalUtil.getSkyLightIntensity(entity.getWorld(), BlockPos.ofFloored(entity.getEyePos()));
+                                                                                                          ^
+  symbol:   method getEyePos()
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:93: error: cannot find symbol
+        matrices.push();
+                ^
+  symbol:   method push()
+  location: variable matrices of type PoseStack
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:94: error: cannot find symbol
+        RenderSystem.enableBlend();
+                    ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:95: error: cannot find symbol
+        RenderSystem.disableDepthTest();
+                    ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:96: error: cannot find symbol
+        RenderSystem.depthMask(false);
+                    ^
+  symbol:   method depthMask(boolean)
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:97: error: cannot find symbol
+        RenderSystem.defaultBlendFunc();
+                    ^
+  symbol:   method defaultBlendFunc()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:105: error: cannot find symbol
+        if (OrangeSunshineClient.getConfig().visual.hurtOverlayEnabled && (entity.hurtTime > 0 || experiencedHealth < 5 || pulseStrength > 0)) {
+            ^
+  symbol:   variable OrangeSunshineClient
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:106: error: cannot find symbol
+            float p1 = Math.max((float)entity.hurtTime / entity.maxHurtTime, pulseStrength);
+                                                               ^
+  symbol:   variable maxHurtTime
+  location: variable entity of type Player
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:110: error: cannot find symbol
+            RenderUtil.drawOverlay(matrices, p, screenWidth, screenHeight, HURT_OVERLAY, 0, 0, 1, 1, (int) ((1 - p) * 40));
+            ^
+  symbol:   variable RenderUtil
+  location: class EnvironmentalScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:113: error: cannot find symbol
+        RenderSystem.enableDepthTest();
+                    ^
+  symbol:   method enableDepthTest()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:114: error: cannot find symbol
+        matrices.pop();
+                ^
+  symbol:   method pop()
+  location: variable matrices of type PoseStack
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:50: error: cannot find symbol
+            .toArray(Identifier[]::new);
+                     ^
+  symbol:   class Identifier
+  location: class LensFlareScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:65: error: cannot find symbol
+        actualSunAlpha = Math.min(1, MathUtils.nearValue(actualSunAlpha, MeteorlogicalUtil.getSunFlareIntensity(client.world, client.getCameraEntity(), tickDelta), 0.1f, 0.01f));
+                                                                                                                      ^
+  symbol:   variable world
+  location: variable client of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:65: error: cannot find symbol
+        actualSunAlpha = Math.min(1, MathUtils.nearValue(actualSunAlpha, MeteorlogicalUtil.getSunFlareIntensity(client.world, client.getCameraEntity(), tickDelta), 0.1f, 0.01f));
+                                                                         ^
+  symbol:   variable MeteorlogicalUtil
+  location: class LensFlareScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:69: error: cannot find symbol
+        return OrangeSunshineClient.getConfig().visual.sunFlareIntensity;
+               ^
+  symbol:   variable OrangeSunshineClient
+  location: class LensFlareScreenEffect
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:83: error: cannot find symbol
+        Level world = client.world;
+                            ^
+  symbol:   variable world
+  location: variable client of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:87: error: cannot find symbol
+        float sunRadians = world.getSkyAngleRadians(tickDelta);
+                                ^
+  symbol:   method getSkyAngleRadians(float)
+  location: variable world of type Level
+100 errors
+
+> Task :common:compileJava FAILED
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':common:compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:10: error: package net.minecraft.client.renderer.r does not exist
+  import net.minecraft.client.renderer.r.MultiBufferSource;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:4: error: package net.minecraft.client.renderer.VertexFormat does not exist
+  import net.minecraft.client.renderer.VertexFormat.DrawMode;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/CompoundScreenEffect.java:7: error: package net.minecraft.client.renderer.r does not exist
+  import net.minecraft.client.renderer.r.MultiBufferSource;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:17: error: package net.minecraft.client.renderer.r does not exist
+  import net.minecraft.client.renderer.r.MultiBufferSource;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:20: error: package net.minecraft.registry.tag does not exist
+  import net.minecraft.registry.tag.FluidTags;
+                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:24: error: package net.minecraft.world.Heightmap does not exist
+  import net.minecraft.world.Heightmap.Type;
+                                      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:25: error: package net.minecraft.world.biome.Biome does not exist
+  import net.minecraft.world.biome.Biome.Precipitation;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:17: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+  import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:18: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+  import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:17: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+  import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:18: error: package com.mojang.blaze3d.platform.GlStateManager does not exist
+  import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:23: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.Framebuffer;
+                                ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:24: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.SimpleFramebuffer;
+                                ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:25: error: package net.minecraft.client.renderer.r does not exist
+  import net.minecraft.client.renderer.r.GameRenderer;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:26: error: package net.minecraft.client.renderer.r does not exist
+  import net.minecraft.client.renderer.r.MultiBufferSource;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/PowerOverlayScreenEffect.java:15: error: package net.minecraft.client.renderer.VertexFormat does not exist
+  import net.minecraft.client.renderer.VertexFormat.DrawMode;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:17: error: package net.minecraft.client.renderer.r does not exist
+  import net.minecraft.client.renderer.r.MultiBufferSource;
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:20: error: package net.minecraft.sound does not exist
+  import net.minecraft.sound.SoundCategory;
+                            ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/WarmthOverlayScreenEffect.java:12: error: package net.minecraft.client.renderer.VertexFormat does not exist
+  import net.minecraft.client.renderer.VertexFormat.DrawMode;
+                                                   ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:36: error: cannot find symbol
+          matrices.push();
+                  ^
+    symbol:   method push()
+    location: variable matrices of type PoseStack
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:37: error: cannot find symbol
+          RenderSystem.enableBlend();
+                      ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:38: error: cannot find symbol
+          RenderSystem.disableDepthTest();
+                      ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:39: error: cannot find symbol
+          RenderSystem.depthMask(false);
+                      ^
+    symbol:   method depthMask(boolean)
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:40: error: cannot find symbol
+          RenderSystem.defaultBlendFunc();
+                      ^
+    symbol:   method defaultBlendFunc()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:42: error: cannot find symbol
+          RenderSystem.enableDepthTest();
+                      ^
+    symbol:   method enableDepthTest()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:43: error: cannot find symbol
+          matrices.pop();
+                  ^
+    symbol:   method pop()
+    location: variable matrices of type PoseStack
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:29: error: cannot find symbol
+          TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                             ^
+    symbol:   method getBlockRenderManager()
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:29: error: cannot find symbol
+          TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                                                                                             ^
+    symbol:   method getDefaultState()
+    location: variable NETHER_PORTAL of type Block
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:31: error: cannot find symbol
+                  sprite.getMinU(),
+                        ^
+    symbol:   method getMinU()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:32: error: cannot find symbol
+                  sprite.getMinV(),
+                        ^
+    symbol:   method getMinV()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:33: error: cannot find symbol
+                  sprite.getMaxU(),
+                        ^
+    symbol:   method getMaxU()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:34: error: cannot find symbol
+                  sprite.getMaxV(),
+                        ^
+    symbol:   method getMaxV()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/CompoundScreenEffect.java:46: error: cannot find symbol
+              if (effect.shouldApply(client.getTickDelta())) {
+                                           ^
+    symbol:   method getTickDelta()
+    location: variable client of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:63: error: cannot find symbol
+          wasInWater = entity.getWorld().getFluidState(BlockPos.ofFloored(entity.getEyePos())).isIn(FluidTags.WATER);
+                             ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:63: error: cannot find symbol
+          wasInWater = entity.getWorld().getFluidState(BlockPos.ofFloored(entity.getEyePos())).isIn(FluidTags.WATER);
+                                                                                ^
+    symbol:   method getEyePos()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:64: error: cannot find symbol
+          wasInRain = entity.getWorld().getRainGradient(tickDelta) > 0
+                            ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                  && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                           ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                  && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                                                      ^
+    symbol:   method getBlockPos()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                  && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                                                                                                     ^
+    symbol:   method getBlockPos()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:66: error: cannot find symbol
+                  && entity.getWorld().getTopPosition(Type.MOTION_BLOCKING, entity.getBlockPos()).getY() <= entity.getY();
+                           ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:66: error: cannot find symbol
+                  && entity.getWorld().getTopPosition(Type.MOTION_BLOCKING, entity.getBlockPos()).getY() <= entity.getY();
+                                                                                  ^
+    symbol:   method getBlockPos()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:81: error: cannot find symbol
+          BlockPos pos = entity.getBlockPos();
+                               ^
+    symbol:   method getBlockPos()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:82: error: cannot find symbol
+          float newHeat = wasInWater ? 0 : entity.getWorld().getBiome(pos).value().getTemperature();
+                                                 ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:83: error: cannot find symbol
+          if (!entity.getWorld().getDimension().hasCeiling()) {
+                     ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:84: error: cannot find symbol
+              newHeat *= MeteorlogicalUtil.getSunIntensity(entity.getWorld());
+                                                                 ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:85: error: cannot find symbol
+              newHeat *= MeteorlogicalUtil.getSkyLightIntensity(entity.getWorld(), BlockPos.ofFloored(entity.getEyePos()));
+                                                                      ^
+    symbol:   method getWorld()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:85: error: cannot find symbol
+              newHeat *= MeteorlogicalUtil.getSkyLightIntensity(entity.getWorld(), BlockPos.ofFloored(entity.getEyePos()));
+                                                                                                            ^
+    symbol:   method getEyePos()
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:93: error: cannot find symbol
+          matrices.push();
+                  ^
+    symbol:   method push()
+    location: variable matrices of type PoseStack
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:94: error: cannot find symbol
+          RenderSystem.enableBlend();
+                      ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:95: error: cannot find symbol
+          RenderSystem.disableDepthTest();
+                      ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:96: error: cannot find symbol
+          RenderSystem.depthMask(false);
+                      ^
+    symbol:   method depthMask(boolean)
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:97: error: cannot find symbol
+          RenderSystem.defaultBlendFunc();
+                      ^
+    symbol:   method defaultBlendFunc()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:113: error: cannot find symbol
+          RenderSystem.enableDepthTest();
+                      ^
+    symbol:   method enableDepthTest()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:114: error: cannot find symbol
+          matrices.pop();
+                  ^
+    symbol:   method pop()
+    location: variable matrices of type PoseStack
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:87: error: cannot find symbol
+          float sunRadians = world.getSkyAngleRadians(tickDelta);
+                                  ^
+    symbol:   method getSkyAngleRadians(float)
+    location: variable world of type Level
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:3: error: cannot find symbol
+  import moriz.orangesunshine.client.render.RenderUtil;
+                                           ^
+    symbol:   class RenderUtil
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:34: error: cannot find symbol
+      public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                             ^
+    symbol:   class MultiBufferSource
+    location: class DrugOverlayScreenEffect<D>
+    where D is a type-variable:
+      D extends Drug declared in class DrugOverlayScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java:46: error: cannot find symbol
+      protected abstract void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenheight, float ticks, DrugProperties properties, D drug);
+                                                         ^
+    symbol:   class MultiBufferSource
+    location: class DrugOverlayScreenEffect<D>
+    where D is a type-variable:
+      D extends Drug declared in class DrugOverlayScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/CompoundScreenEffect.java:44: error: cannot find symbol
+      public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                             ^
+    symbol:   class MultiBufferSource
+    location: class CompoundScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:11: error: cannot find symbol
+  import moriz.orangesunshine.client.OrangeSunshineClient;
+                                    ^
+    symbol:   class OrangeSunshineClient
+    location: package moriz.orangesunshine.client
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:12: error: cannot find symbol
+  import moriz.orangesunshine.client.render.MeteorlogicalUtil;
+                                           ^
+    symbol:   class MeteorlogicalUtil
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:13: error: cannot find symbol
+  import moriz.orangesunshine.client.render.RenderUtil;
+                                           ^
+    symbol:   class RenderUtil
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:92: error: cannot find symbol
+      public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                             ^
+    symbol:   class MultiBufferSource
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:11: error: cannot find symbol
+  import moriz.orangesunshine.client.render.MeteorlogicalUtil;
+                                           ^
+    symbol:   class MeteorlogicalUtil
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:12: error: cannot find symbol
+  import moriz.orangesunshine.client.render.PsycheMatrixHelper;
+                                           ^
+    symbol:   class PsycheMatrixHelper
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:13: error: cannot find symbol
+  import moriz.orangesunshine.client.render.RenderUtil;
+                                           ^
+    symbol:   class RenderUtil
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:21: error: cannot find symbol
+  import moriz.orangesunshine.client.OrangeSunshineClient;
+                                    ^
+    symbol:   class OrangeSunshineClient
+    location: package moriz.orangesunshine.client
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:27: error: cannot find symbol
+  import net.minecraft.util.FastColor;
+                           ^
+    symbol:   class FastColor
+    location: package net.minecraft.util
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:48: error: cannot find symbol
+      private static final Identifier[] FLARES = IntStream.range(0, FLARE_SIZES.length)
+                           ^
+    symbol:   class Identifier
+    location: class LensFlareScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:52: error: cannot find symbol
+      private static final Identifier BLINDNESS_OVERLAY = OrangeSunshine.id("textures/environment/lense_flare/sun_blindness.png");
+                           ^
+    symbol:   class Identifier
+    location: class LensFlareScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:15: error: cannot find symbol
+  import com.mojang.blaze3d.platform.GlConst;
+                                    ^
+    symbol:   class GlConst
+    location: package com.mojang.blaze3d.platform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:16: error: cannot find symbol
+  import com.mojang.blaze3d.platform.GlStateManager;
+                                    ^
+    symbol:   class GlStateManager
+    location: package com.mojang.blaze3d.platform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:21: error: cannot find symbol
+  import moriz.orangesunshine.client.OrangeSunshineClient;
+                                    ^
+    symbol:   class OrangeSunshineClient
+    location: package moriz.orangesunshine.client
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:55: error: cannot find symbol
+      public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                             ^
+    symbol:   class MultiBufferSource
+    location: class MotionBlurScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/MotionBlurScreenEffect.java:135: error: cannot find symbol
+          private final SimpleFramebuffer output;
+                        ^
+    symbol:   class SimpleFramebuffer
+    location: class MotionBlurScreenEffect.GlTexture
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/PowerOverlayScreenEffect.java:6: error: cannot find symbol
+  import com.mojang.blaze3d.platform.GlStateManager;
+                                    ^
+    symbol:   class GlStateManager
+    location: package com.mojang.blaze3d.platform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:12: error: cannot find symbol
+  import moriz.orangesunshine.client.render.RenderUtil;
+                                           ^
+    symbol:   class RenderUtil
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/TirednessScreenEffect.java:66: error: cannot find symbol
+      public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+                                             ^
+    symbol:   class MultiBufferSource
+    location: class TirednessScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:30: error: cannot find symbol
+          RenderUtil.drawOverlay(matrices, overlayAlpha * 0.25f, width, height, InventoryMenu.BLOCK_ATLAS,
+                                                                                             ^
+    symbol:   variable BLOCK_ATLAS
+    location: class InventoryMenu
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:30: error: cannot find symbol
+          RenderUtil.drawOverlay(matrices, overlayAlpha * 0.25f, width, height, InventoryMenu.BLOCK_ATLAS,
+          ^
+    symbol:   variable RenderUtil
+    location: class AlcoholOverlayScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:17: error: cannot find symbol
+          BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+          ^
+    symbol:   class BufferBuilder
+    location: interface ScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:17: error: cannot find symbol
+          BufferBuilder renderer = Tessellator.getInstance().getBuffer();
+                                   ^
+    symbol:   variable Tessellator
+    location: interface ScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:18: error: cannot find symbol
+          renderer.begin(DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+                         ^
+    symbol:   variable DrawMode
+    location: interface ScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:18: error: cannot find symbol
+          renderer.begin(DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+                                         ^
+    symbol:   variable VertexFormats
+    location: interface ScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/ScreenEffect.java:23: error: cannot find symbol
+          Tessellator.getInstance().draw();
+          ^
+    symbol:   variable Tessellator
+    location: interface ScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:59: error: cannot find symbol
+          if (OrangeSunshineClient.getConfig().visual.hurtOverlayEnabled) {
+              ^
+    symbol:   variable OrangeSunshineClient
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:63: error: cannot find symbol
+          wasInWater = entity.getWorld().getFluidState(BlockPos.ofFloored(entity.getEyePos())).isIn(FluidTags.WATER);
+                                                                                                    ^
+    symbol:   variable FluidTags
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:65: error: cannot find symbol
+                  && entity.getWorld().getBiome(entity.getBlockPos()).value().getPrecipitation(entity.getBlockPos()) == Precipitation.RAIN
+                                                                                                                        ^
+    symbol:   variable Precipitation
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:66: error: cannot find symbol
+                  && entity.getWorld().getTopPosition(Type.MOTION_BLOCKING, entity.getBlockPos()).getY() <= entity.getY();
+                                                      ^
+    symbol:   variable Type
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:68: error: cannot find symbol
+          if (OrangeSunshineClient.getConfig().visual.waterOverlayEnabled) {
+              ^
+    symbol:   variable OrangeSunshineClient
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:84: error: cannot find symbol
+              newHeat *= MeteorlogicalUtil.getSunIntensity(entity.getWorld());
+                         ^
+    symbol:   variable MeteorlogicalUtil
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:85: error: cannot find symbol
+              newHeat *= MeteorlogicalUtil.getSkyLightIntensity(entity.getWorld(), BlockPos.ofFloored(entity.getEyePos()));
+                         ^
+    symbol:   variable MeteorlogicalUtil
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:105: error: cannot find symbol
+          if (OrangeSunshineClient.getConfig().visual.hurtOverlayEnabled && (entity.hurtTime > 0 || experiencedHealth < 5 || pulseStrength > 0)) {
+              ^
+    symbol:   variable OrangeSunshineClient
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:106: error: cannot find symbol
+              float p1 = Math.max((float)entity.hurtTime / entity.maxHurtTime, pulseStrength);
+                                                                 ^
+    symbol:   variable maxHurtTime
+    location: variable entity of type Player
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/EnvironmentalScreenEffect.java:110: error: cannot find symbol
+              RenderUtil.drawOverlay(matrices, p, screenWidth, screenHeight, HURT_OVERLAY, 0, 0, 1, 1, (int) ((1 - p) * 40));
+              ^
+    symbol:   variable RenderUtil
+    location: class EnvironmentalScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:50: error: cannot find symbol
+              .toArray(Identifier[]::new);
+                       ^
+    symbol:   class Identifier
+    location: class LensFlareScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:65: error: cannot find symbol
+          actualSunAlpha = Math.min(1, MathUtils.nearValue(actualSunAlpha, MeteorlogicalUtil.getSunFlareIntensity(client.world, client.getCameraEntity(), tickDelta), 0.1f, 0.01f));
+                                                                                                                        ^
+    symbol:   variable world
+    location: variable client of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:65: error: cannot find symbol
+          actualSunAlpha = Math.min(1, MathUtils.nearValue(actualSunAlpha, MeteorlogicalUtil.getSunFlareIntensity(client.world, client.getCameraEntity(), tickDelta), 0.1f, 0.01f));
+                                                                           ^
+    symbol:   variable MeteorlogicalUtil
+    location: class LensFlareScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:69: error: cannot find symbol
+          return OrangeSunshineClient.getConfig().visual.sunFlareIntensity;
+                 ^
+    symbol:   variable OrangeSunshineClient
+    location: class LensFlareScreenEffect
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/LensFlareScreenEffect.java:83: error: cannot find symbol
+          Level world = client.world;
+                              ^
+    symbol:   variable world
+    location: variable client of type Minecraft
+  100 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 8s
+1 actionable task: 1 executed

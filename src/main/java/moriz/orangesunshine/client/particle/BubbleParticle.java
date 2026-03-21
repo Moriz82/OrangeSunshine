@@ -3,48 +3,53 @@ package moriz.orangesunshine.client.particle;
 import moriz.orangesunshine.particle.BubbleParticleEffect;
 import org.joml.Vector3f;
 
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.RandomSource;
 
-public class BubbleParticle extends SpriteBillboardParticle {
-    BubbleParticle(BubbleParticleEffect effect, SpriteProvider spriteProvider, ClientWorld world,
+public class BubbleParticle extends SingleQuadParticle {
+    private final SpriteSet sprites;
+
+    BubbleParticle(BubbleParticleEffect effect, SpriteSet spriteProvider, ClientLevel world,
                    double x, double y, double z,
-                   double vX, double vY, double vZ) {
-        super(world, x, y, z);
-        setSprite(spriteProvider);
+                   double vX, double vY, double vZ,
+                   RandomSource random) {
+        super(world, x, y, z, spriteProvider.first());
+        this.sprites = spriteProvider;
+        setSpriteFromAge(spriteProvider);
         setBoundingBoxSpacing(0.02F, 0.02F);
-        scale *= this.random.nextFloat() * 0.6F + 0.2F;
-        velocityX = vX * 0.2F + (Math.random() * 2 - 1) * 0.02F;
-        velocityY = vY * 0.2F + (Math.random() * 2 - 1) * 0.02F;
-        velocityZ = vZ * 0.2F + (Math.random() * 2 - 1) * 0.02F;
-        maxAge = (int)(8 / (Math.random() * 0.8 + 0.2));
+        quadSize *= this.random.nextFloat() * 0.6F + 0.2F;
+        xd = vX * 0.2F + (Math.random() * 2 - 1) * 0.02F;
+        yd = vY * 0.2F + (Math.random() * 2 - 1) * 0.02F;
+        zd = vZ * 0.2F + (Math.random() * 2 - 1) * 0.02F;
+        lifetime = (int)(8 / (Math.random() * 0.8 + 0.2));
 
         Vector3f color = effect.getColor();
-        red = color.x;
-        green = color.y;
-        blue = color.z;
+        rCol = color.x;
+        gCol = color.y;
+        bCol = color.z;
     }
 
     @Override
     public void tick() {
-        prevPosX = x;
-        prevPosY = y;
-        prevPosZ = z;
-        if (maxAge-- <= 0) {
-            markDead();
+        xo = x;
+        yo = y;
+        zo = z;
+        if (age++ >= lifetime) {
+            remove();
             return;
         }
-        velocityY += 0.002;
-        move(velocityX, velocityY, velocityZ);
-        velocityX *= 0.85F;
-        velocityY *= 0.85F;
-        velocityZ *= 0.85F;
+        yd += 0.002;
+        move(xd, yd, zd);
+        xd *= 0.85F;
+        yd *= 0.85F;
+        zd *= 0.85F;
+        setSpriteFromAge(sprites);
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
+    protected Layer getLayer() {
+        return Layer.OPAQUE;
     }
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "@",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "@": {
+      "item": "orangesunshine:dried_weed_bud"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:weed_joint"
+  }
+}

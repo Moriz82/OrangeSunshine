@@ -1,0 +1,46 @@
+Compiled from "RenderSystem.java"
+public class com.mojang.blaze3d.systems.RenderSystem {
+  static final org.slf4j.Logger LOGGER;
+  public static final int MINIMUM_ATLAS_TEXTURE_SIZE;
+  public static final int PROJECTION_MATRIX_UBO_SIZE;
+  public static com.mojang.blaze3d.textures.GpuTextureView outputColorTextureOverride;
+  public static com.mojang.blaze3d.textures.GpuTextureView outputDepthTextureOverride;
+  public com.mojang.blaze3d.systems.RenderSystem();
+  public static com.mojang.blaze3d.systems.SamplerCache getSamplerCache();
+  public static void initRenderThread();
+  public static boolean isOnRenderThread();
+  public static void assertOnRenderThread();
+  public static boolean isFrozenAtPollEvents();
+  public static void flipFrame(com.mojang.blaze3d.platform.Window, com.mojang.blaze3d.TracyFrameCapture);
+  public static void limitDisplayFPS(int);
+  public static void setShaderFog(com.mojang.blaze3d.buffers.GpuBufferSlice);
+  public static com.mojang.blaze3d.buffers.GpuBufferSlice getShaderFog();
+  public static void setShaderLights(com.mojang.blaze3d.buffers.GpuBufferSlice);
+  public static com.mojang.blaze3d.buffers.GpuBufferSlice getShaderLights();
+  public static void enableScissorForRenderTypeDraws(int, int, int, int);
+  public static void disableScissorForRenderTypeDraws();
+  public static com.mojang.blaze3d.systems.ScissorState getScissorStateForRenderTypeDraws();
+  public static java.lang.String getBackendDescription();
+  public static java.lang.String getApiDescription();
+  public static net.minecraft.util.TimeSource$NanoTimeSource initBackendSystem();
+  public static void initRenderer(long, int, boolean, com.mojang.blaze3d.shaders.ShaderSource, boolean);
+  public static void setErrorCallback(org.lwjgl.glfw.GLFWErrorCallbackI);
+  public static void setupDefaultState();
+  public static void setProjectionMatrix(com.mojang.blaze3d.buffers.GpuBufferSlice, com.mojang.blaze3d.ProjectionType);
+  public static void backupProjectionMatrix();
+  public static void restoreProjectionMatrix();
+  public static com.mojang.blaze3d.buffers.GpuBufferSlice getProjectionMatrixBuffer();
+  public static org.joml.Matrix4f getModelViewMatrix();
+  public static org.joml.Matrix4fStack getModelViewStack();
+  public static com.mojang.blaze3d.systems.RenderSystem$AutoStorageIndexBuffer getSequentialBuffer(com.mojang.blaze3d.vertex.VertexFormat$Mode);
+  public static void setGlobalSettingsUniform(com.mojang.blaze3d.buffers.GpuBuffer);
+  public static com.mojang.blaze3d.buffers.GpuBuffer getGlobalSettingsUniform();
+  public static com.mojang.blaze3d.ProjectionType getProjectionType();
+  public static void queueFencedTask(java.lang.Runnable);
+  public static void executePendingTasks();
+  public static com.mojang.blaze3d.systems.GpuDevice getDevice();
+  public static com.mojang.blaze3d.systems.GpuDevice tryGetDevice();
+  public static net.minecraft.client.renderer.DynamicUniforms getDynamicUniforms();
+  public static void bindDefaultUniforms(com.mojang.blaze3d.systems.RenderPass);
+  static {};
+}

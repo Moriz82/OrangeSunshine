@@ -241,7 +241,7 @@ public class AlcoholicFluid extends DrugFluid implements Processable {
         }
 
         //if (distillation > 0 || maturation > 0 || fermentation > 0) {
-        //    tooltip.add(Text.empty());
+        //    tooltip.add(Component.empty());
         //    tooltip.add(settings.profile.getFlavour(distillation, fermentation, maturation));
         //}
     }

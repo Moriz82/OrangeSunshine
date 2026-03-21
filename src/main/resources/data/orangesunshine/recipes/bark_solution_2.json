@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:bark_solution_1"
+  },
+  "result": "orangesunshine:bark_solution_2",
+  "experience": 0.3,
+  "cookingtime": 200
+}

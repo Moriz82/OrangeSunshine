@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "orangesunshine:psych_ingot"
+    },
+    "B": {
+      "item": "orangesunshine:weed_bud"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:compound_extractor"
+  }
+}

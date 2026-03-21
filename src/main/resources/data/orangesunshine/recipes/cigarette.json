@@ -1,13 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "P",
-    "T",
-    "P"
+    "#",
+    "@",
+    "#"
   ],
   "key": {
-    "P": { "item": "minecraft:paper" },
-    "T": { "item": "orangesunshine:dried_tobacco" }
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "@": {
+      "item": "orangesunshine:dried_tobacco"
+    }
   },
   "result": {
     "item": "orangesunshine:cigarette"

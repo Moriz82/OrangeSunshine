@@ -1,7 +1,5 @@
 {
   "variants": {
-    "": {
-      "model": "orangesunshine:block/drying_table"
-    }
+    "": { "model": "orangesunshine:block/drying_table" }
   }
 }

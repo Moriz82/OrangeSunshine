@@ -1,93 +1,59 @@
-/*
- *  Copyright (c) 2014, Lukas Tenbrink.
- *  * http://lukas.axxim.net
- */
-
 package moriz.orangesunshine.client.render;
 
-import moriz.orangesunshine.entity.drug.Drug;
-import moriz.orangesunshine.entity.drug.DrugProperties;
-import org.joml.Vector2f;
-
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.SmoothUtil;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-/**
- * Created by lukas on 23.02.14.
- * Updated by Sollace on 4 Jan 2023
- */
 public class SmoothCameraHelper {
-    public static final SmoothCameraHelper INSTANCE = new SmoothCameraHelper();
+    private static final Identifier SMOOTH_CAM_SHADER = OrangeSunshine.id("shaders/post/smooth_cam.json");
 
-    private final SmoothUtil xSmoother = new SmoothUtil();
-    private final SmoothUtil ySmoother = new SmoothUtil();
+    private static float shakeX;
+    private static float shakeY;
+    private static float shakeZ;
 
-    private float lastTickDelta;
+    private static float prevShakeX;
+    private static float prevShakeY;
+    private static float prevShakeZ;
 
-    private Vector2f cursorDelta = new Vector2f();
+    private static float shakeScale = 0.01f;
 
-    private Vector2f smoothedCursor = new Vector2f();
-    private Vector2f prevCursorDelta = new Vector2f();
+    public static void updateShake(float tickDelta) {
+        prevShakeX = shakeX;
+        prevShakeY = shakeY;
+        prevShakeZ = shakeZ;
 
-    public void setCursorDelta(float deltaX, float deltaY) {
-        prevCursorDelta.x = deltaX;
-        prevCursorDelta.y = deltaY;
+        shakeX = shakeY = shakeZ = 0;
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
+
+        DrugProperties properties = DrugProperties.of(mc.player);
+        if (properties == null) return;
+
+        float strength = properties.getModifier(Drug.VIEW_WOBBLYNESS);
+        float tick = mc.player.tickCount + tickDelta;
+
+        shakeX = Mth.sin(tick / 150 * (float) Math.PI) * strength;
+        shakeY = Mth.sin(tick / 170 * (float) Math.PI) * strength;
+        shakeZ = Mth.sin(tick / 190 * (float) Math.PI) * strength;
     }
 
-    public void applyCameraChange() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.isWindowFocused() && !mc.isPaused() && mc.player != null) {
-            DrugProperties properties = DrugProperties.of(mc.player);
-            if (properties.getModifier(Drug.HEAD_MOTION_INERTNESS) > 0) {
-                Vector2f angles = getAngles();
+    public static void applyCameraShake(PoseStack matrices, float tickDelta) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
 
-                if (!mc.options.smoothCameraEnabled) {
-                    angles.sub(getOriginalAngles());
-                }
+        DrugProperties properties = DrugProperties.of(mc.player);
+        if (properties == null) return;
 
-                mc.player.changeLookDirection(angles.x, angles.y);
-            }
-        }
-    }
+        float strength = properties.getModifier(Drug.VIEW_WOBBLYNESS);
+        if (strength <= 0) return;
 
-    public void tick(DrugProperties properties) {
-        float multiplier = Mth.clamp(properties.getModifier(Drug.HEAD_MOTION_INERTNESS), 0, 1);
-        float speed = getSpeed();
-        smoothedCursor.set(
-                (float)xSmoother.smooth(cursorDelta.x, multiplier * speed),
-                (float)ySmoother.smooth(cursorDelta.y, multiplier * speed)
-        );
-        lastTickDelta = 0;
-        cursorDelta.set(0, 0);
-    }
+        float currentShakeX = Mth.lerp(tickDelta, prevShakeX, shakeX) * shakeScale;
+        float currentShakeY = Mth.lerp(tickDelta, prevShakeY, shakeY) * shakeScale;
+        float currentShakeZ = Mth.lerp(tickDelta, prevShakeZ, shakeZ) * shakeScale;
 
-    private Vector2f getAngles() {
-        float speed = getSpeed();
-        cursorDelta.add(prevCursorDelta.x * speed, prevCursorDelta.y * speed);
-
-        float tickDelta = MinecraftClient.getInstance().getTickDelta();
-        float progress = tickDelta - lastTickDelta;
-        lastTickDelta = tickDelta;
-
-        return smoothedCursor.mul(progress, progress * getYSignum(), new Vector2f());
-    }
-
-    private Vector2f getOriginalAngles() {
-        float speed = getSpeed();
-        return prevCursorDelta.mul(speed, speed * getYSignum(), new Vector2f());
-    }
-
-    private float getYSignum() {
-        return MinecraftClient.getInstance().options.getInvertYMouse().getValue() ? -1 : 1;
-    }
-
-    private float getSpeed() {
-        float sensitivity = MinecraftClient.getInstance().options.getMouseSensitivity().getValue().floatValue() * 0.6F + 0.2F;
-        sensitivity = sensitivity * sensitivity * sensitivity;
-        if (!MinecraftClient.getInstance().player.isUsingSpyglass()) {
-            sensitivity *= 8;
-        }
-        return sensitivity;
+        matrices.translate(currentShakeX, currentShakeY, currentShakeZ);
     }
 }

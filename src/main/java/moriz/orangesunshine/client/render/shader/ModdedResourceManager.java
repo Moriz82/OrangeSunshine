@@ -4,18 +4,20 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import net.minecraft.resource.*;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourcePack;
 import net.minecraft.resources.Identifier;
 
 class ModdedResourceManager implements ResourceManager {
     private final ResourceManager parent;
     private final String defaultNamespace;
-    private final ModdedResourceFactory proxy;
+    private final ModdedResourceProvider proxy;
 
     public ModdedResourceManager(ResourceManager parent, String defaultNamespace) {
         this.parent = parent;
         this.defaultNamespace = defaultNamespace;
-        this.proxy = new ModdedResourceFactory(parent, defaultNamespace);
+        this.proxy = new ModdedResourceProvider(parent, defaultNamespace);
     }
 
     @Override
@@ -24,31 +26,31 @@ class ModdedResourceManager implements ResourceManager {
     }
 
     @Override
-    public Set<String> getAllNamespaces() {
-        return parent.getAllNamespaces();
+    public Set<String> getNamespaces() {
+        return parent.getNamespaces();
     }
 
     @Override
-    public List<Resource> getAllResources(Identifier id) {
-        List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+    public List<Resource> getResourceStack(Identifier id) {
+        List<Resource> resources = parent.getResourceStack(Identifier.fromNamespaceAndPath(defaultNamespace, id.getPath()));
         if (resources.isEmpty()) {
-            return parent.getAllResources(id);
+            return parent.getResourceStack(id);
         }
         return resources;
     }
 
     @Override
-    public Map<Identifier, Resource> findResources(String path, Predicate<Identifier> filter) {
-        return parent.findResources(path, filter);
+    public Map<Identifier, Resource> listResources(String path, Predicate<Identifier> filter) {
+        return parent.listResources(path, filter);
     }
 
     @Override
-    public Map<Identifier, List<Resource>> findAllResources(String path, Predicate<Identifier> filter) {
-        return parent.findAllResources(path, filter);
+    public Map<Identifier, List<Resource>> listResourceStacks(String path, Predicate<Identifier> filter) {
+        return parent.listResourceStacks(path, filter);
     }
 
     @Override
-    public Stream<ResourcePack> streamResourcePacks() {
-        return parent.streamResourcePacks();
+    public Stream<ResourcePack> listPacks() {
+        return parent.listPacks();
     }
 }

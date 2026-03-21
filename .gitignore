@@ -9,6 +9,7 @@ run/
 /.apt_generated/
 .factorypath
 logs/
+/dev-tools/qa/artifacts/
 .idea/
 *.iml
 classes/

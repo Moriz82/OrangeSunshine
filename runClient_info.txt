@@ -1,0 +1,1768 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/moriz/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/lib/native-platform-0.22-milestone-26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Initialized native services in: /home/moriz/.gradle/native
+Initialized jansi services in: /home/moriz/.gradle/native
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Starting process 'Gradle build daemon'. Working directory: /home/moriz/.gradle/daemon/8.11.1 Command: /usr/lib/jvm/java-25-openjdk/bin/java --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.xml/javax.xml.namespace=ALL-UNNAMED -Xmx8G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -cp /home/moriz/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/lib/gradle-daemon-main-8.11.1.jar -javaagent:/home/moriz/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/lib/agents/gradle-instrumentation-agent-8.11.1.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 8.11.1
+Successfully started process 'Gradle build daemon'
+An attempt to start the daemon took 0.591 secs.
+The client will now receive all logging from the daemon (pid: 893992). The daemon log file: /home/moriz/.gradle/daemon/8.11.1/daemon-893992.out.log
+Daemon will be stopped at the end of the build 
+Using 12 worker leases.
+Received JVM installation metadata from '/usr/lib/jvm/java-25-openjdk': {JAVA_HOME=/usr/lib/jvm/java-25-openjdk, JAVA_VERSION=25.0.2, JAVA_VENDOR=Arch Linux, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=25.0.2, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=25.0.2, VM_VENDOR=Arch Linux, OS_ARCH=amd64}
+Watching the file system is configured to be enabled if available
+Now considering [/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11] as hierarchies to watch
+File system watching is active
+Starting Build
+Settings evaluated using settings file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/settings.gradle'.
+Projects loaded. Root project using build file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build.gradle'.
+Included projects: [root project 'OrangeSunshine', project ':common', project ':fabric', project ':forge', project ':neoforge']
+
+> Configure project :
+Evaluating root project 'OrangeSunshine' using build file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build.gradle'.
+Transforming architectury-plugin.gradle.plugin-3.4.162.jar (architectury-plugin:architectury-plugin.gradle.plugin:3.4.162) with InstrumentationAnalysisTransform
+Transforming shadow-8.1.1.jar (com.github.johnrengelman:shadow:8.1.1) with InstrumentationAnalysisTransform
+Transforming log4j-core-2.20.0.jar (org.apache.logging.log4j:log4j-core:2.20.0) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk8-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72) with InstrumentationAnalysisTransform
+Transforming kotlin-reflect-1.3.72.jar (org.jetbrains.kotlin:kotlin-reflect:1.3.72) with InstrumentationAnalysisTransform
+Transforming gradle-idea-ext-0.10.jar (gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.10) with InstrumentationAnalysisTransform
+Transforming architectury-transformer-5.2.87.jar (dev.architectury:architectury-transformer:5.2.87) with InstrumentationAnalysisTransform
+Transforming tiny-remapper-1.1.0.jar (dev.architectury:tiny-remapper:1.1.0) with InstrumentationAnalysisTransform
+Transforming architectury-loom-1.13.467.jar (dev.architectury:architectury-loom:1.13.467) with InstrumentationAnalysisTransform
+Transforming mcinjector-3.8.0.jar (de.oceanlabs.mcp:mcinjector:3.8.0) with InstrumentationAnalysisTransform
+Transforming datafixerupper-6.0.8.jar (com.mojang:datafixerupper:6.0.8) with InstrumentationAnalysisTransform
+Transforming gson-2.10.1.jar (com.google.code.gson:gson:2.10.1) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk7-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib:1.3.72) with InstrumentationAnalysisTransform
+Transforming stitch-0.6.2.jar (net.fabricmc:stitch:0.6.2) with InstrumentationAnalysisTransform
+Transforming guava-31.0.1-jre.jar (com.google.guava:guava:31.0.1-jre) with InstrumentationAnalysisTransform
+Transforming class-tweaker-0.1.1.jar (net.fabricmc:class-tweaker:0.1.1) with InstrumentationAnalysisTransform
+Transforming tiny-remapper-0.12.0.jar (net.fabricmc:tiny-remapper:0.12.0) with InstrumentationAnalysisTransform
+Transforming unpick-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick:3.0.0-beta.13) with InstrumentationAnalysisTransform
+Transforming unpick-format-utils-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick-format-utils:3.0.0-beta.13) with InstrumentationAnalysisTransform
+Transforming asm-commons-9.9.jar (org.ow2.asm:asm-commons:9.9) with InstrumentationAnalysisTransform
+Transforming asm-util-9.9.jar (org.ow2.asm:asm-util:9.9) with InstrumentationAnalysisTransform
+Transforming asm-analysis-9.9.jar (org.ow2.asm:asm-analysis:9.9) with InstrumentationAnalysisTransform
+Transforming asm-tree-9.9.jar (org.ow2.asm:asm-tree:9.9) with InstrumentationAnalysisTransform
+Transforming asm-9.9.jar (org.ow2.asm:asm:9.9) with InstrumentationAnalysisTransform
+Transforming at-1.0.1.jar (dev.architectury:at:1.0.1) with InstrumentationAnalysisTransform
+Transforming mapping-io-0.8.0.jar (net.fabricmc:mapping-io:0.8.0) with InstrumentationAnalysisTransform
+Transforming lorenz-tiny-4.0.2.jar (net.fabricmc:lorenz-tiny:4.0.2) with InstrumentationAnalysisTransform
+Transforming refmap-remapper-1.0.5.jar (dev.architectury:refmap-remapper:1.0.5) with InstrumentationAnalysisTransform
+Transforming fabric-loom-native-0.2.0.jar (net.fabricmc:fabric-loom-native:0.2.0) with InstrumentationAnalysisTransform
+Transforming mercury-0.4.3.18.jar (dev.architectury:mercury:0.4.3.18) with InstrumentationAnalysisTransform
+Transforming mercurymixin-0.2.2.jar (net.fabricmc:mercurymixin:0.2.2) with InstrumentationAnalysisTransform
+Transforming kotlin-metadata-jvm-2.0.21.jar (org.jetbrains.kotlin:kotlin-metadata-jvm:2.0.21) with InstrumentationAnalysisTransform
+Transforming mercury-0.4.2.jar (net.fabricmc:mercury:0.4.2) with InstrumentationAnalysisTransform
+Transforming lorenz-0.5.7.jar (org.cadixdev:lorenz:0.5.7) with InstrumentationAnalysisTransform
+Transforming opencsv-5.4.jar (com.opencsv:opencsv:5.4) with InstrumentationAnalysisTransform
+Transforming DiffPatch-2.0.7.jar (net.minecraftforge:DiffPatch:2.0.7) with InstrumentationAnalysisTransform
+Transforming toml-3.6.6.jar (com.electronwill.night-config:toml:3.6.6) with InstrumentationAnalysisTransform
+Transforming jankson-1.2.3.jar (blue.endless:jankson:1.2.3) with InstrumentationAnalysisTransform
+Transforming jdom2-2.0.6.1.jar (org.jdom:jdom2:2.0.6.1) with InstrumentationAnalysisTransform
+Transforming commons-io-2.11.0.jar (commons-io:commons-io:2.11.0) with InstrumentationAnalysisTransform
+Transforming ant-1.10.13.jar (org.apache.ant:ant:1.10.13) with InstrumentationAnalysisTransform
+Transforming plexus-utils-3.5.1.jar (org.codehaus.plexus:plexus-utils:3.5.1) with InstrumentationAnalysisTransform
+Transforming jdependency-2.8.0.jar (org.vafer:jdependency:2.8.0) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-common-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72) with InstrumentationAnalysisTransform
+Transforming annotations-13.0.jar (org.jetbrains:annotations:13.0) with InstrumentationAnalysisTransform
+Transforming failureaccess-1.0.1.jar (com.google.guava:failureaccess:1.0.1) with InstrumentationAnalysisTransform
+Transforming listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar (com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava) with InstrumentationAnalysisTransform
+Transforming jsr305-3.0.2.jar (com.google.code.findbugs:jsr305:3.0.2) with InstrumentationAnalysisTransform
+Transforming checker-qual-3.12.0.jar (org.checkerframework:checker-qual:3.12.0) with InstrumentationAnalysisTransform
+Transforming error_prone_annotations-2.7.1.jar (com.google.errorprone:error_prone_annotations:2.7.1) with InstrumentationAnalysisTransform
+Transforming j2objc-annotations-1.3.jar (com.google.j2objc:j2objc-annotations:1.3) with InstrumentationAnalysisTransform
+Transforming tiny-mappings-parser-0.3.0+build.17.jar (net.fabricmc:tiny-mappings-parser:0.3.0+build.17) with InstrumentationAnalysisTransform
+Transforming at-0.1.0-rc1.jar (org.cadixdev:at:0.1.0-rc1) with InstrumentationAnalysisTransform
+Transforming jopt-simple-5.0.4.jar (net.sf.jopt-simple:jopt-simple:5.0.4) with InstrumentationAnalysisTransform
+Transforming commons-text-1.9.jar (org.apache.commons:commons-text:1.9) with InstrumentationAnalysisTransform
+Transforming commons-lang3-3.12.0.jar (org.apache.commons:commons-lang3:3.12.0) with InstrumentationAnalysisTransform
+Transforming commons-beanutils-1.9.4.jar (commons-beanutils:commons-beanutils:1.9.4) with InstrumentationAnalysisTransform
+Transforming commons-collections4-4.4.jar (org.apache.commons:commons-collections4:4.4) with InstrumentationAnalysisTransform
+Transforming fastutil-8.5.6.jar (it.unimi.dsi:fastutil:8.5.6) with InstrumentationAnalysisTransform
+Transforming commons-compress-1.18.jar (org.apache.commons:commons-compress:1.18) with InstrumentationAnalysisTransform
+Transforming xz-1.8.jar (org.tukaani:xz:1.8) with InstrumentationAnalysisTransform
+Transforming slf4j-api-1.8.0-beta4.jar (org.slf4j:slf4j-api:1.8.0-beta4) with InstrumentationAnalysisTransform
+Transforming bombe-0.3.4.jar (org.cadixdev:bombe:0.3.4) with InstrumentationAnalysisTransform
+Transforming core-3.6.6.jar (com.electronwill.night-config:core:3.6.6) with InstrumentationAnalysisTransform
+Transforming ant-launcher-1.10.13.jar (org.apache.ant:ant-launcher:1.10.13) with InstrumentationAnalysisTransform
+Transforming log4j-api-2.20.0.jar (org.apache.logging.log4j:log4j-api:2.20.0) with InstrumentationAnalysisTransform
+Transforming commons-logging-1.2.jar (commons-logging:commons-logging:1.2) with InstrumentationAnalysisTransform
+Transforming commons-collections-3.2.2.jar (commons-collections:commons-collections:3.2.2) with InstrumentationAnalysisTransform
+Transforming architectury-plugin.gradle.plugin-3.4.162.jar (architectury-plugin:architectury-plugin.gradle.plugin:3.4.162) with InstrumentationAnalysisTransform
+Transforming architectury-plugin.gradle.plugin-3.4.162.jar (architectury-plugin:architectury-plugin.gradle.plugin:3.4.162) with MergeInstrumentationAnalysisTransform
+Transforming shadow-8.1.1.jar (com.github.johnrengelman:shadow:8.1.1) with InstrumentationAnalysisTransform
+Transforming shadow-8.1.1.jar (com.github.johnrengelman:shadow:8.1.1) with MergeInstrumentationAnalysisTransform
+Transforming log4j-core-2.20.0.jar (org.apache.logging.log4j:log4j-core:2.20.0) with InstrumentationAnalysisTransform
+Transforming log4j-core-2.20.0.jar (org.apache.logging.log4j:log4j-core:2.20.0) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk8-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk8-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-reflect-1.3.72.jar (org.jetbrains.kotlin:kotlin-reflect:1.3.72) with InstrumentationAnalysisTransform
+Transforming kotlin-reflect-1.3.72.jar (org.jetbrains.kotlin:kotlin-reflect:1.3.72) with MergeInstrumentationAnalysisTransform
+Transforming gradle-idea-ext-0.10.jar (gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.10) with InstrumentationAnalysisTransform
+Transforming gradle-idea-ext-0.10.jar (gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.10) with MergeInstrumentationAnalysisTransform
+Transforming architectury-transformer-5.2.87.jar (dev.architectury:architectury-transformer:5.2.87) with InstrumentationAnalysisTransform
+Transforming architectury-transformer-5.2.87.jar (dev.architectury:architectury-transformer:5.2.87) with MergeInstrumentationAnalysisTransform
+Transforming tiny-remapper-1.1.0.jar (dev.architectury:tiny-remapper:1.1.0) with InstrumentationAnalysisTransform
+Transforming tiny-remapper-1.1.0.jar (dev.architectury:tiny-remapper:1.1.0) with MergeInstrumentationAnalysisTransform
+Transforming architectury-loom-1.13.467.jar (dev.architectury:architectury-loom:1.13.467) with InstrumentationAnalysisTransform
+Transforming architectury-loom-1.13.467.jar (dev.architectury:architectury-loom:1.13.467) with MergeInstrumentationAnalysisTransform
+Transforming mcinjector-3.8.0.jar (de.oceanlabs.mcp:mcinjector:3.8.0) with InstrumentationAnalysisTransform
+Transforming mcinjector-3.8.0.jar (de.oceanlabs.mcp:mcinjector:3.8.0) with MergeInstrumentationAnalysisTransform
+Transforming datafixerupper-6.0.8.jar (com.mojang:datafixerupper:6.0.8) with InstrumentationAnalysisTransform
+Transforming datafixerupper-6.0.8.jar (com.mojang:datafixerupper:6.0.8) with MergeInstrumentationAnalysisTransform
+Transforming gson-2.10.1.jar (com.google.code.gson:gson:2.10.1) with InstrumentationAnalysisTransform
+Transforming gson-2.10.1.jar (com.google.code.gson:gson:2.10.1) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk7-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk7-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-stdlib-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib:1.3.72) with InstrumentationAnalysisTransform
+Transforming log4j-core-2.20.0.jar (org.apache.logging.log4j:log4j-core:2.20.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming kotlin-stdlib-jdk8-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72) with ExternalDependencyInstrumentingArtifactTransform
+Transforming kotlin-stdlib-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib:1.3.72) with MergeInstrumentationAnalysisTransform
+Transforming gradle-idea-ext-0.10.jar (gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.10) with ExternalDependencyInstrumentingArtifactTransform
+Transforming stitch-0.6.2.jar (net.fabricmc:stitch:0.6.2) with InstrumentationAnalysisTransform
+Transforming architectury-plugin.gradle.plugin-3.4.162.jar (architectury-plugin:architectury-plugin.gradle.plugin:3.4.162) with ExternalDependencyInstrumentingArtifactTransform
+Transforming stitch-0.6.2.jar (net.fabricmc:stitch:0.6.2) with MergeInstrumentationAnalysisTransform
+Transforming architectury-transformer-5.2.87.jar (dev.architectury:architectury-transformer:5.2.87) with ExternalDependencyInstrumentingArtifactTransform
+Transforming guava-31.0.1-jre.jar (com.google.guava:guava:31.0.1-jre) with InstrumentationAnalysisTransform
+Transforming guava-31.0.1-jre.jar (com.google.guava:guava:31.0.1-jre) with MergeInstrumentationAnalysisTransform
+Transforming class-tweaker-0.1.1.jar (net.fabricmc:class-tweaker:0.1.1) with InstrumentationAnalysisTransform
+Transforming class-tweaker-0.1.1.jar (net.fabricmc:class-tweaker:0.1.1) with MergeInstrumentationAnalysisTransform
+Transforming tiny-remapper-0.12.0.jar (net.fabricmc:tiny-remapper:0.12.0) with InstrumentationAnalysisTransform
+Transforming tiny-remapper-1.1.0.jar (dev.architectury:tiny-remapper:1.1.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming tiny-remapper-0.12.0.jar (net.fabricmc:tiny-remapper:0.12.0) with MergeInstrumentationAnalysisTransform
+Transforming unpick-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick:3.0.0-beta.13) with InstrumentationAnalysisTransform
+Transforming unpick-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick:3.0.0-beta.13) with MergeInstrumentationAnalysisTransform
+Transforming unpick-format-utils-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick-format-utils:3.0.0-beta.13) with InstrumentationAnalysisTransform
+Transforming unpick-format-utils-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick-format-utils:3.0.0-beta.13) with MergeInstrumentationAnalysisTransform
+Transforming asm-commons-9.9.jar (org.ow2.asm:asm-commons:9.9) with InstrumentationAnalysisTransform
+Transforming asm-commons-9.9.jar (org.ow2.asm:asm-commons:9.9) with MergeInstrumentationAnalysisTransform
+Transforming asm-util-9.9.jar (org.ow2.asm:asm-util:9.9) with InstrumentationAnalysisTransform
+Transforming asm-util-9.9.jar (org.ow2.asm:asm-util:9.9) with MergeInstrumentationAnalysisTransform
+Transforming asm-analysis-9.9.jar (org.ow2.asm:asm-analysis:9.9) with InstrumentationAnalysisTransform
+Transforming asm-analysis-9.9.jar (org.ow2.asm:asm-analysis:9.9) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-reflect-1.3.72.jar (org.jetbrains.kotlin:kotlin-reflect:1.3.72) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-tree-9.9.jar (org.ow2.asm:asm-tree:9.9) with InstrumentationAnalysisTransform
+Transforming shadow-8.1.1.jar (com.github.johnrengelman:shadow:8.1.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-tree-9.9.jar (org.ow2.asm:asm-tree:9.9) with MergeInstrumentationAnalysisTransform
+Transforming asm-9.9.jar (org.ow2.asm:asm:9.9) with InstrumentationAnalysisTransform
+Transforming asm-9.9.jar (org.ow2.asm:asm:9.9) with MergeInstrumentationAnalysisTransform
+Transforming at-1.0.1.jar (dev.architectury:at:1.0.1) with InstrumentationAnalysisTransform
+Transforming at-1.0.1.jar (dev.architectury:at:1.0.1) with MergeInstrumentationAnalysisTransform
+Transforming mapping-io-0.8.0.jar (net.fabricmc:mapping-io:0.8.0) with InstrumentationAnalysisTransform
+Transforming mapping-io-0.8.0.jar (net.fabricmc:mapping-io:0.8.0) with MergeInstrumentationAnalysisTransform
+Transforming lorenz-tiny-4.0.2.jar (net.fabricmc:lorenz-tiny:4.0.2) with InstrumentationAnalysisTransform
+Transforming lorenz-tiny-4.0.2.jar (net.fabricmc:lorenz-tiny:4.0.2) with MergeInstrumentationAnalysisTransform
+Transforming refmap-remapper-1.0.5.jar (dev.architectury:refmap-remapper:1.0.5) with InstrumentationAnalysisTransform
+Transforming refmap-remapper-1.0.5.jar (dev.architectury:refmap-remapper:1.0.5) with MergeInstrumentationAnalysisTransform
+Transforming mcinjector-3.8.0.jar (de.oceanlabs.mcp:mcinjector:3.8.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming architectury-loom-1.13.467.jar (dev.architectury:architectury-loom:1.13.467) with ExternalDependencyInstrumentingArtifactTransform
+Transforming fabric-loom-native-0.2.0.jar (net.fabricmc:fabric-loom-native:0.2.0) with InstrumentationAnalysisTransform
+Transforming fabric-loom-native-0.2.0.jar (net.fabricmc:fabric-loom-native:0.2.0) with MergeInstrumentationAnalysisTransform
+Transforming mercury-0.4.3.18.jar (dev.architectury:mercury:0.4.3.18) with InstrumentationAnalysisTransform
+Transforming mercury-0.4.3.18.jar (dev.architectury:mercury:0.4.3.18) with MergeInstrumentationAnalysisTransform
+Transforming mercurymixin-0.2.2.jar (net.fabricmc:mercurymixin:0.2.2) with InstrumentationAnalysisTransform
+Transforming mercurymixin-0.2.2.jar (net.fabricmc:mercurymixin:0.2.2) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-metadata-jvm-2.0.21.jar (org.jetbrains.kotlin:kotlin-metadata-jvm:2.0.21) with InstrumentationAnalysisTransform
+Transforming kotlin-metadata-jvm-2.0.21.jar (org.jetbrains.kotlin:kotlin-metadata-jvm:2.0.21) with MergeInstrumentationAnalysisTransform
+Transforming mercury-0.4.2.jar (net.fabricmc:mercury:0.4.2) with InstrumentationAnalysisTransform
+Transforming mercury-0.4.2.jar (net.fabricmc:mercury:0.4.2) with MergeInstrumentationAnalysisTransform
+Transforming lorenz-0.5.7.jar (org.cadixdev:lorenz:0.5.7) with InstrumentationAnalysisTransform
+Transforming lorenz-0.5.7.jar (org.cadixdev:lorenz:0.5.7) with MergeInstrumentationAnalysisTransform
+Transforming opencsv-5.4.jar (com.opencsv:opencsv:5.4) with InstrumentationAnalysisTransform
+Transforming opencsv-5.4.jar (com.opencsv:opencsv:5.4) with MergeInstrumentationAnalysisTransform
+Transforming DiffPatch-2.0.7.jar (net.minecraftforge:DiffPatch:2.0.7) with InstrumentationAnalysisTransform
+Transforming DiffPatch-2.0.7.jar (net.minecraftforge:DiffPatch:2.0.7) with MergeInstrumentationAnalysisTransform
+Transforming toml-3.6.6.jar (com.electronwill.night-config:toml:3.6.6) with InstrumentationAnalysisTransform
+Transforming toml-3.6.6.jar (com.electronwill.night-config:toml:3.6.6) with MergeInstrumentationAnalysisTransform
+Transforming jankson-1.2.3.jar (blue.endless:jankson:1.2.3) with InstrumentationAnalysisTransform
+Transforming jankson-1.2.3.jar (blue.endless:jankson:1.2.3) with MergeInstrumentationAnalysisTransform
+Transforming jdom2-2.0.6.1.jar (org.jdom:jdom2:2.0.6.1) with InstrumentationAnalysisTransform
+Transforming jdom2-2.0.6.1.jar (org.jdom:jdom2:2.0.6.1) with MergeInstrumentationAnalysisTransform
+Transforming commons-io-2.11.0.jar (commons-io:commons-io:2.11.0) with InstrumentationAnalysisTransform
+Transforming commons-io-2.11.0.jar (commons-io:commons-io:2.11.0) with MergeInstrumentationAnalysisTransform
+Transforming ant-1.10.13.jar (org.apache.ant:ant:1.10.13) with InstrumentationAnalysisTransform
+Transforming ant-1.10.13.jar (org.apache.ant:ant:1.10.13) with MergeInstrumentationAnalysisTransform
+Transforming plexus-utils-3.5.1.jar (org.codehaus.plexus:plexus-utils:3.5.1) with InstrumentationAnalysisTransform
+Transforming plexus-utils-3.5.1.jar (org.codehaus.plexus:plexus-utils:3.5.1) with MergeInstrumentationAnalysisTransform
+Transforming jdependency-2.8.0.jar (org.vafer:jdependency:2.8.0) with InstrumentationAnalysisTransform
+Transforming jdependency-2.8.0.jar (org.vafer:jdependency:2.8.0) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-stdlib-common-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72) with InstrumentationAnalysisTransform
+Transforming kotlin-stdlib-common-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72) with MergeInstrumentationAnalysisTransform
+Transforming annotations-13.0.jar (org.jetbrains:annotations:13.0) with InstrumentationAnalysisTransform
+Transforming annotations-13.0.jar (org.jetbrains:annotations:13.0) with MergeInstrumentationAnalysisTransform
+Transforming failureaccess-1.0.1.jar (com.google.guava:failureaccess:1.0.1) with InstrumentationAnalysisTransform
+Transforming failureaccess-1.0.1.jar (com.google.guava:failureaccess:1.0.1) with MergeInstrumentationAnalysisTransform
+Transforming listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar (com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava) with InstrumentationAnalysisTransform
+Transforming listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar (com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava) with MergeInstrumentationAnalysisTransform
+Transforming jsr305-3.0.2.jar (com.google.code.findbugs:jsr305:3.0.2) with InstrumentationAnalysisTransform
+Transforming jsr305-3.0.2.jar (com.google.code.findbugs:jsr305:3.0.2) with MergeInstrumentationAnalysisTransform
+Transforming checker-qual-3.12.0.jar (org.checkerframework:checker-qual:3.12.0) with InstrumentationAnalysisTransform
+Transforming checker-qual-3.12.0.jar (org.checkerframework:checker-qual:3.12.0) with MergeInstrumentationAnalysisTransform
+Transforming error_prone_annotations-2.7.1.jar (com.google.errorprone:error_prone_annotations:2.7.1) with InstrumentationAnalysisTransform
+Transforming error_prone_annotations-2.7.1.jar (com.google.errorprone:error_prone_annotations:2.7.1) with MergeInstrumentationAnalysisTransform
+Transforming j2objc-annotations-1.3.jar (com.google.j2objc:j2objc-annotations:1.3) with InstrumentationAnalysisTransform
+Transforming datafixerupper-6.0.8.jar (com.mojang:datafixerupper:6.0.8) with ExternalDependencyInstrumentingArtifactTransform
+Transforming j2objc-annotations-1.3.jar (com.google.j2objc:j2objc-annotations:1.3) with MergeInstrumentationAnalysisTransform
+Transforming tiny-mappings-parser-0.3.0+build.17.jar (net.fabricmc:tiny-mappings-parser:0.3.0+build.17) with InstrumentationAnalysisTransform
+Transforming tiny-mappings-parser-0.3.0+build.17.jar (net.fabricmc:tiny-mappings-parser:0.3.0+build.17) with MergeInstrumentationAnalysisTransform
+Transforming at-0.1.0-rc1.jar (org.cadixdev:at:0.1.0-rc1) with InstrumentationAnalysisTransform
+Transforming at-0.1.0-rc1.jar (org.cadixdev:at:0.1.0-rc1) with MergeInstrumentationAnalysisTransform
+Transforming jopt-simple-5.0.4.jar (net.sf.jopt-simple:jopt-simple:5.0.4) with InstrumentationAnalysisTransform
+Transforming jopt-simple-5.0.4.jar (net.sf.jopt-simple:jopt-simple:5.0.4) with MergeInstrumentationAnalysisTransform
+Transforming commons-text-1.9.jar (org.apache.commons:commons-text:1.9) with InstrumentationAnalysisTransform
+Transforming commons-text-1.9.jar (org.apache.commons:commons-text:1.9) with MergeInstrumentationAnalysisTransform
+Transforming commons-lang3-3.12.0.jar (org.apache.commons:commons-lang3:3.12.0) with InstrumentationAnalysisTransform
+Transforming commons-lang3-3.12.0.jar (org.apache.commons:commons-lang3:3.12.0) with MergeInstrumentationAnalysisTransform
+Transforming commons-beanutils-1.9.4.jar (commons-beanutils:commons-beanutils:1.9.4) with InstrumentationAnalysisTransform
+Transforming commons-beanutils-1.9.4.jar (commons-beanutils:commons-beanutils:1.9.4) with MergeInstrumentationAnalysisTransform
+Transforming commons-collections4-4.4.jar (org.apache.commons:commons-collections4:4.4) with InstrumentationAnalysisTransform
+Transforming commons-collections4-4.4.jar (org.apache.commons:commons-collections4:4.4) with MergeInstrumentationAnalysisTransform
+Transforming fastutil-8.5.6.jar (it.unimi.dsi:fastutil:8.5.6) with InstrumentationAnalysisTransform
+Transforming fastutil-8.5.6.jar (it.unimi.dsi:fastutil:8.5.6) with MergeInstrumentationAnalysisTransform
+Transforming commons-compress-1.18.jar (org.apache.commons:commons-compress:1.18) with InstrumentationAnalysisTransform
+Transforming commons-compress-1.18.jar (org.apache.commons:commons-compress:1.18) with MergeInstrumentationAnalysisTransform
+Transforming xz-1.8.jar (org.tukaani:xz:1.8) with InstrumentationAnalysisTransform
+Transforming xz-1.8.jar (org.tukaani:xz:1.8) with MergeInstrumentationAnalysisTransform
+Transforming slf4j-api-1.8.0-beta4.jar (org.slf4j:slf4j-api:1.8.0-beta4) with InstrumentationAnalysisTransform
+Transforming slf4j-api-1.8.0-beta4.jar (org.slf4j:slf4j-api:1.8.0-beta4) with MergeInstrumentationAnalysisTransform
+Transforming bombe-0.3.4.jar (org.cadixdev:bombe:0.3.4) with InstrumentationAnalysisTransform
+Transforming bombe-0.3.4.jar (org.cadixdev:bombe:0.3.4) with MergeInstrumentationAnalysisTransform
+Transforming gson-2.10.1.jar (com.google.code.gson:gson:2.10.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming core-3.6.6.jar (com.electronwill.night-config:core:3.6.6) with InstrumentationAnalysisTransform
+Transforming core-3.6.6.jar (com.electronwill.night-config:core:3.6.6) with MergeInstrumentationAnalysisTransform
+Transforming ant-launcher-1.10.13.jar (org.apache.ant:ant-launcher:1.10.13) with InstrumentationAnalysisTransform
+Transforming ant-launcher-1.10.13.jar (org.apache.ant:ant-launcher:1.10.13) with MergeInstrumentationAnalysisTransform
+Transforming log4j-api-2.20.0.jar (org.apache.logging.log4j:log4j-api:2.20.0) with InstrumentationAnalysisTransform
+Transforming log4j-api-2.20.0.jar (org.apache.logging.log4j:log4j-api:2.20.0) with MergeInstrumentationAnalysisTransform
+Transforming commons-logging-1.2.jar (commons-logging:commons-logging:1.2) with InstrumentationAnalysisTransform
+Transforming commons-logging-1.2.jar (commons-logging:commons-logging:1.2) with MergeInstrumentationAnalysisTransform
+Transforming commons-collections-3.2.2.jar (commons-collections:commons-collections:3.2.2) with InstrumentationAnalysisTransform
+Transforming commons-collections-3.2.2.jar (commons-collections:commons-collections:3.2.2) with MergeInstrumentationAnalysisTransform
+Transforming kotlin-stdlib-jdk7-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72) with ExternalDependencyInstrumentingArtifactTransform
+Transforming kotlin-stdlib-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib:1.3.72) with ExternalDependencyInstrumentingArtifactTransform
+Transforming stitch-0.6.2.jar (net.fabricmc:stitch:0.6.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming guava-31.0.1-jre.jar (com.google.guava:guava:31.0.1-jre) with ExternalDependencyInstrumentingArtifactTransform
+Transforming unpick-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick:3.0.0-beta.13) with ExternalDependencyInstrumentingArtifactTransform
+Transforming tiny-remapper-0.12.0.jar (net.fabricmc:tiny-remapper:0.12.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming class-tweaker-0.1.1.jar (net.fabricmc:class-tweaker:0.1.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming unpick-format-utils-3.0.0-beta.13.jar (net.fabricmc.unpick:unpick-format-utils:3.0.0-beta.13) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-commons-9.9.jar (org.ow2.asm:asm-commons:9.9) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-util-9.9.jar (org.ow2.asm:asm-util:9.9) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-analysis-9.9.jar (org.ow2.asm:asm-analysis:9.9) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-9.9.jar (org.ow2.asm:asm:9.9) with ExternalDependencyInstrumentingArtifactTransform
+Transforming asm-tree-9.9.jar (org.ow2.asm:asm-tree:9.9) with ExternalDependencyInstrumentingArtifactTransform
+Transforming at-1.0.1.jar (dev.architectury:at:1.0.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming mapping-io-0.8.0.jar (net.fabricmc:mapping-io:0.8.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming lorenz-tiny-4.0.2.jar (net.fabricmc:lorenz-tiny:4.0.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming lorenz-0.5.7.jar (org.cadixdev:lorenz:0.5.7) with ExternalDependencyInstrumentingArtifactTransform
+Transforming mercury-0.4.3.18.jar (dev.architectury:mercury:0.4.3.18) with ExternalDependencyInstrumentingArtifactTransform
+Transforming refmap-remapper-1.0.5.jar (dev.architectury:refmap-remapper:1.0.5) with ExternalDependencyInstrumentingArtifactTransform
+Transforming mercurymixin-0.2.2.jar (net.fabricmc:mercurymixin:0.2.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming fabric-loom-native-0.2.0.jar (net.fabricmc:fabric-loom-native:0.2.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming kotlin-metadata-jvm-2.0.21.jar (org.jetbrains.kotlin:kotlin-metadata-jvm:2.0.21) with ExternalDependencyInstrumentingArtifactTransform
+Transforming mercury-0.4.2.jar (net.fabricmc:mercury:0.4.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming DiffPatch-2.0.7.jar (net.minecraftforge:DiffPatch:2.0.7) with ExternalDependencyInstrumentingArtifactTransform
+Transforming opencsv-5.4.jar (com.opencsv:opencsv:5.4) with ExternalDependencyInstrumentingArtifactTransform
+Transforming toml-3.6.6.jar (com.electronwill.night-config:toml:3.6.6) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jankson-1.2.3.jar (blue.endless:jankson:1.2.3) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jdom2-2.0.6.1.jar (org.jdom:jdom2:2.0.6.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming ant-1.10.13.jar (org.apache.ant:ant:1.10.13) with ExternalDependencyInstrumentingArtifactTransform
+Transforming kotlin-stdlib-common-1.3.72.jar (org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72) with ExternalDependencyInstrumentingArtifactTransform
+Transforming annotations-13.0.jar (org.jetbrains:annotations:13.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jdependency-2.8.0.jar (org.vafer:jdependency:2.8.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-io-2.11.0.jar (commons-io:commons-io:2.11.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming plexus-utils-3.5.1.jar (org.codehaus.plexus:plexus-utils:3.5.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming failureaccess-1.0.1.jar (com.google.guava:failureaccess:1.0.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar (com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jsr305-3.0.2.jar (com.google.code.findbugs:jsr305:3.0.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming checker-qual-3.12.0.jar (org.checkerframework:checker-qual:3.12.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming j2objc-annotations-1.3.jar (com.google.j2objc:j2objc-annotations:1.3) with ExternalDependencyInstrumentingArtifactTransform
+Transforming error_prone_annotations-2.7.1.jar (com.google.errorprone:error_prone_annotations:2.7.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming at-0.1.0-rc1.jar (org.cadixdev:at:0.1.0-rc1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming tiny-mappings-parser-0.3.0+build.17.jar (net.fabricmc:tiny-mappings-parser:0.3.0+build.17) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jopt-simple-5.0.4.jar (net.sf.jopt-simple:jopt-simple:5.0.4) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-text-1.9.jar (org.apache.commons:commons-text:1.9) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-lang3-3.12.0.jar (org.apache.commons:commons-lang3:3.12.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-beanutils-1.9.4.jar (commons-beanutils:commons-beanutils:1.9.4) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-collections4-4.4.jar (org.apache.commons:commons-collections4:4.4) with ExternalDependencyInstrumentingArtifactTransform
+Transforming fastutil-8.5.6.jar (it.unimi.dsi:fastutil:8.5.6) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-compress-1.18.jar (org.apache.commons:commons-compress:1.18) with ExternalDependencyInstrumentingArtifactTransform
+Transforming xz-1.8.jar (org.tukaani:xz:1.8) with ExternalDependencyInstrumentingArtifactTransform
+Transforming ant-launcher-1.10.13.jar (org.apache.ant:ant-launcher:1.10.13) with ExternalDependencyInstrumentingArtifactTransform
+Transforming core-3.6.6.jar (com.electronwill.night-config:core:3.6.6) with ExternalDependencyInstrumentingArtifactTransform
+Transforming bombe-0.3.4.jar (org.cadixdev:bombe:0.3.4) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-collections-3.2.2.jar (commons-collections:commons-collections:3.2.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming slf4j-api-1.8.0-beta4.jar (org.slf4j:slf4j-api:1.8.0-beta4) with ExternalDependencyInstrumentingArtifactTransform
+Transforming commons-logging-1.2.jar (commons-logging:commons-logging:1.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming log4j-api-2.20.0.jar (org.apache.logging.log4j:log4j-api:2.20.0) with ExternalDependencyInstrumentingArtifactTransform
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+(kotlin.metadata.jvm.KotlinClassMetadata) with version (2.0.21-release-482) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-metadata-jvm/2.0.21/dd8294df485f71ba735d14173a286e3f3eef44f9/kotlin-metadata-jvm-2.0.21.jar)
+(org.objectweb.asm.ClassVisitor) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.9/c29635c8a7afa03d74b33c1884df8abb2b3f3dcc/asm-9.9.jar)
+(org.objectweb.asm.tree.analysis.Analyzer) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.9/bf4fa6e66638851c1cd22c2caea0c3ee5d5f437/asm-analysis-9.9.jar)
+(org.objectweb.asm.commons.ClassRemapper) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.9/db9165a3bf908ded6b08612d583a15d1d0c7bda0/asm-commons-9.9.jar)
+(org.objectweb.asm.tree.ClassNode) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.9/f8de6eead6d24dd0f45bd065bbe112b2cda6ea21/asm-tree-9.9.jar)
+(org.objectweb.asm.util.ASMifier) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.9/42fdfc0508b43807c8078d6e82ecff2ce2112ae8/asm-util-9.9.jar)
+(com.google.gson.Gson) with version (null) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/b3add478d4382b78ea20b1671390a858002feb6c/gson-2.10.1.jar)
+(kotlin.metadata.jvm.KotlinClassMetadata) with version (2.0.21-release-482) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-metadata-jvm/2.0.21/dd8294df485f71ba735d14173a286e3f3eef44f9/kotlin-metadata-jvm-2.0.21.jar)
+(org.objectweb.asm.ClassVisitor) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.9/c29635c8a7afa03d74b33c1884df8abb2b3f3dcc/asm-9.9.jar)
+(org.objectweb.asm.tree.analysis.Analyzer) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.9/bf4fa6e66638851c1cd22c2caea0c3ee5d5f437/asm-analysis-9.9.jar)
+(org.objectweb.asm.commons.ClassRemapper) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.9/db9165a3bf908ded6b08612d583a15d1d0c7bda0/asm-commons-9.9.jar)
+(org.objectweb.asm.tree.ClassNode) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.9/f8de6eead6d24dd0f45bd065bbe112b2cda6ea21/asm-tree-9.9.jar)
+(org.objectweb.asm.util.ASMifier) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.9/42fdfc0508b43807c8078d6e82ecff2ce2112ae8/asm-util-9.9.jar)
+(com.google.gson.Gson) with version (null) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/b3add478d4382b78ea20b1671390a858002feb6c/gson-2.10.1.jar)
+Computing owner project for SourceSet main as it is not a sourceset of :fabric
+(kotlin.metadata.jvm.KotlinClassMetadata) with version (2.0.21-release-482) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-metadata-jvm/2.0.21/dd8294df485f71ba735d14173a286e3f3eef44f9/kotlin-metadata-jvm-2.0.21.jar)
+(org.objectweb.asm.ClassVisitor) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.9/c29635c8a7afa03d74b33c1884df8abb2b3f3dcc/asm-9.9.jar)
+(org.objectweb.asm.tree.analysis.Analyzer) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.9/bf4fa6e66638851c1cd22c2caea0c3ee5d5f437/asm-analysis-9.9.jar)
+(org.objectweb.asm.commons.ClassRemapper) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.9/db9165a3bf908ded6b08612d583a15d1d0c7bda0/asm-commons-9.9.jar)
+(org.objectweb.asm.tree.ClassNode) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.9/f8de6eead6d24dd0f45bd065bbe112b2cda6ea21/asm-tree-9.9.jar)
+(org.objectweb.asm.util.ASMifier) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.9/42fdfc0508b43807c8078d6e82ecff2ce2112ae8/asm-util-9.9.jar)
+(com.google.gson.Gson) with version (null) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/b3add478d4382b78ea20b1671390a858002feb6c/gson-2.10.1.jar)
+Computing owner project for SourceSet main as it is not a sourceset of :forge
+(kotlin.metadata.jvm.KotlinClassMetadata) with version (2.0.21-release-482) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-metadata-jvm/2.0.21/dd8294df485f71ba735d14173a286e3f3eef44f9/kotlin-metadata-jvm-2.0.21.jar)
+(org.objectweb.asm.ClassVisitor) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.9/c29635c8a7afa03d74b33c1884df8abb2b3f3dcc/asm-9.9.jar)
+(org.objectweb.asm.tree.analysis.Analyzer) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.9/bf4fa6e66638851c1cd22c2caea0c3ee5d5f437/asm-analysis-9.9.jar)
+(org.objectweb.asm.commons.ClassRemapper) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.9/db9165a3bf908ded6b08612d583a15d1d0c7bda0/asm-commons-9.9.jar)
+(org.objectweb.asm.tree.ClassNode) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.9/f8de6eead6d24dd0f45bd065bbe112b2cda6ea21/asm-tree-9.9.jar)
+(org.objectweb.asm.util.ASMifier) with version (9.9) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.9/42fdfc0508b43807c8078d6e82ecff2ce2112ae8/asm-util-9.9.jar)
+(com.google.gson.Gson) with version (null) was loaded from (/home/moriz/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/b3add478d4382b78ea20b1671390a858002feb6c/gson-2.10.1.jar)
+Computing owner project for SourceSet main as it is not a sourceset of :neoforge
+
+> Configure project :common
+Evaluating project ':common' using build file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/build.gradle'.
+Using cached Minecraft jars
+:Extracting server jar from bootstrap
+Evaluating layer mapping: loom:mappings:layered+hash.40359
+:setting up loom dependencies
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+Mod dependency options: {"__inlineRefmap__":false,"__mappings__":"loom.mappings.1_21_11.layered+hash.40359-v2"}
+Applying installer data from /home/moriz/.gradle/caches/modules-2/files-2.1/net.fabricmc/fabric-loader/0.18.4/dc4682125d5db647d6ce80a98b98945835adcd4b/fabric-loader-0.18.4.jar
+Found another installer JSON in (/home/moriz/.gradle/caches/modules-2/files-2.1/net.fabricmc/fabric-loader/0.18.4/dc4682125d5db647d6ce80a98b98945835adcd4b/fabric-loader-0.18.4.jar), ignoring
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+
+> Configure project :fabric
+Evaluating project ':fabric' using build file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/fabric/build.gradle'.
+Using cached Minecraft jars
+:Extracting server jar from bootstrap
+Evaluating layer mapping: loom:mappings:layered+hash.40359
+:setting up loom dependencies
+Mod dependency options: {"__inlineRefmap__":false,"__mappings__":"loom.mappings.1_21_11.layered+hash.40359-v2"}
+Applying installer data from /home/moriz/.gradle/caches/modules-2/files-2.1/net.fabricmc/fabric-loader/0.18.4/dc4682125d5db647d6ce80a98b98945835adcd4b/fabric-loader-0.18.4.jar
+Found another installer JSON in (/home/moriz/.gradle/caches/modules-2/files-2.1/net.fabricmc/fabric-loader/0.18.4/dc4682125d5db647d6ce80a98b98945835adcd4b/fabric-loader-0.18.4.jar), ignoring
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+
+> Configure project :forge
+Evaluating project ':forge' using build file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/forge/build.gradle'.
+Using cached Minecraft jars
+:Extracting server jar from bootstrap
+Evaluating layer mapping: loom:mappings:layered+hash.40359
+:setting up loom dependencies
+:remapping FML loader
+:manipulated forge mappings are up to date
+Could not load mods.toml
+java.lang.IllegalArgumentException: Could not parse mods.toml, com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}
+	at net.fabricmc.loom.util.ExceptionUtil.createDescriptiveWrapper(ExceptionUtil.java:59)
+	at dev.architectury.loom.metadata.ModsToml.of(ModsToml.java:42)
+	at dev.architectury.loom.metadata.ModsToml.of(ModsToml.java:35)
+	at dev.architectury.loom.metadata.ModMetadataFiles.lambda$onError$2(ModMetadataFiles.java:42)
+	at dev.architectury.loom.metadata.ModMetadataFiles.fromSourceSets(ModMetadataFiles.java:114)
+	at net.fabricmc.loom.util.fmj.FabricModJsonFactory.createFromSourceSetsNullable(FabricModJsonFactory.java:149)
+	at net.fabricmc.loom.util.fmj.FabricModJsonHelpers.getModsInProject(FabricModJsonHelpers.java:60)
+	at net.fabricmc.loom.configuration.processors.SpecContextProjectView$Impl.getMods(SpecContextProjectView.java:94)
+	at net.fabricmc.loom.configuration.processors.SpecContextRemappedImpl.create(SpecContextRemappedImpl.java:72)
+	at net.fabricmc.loom.configuration.processors.SpecContextRemappedImpl.create(SpecContextRemappedImpl.java:64)
+	at net.fabricmc.loom.configuration.processors.MinecraftJarProcessorManager.create(MinecraftJarProcessorManager.java:74)
+	at net.fabricmc.loom.configuration.CompileConfiguration.setupMinecraft(CompileConfiguration.java:268)
+	at net.fabricmc.loom.configuration.CompileConfiguration.lambda$run$2(CompileConfiguration.java:138)
+	at net.fabricmc.loom.configuration.CompileConfiguration.lambda$afterEvaluationWithService$9(CompileConfiguration.java:591)
+	at net.fabricmc.loom.util.gradle.GradleUtils.lambda$afterSuccessfulEvaluation$0(GradleUtils.java:51)
+	at org.gradle.internal.code.DefaultUserCodeApplicationContext$CurrentApplication$1.execute(DefaultUserCodeApplicationContext.java:124)
+	at org.gradle.configuration.internal.DefaultListenerBuildOperationDecorator$BuildOperationEmittingAction$1.run(DefaultListenerBuildOperationDecorator.java:173)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.internal.DefaultListenerBuildOperationDecorator$BuildOperationEmittingAction.execute(DefaultListenerBuildOperationDecorator.java:170)
+	at org.gradle.internal.event.BroadcastDispatch$ActionInvocationHandler.dispatch(BroadcastDispatch.java:99)
+	at org.gradle.internal.event.BroadcastDispatch$ActionInvocationHandler.dispatch(BroadcastDispatch.java:87)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:44)
+	at org.gradle.internal.event.BroadcastDispatch$SingletonDispatch.dispatch(BroadcastDispatch.java:268)
+	at org.gradle.internal.event.BroadcastDispatch$SingletonDispatch.dispatch(BroadcastDispatch.java:170)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:84)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:70)
+	at org.gradle.internal.event.BroadcastDispatch$CompositeDispatch.dispatch(BroadcastDispatch.java:380)
+	at org.gradle.internal.event.BroadcastDispatch$CompositeDispatch.dispatch(BroadcastDispatch.java:272)
+	at org.gradle.internal.event.ListenerBroadcast.dispatch(ListenerBroadcast.java:153)
+	at org.gradle.internal.event.ListenerBroadcast.dispatch(ListenerBroadcast.java:38)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy1/jdk.proxy1.$Proxy57.afterEvaluate(Unknown Source)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate$1.execute(LifecycleProjectEvaluator.java:247)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate$1.execute(LifecycleProjectEvaluator.java:244)
+	at org.gradle.api.internal.project.DefaultProject.stepEvaluationListener(DefaultProject.java:1595)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate.run(LifecycleProjectEvaluator.java:253)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$EvaluateProject.lambda$run$0(LifecycleProjectEvaluator.java:114)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.lambda$applyToMutableState$1(DefaultProjectStateRegistry.java:411)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.lambda$fromMutableState$2(DefaultProjectStateRegistry.java:434)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withReplacedLocks(DefaultWorkerLeaseService.java:359)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.fromMutableState(DefaultProjectStateRegistry.java:434)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.applyToMutableState(DefaultProjectStateRegistry.java:410)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$EvaluateProject.run(LifecycleProjectEvaluator.java:100)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator.evaluate(LifecycleProjectEvaluator.java:72)
+	at org.gradle.api.internal.project.DefaultProject.evaluateUnchecked(DefaultProject.java:825)
+	at org.gradle.api.internal.project.ProjectLifecycleController.lambda$ensureSelfConfigured$2(ProjectLifecycleController.java:85)
+	at org.gradle.internal.model.StateTransitionController.lambda$doTransition$14(StateTransitionController.java:255)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:254)
+	at org.gradle.internal.model.StateTransitionController.lambda$maybeTransitionIfNotCurrentlyTransitioning$10(StateTransitionController.java:199)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:36)
+	at org.gradle.internal.model.StateTransitionController.maybeTransitionIfNotCurrentlyTransitioning(StateTransitionController.java:195)
+	at org.gradle.api.internal.project.ProjectLifecycleController.ensureSelfConfigured(ProjectLifecycleController.java:85)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.ensureConfigured(DefaultProjectStateRegistry.java:385)
+	at org.gradle.execution.TaskPathProjectEvaluator.configure(TaskPathProjectEvaluator.java:42)
+	at org.gradle.execution.TaskPathProjectEvaluator.configureHierarchy(TaskPathProjectEvaluator.java:58)
+	at org.gradle.configuration.DefaultProjectsPreparer.prepareProjects(DefaultProjectsPreparer.java:50)
+	at org.gradle.configuration.BuildTreePreparingProjectsPreparer.prepareProjects(BuildTreePreparingProjectsPreparer.java:65)
+	at org.gradle.configuration.BuildOperationFiringProjectsPreparer$ConfigureBuild.run(BuildOperationFiringProjectsPreparer.java:52)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.BuildOperationFiringProjectsPreparer.prepareProjects(BuildOperationFiringProjectsPreparer.java:40)
+	at org.gradle.initialization.VintageBuildModelController.lambda$prepareProjects$2(VintageBuildModelController.java:84)
+	at org.gradle.internal.model.StateTransitionController.lambda$doTransition$14(StateTransitionController.java:255)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:254)
+	at org.gradle.internal.model.StateTransitionController.lambda$transitionIfNotPreviously$11(StateTransitionController.java:213)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:36)
+	at org.gradle.internal.model.StateTransitionController.transitionIfNotPreviously(StateTransitionController.java:209)
+	at org.gradle.initialization.VintageBuildModelController.prepareProjects(VintageBuildModelController.java:84)
+	at org.gradle.initialization.VintageBuildModelController.prepareToScheduleTasks(VintageBuildModelController.java:71)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$prepareToScheduleTasks$6(DefaultBuildLifecycleController.java:175)
+	at org.gradle.internal.model.StateTransitionController.lambda$doTransition$14(StateTransitionController.java:255)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:254)
+	at org.gradle.internal.model.StateTransitionController.lambda$maybeTransition$9(StateTransitionController.java:190)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:36)
+	at org.gradle.internal.model.StateTransitionController.maybeTransition(StateTransitionController.java:186)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.prepareToScheduleTasks(DefaultBuildLifecycleController.java:173)
+	at org.gradle.internal.buildtree.DefaultBuildTreeWorkPreparer.scheduleRequestedTasks(DefaultBuildTreeWorkPreparer.java:36)
+	at org.gradle.internal.cc.impl.VintageBuildTreeWorkController$scheduleAndRunRequestedTasks$1.apply(VintageBuildTreeWorkController.kt:36)
+	at org.gradle.internal.cc.impl.VintageBuildTreeWorkController$scheduleAndRunRequestedTasks$1.apply(VintageBuildTreeWorkController.kt:35)
+	at org.gradle.composite.internal.DefaultIncludedBuildTaskGraph.withNewWorkGraph(DefaultIncludedBuildTaskGraph.java:112)
+	at org.gradle.internal.cc.impl.VintageBuildTreeWorkController.scheduleAndRunRequestedTasks(VintageBuildTreeWorkController.kt:35)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.lambda$scheduleAndRunTasks$1(DefaultBuildTreeLifecycleController.java:77)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.lambda$runBuild$4(DefaultBuildTreeLifecycleController.java:120)
+	at org.gradle.internal.model.StateTransitionController.lambda$transition$6(StateTransitionController.java:169)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.lambda$transition$7(StateTransitionController.java:169)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
+	at org.gradle.internal.model.StateTransitionController.transition(StateTransitionController.java:169)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.runBuild(DefaultBuildTreeLifecycleController.java:117)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.scheduleAndRunTasks(DefaultBuildTreeLifecycleController.java:77)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.scheduleAndRunTasks(DefaultBuildTreeLifecycleController.java:72)
+	at org.gradle.tooling.internal.provider.ExecuteBuildActionRunner.run(ExecuteBuildActionRunner.java:31)
+	at org.gradle.launcher.exec.ChainingBuildActionRunner.run(ChainingBuildActionRunner.java:35)
+	at org.gradle.internal.buildtree.ProblemReportingBuildActionRunner.run(ProblemReportingBuildActionRunner.java:49)
+	at org.gradle.launcher.exec.BuildOutcomeReportingBuildActionRunner.run(BuildOutcomeReportingBuildActionRunner.java:66)
+	at org.gradle.tooling.internal.provider.FileSystemWatchingBuildActionRunner.run(FileSystemWatchingBuildActionRunner.java:140)
+	at org.gradle.launcher.exec.BuildCompletionNotifyingBuildActionRunner.run(BuildCompletionNotifyingBuildActionRunner.java:41)
+	at org.gradle.launcher.exec.RootBuildLifecycleBuildActionExecutor.lambda$execute$0(RootBuildLifecycleBuildActionExecutor.java:54)
+	at org.gradle.composite.internal.DefaultRootBuildState.run(DefaultRootBuildState.java:130)
+	at org.gradle.launcher.exec.RootBuildLifecycleBuildActionExecutor.execute(RootBuildLifecycleBuildActionExecutor.java:54)
+	at org.gradle.internal.buildtree.InitDeprecationLoggingActionExecutor.execute(InitDeprecationLoggingActionExecutor.java:62)
+	at org.gradle.internal.buildtree.InitProblems.execute(InitProblems.java:36)
+	at org.gradle.internal.buildtree.DefaultBuildTreeContext.execute(DefaultBuildTreeContext.java:40)
+	at org.gradle.launcher.exec.BuildTreeLifecycleBuildActionExecutor.lambda$execute$0(BuildTreeLifecycleBuildActionExecutor.java:71)
+	at org.gradle.internal.buildtree.BuildTreeState.run(BuildTreeState.java:60)
+	at org.gradle.launcher.exec.BuildTreeLifecycleBuildActionExecutor.execute(BuildTreeLifecycleBuildActionExecutor.java:71)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor$3.call(RunAsBuildOperationBuildActionExecutor.java:61)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor$3.call(RunAsBuildOperationBuildActionExecutor.java:57)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor.execute(RunAsBuildOperationBuildActionExecutor.java:57)
+	at org.gradle.launcher.exec.RunAsWorkerThreadBuildActionExecutor.lambda$execute$0(RunAsWorkerThreadBuildActionExecutor.java:36)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+	at org.gradle.launcher.exec.RunAsWorkerThreadBuildActionExecutor.execute(RunAsWorkerThreadBuildActionExecutor.java:36)
+	at org.gradle.tooling.internal.provider.continuous.ContinuousBuildActionExecutor.execute(ContinuousBuildActionExecutor.java:110)
+	at org.gradle.tooling.internal.provider.SubscribableBuildActionExecutor.execute(SubscribableBuildActionExecutor.java:64)
+	at org.gradle.internal.session.DefaultBuildSessionContext.execute(DefaultBuildSessionContext.java:46)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor$ActionImpl.apply(BuildSessionLifecycleBuildActionExecutor.java:92)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor$ActionImpl.apply(BuildSessionLifecycleBuildActionExecutor.java:80)
+	at org.gradle.internal.session.BuildSessionState.run(BuildSessionState.java:71)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor.execute(BuildSessionLifecycleBuildActionExecutor.java:62)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor.execute(BuildSessionLifecycleBuildActionExecutor.java:41)
+	at org.gradle.internal.buildprocess.execution.StartParamsValidatingActionExecutor.execute(StartParamsValidatingActionExecutor.java:64)
+	at org.gradle.internal.buildprocess.execution.StartParamsValidatingActionExecutor.execute(StartParamsValidatingActionExecutor.java:32)
+	at org.gradle.internal.buildprocess.execution.SessionFailureReportingActionExecutor.execute(SessionFailureReportingActionExecutor.java:51)
+	at org.gradle.internal.buildprocess.execution.SessionFailureReportingActionExecutor.execute(SessionFailureReportingActionExecutor.java:39)
+	at org.gradle.internal.buildprocess.execution.SetupLoggingActionExecutor.execute(SetupLoggingActionExecutor.java:47)
+	at org.gradle.internal.buildprocess.execution.SetupLoggingActionExecutor.execute(SetupLoggingActionExecutor.java:31)
+	at org.gradle.launcher.daemon.server.exec.ExecuteBuild.doBuild(ExecuteBuild.java:70)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.WatchForDisconnection.execute(WatchForDisconnection.java:39)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.ResetDeprecationLogger.execute(ResetDeprecationLogger.java:29)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.RequestStopIfSingleUsedDaemon.execute(RequestStopIfSingleUsedDaemon.java:35)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.ForwardClientInput.lambda$execute$0(ForwardClientInput.java:40)
+	at org.gradle.internal.daemon.clientinput.ClientInputForwarder.forwardInput(ClientInputForwarder.java:80)
+	at org.gradle.launcher.daemon.server.exec.ForwardClientInput.execute(ForwardClientInput.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.LogAndCheckHealth.execute(LogAndCheckHealth.java:53)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.LogToClient.doBuild(LogToClient.java:63)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment.doBuild(EstablishBuildEnvironment.java:84)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy$1.run(StartBuildOrRespondWithBusy.java:52)
+	at org.gradle.launcher.daemon.server.DaemonStateCoordinator.lambda$runCommand$0(DaemonStateCoordinator.java:321)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}
+	at com.electronwill.nightconfig.toml.TableParser.parseKey(TableParser.java:176)
+	at com.electronwill.nightconfig.toml.TableParser.parseTableName(TableParser.java:112)
+	at com.electronwill.nightconfig.toml.TomlParser.parse(TomlParser.java:66)
+	at com.electronwill.nightconfig.toml.TomlParser.parse(TomlParser.java:44)
+	at com.electronwill.nightconfig.toml.TomlParser.parse(TomlParser.java:17)
+	at com.electronwill.nightconfig.core.io.ConfigParser.parse(ConfigParser.java:55)
+	at dev.architectury.loom.metadata.ModsToml.of(ModsToml.java:40)
+	... 188 more
+Mod dependency options: {"__inlineRefmap__":false,"__mappings__":"loom.mappings.1_21_11.layered+hash.40359-v2-forge-1.21.11-61.1.4_forge"}
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+file or directory '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/common/src/main/resources', not found
+
+> Configure project :neoforge
+Evaluating project ':neoforge' using build file '/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/neoforge/build.gradle'.
+Using cached Minecraft jars
+:Extracting server jar from bootstrap
+Evaluating layer mapping: loom:mappings:layered+hash.40359
+:setting up loom dependencies
+:remapping FancyML loader
+:manipulated neoforge mappings are up to date
+Could not load neoforge.mods.toml
+java.lang.IllegalArgumentException: Could not parse mods.toml, com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}
+	at net.fabricmc.loom.util.ExceptionUtil.createDescriptiveWrapper(ExceptionUtil.java:59)
+	at dev.architectury.loom.metadata.ModsToml.of(ModsToml.java:42)
+	at dev.architectury.loom.metadata.ModsToml.of(ModsToml.java:35)
+	at dev.architectury.loom.metadata.ModMetadataFiles.lambda$onError$2(ModMetadataFiles.java:42)
+	at dev.architectury.loom.metadata.ModMetadataFiles.fromSourceSets(ModMetadataFiles.java:114)
+	at net.fabricmc.loom.util.fmj.FabricModJsonFactory.createFromSourceSetsNullable(FabricModJsonFactory.java:149)
+	at net.fabricmc.loom.util.fmj.FabricModJsonHelpers.getModsInProject(FabricModJsonHelpers.java:60)
+	at net.fabricmc.loom.configuration.processors.SpecContextProjectView$Impl.getMods(SpecContextProjectView.java:94)
+	at net.fabricmc.loom.configuration.processors.SpecContextRemappedImpl.create(SpecContextRemappedImpl.java:72)
+	at net.fabricmc.loom.configuration.processors.SpecContextRemappedImpl.create(SpecContextRemappedImpl.java:64)
+	at net.fabricmc.loom.configuration.processors.MinecraftJarProcessorManager.create(MinecraftJarProcessorManager.java:74)
+	at net.fabricmc.loom.configuration.CompileConfiguration.setupMinecraft(CompileConfiguration.java:268)
+	at net.fabricmc.loom.configuration.CompileConfiguration.lambda$run$2(CompileConfiguration.java:138)
+	at net.fabricmc.loom.configuration.CompileConfiguration.lambda$afterEvaluationWithService$9(CompileConfiguration.java:591)
+	at net.fabricmc.loom.util.gradle.GradleUtils.lambda$afterSuccessfulEvaluation$0(GradleUtils.java:51)
+	at org.gradle.internal.code.DefaultUserCodeApplicationContext$CurrentApplication$1.execute(DefaultUserCodeApplicationContext.java:124)
+	at org.gradle.configuration.internal.DefaultListenerBuildOperationDecorator$BuildOperationEmittingAction$1.run(DefaultListenerBuildOperationDecorator.java:173)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.internal.DefaultListenerBuildOperationDecorator$BuildOperationEmittingAction.execute(DefaultListenerBuildOperationDecorator.java:170)
+	at org.gradle.internal.event.BroadcastDispatch$ActionInvocationHandler.dispatch(BroadcastDispatch.java:99)
+	at org.gradle.internal.event.BroadcastDispatch$ActionInvocationHandler.dispatch(BroadcastDispatch.java:87)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:44)
+	at org.gradle.internal.event.BroadcastDispatch$SingletonDispatch.dispatch(BroadcastDispatch.java:268)
+	at org.gradle.internal.event.BroadcastDispatch$SingletonDispatch.dispatch(BroadcastDispatch.java:170)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:84)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:70)
+	at org.gradle.internal.event.BroadcastDispatch$CompositeDispatch.dispatch(BroadcastDispatch.java:380)
+	at org.gradle.internal.event.BroadcastDispatch$CompositeDispatch.dispatch(BroadcastDispatch.java:272)
+	at org.gradle.internal.event.ListenerBroadcast.dispatch(ListenerBroadcast.java:153)
+	at org.gradle.internal.event.ListenerBroadcast.dispatch(ListenerBroadcast.java:38)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy1/jdk.proxy1.$Proxy57.afterEvaluate(Unknown Source)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate$1.execute(LifecycleProjectEvaluator.java:247)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate$1.execute(LifecycleProjectEvaluator.java:244)
+	at org.gradle.api.internal.project.DefaultProject.stepEvaluationListener(DefaultProject.java:1595)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate.run(LifecycleProjectEvaluator.java:253)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$EvaluateProject.lambda$run$0(LifecycleProjectEvaluator.java:114)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.lambda$applyToMutableState$1(DefaultProjectStateRegistry.java:411)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.lambda$fromMutableState$2(DefaultProjectStateRegistry.java:434)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withReplacedLocks(DefaultWorkerLeaseService.java:359)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.fromMutableState(DefaultProjectStateRegistry.java:434)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.applyToMutableState(DefaultProjectStateRegistry.java:410)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator$EvaluateProject.run(LifecycleProjectEvaluator.java:100)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator.evaluate(LifecycleProjectEvaluator.java:72)
+	at org.gradle.api.internal.project.DefaultProject.evaluateUnchecked(DefaultProject.java:825)
+	at org.gradle.api.internal.project.ProjectLifecycleController.lambda$ensureSelfConfigured$2(ProjectLifecycleController.java:85)
+	at org.gradle.internal.model.StateTransitionController.lambda$doTransition$14(StateTransitionController.java:255)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:254)
+	at org.gradle.internal.model.StateTransitionController.lambda$maybeTransitionIfNotCurrentlyTransitioning$10(StateTransitionController.java:199)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:36)
+	at org.gradle.internal.model.StateTransitionController.maybeTransitionIfNotCurrentlyTransitioning(StateTransitionController.java:195)
+	at org.gradle.api.internal.project.ProjectLifecycleController.ensureSelfConfigured(ProjectLifecycleController.java:85)
+	at org.gradle.api.internal.project.DefaultProjectStateRegistry$ProjectStateImpl.ensureConfigured(DefaultProjectStateRegistry.java:385)
+	at org.gradle.execution.TaskPathProjectEvaluator.configure(TaskPathProjectEvaluator.java:42)
+	at org.gradle.execution.TaskPathProjectEvaluator.configureHierarchy(TaskPathProjectEvaluator.java:58)
+	at org.gradle.configuration.DefaultProjectsPreparer.prepareProjects(DefaultProjectsPreparer.java:50)
+	at org.gradle.configuration.BuildTreePreparingProjectsPreparer.prepareProjects(BuildTreePreparingProjectsPreparer.java:65)
+	at org.gradle.configuration.BuildOperationFiringProjectsPreparer$ConfigureBuild.run(BuildOperationFiringProjectsPreparer.java:52)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+	at org.gradle.configuration.BuildOperationFiringProjectsPreparer.prepareProjects(BuildOperationFiringProjectsPreparer.java:40)
+	at org.gradle.initialization.VintageBuildModelController.lambda$prepareProjects$2(VintageBuildModelController.java:84)
+	at org.gradle.internal.model.StateTransitionController.lambda$doTransition$14(StateTransitionController.java:255)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:254)
+	at org.gradle.internal.model.StateTransitionController.lambda$transitionIfNotPreviously$11(StateTransitionController.java:213)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:36)
+	at org.gradle.internal.model.StateTransitionController.transitionIfNotPreviously(StateTransitionController.java:209)
+	at org.gradle.initialization.VintageBuildModelController.prepareProjects(VintageBuildModelController.java:84)
+	at org.gradle.initialization.VintageBuildModelController.prepareToScheduleTasks(VintageBuildModelController.java:71)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$prepareToScheduleTasks$6(DefaultBuildLifecycleController.java:175)
+	at org.gradle.internal.model.StateTransitionController.lambda$doTransition$14(StateTransitionController.java:255)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:254)
+	at org.gradle.internal.model.StateTransitionController.lambda$maybeTransition$9(StateTransitionController.java:190)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:36)
+	at org.gradle.internal.model.StateTransitionController.maybeTransition(StateTransitionController.java:186)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.prepareToScheduleTasks(DefaultBuildLifecycleController.java:173)
+	at org.gradle.internal.buildtree.DefaultBuildTreeWorkPreparer.scheduleRequestedTasks(DefaultBuildTreeWorkPreparer.java:36)
+	at org.gradle.internal.cc.impl.VintageBuildTreeWorkController$scheduleAndRunRequestedTasks$1.apply(VintageBuildTreeWorkController.kt:36)
+	at org.gradle.internal.cc.impl.VintageBuildTreeWorkController$scheduleAndRunRequestedTasks$1.apply(VintageBuildTreeWorkController.kt:35)
+	at org.gradle.composite.internal.DefaultIncludedBuildTaskGraph.withNewWorkGraph(DefaultIncludedBuildTaskGraph.java:112)
+	at org.gradle.internal.cc.impl.VintageBuildTreeWorkController.scheduleAndRunRequestedTasks(VintageBuildTreeWorkController.kt:35)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.lambda$scheduleAndRunTasks$1(DefaultBuildTreeLifecycleController.java:77)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.lambda$runBuild$4(DefaultBuildTreeLifecycleController.java:120)
+	at org.gradle.internal.model.StateTransitionController.lambda$transition$6(StateTransitionController.java:169)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.lambda$transition$7(StateTransitionController.java:169)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
+	at org.gradle.internal.model.StateTransitionController.transition(StateTransitionController.java:169)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.runBuild(DefaultBuildTreeLifecycleController.java:117)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.scheduleAndRunTasks(DefaultBuildTreeLifecycleController.java:77)
+	at org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController.scheduleAndRunTasks(DefaultBuildTreeLifecycleController.java:72)
+	at org.gradle.tooling.internal.provider.ExecuteBuildActionRunner.run(ExecuteBuildActionRunner.java:31)
+	at org.gradle.launcher.exec.ChainingBuildActionRunner.run(ChainingBuildActionRunner.java:35)
+	at org.gradle.internal.buildtree.ProblemReportingBuildActionRunner.run(ProblemReportingBuildActionRunner.java:49)
+	at org.gradle.launcher.exec.BuildOutcomeReportingBuildActionRunner.run(BuildOutcomeReportingBuildActionRunner.java:66)
+	at org.gradle.tooling.internal.provider.FileSystemWatchingBuildActionRunner.run(FileSystemWatchingBuildActionRunner.java:140)
+	at org.gradle.launcher.exec.BuildCompletionNotifyingBuildActionRunner.run(BuildCompletionNotifyingBuildActionRunner.java:41)
+	at org.gradle.launcher.exec.RootBuildLifecycleBuildActionExecutor.lambda$execute$0(RootBuildLifecycleBuildActionExecutor.java:54)
+	at org.gradle.composite.internal.DefaultRootBuildState.run(DefaultRootBuildState.java:130)
+	at org.gradle.launcher.exec.RootBuildLifecycleBuildActionExecutor.execute(RootBuildLifecycleBuildActionExecutor.java:54)
+	at org.gradle.internal.buildtree.InitDeprecationLoggingActionExecutor.execute(InitDeprecationLoggingActionExecutor.java:62)
+	at org.gradle.internal.buildtree.InitProblems.execute(InitProblems.java:36)
+	at org.gradle.internal.buildtree.DefaultBuildTreeContext.execute(DefaultBuildTreeContext.java:40)
+	at org.gradle.launcher.exec.BuildTreeLifecycleBuildActionExecutor.lambda$execute$0(BuildTreeLifecycleBuildActionExecutor.java:71)
+	at org.gradle.internal.buildtree.BuildTreeState.run(BuildTreeState.java:60)
+	at org.gradle.launcher.exec.BuildTreeLifecycleBuildActionExecutor.execute(BuildTreeLifecycleBuildActionExecutor.java:71)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor$3.call(RunAsBuildOperationBuildActionExecutor.java:61)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor$3.call(RunAsBuildOperationBuildActionExecutor.java:57)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor.execute(RunAsBuildOperationBuildActionExecutor.java:57)
+	at org.gradle.launcher.exec.RunAsWorkerThreadBuildActionExecutor.lambda$execute$0(RunAsWorkerThreadBuildActionExecutor.java:36)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+	at org.gradle.launcher.exec.RunAsWorkerThreadBuildActionExecutor.execute(RunAsWorkerThreadBuildActionExecutor.java:36)
+	at org.gradle.tooling.internal.provider.continuous.ContinuousBuildActionExecutor.execute(ContinuousBuildActionExecutor.java:110)
+	at org.gradle.tooling.internal.provider.SubscribableBuildActionExecutor.execute(SubscribableBuildActionExecutor.java:64)
+	at org.gradle.internal.session.DefaultBuildSessionContext.execute(DefaultBuildSessionContext.java:46)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor$ActionImpl.apply(BuildSessionLifecycleBuildActionExecutor.java:92)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor$ActionImpl.apply(BuildSessionLifecycleBuildActionExecutor.java:80)
+	at org.gradle.internal.session.BuildSessionState.run(BuildSessionState.java:71)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor.execute(BuildSessionLifecycleBuildActionExecutor.java:62)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor.execute(BuildSessionLifecycleBuildActionExecutor.java:41)
+	at org.gradle.internal.buildprocess.execution.StartParamsValidatingActionExecutor.execute(StartParamsValidatingActionExecutor.java:64)
+	at org.gradle.internal.buildprocess.execution.StartParamsValidatingActionExecutor.execute(StartParamsValidatingActionExecutor.java:32)
+	at org.gradle.internal.buildprocess.execution.SessionFailureReportingActionExecutor.execute(SessionFailureReportingActionExecutor.java:51)
+	at org.gradle.internal.buildprocess.execution.SessionFailureReportingActionExecutor.execute(SessionFailureReportingActionExecutor.java:39)
+	at org.gradle.internal.buildprocess.execution.SetupLoggingActionExecutor.execute(SetupLoggingActionExecutor.java:47)
+	at org.gradle.internal.buildprocess.execution.SetupLoggingActionExecutor.execute(SetupLoggingActionExecutor.java:31)
+	at org.gradle.launcher.daemon.server.exec.ExecuteBuild.doBuild(ExecuteBuild.java:70)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.WatchForDisconnection.execute(WatchForDisconnection.java:39)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.ResetDeprecationLogger.execute(ResetDeprecationLogger.java:29)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.RequestStopIfSingleUsedDaemon.execute(RequestStopIfSingleUsedDaemon.java:35)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.ForwardClientInput.lambda$execute$0(ForwardClientInput.java:40)
+	at org.gradle.internal.daemon.clientinput.ClientInputForwarder.forwardInput(ClientInputForwarder.java:80)
+	at org.gradle.launcher.daemon.server.exec.ForwardClientInput.execute(ForwardClientInput.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.LogAndCheckHealth.execute(LogAndCheckHealth.java:53)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.LogToClient.doBuild(LogToClient.java:63)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment.doBuild(EstablishBuildEnvironment.java:84)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy$1.run(StartBuildOrRespondWithBusy.java:52)
+	at org.gradle.launcher.daemon.server.DaemonStateCoordinator.lambda$runCommand$0(DaemonStateCoordinator.java:321)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}
+	at com.electronwill.nightconfig.toml.TableParser.parseKey(TableParser.java:176)
+	at com.electronwill.nightconfig.toml.TableParser.parseTableName(TableParser.java:112)
+	at com.electronwill.nightconfig.toml.TomlParser.parse(TomlParser.java:66)
+	at com.electronwill.nightconfig.toml.TomlParser.parse(TomlParser.java:44)
+	at com.electronwill.nightconfig.toml.TomlParser.parse(TomlParser.java:17)
+	at com.electronwill.nightconfig.core.io.ConfigParser.parse(ConfigParser.java:55)
+	at dev.architectury.loom.metadata.ModsToml.of(ModsToml.java:40)
+	... 188 more
+Mod dependency options: {"__inlineRefmap__":false,"__mappings__":"loom.mappings.1_21_11.layered+hash.40359-v2-neoforge-21.11.38-beta_forge"}
+All projects evaluated.
+Task path 'fabric:runClient' matched project ':fabric'
+Task name matched 'runClient'
+Selected primary task 'runClient' from project :fabric
+Starting process 'command '/home/moriz/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2/bin/java''. Working directory: /home/moriz/.gradle/.tmp/tmp-jvm5270926954500197926probe Command: /home/moriz/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2/bin/java -Xmx32m -Xms32m -cp . JavaProbe
+Successfully started process 'command '/home/moriz/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2/bin/java''
+Received JVM installation metadata from '/home/moriz/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2': {JAVA_HOME=/home/moriz/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2, JAVA_VERSION=17.0.17, JAVA_VENDOR=Eclipse Adoptium, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=17.0.17+10, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=17.0.17+10, VM_VENDOR=Eclipse Adoptium, OS_ARCH=amd64}
+Starting process 'command '/home/moriz/.jdks/temurin-8/bin/java''. Working directory: /home/moriz/.gradle/.tmp/tmp-jvm16200978469482454642probe Command: /home/moriz/.jdks/temurin-8/bin/java -Xmx32m -Xms32m -cp . JavaProbe
+Successfully started process 'command '/home/moriz/.jdks/temurin-8/bin/java''
+Received JVM installation metadata from '/home/moriz/.jdks/temurin-8': {JAVA_HOME=/home/moriz/.jdks/temurin-8/jre, JAVA_VERSION=1.8.0_482, JAVA_VENDOR=Temurin, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=1.8.0_482-b08, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=25.482-b08, VM_VENDOR=Temurin, OS_ARCH=amd64}
+Starting process 'command '/home/moriz/.jdks/temurin-17/bin/java''. Working directory: /home/moriz/.gradle/.tmp/tmp-jvm9172820258314128152probe Command: /home/moriz/.jdks/temurin-17/bin/java -Xmx32m -Xms32m -cp . JavaProbe
+Successfully started process 'command '/home/moriz/.jdks/temurin-17/bin/java''
+Received JVM installation metadata from '/home/moriz/.jdks/temurin-17': {JAVA_HOME=/home/moriz/.jdks/temurin-17, JAVA_VERSION=17.0.18, JAVA_VENDOR=Eclipse Adoptium, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=17.0.18+8, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=17.0.18+8, VM_VENDOR=Eclipse Adoptium, OS_ARCH=amd64}
+Starting process 'command '/home/moriz/.jdks/temurin-11/bin/java''. Working directory: /home/moriz/.gradle/.tmp/tmp-jvm13901983209251160033probe Command: /home/moriz/.jdks/temurin-11/bin/java -Xmx32m -Xms32m -cp . JavaProbe
+Successfully started process 'command '/home/moriz/.jdks/temurin-11/bin/java''
+Received JVM installation metadata from '/home/moriz/.jdks/temurin-11': {JAVA_HOME=/home/moriz/.jdks/temurin-11, JAVA_VERSION=11.0.30, JAVA_VENDOR=Eclipse Adoptium, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=11.0.30+7, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=11.0.30+7, VM_VENDOR=Eclipse Adoptium, OS_ARCH=amd64}
+Starting process 'command '/home/moriz/.jdks/temurin-21/bin/java''. Working directory: /home/moriz/.gradle/.tmp/tmp-jvm7200980423830617450probe Command: /home/moriz/.jdks/temurin-21/bin/java -Xmx32m -Xms32m -cp . JavaProbe
+Successfully started process 'command '/home/moriz/.jdks/temurin-21/bin/java''
+Received JVM installation metadata from '/home/moriz/.jdks/temurin-21': {JAVA_HOME=/home/moriz/.jdks/temurin-21, JAVA_VERSION=21.0.10, JAVA_VENDOR=Eclipse Adoptium, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=21.0.10+7-LTS, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=21.0.10+7-LTS, VM_VENDOR=Eclipse Adoptium, OS_ARCH=amd64}
+Tasks to be executed: [task ':common:compileJava', task ':common:processResources', task ':common:classes', task ':common:jar', task ':fabric:compileJava', task ':fabric:processResources', task ':fabric:classes', task ':common:exportClasspath', task ':fabric:generateLog4jConfig', task ':fabric:generateRemapClasspath', task ':fabric:generateDLIConfig', task ':fabric:configureLaunch', task ':fabric:downloadAssets', task ':fabric:configureClientLaunch', task ':fabric:runClient']
+Tasks that were excluded: []
+Resolve mutations for :common:compileJava (Thread[#357,Execution worker Thread 2,5,main]) started.
+:common:compileJava (Thread[#357,Execution worker Thread 2,5,main]) started.
+
+> Task :common:compileJava UP-TO-DATE
+Caching disabled for task ':common:compileJava' because:
+  Build cache is disabled
+Skipping task ':common:compileJava' as it is up-to-date.
+Resolve mutations for :common:processResources (Thread[#357,Execution worker Thread 2,5,main]) started.
+:common:processResources (Thread[#357,Execution worker Thread 2,5,main]) started.
+
+> Task :common:processResources UP-TO-DATE
+Caching disabled for task ':common:processResources' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':common:processResources' as it is up-to-date.
+Resolve mutations for :common:classes (Thread[#357,Execution worker Thread 2,5,main]) started.
+:common:classes (Thread[#357,Execution worker Thread 2,5,main]) started.
+
+> Task :common:classes UP-TO-DATE
+Skipping task ':common:classes' as it has no actions.
+Resolve mutations for :common:jar (Thread[#357,Execution worker Thread 2,5,main]) started.
+:common:jar (Thread[#357,Execution worker Thread 2,5,main]) started.
+
+> Task :common:jar UP-TO-DATE
+Caching disabled for task ':common:jar' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':common:jar' as it is up-to-date.
+work action resolve orangesunshine-common-1.21.11-1.0.0-alpha.1-dev.jar (project :common) (Thread[#357,Execution worker Thread 2,5,main]) started.
+Resolve mutations for :fabric:compileJava (Thread[#357,Execution worker Thread 2,5,main]) started.
+:fabric:compileJava (Thread[#357,Execution worker Thread 2,5,main]) started.
+This JVM does not support getting OS memory, so no OS memory status updates will be broadcast
+
+> Task :fabric:compileJava FAILED
+Caching disabled for task ':fabric:compileJava' because:
+  Build cache is disabled
+Task ':fabric:compileJava' is not up-to-date because:
+  Task has failed previously.
+The input changes require a full rebuild for incremental task ':fabric:compileJava'.
+Compilation mode: default, forking compiler
+Full recompilation is required because no incremental change information is available. This is usually caused by clean builds or changing compiler arguments.
+Compiling with toolchain '/home/moriz/.jdks/temurin-21'.
+Starting process 'Gradle Worker Daemon 1'. Working directory: /home/moriz/.gradle/workers Command: /home/moriz/.jdks/temurin-21/bin/java --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED @/home/moriz/.gradle/.tmp/gradle-worker-classpath14462373817891626077txt -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Worker Daemon 1'
+Successfully started process 'Gradle Worker Daemon 1'
+Started Gradle worker daemon (0.23 secs) with fork options DaemonForkOptions{executable=/home/moriz/.jdks/temurin-21/bin/java, minHeapSize=null, maxHeapSize=null, jvmArgs=[--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED, --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED], keepAliveMode=DAEMON}.
+Compiling with JDK Java compiler API.
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:11: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.ShaderProgram;
+                              ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:12: error: package net.minecraft.resource does not exist
+import net.minecraft.resource.ResourceFactory;
+                             ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+    void call(ResourceFactory factory, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList) throws IOException;
+              ^
+  symbol:   class ResourceFactory
+  location: interface CoreShaderRegistrationCallback
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+    void call(ResourceFactory factory, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList) throws IOException;
+                                                 ^
+  symbol:   class ShaderProgram
+  location: interface CoreShaderRegistrationCallback
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+    void call(ResourceFactory factory, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList) throws IOException;
+                                                                         ^
+  symbol:   class ShaderProgram
+  location: interface CoreShaderRegistrationCallback
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:13: error: package net.minecraft.block does not exist
+import net.minecraft.block.Blocks;
+                          ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:16: error: package net.minecraft.client.gl.ShaderStage does not exist
+import net.minecraft.client.gl.ShaderStage.Type;
+                                          ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:17: error: package net.minecraft.client.texture does not exist
+import net.minecraft.client.texture.Sprite;
+                                   ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:19: error: package net.minecraft.screen does not exist
+import net.minecraft.screen.PlayerScreenHandler;
+                           ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:33: error: cannot find symbol
+    private Type type;
+            ^
+  symbol:   class Type
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:35: error: cannot find symbol
+    private final MinecraftClient client = MinecraftClient.getInstance();
+                  ^
+  symbol:   class MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:36: error: cannot find symbol
+    private final ResourceManager manager = client.getResourceManager();
+                  ^
+  symbol:   class ResourceManager
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:47: error: cannot find symbol
+    public void setup(Type type, String name, InputStream stream, String domain, GlImportProcessor loader) {
+                      ^
+  symbol:   class Type
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:47: error: cannot find symbol
+    public void setup(Type type, String name, InputStream stream, String domain, GlImportProcessor loader) {
+                                                                                 ^
+  symbol:   class GlImportProcessor
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:60: error: cannot find symbol
+    public void addUniforms(ShaderProgramSetupView program, Consumer<GlUniform> register) {
+                            ^
+  symbol:   class ShaderProgramSetupView
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:60: error: cannot find symbol
+    public void addUniforms(ShaderProgramSetupView program, Consumer<GlUniform> register) {
+                                                                     ^
+  symbol:   class GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:15: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.*;
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:18: error: package net.minecraft.resource does not exist
+import net.minecraft.resource.*;
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:150: error: cannot find symbol
+    static class BoundUniform extends GlUniform {
+                                      ^
+  symbol:   class GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:151: error: cannot find symbol
+        private final Consumer<GlUniform> valueGetter;
+                               ^
+  symbol:   class GlUniform
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:153: error: cannot find symbol
+        public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<GlUniform> valueGetter) {
+                                                                  ^
+  symbol:   class ShaderProgramSetupView
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:153: error: cannot find symbol
+        public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<GlUniform> valueGetter) {
+                                                                                                           ^
+  symbol:   class GlUniform
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:15: error: cannot find symbol
+class LoadedShader extends PostEffectProcessor {
+                           ^
+  symbol: class PostEffectProcessor
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:25: error: cannot find symbol
+    public LoadedShader(MinecraftClient client, Identifier id, UniformBinding.Set bindings) throws IOException, JsonSyntaxException {
+                        ^
+  symbol:   class MinecraftClient
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: cannot find symbol
+    public PostEffectPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                      ^
+  symbol:   class Framebuffer
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: cannot find symbol
+    public PostEffectPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                                          ^
+  symbol:   class Framebuffer
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: cannot find symbol
+    public PostEffectPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+           ^
+  symbol:   class PostEffectPass
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:75: error: cannot find symbol
+        private final JsonEffectShaderProgram program;
+                      ^
+  symbol:   class JsonEffectShaderProgram
+  location: class LoadedShader.Pass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:76: error: cannot find symbol
+        private final PostEffectPass pass;
+                      ^
+  symbol:   class PostEffectPass
+  location: class LoadedShader.Pass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:83: error: cannot find symbol
+        public Pass(PostEffectPass pass) {
+                    ^
+  symbol:   class PostEffectPass
+  location: class LoadedShader.Pass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:12: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.*;
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:12: error: cannot find symbol
+class ModdedResourceFactory implements ResourceFactory {
+                                       ^
+  symbol: class ResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:13: error: cannot find symbol
+    private final ResourceFactory parent;
+                  ^
+  symbol:   class ResourceFactory
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:18: error: cannot find symbol
+    public ModdedResourceFactory(ResourceFactory parent, String defaultNamespace) {
+                                 ^
+  symbol:   class ResourceFactory
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:24: error: cannot find symbol
+    public Optional<Resource> getResource(Identifier id) {
+                    ^
+  symbol:   class Resource
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:30: error: cannot find symbol
+    private Resource loadShader(Resource resource, Identifier id) {
+                                ^
+  symbol:   class Resource
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:30: error: cannot find symbol
+    private Resource loadShader(Resource resource, Identifier id) {
+            ^
+  symbol:   class Resource
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:9: error: package net.minecraft.resource does not exist
+import net.minecraft.resource.*;
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:10: error: cannot find symbol
+class ModdedResourceManager implements ResourceManager {
+                                       ^
+  symbol: class ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:11: error: cannot find symbol
+    private final ResourceManager parent;
+                  ^
+  symbol:   class ResourceManager
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:15: error: cannot find symbol
+    public ModdedResourceManager(ResourceManager parent, String defaultNamespace) {
+                                 ^
+  symbol:   class ResourceManager
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:22: error: cannot find symbol
+    public Optional<Resource> getResource(Identifier id) {
+                    ^
+  symbol:   class Resource
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:32: error: cannot find symbol
+    public List<Resource> getAllResources(Identifier id) {
+                ^
+  symbol:   class Resource
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:41: error: cannot find symbol
+    public Map<Identifier, Resource> findResources(String path, Predicate<Identifier> filter) {
+                           ^
+  symbol:   class Resource
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:46: error: cannot find symbol
+    public Map<Identifier, List<Resource>> findAllResources(String path, Predicate<Identifier> filter) {
+                                ^
+  symbol:   class Resource
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:51: error: cannot find symbol
+    public Stream<ResourcePack> streamResourcePacks() {
+                  ^
+  symbol:   class ResourcePack
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:7: error: package net.minecraft.resource does not exist
+import net.minecraft.resource.*;
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:7: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.ShaderProgram;
+                              ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:8: error: package net.minecraft.client.render does not exist
+import net.minecraft.client.render.VertexFormats;
+                                  ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:12: error: cannot find symbol
+    private static ShaderProgram renderTypeZeroMatterProgram;
+                   ^
+  symbol:   class ShaderProgram
+  location: class PSShaders
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:14: error: cannot find symbol
+    public static ShaderProgram getRenderTypeZeroMatterProgram() {
+                  ^
+  symbol:   class ShaderProgram
+  location: class PSShaders
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:8: error: package net.minecraft.client.gl does not exist
+import net.minecraft.client.gl.PostEffectProcessor;
+                              ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:17: error: cannot find symbol
+import moriz.orangesunshine.client.render.GLStateProxy;
+                                         ^
+  symbol:   class GLStateProxy
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:20: error: package net.minecraft.resource does not exist
+import net.minecraft.resource.ResourceManager;
+                             ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:21: error: package net.minecraft.resource does not exist
+import net.minecraft.resource.SynchronousResourceReloader;
+                             ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:25: error: cannot find symbol
+public class ShaderLoader implements SynchronousResourceReloader, IdentifiableResourceReloadListener {
+                                     ^
+  symbol: class SynchronousResourceReloader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:249: error: cannot find symbol
+    private final MinecraftClient client = MinecraftClient.getInstance();
+                  ^
+  symbol:   class MinecraftClient
+  location: class ShaderLoader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:276: error: cannot find symbol
+    public void reload(ResourceManager manager) {
+                       ^
+  symbol:   class ResourceManager
+  location: class ShaderLoader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:35: error: cannot find symbol
+    private final MinecraftClient client = MinecraftClient.getInstance();
+                                           ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:42: error: cannot find symbol
+        map.put("PS_DepthSampler", () -> MinecraftClient.getInstance().getFramebuffer().getDepthAttachment());
+                                         ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:43: error: cannot find symbol
+        map.put("PS_SurfaceFractalSampler", () -> MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE));
+                                                                                                               ^
+  symbol:   variable PlayerScreenHandler
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:43: error: cannot find symbol
+        map.put("PS_SurfaceFractalSampler", () -> MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE));
+                                                  ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:48: error: constructor Identifier in class Identifier cannot be applied to given types;
+        this.name = new Identifier(name);
+                    ^
+  required: String,String
+  found:    String
+  reason: actual and formal argument lists differ in length
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:61: error: cannot find symbol
+        register.accept(new BoundUniform("PS_SurfaceFractalStrength", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                      ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:64: error: cannot find symbol
+        register.accept(new BoundUniform("PS_Pulses", GlUniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                      ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:67: error: cannot find symbol
+        register.accept(new BoundUniform("PS_SurfaceFractalCoords", GlUniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                                    ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:69: error: cannot find symbol
+                Sprite sprite = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                ^
+  symbol:   class Sprite
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:69: error: cannot find symbol
+                Sprite sprite = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:69: error: package Blocks does not exist
+                Sprite sprite = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                                                                               ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:73: error: cannot find symbol
+        register.accept(new BoundUniform("PS_PlayerPosition", GlUniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                              ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+            Vec3d pos = isEnabled() ? MinecraftClient.getInstance().player.getPos() : Vec3d.ZERO;
+            ^
+  symbol:   class Vec3d
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+            Vec3d pos = isEnabled() ? MinecraftClient.getInstance().player.getPos() : Vec3d.ZERO;
+                                      ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+            Vec3d pos = isEnabled() ? MinecraftClient.getInstance().player.getPos() : Vec3d.ZERO;
+                                                                                      ^
+  symbol:   variable Vec3d
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:77: error: cannot find symbol
+        register.accept(new BoundUniform("PS_WorldTicks", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                          ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:80: error: cannot find symbol
+        register.accept(new BoundUniform("PS_WavesMatrix", GlUniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                           ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:92: error: cannot find symbol
+        register.accept(new BoundUniform("PS_DistantWorldDeformation", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                       ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:93: error: cannot find symbol
+            uniform.set(isWorld() ? ShaderContext.hallucinations().getDistantWorldDeformationStrength(MinecraftClient.getInstance().getTickDelta()) : 0);
+                                                                                                      ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:95: error: cannot find symbol
+        register.accept(new BoundUniform("PS_FractalFractureStrength", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                       ^
+  symbol:   variable GlUniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:96: error: cannot find symbol
+            uniform.set(isWorld() ? ShaderContext.hallucinations().getSurfaceShatteringStrength(MinecraftClient.getInstance().getTickDelta()) : 0F);
+                                                                                                ^
+  symbol:   variable MinecraftClient
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:105: error: cannot find symbol
+        if (type == Type.VERTEX) {
+                    ^
+  symbol:   variable Type
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:113: error: cannot find symbol
+        if (type == Type.FRAGMENT) {
+                    ^
+  symbol:   variable Type
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:158: error: method does not override or implement a method from a supertype
+        @Override
+        ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:160: error: cannot find symbol
+            if (!MinecraftClient.getInstance().isPaused()) {
+                 ^
+  symbol:   variable MinecraftClient
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:163: error: non-static variable super cannot be referenced from a static context
+            super.upload();
+            ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:163: error: cannot find symbol
+            super.upload();
+                 ^
+  symbol: method upload()
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:37: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:57: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:61: error: cannot find symbol
+        super.setupDimensions(targetsWidth, targetsHeight);
+        ^
+  symbol:   variable super
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:64: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+        PostEffectPass pass = super.addPass(programName, source, dest);
+        ^
+  symbol:   class PostEffectPass
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+        PostEffectPass pass = super.addPass(programName, source, dest);
+                              ^
+  symbol:   variable super
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:23: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:25: error: Identifier(String,String) has private access in Identifier
+        final Identifier overrideId = new Identifier(defaultNamespace, id.getPath());
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:32: error: cannot find symbol
+            return new Resource(resource.getPack(), () -> {
+                       ^
+  symbol:   class Resource
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:56: error: cannot find symbol
+                importPath = importPath.withPrefixedPath("shaders/include/");
+                                       ^
+  symbol:   method withPrefixedPath(String)
+  location: variable importPath of type Identifier
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:21: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:26: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:31: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: cannot find symbol
+        List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+             ^
+  symbol:   class Resource
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: Identifier(String,String) has private access in Identifier
+        List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+                                                          ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+100 errors
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':fabric:compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:158: error: method does not override or implement a method from a supertype
+          @Override
+          ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:37: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:57: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:64: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:23: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:21: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:26: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:31: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:163: error: cannot find symbol
+              super.upload();
+                   ^
+    symbol: method upload()
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:15: error: cannot find symbol
+  class LoadedShader extends PostEffectProcessor {
+                             ^
+    symbol: class PostEffectProcessor
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:12: error: cannot find symbol
+  class ModdedResourceFactory implements ResourceFactory {
+                                         ^
+    symbol: class ResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:10: error: cannot find symbol
+  class ModdedResourceManager implements ResourceManager {
+                                         ^
+    symbol: class ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:25: error: cannot find symbol
+  public class ShaderLoader implements SynchronousResourceReloader, IdentifiableResourceReloadListener {
+                                       ^
+    symbol: class SynchronousResourceReloader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:11: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.ShaderProgram;
+                                ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:12: error: package net.minecraft.resource does not exist
+  import net.minecraft.resource.ResourceFactory;
+                               ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:13: error: package net.minecraft.block does not exist
+  import net.minecraft.block.Blocks;
+                            ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:16: error: package net.minecraft.client.gl.ShaderStage does not exist
+  import net.minecraft.client.gl.ShaderStage.Type;
+                                            ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:17: error: package net.minecraft.client.texture does not exist
+  import net.minecraft.client.texture.Sprite;
+                                     ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:19: error: package net.minecraft.screen does not exist
+  import net.minecraft.screen.PlayerScreenHandler;
+                             ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:15: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.*;
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:18: error: package net.minecraft.resource does not exist
+  import net.minecraft.resource.*;
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:12: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.*;
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:9: error: package net.minecraft.resource does not exist
+  import net.minecraft.resource.*;
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:7: error: package net.minecraft.resource does not exist
+  import net.minecraft.resource.*;
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:7: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.ShaderProgram;
+                                ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:8: error: package net.minecraft.client.render does not exist
+  import net.minecraft.client.render.VertexFormats;
+                                    ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:8: error: package net.minecraft.client.gl does not exist
+  import net.minecraft.client.gl.PostEffectProcessor;
+                                ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:20: error: package net.minecraft.resource does not exist
+  import net.minecraft.resource.ResourceManager;
+                               ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:21: error: package net.minecraft.resource does not exist
+  import net.minecraft.resource.SynchronousResourceReloader;
+                               ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:69: error: package Blocks does not exist
+                  Sprite sprite = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                                                                                 ^
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: Some input files use or override a deprecated API.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:56: error: cannot find symbol
+                  importPath = importPath.withPrefixedPath("shaders/include/");
+                                         ^
+    symbol:   method withPrefixedPath(String)
+    location: variable importPath of type Identifier
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:163: error: non-static variable super cannot be referenced from a static context
+              super.upload();
+              ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:48: error: constructor Identifier in class Identifier cannot be applied to given types;
+          this.name = new Identifier(name);
+                      ^
+    required: String,String
+    found:    String
+    reason: actual and formal argument lists differ in length
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+      void call(ResourceFactory factory, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList) throws IOException;
+                ^
+    symbol:   class ResourceFactory
+    location: interface CoreShaderRegistrationCallback
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+      void call(ResourceFactory factory, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList) throws IOException;
+                                                   ^
+    symbol:   class ShaderProgram
+    location: interface CoreShaderRegistrationCallback
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+      void call(ResourceFactory factory, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList) throws IOException;
+                                                                           ^
+    symbol:   class ShaderProgram
+    location: interface CoreShaderRegistrationCallback
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:33: error: cannot find symbol
+      private Type type;
+              ^
+    symbol:   class Type
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:35: error: cannot find symbol
+      private final MinecraftClient client = MinecraftClient.getInstance();
+                    ^
+    symbol:   class MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:36: error: cannot find symbol
+      private final ResourceManager manager = client.getResourceManager();
+                    ^
+    symbol:   class ResourceManager
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:47: error: cannot find symbol
+      public void setup(Type type, String name, InputStream stream, String domain, GlImportProcessor loader) {
+                        ^
+    symbol:   class Type
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:47: error: cannot find symbol
+      public void setup(Type type, String name, InputStream stream, String domain, GlImportProcessor loader) {
+                                                                                   ^
+    symbol:   class GlImportProcessor
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:60: error: cannot find symbol
+      public void addUniforms(ShaderProgramSetupView program, Consumer<GlUniform> register) {
+                              ^
+    symbol:   class ShaderProgramSetupView
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:60: error: cannot find symbol
+      public void addUniforms(ShaderProgramSetupView program, Consumer<GlUniform> register) {
+                                                                       ^
+    symbol:   class GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:150: error: cannot find symbol
+      static class BoundUniform extends GlUniform {
+                                        ^
+    symbol:   class GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:151: error: cannot find symbol
+          private final Consumer<GlUniform> valueGetter;
+                                 ^
+    symbol:   class GlUniform
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:153: error: cannot find symbol
+          public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<GlUniform> valueGetter) {
+                                                                    ^
+    symbol:   class ShaderProgramSetupView
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:153: error: cannot find symbol
+          public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<GlUniform> valueGetter) {
+                                                                                                             ^
+    symbol:   class GlUniform
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:25: error: cannot find symbol
+      public LoadedShader(MinecraftClient client, Identifier id, UniformBinding.Set bindings) throws IOException, JsonSyntaxException {
+                          ^
+    symbol:   class MinecraftClient
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: cannot find symbol
+      public PostEffectPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                        ^
+    symbol:   class Framebuffer
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: cannot find symbol
+      public PostEffectPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                                            ^
+    symbol:   class Framebuffer
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: cannot find symbol
+      public PostEffectPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+             ^
+    symbol:   class PostEffectPass
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:75: error: cannot find symbol
+          private final JsonEffectShaderProgram program;
+                        ^
+    symbol:   class JsonEffectShaderProgram
+    location: class LoadedShader.Pass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:76: error: cannot find symbol
+          private final PostEffectPass pass;
+                        ^
+    symbol:   class PostEffectPass
+    location: class LoadedShader.Pass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:83: error: cannot find symbol
+          public Pass(PostEffectPass pass) {
+                      ^
+    symbol:   class PostEffectPass
+    location: class LoadedShader.Pass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:13: error: cannot find symbol
+      private final ResourceFactory parent;
+                    ^
+    symbol:   class ResourceFactory
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:18: error: cannot find symbol
+      public ModdedResourceFactory(ResourceFactory parent, String defaultNamespace) {
+                                   ^
+    symbol:   class ResourceFactory
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:24: error: cannot find symbol
+      public Optional<Resource> getResource(Identifier id) {
+                      ^
+    symbol:   class Resource
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:30: error: cannot find symbol
+      private Resource loadShader(Resource resource, Identifier id) {
+                                  ^
+    symbol:   class Resource
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:30: error: cannot find symbol
+      private Resource loadShader(Resource resource, Identifier id) {
+              ^
+    symbol:   class Resource
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:11: error: cannot find symbol
+      private final ResourceManager parent;
+                    ^
+    symbol:   class ResourceManager
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:15: error: cannot find symbol
+      public ModdedResourceManager(ResourceManager parent, String defaultNamespace) {
+                                   ^
+    symbol:   class ResourceManager
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:22: error: cannot find symbol
+      public Optional<Resource> getResource(Identifier id) {
+                      ^
+    symbol:   class Resource
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:32: error: cannot find symbol
+      public List<Resource> getAllResources(Identifier id) {
+                  ^
+    symbol:   class Resource
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:41: error: cannot find symbol
+      public Map<Identifier, Resource> findResources(String path, Predicate<Identifier> filter) {
+                             ^
+    symbol:   class Resource
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:46: error: cannot find symbol
+      public Map<Identifier, List<Resource>> findAllResources(String path, Predicate<Identifier> filter) {
+                                  ^
+    symbol:   class Resource
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:51: error: cannot find symbol
+      public Stream<ResourcePack> streamResourcePacks() {
+                    ^
+    symbol:   class ResourcePack
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:12: error: cannot find symbol
+      private static ShaderProgram renderTypeZeroMatterProgram;
+                     ^
+    symbol:   class ShaderProgram
+    location: class PSShaders
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:14: error: cannot find symbol
+      public static ShaderProgram getRenderTypeZeroMatterProgram() {
+                    ^
+    symbol:   class ShaderProgram
+    location: class PSShaders
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:17: error: cannot find symbol
+  import moriz.orangesunshine.client.render.GLStateProxy;
+                                           ^
+    symbol:   class GLStateProxy
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:249: error: cannot find symbol
+      private final MinecraftClient client = MinecraftClient.getInstance();
+                    ^
+    symbol:   class MinecraftClient
+    location: class ShaderLoader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:276: error: cannot find symbol
+      public void reload(ResourceManager manager) {
+                         ^
+    symbol:   class ResourceManager
+    location: class ShaderLoader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:35: error: cannot find symbol
+      private final MinecraftClient client = MinecraftClient.getInstance();
+                                             ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:42: error: cannot find symbol
+          map.put("PS_DepthSampler", () -> MinecraftClient.getInstance().getFramebuffer().getDepthAttachment());
+                                           ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:43: error: cannot find symbol
+          map.put("PS_SurfaceFractalSampler", () -> MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE));
+                                                                                                                 ^
+    symbol:   variable PlayerScreenHandler
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:43: error: cannot find symbol
+          map.put("PS_SurfaceFractalSampler", () -> MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE));
+                                                    ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:61: error: cannot find symbol
+          register.accept(new BoundUniform("PS_SurfaceFractalStrength", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                        ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:64: error: cannot find symbol
+          register.accept(new BoundUniform("PS_Pulses", GlUniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                        ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:67: error: cannot find symbol
+          register.accept(new BoundUniform("PS_SurfaceFractalCoords", GlUniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                                      ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:69: error: cannot find symbol
+                  Sprite sprite = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                  ^
+    symbol:   class Sprite
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:69: error: cannot find symbol
+                  Sprite sprite = MinecraftClient.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                  ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:73: error: cannot find symbol
+          register.accept(new BoundUniform("PS_PlayerPosition", GlUniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                                ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+              Vec3d pos = isEnabled() ? MinecraftClient.getInstance().player.getPos() : Vec3d.ZERO;
+              ^
+    symbol:   class Vec3d
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+              Vec3d pos = isEnabled() ? MinecraftClient.getInstance().player.getPos() : Vec3d.ZERO;
+                                        ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+              Vec3d pos = isEnabled() ? MinecraftClient.getInstance().player.getPos() : Vec3d.ZERO;
+                                                                                        ^
+    symbol:   variable Vec3d
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:77: error: cannot find symbol
+          register.accept(new BoundUniform("PS_WorldTicks", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                            ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:80: error: cannot find symbol
+          register.accept(new BoundUniform("PS_WavesMatrix", GlUniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                             ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:92: error: cannot find symbol
+          register.accept(new BoundUniform("PS_DistantWorldDeformation", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                         ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:93: error: cannot find symbol
+              uniform.set(isWorld() ? ShaderContext.hallucinations().getDistantWorldDeformationStrength(MinecraftClient.getInstance().getTickDelta()) : 0);
+                                                                                                        ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:95: error: cannot find symbol
+          register.accept(new BoundUniform("PS_FractalFractureStrength", GlUniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                         ^
+    symbol:   variable GlUniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:96: error: cannot find symbol
+              uniform.set(isWorld() ? ShaderContext.hallucinations().getSurfaceShatteringStrength(MinecraftClient.getInstance().getTickDelta()) : 0F);
+                                                                                                  ^
+    symbol:   variable MinecraftClient
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:105: error: cannot find symbol
+          if (type == Type.VERTEX) {
+                      ^
+    symbol:   variable Type
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:113: error: cannot find symbol
+          if (type == Type.FRAGMENT) {
+                      ^
+    symbol:   variable Type
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:160: error: cannot find symbol
+              if (!MinecraftClient.getInstance().isPaused()) {
+                   ^
+    symbol:   variable MinecraftClient
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:61: error: cannot find symbol
+          super.setupDimensions(targetsWidth, targetsHeight);
+          ^
+    symbol:   variable super
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+          PostEffectPass pass = super.addPass(programName, source, dest);
+          ^
+    symbol:   class PostEffectPass
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+          PostEffectPass pass = super.addPass(programName, source, dest);
+                                ^
+    symbol:   variable super
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:32: error: cannot find symbol
+              return new Resource(resource.getPack(), () -> {
+                         ^
+    symbol:   class Resource
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: cannot find symbol
+          List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+               ^
+    symbol:   class Resource
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:25: error: Identifier(String,String) has private access in Identifier
+          final Identifier overrideId = new Identifier(defaultNamespace, id.getPath());
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: Identifier(String,String) has private access in Identifier
+          List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+                                                            ^
+  100 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 8s
+4 actionable tasks: 1 executed, 3 up-to-date

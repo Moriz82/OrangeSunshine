@@ -43,6 +43,12 @@ public interface PSItemGroups {
                 entries.accept(PSItems.JUNGLE_BARREL);
                 entries.accept(PSItems.DARK_OAK_BARREL);
 
+                entries.accept(PSBlocks.FRIDGE);
+                entries.accept(PSBlocks.COMPOUND_EXTRACTOR);
+                entries.accept(PSBlocks.COMPOUND_COMPRESSOR);
+                entries.accept(PSBlocks.COKE_CAKE_BLOCK);
+                entries.accept(PSBlocks.CUT_POPPY_BLOCK);
+
                 if (OrangeSunshine.getConfig().balancing.enableRiftJars) {
                     entries.accept(RiftJarItem.createFilledRiftJar(0.0F, PSItems.RIFT_JAR));
                     entries.accept(RiftJarItem.createFilledRiftJar(0.25F, PSItems.RIFT_JAR));
@@ -79,6 +85,22 @@ public interface PSItemGroups {
 
                 entries.accept(PSItems.OBSIDIAN_BOTTLE);
                 entries.accept(PSItems.OBSIDIAN_DUST);
+
+                entries.accept(PSItems.DMT);
+                entries.accept(PSItems.AYAHUASCA);
+                entries.accept(PSItems.SAN_PEDRO);
+                entries.accept(PSItems.SAN_PEDRO_SEEDS);
+
+                entries.accept(PSItems.MDMA);
+                entries.accept(PSItems.MDA);
+                entries.accept(PSItems.PMA);
+                entries.accept(PSItems.CODEINE);
+
+                entries.accept(PSItems.MORPHINE_BOTTLE);
+                entries.accept(PSItems.OPIUM_BOTTLE_0);
+                entries.accept(PSItems.OPIUM_BOTTLE_1);
+                entries.accept(PSItems.OPIUM_BOTTLE_2);
+                entries.accept(PSItems.OPIUM_BOTTLE_3);
 
                // entries.accept(PSItems.KAVA_SEEDS);
                // entries.accept(PSItems.KAVA_ROOT);
@@ -135,6 +157,12 @@ public interface PSItemGroups {
                 entries.accept(PSItems.COCA_LEAVES);
                 entries.accept(PSItems.DRIED_COCA_LEAVES);
                 entries.accept(PSItems.COCAINE_POWDER);
+                entries.accept(PSItems.COCAINE_ROCK);
+                entries.accept(PSItems.COCA_MULCH);
+
+                entries.accept(PSItems.SOURIN_AIR);
+                entries.accept(PSItems.COCAINE_SYRINGE);
+                entries.accept(PSItems.MORPHINE_SYRINGE);
 
                 entries.accept(PSItems.AGAVE_LEAF);
                 entries.accept(PSItems.PEYOTE);

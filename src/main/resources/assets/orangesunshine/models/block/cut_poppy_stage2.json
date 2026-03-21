@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "orangesunshine:block/cut_poppy_stage2"
+  }
+}

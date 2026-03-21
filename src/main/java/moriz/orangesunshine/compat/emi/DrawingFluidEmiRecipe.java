@@ -15,7 +15,7 @@ import moriz.orangesunshine.PSTags;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.FluidContainer;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class DrawingFluidEmiRecipe implements EmiRecipe, PSRecipe {
 

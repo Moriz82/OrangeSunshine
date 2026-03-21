@@ -27,7 +27,7 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class Main implements EmiPlugin {
     static final RecipeCategory DRYING_TABLE = RecipeCategory.register("drying_table", EmiStack.of(PSItems.DRYING_TABLE), registry -> {

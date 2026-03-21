@@ -1,0 +1,18 @@
+{
+  "type" : "orangesunshine:compound_extractor_crafting",
+  "size" : 3,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:sodium_hydroxide"
+    },
+    {
+      "item" : "orangesunshine:de_ionized_water"
+    },
+    {
+      "item" : "orangesunshine:syringe"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:furosemide"
+  }
+}

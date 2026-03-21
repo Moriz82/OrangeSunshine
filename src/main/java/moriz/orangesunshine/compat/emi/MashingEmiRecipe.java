@@ -10,7 +10,7 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.fluid.FluidVolumes;
 import moriz.orangesunshine.recipe.MashingRecipe;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class MashingEmiRecipe implements EmiRecipe, PSRecipe {
 

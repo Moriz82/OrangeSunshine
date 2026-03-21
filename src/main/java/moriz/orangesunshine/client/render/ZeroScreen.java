@@ -5,12 +5,12 @@ import java.util.stream.IntStream;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.client.render.shader.PSShaders;
-import net.minecraft.client.render.*;
+import net.minecraft.client.renderer.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.Mth;
 
-public class ZeroScreen extends RenderLayer {
+public class ZeroScreen extends RenderType {
     private ZeroScreen() {super(null, null, null, 0, false, false, null, null);}
 
     public static final Identifier[] TEXTURES = IntStream.range(0, 8)
@@ -21,7 +21,7 @@ public class ZeroScreen extends RenderLayer {
 
     protected static final ShaderProgram ZERO_MATTER_PROGRAM = new ShaderProgram(PSShaders::getRenderTypeZeroMatterProgram);
 
-    private static final Function<Identifier, RenderLayer> PS_ZERO_SCREEN = Util.memoize(texture -> of("ps_zero_screen",
+    private static final Function<Identifier, RenderType> PS_ZERO_SCREEN = Util.memoize(texture -> of("ps_zero_screen",
             VertexFormats.POSITION_COLOR,
             VertexFormat.DrawMode.QUADS, 256, false, false, MultiPhaseParameters.builder()
             .transparency(TRANSLUCENT_TRANSPARENCY)
@@ -44,6 +44,6 @@ public class ZeroScreen extends RenderLayer {
 
     @FunctionalInterface
     public interface Renderable {
-        void render(RenderLayer layer, float u, float v);
+        void render(RenderType layer, float u, float v);
     }
 }

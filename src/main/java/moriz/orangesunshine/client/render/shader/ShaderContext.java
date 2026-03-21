@@ -9,14 +9,14 @@ import net.minecraft.client.Minecraft;
 
 public interface ShaderContext {
     static HallucinationManager hallucinations() {
-        return DrugProperties.of(MinecraftClient.getInstance().player).getHallucinations();
+        return DrugProperties.of(Minecraft.getInstance().player).getHallucinations();
     }
 
     static DrugProperties properties() {
-        return DrugProperties.of(MinecraftClient.getInstance().player);
+        return DrugProperties.of(Minecraft.getInstance().player);
     }
 
-    static float drug(DrugType type) {
+    static float drug(DrugShaderType type) {
         return properties().getDrugValue(type);
     }
 
@@ -25,18 +25,18 @@ public interface ShaderContext {
     }
 
     static float ticks() {
-        return MinecraftClient.getInstance().player.age + tickDelta();
+        return (Minecraft.getInstance().player == null ? 0 : Minecraft.getInstance().player.tickCount) + tickDelta();
     }
 
     static float tickDelta() {
-        return MinecraftClient.getInstance().getTickDelta();
+        return Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
     }
 
     static long time() {
-        return MinecraftClient.getInstance().world.getTime();
+        return Minecraft.getInstance().level == null ? 0 : Minecraft.getInstance().level.getGameTime();
     }
 
     static float viewDistace() {
-        return MinecraftClient.getInstance().options.getViewDistance().getValue() * 16;
+        return Minecraft.getInstance().options.getEffectiveRenderDistance() * 16;
     }
 }

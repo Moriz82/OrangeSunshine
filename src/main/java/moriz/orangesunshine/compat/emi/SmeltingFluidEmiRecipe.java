@@ -12,8 +12,8 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import moriz.orangesunshine.recipe.SmeltingFluidRecipe;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class SmeltingFluidEmiRecipe implements EmiRecipe {
     private final Identifier id;
@@ -61,7 +61,7 @@ public class SmeltingFluidEmiRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         widgets.addFillingArrow(24, 5, 50 * recipe.getCookingTime())
-            .tooltipText(List.of(Text.translatable("emi.cooking.time", recipe.getCookingTime() / 20f)));
+            .tooltipText(List.of(Component.translatable("emi.cooking.time", recipe.getCookingTime() / 20f)));
 
         widgets.addTexture(EmiTexture.EMPTY_FLAME, 1, 24);
         widgets.addAnimatedTexture(EmiTexture.FULL_FLAME, 1, 24, 4000 / recipe.getCookingTime(), false, true, true);

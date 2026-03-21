@@ -1,7 +1,15 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    { "item": "orangesunshine:dried_coca_leaves" }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
   ],
-  "result": { "item": "orangesunshine:cocaine_powder" }
+  "key": {
+    "#": {
+      "item": "orangesunshine:cocaine_dust"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:cocaine_powder"
+  }
 }

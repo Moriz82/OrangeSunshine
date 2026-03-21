@@ -1,0 +1,964 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/moriz/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/lib/native-platform-0.22-milestone-26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:22: error: package net.minecraft.item does not exist
+import net.minecraft.item.BlockItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:23: error: package net.minecraft.item does not exist
+import net.minecraft.item.HangingSignItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:24: error: package net.minecraft.item does not exist
+import net.minecraft.item.Item;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:25: error: package net.minecraft.item.Item does not exist
+import net.minecraft.item.Item.Settings;
+                              ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:26: error: package net.minecraft.item does not exist
+import net.minecraft.item.ItemUseAnimation;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:27: error: package net.minecraft.item does not exist
+import net.minecraft.item.Items;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:28: error: package net.minecraft.item does not exist
+import net.minecraft.item.SignItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:29: error: package net.minecraft.block does not exist
+import net.minecraft.block.Block;
+                          ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:33: error: package net.minecraft.item does not exist
+import net.minecraft.item.ArmorItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:34: error: package net.minecraft.item does not exist
+import net.minecraft.item.ArmorMaterials;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:35: error: package net.minecraft.item does not exist
+import net.minecraft.item.AxeItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:36: error: package net.minecraft.item does not exist
+import net.minecraft.item.HoeItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:37: error: package net.minecraft.item does not exist
+import net.minecraft.item.PickaxeItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:38: error: package net.minecraft.item does not exist
+import net.minecraft.item.ShovelItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:39: error: package net.minecraft.item does not exist
+import net.minecraft.item.SwordItem;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:40: error: package net.minecraft.item does not exist
+import net.minecraft.item.ToolMaterials;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:41: error: package net.minecraft.item does not exist
+import net.minecraft.item.ArmorMaterial;
+                         ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:42: error: package net.minecraft.registry.entry does not exist
+import net.minecraft.registry.entry.RegistryEntry;
+                                   ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:60: error: cannot find symbol
+    Item WINE_GRAPES = register("wine_grapes", new WineGrapesItem(new Settings().setId(itemKey("wine_grapes")).food(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:65: error: cannot find symbol
+    Item COFFEA_CHERRIES = register("coffea_cherries", new BlockItem(PSBlocks.COFFEA, new Settings().setId(itemKey("coffea_cherries"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:66: error: cannot find symbol
+    Item COFFEE_BEANS = register("coffee_beans");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:69: error: cannot find symbol
+    Item PEYOTE = register("peyote", PSBlocks.PEYOTE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:70: error: cannot find symbol
+    Item DRIED_PEYOTE = register("dried_peyote", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:76: error: cannot find symbol
+    Item CANNABIS_SEEDS = register("cannabis_seeds", new BlockItem(PSBlocks.CANNABIS, new Settings().setId(itemKey("cannabis_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:77: error: cannot find symbol
+    Item CANNABIS_LEAF = register("cannabis_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:78: error: cannot find symbol
+    Item CANNABIS_BUDS = register("cannabis_buds");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:79: error: cannot find symbol
+    Item DRIED_CANNABIS_LEAF = register("dried_cannabis_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:80: error: cannot find symbol
+    Item DRIED_CANNABIS_BUDS = register("dried_cannabis_buds");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:83: error: cannot find symbol
+    Item MORNING_GLORY = register("morning_glory");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:84: error: cannot find symbol
+    Item ERGOT = register("ergot");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:85: error: cannot find symbol
+    Item ERGOT_POWDER = register("ergot_powder");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:86: error: cannot find symbol
+    Item MORNING_GLORY_SEEDS = register("morning_glory_seeds", new BlockItem(PSBlocks.MORNING_GLORY, new Settings().setId(itemKey("morning_glory_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:89: error: cannot find symbol
+    Item HOP_CONES = register("hop_cones");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:90: error: cannot find symbol
+    Item HOP_SEEDS = register("hop_seeds", new BlockItem(PSBlocks.HOP, new Settings().setId(itemKey("hop_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:93: error: cannot find symbol
+    Item COCA_SEEDS = register("coca_seeds", new BlockItem(PSBlocks.COCA, new Settings().setId(itemKey("coca_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:94: error: cannot find symbol
+    Item COCA_LEAVES = register("coca_leaves");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:95: error: cannot find symbol
+    Item DRIED_COCA_LEAVES = register("dried_coca_leaves");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:98: error: cannot find symbol
+    Item JIMSONWEED_SEEDS = register("jimsonweed_seeds", new BlockItem(PSBlocks.JIMSONWEEED, new Settings().setId(itemKey("jimsonweed_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:99: error: cannot find symbol
+    Item JIMSONWEED_SEED_POD = register("jimsonweed_seed_pod");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:100: error: cannot find symbol
+    Item JIMSONWEED_LEAF = register("jimsonweed_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:101: error: cannot find symbol
+    Item DRIED_JIMSONWEED_LEAF = register("dried_jimsonweed_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:103: error: cannot find symbol
+    Item TOMATO_SEEDS = register("tomato_seeds", new BlockItem(PSBlocks.TOMATOES, new Settings().setId(itemKey("tomato_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:104: error: cannot find symbol
+    Item TOMATO = register("tomato", new Item(new Settings().setId(itemKey("tomato")).food(EdibleItem.TOMATO)));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:105: error: cannot find symbol
+    Item TOMATO_LEAF = register("tomato_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:107: error: cannot find symbol
+    Item BELLADONNA_SEEDS = register("belladonna_seeds", new BlockItem(PSBlocks.BELLADONNA, new Settings().setId(itemKey("belladonna_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:108: error: cannot find symbol
+    Item BELLADONNA_LEAF = register("belladonna_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:109: error: cannot find symbol
+    Item DRIED_BELLADONNA_LEAF = register("dried_belladonna_leaf");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:110: error: cannot find symbol
+    Item BELLADONNA_BERRIES = register("belladonna_berries", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:115: error: cannot find symbol
+    Item AGAVE_LEAF = register("agave_leaf", new BlockItem(PSBlocks.AGAVE_PLANT, new Settings().setId(itemKey("agave_leaf"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:118: error: cannot find symbol
+    Item DMT = register("dmt");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:119: error: cannot find symbol
+    Item AYAHUASCA = register("ayahuasca");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:120: error: cannot find symbol
+    Item SAN_PEDRO = register("san_pedro");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:121: error: cannot find symbol
+    Item SAN_PEDRO_SEEDS = register("san_pedro_seeds", new BlockItem(PSBlocks.SAN_PEDRO_BLOCK, new Settings().setId(itemKey("san_pedro_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:128: error: cannot find symbol
+    Item HASH_MUFFIN = register("hash_muffin", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:135: error: cannot find symbol
+    Item BROWN_MAGIC_MUSHROOMS = register("brown_magic_mushrooms", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:139: error: cannot find symbol
+    Item RED_MAGIC_MUSHROOMS = register("red_magic_mushrooms", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:146: error: cannot find symbol
+    Item TOBACCO_LEAVES = register("tobacco");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:147: error: cannot find symbol
+    Item TOBACCO_SEEDS = register("tobacco_seeds", new BlockItem(PSBlocks.TOBACCO, new Settings().setId(itemKey("tobacco_seeds"))));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:148: error: cannot find symbol
+    Item DRIED_TOBACCO = register("dried_tobacco");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:152: error: cannot find symbol
+    Item COCAINE_POWDER = register("cocaine_powder", new CocainePowderItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:156: error: cannot find symbol
+    Item COCAINE_ROCK = register("cocaine_rock");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:157: error: cannot find symbol
+    Item COCA_MULCH = register("coca_mulch");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:160: error: cannot find symbol
+    Item MDMA = register("mdma");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:161: error: cannot find symbol
+    Item MDA = register("mda");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:162: error: cannot find symbol
+    Item PMA = register("pma");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:165: error: cannot find symbol
+    Item CODEINE = register("codeine");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:166: error: cannot find symbol
+    Item MORPHINE_BOTTLE = register("morphine_bottle");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:167: error: cannot find symbol
+    Item OPIUM_BOTTLE_0 = register("opium_bottle_0");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:168: error: cannot find symbol
+    Item OPIUM_BOTTLE_1 = register("opium_bottle_1");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:169: error: cannot find symbol
+    Item OPIUM_BOTTLE_2 = register("opium_bottle_2");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:170: error: cannot find symbol
+    Item OPIUM_BOTTLE_3 = register("opium_bottle_3");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:174: error: cannot find symbol
+    Item LATTICE = register("lattice", PSBlocks.LATTICE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:175: error: cannot find symbol
+    Item WINE_GRAPE_LATTICE = register("wine_grape_lattice", PSBlocks.WINE_GRAPE_LATTICE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:176: error: cannot find symbol
+    Item MORNING_GLORY_LATTICE = register("morning_glory_lattice", PSBlocks.MORNING_GLORY_LATTICE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:180: error: cannot find symbol
+    Item BLOTTER = register("blotter");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:181: error: cannot find symbol
+    Item ROLLING_PAPER = register("rolling_paper");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:182: error: cannot find symbol
+    Item JOLLY_RANCHER = register("jolly_rancher", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:187: error: cannot find symbol
+    Item NALOXONE = register("naloxone", new DrugClearItem(new Settings().setId(itemKey("naloxone")).food(EdibleItem.NON_FILLING_EDIBLE), ItemUseAnimation.BOW, 1));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:192: error: cannot find symbol
+    Item LSA_BLOTTER = register("lsa_blotter", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:196: error: cannot find symbol
+    Item LSD_BLOTTER = register("lsd_blotter", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:200: error: cannot find symbol
+    Item ORANGESUNSINE_BLOTTER = register("orangesunshine_blotter", new EdibleItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:264: error: cannot find symbol
+    Item ERGOPEPTINE_CRYSTALS = register("ergopeptine_crystals");
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:303: error: cannot find symbol
+    Item JUNIPER_LEAVES = register("juniper_leaves", PSBlocks.JUNIPER_LEAVES);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:304: error: cannot find symbol
+    Item FRUITING_JUNIPER_LEAVES = register("fruiting_juniper_leaves", PSBlocks.FRUITING_JUNIPER_LEAVES);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:305: error: cannot find symbol
+    Item JUNIPER_LOG = register("juniper_log", PSBlocks.JUNIPER_LOG);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:306: error: cannot find symbol
+    Item JUNIPER_WOOD = register("juniper_wood", PSBlocks.JUNIPER_WOOD);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:307: error: cannot find symbol
+    Item STRIPPED_JUNIPER_LOG = register("stripped_juniper_log", PSBlocks.STRIPPED_JUNIPER_LOG);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:308: error: cannot find symbol
+    Item STRIPPED_JUNIPER_WOOD = register("stripped_juniper_wood", PSBlocks.STRIPPED_JUNIPER_WOOD);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:309: error: cannot find symbol
+    Item JUNIPER_BERRIES = register("juniper_berries", new SpecialFoodItem(
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:312: error: cannot find symbol
+    Item JUNIPER_SAPLING = register("juniper_sapling", PSBlocks.JUNIPER_SAPLING);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:313: error: cannot find symbol
+    Item JUNIPER_PLANKS = register("juniper_planks", PSBlocks.JUNIPER_PLANKS);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:314: error: cannot find symbol
+    Item JUNIPER_STAIRS = register("juniper_stairs", PSBlocks.JUNIPER_STAIRS);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:315: error: cannot find symbol
+    Item JUNIPER_SIGN = register("juniper_sign", new SignItem(PSBlocks.JUNIPER_SIGN, PSBlocks.JUNIPER_WALL_SIGN, new Settings().setId(itemKey("juniper_sign")).stacksTo(16)));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:316: error: cannot find symbol
+    Item JUNIPER_DOOR = register("juniper_door", PSBlocks.JUNIPER_DOOR);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:317: error: cannot find symbol
+    Item JUNIPER_HANGING_SIGN = register("juniper_hanging_sign", new HangingSignItem(PSBlocks.JUNIPER_HANGING_SIGN, PSBlocks.JUNIPER_WALL_HANGING_SIGN, new Settings().setId(itemKey("juniper_hanging_sign")).stacksTo(16)));
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:318: error: cannot find symbol
+    Item JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", PSBlocks.JUNIPER_PRESSURE_PLATE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:319: error: cannot find symbol
+    Item JUNIPER_FENCE = register("juniper_fence", PSBlocks.JUNIPER_FENCE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:320: error: cannot find symbol
+    Item JUNIPER_TRAPDOOR = register("juniper_trapdoor", PSBlocks.JUNIPER_TRAPDOOR);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:321: error: cannot find symbol
+    Item JUNIPER_FENCE_GATE = register("juniper_fence_gate", PSBlocks.JUNIPER_FENCE_GATE);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:322: error: cannot find symbol
+    Item JUNIPER_BUTTON = register("juniper_button", PSBlocks.JUNIPER_BUTTON);
+    ^
+  symbol:   class Item
+  location: interface PSItems
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+100 errors
+
+> Task :common:compileJava FAILED
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':common:compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:22: error: package net.minecraft.item does not exist
+  import net.minecraft.item.BlockItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:23: error: package net.minecraft.item does not exist
+  import net.minecraft.item.HangingSignItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:24: error: package net.minecraft.item does not exist
+  import net.minecraft.item.Item;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:25: error: package net.minecraft.item.Item does not exist
+  import net.minecraft.item.Item.Settings;
+                                ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:26: error: package net.minecraft.item does not exist
+  import net.minecraft.item.ItemUseAnimation;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:27: error: package net.minecraft.item does not exist
+  import net.minecraft.item.Items;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:28: error: package net.minecraft.item does not exist
+  import net.minecraft.item.SignItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:29: error: package net.minecraft.block does not exist
+  import net.minecraft.block.Block;
+                            ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:33: error: package net.minecraft.item does not exist
+  import net.minecraft.item.ArmorItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:34: error: package net.minecraft.item does not exist
+  import net.minecraft.item.ArmorMaterials;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:35: error: package net.minecraft.item does not exist
+  import net.minecraft.item.AxeItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:36: error: package net.minecraft.item does not exist
+  import net.minecraft.item.HoeItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:37: error: package net.minecraft.item does not exist
+  import net.minecraft.item.PickaxeItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:38: error: package net.minecraft.item does not exist
+  import net.minecraft.item.ShovelItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:39: error: package net.minecraft.item does not exist
+  import net.minecraft.item.SwordItem;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:40: error: package net.minecraft.item does not exist
+  import net.minecraft.item.ToolMaterials;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:41: error: package net.minecraft.item does not exist
+  import net.minecraft.item.ArmorMaterial;
+                           ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:42: error: package net.minecraft.registry.entry does not exist
+  import net.minecraft.registry.entry.RegistryEntry;
+                                     ^
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: Some input files use or override a deprecated API.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:60: error: cannot find symbol
+      Item WINE_GRAPES = register("wine_grapes", new WineGrapesItem(new Settings().setId(itemKey("wine_grapes")).food(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:65: error: cannot find symbol
+      Item COFFEA_CHERRIES = register("coffea_cherries", new BlockItem(PSBlocks.COFFEA, new Settings().setId(itemKey("coffea_cherries"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:66: error: cannot find symbol
+      Item COFFEE_BEANS = register("coffee_beans");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:69: error: cannot find symbol
+      Item PEYOTE = register("peyote", PSBlocks.PEYOTE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:70: error: cannot find symbol
+      Item DRIED_PEYOTE = register("dried_peyote", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:76: error: cannot find symbol
+      Item CANNABIS_SEEDS = register("cannabis_seeds", new BlockItem(PSBlocks.CANNABIS, new Settings().setId(itemKey("cannabis_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:77: error: cannot find symbol
+      Item CANNABIS_LEAF = register("cannabis_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:78: error: cannot find symbol
+      Item CANNABIS_BUDS = register("cannabis_buds");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:79: error: cannot find symbol
+      Item DRIED_CANNABIS_LEAF = register("dried_cannabis_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:80: error: cannot find symbol
+      Item DRIED_CANNABIS_BUDS = register("dried_cannabis_buds");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:83: error: cannot find symbol
+      Item MORNING_GLORY = register("morning_glory");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:84: error: cannot find symbol
+      Item ERGOT = register("ergot");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:85: error: cannot find symbol
+      Item ERGOT_POWDER = register("ergot_powder");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:86: error: cannot find symbol
+      Item MORNING_GLORY_SEEDS = register("morning_glory_seeds", new BlockItem(PSBlocks.MORNING_GLORY, new Settings().setId(itemKey("morning_glory_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:89: error: cannot find symbol
+      Item HOP_CONES = register("hop_cones");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:90: error: cannot find symbol
+      Item HOP_SEEDS = register("hop_seeds", new BlockItem(PSBlocks.HOP, new Settings().setId(itemKey("hop_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:93: error: cannot find symbol
+      Item COCA_SEEDS = register("coca_seeds", new BlockItem(PSBlocks.COCA, new Settings().setId(itemKey("coca_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:94: error: cannot find symbol
+      Item COCA_LEAVES = register("coca_leaves");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:95: error: cannot find symbol
+      Item DRIED_COCA_LEAVES = register("dried_coca_leaves");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:98: error: cannot find symbol
+      Item JIMSONWEED_SEEDS = register("jimsonweed_seeds", new BlockItem(PSBlocks.JIMSONWEEED, new Settings().setId(itemKey("jimsonweed_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:99: error: cannot find symbol
+      Item JIMSONWEED_SEED_POD = register("jimsonweed_seed_pod");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:100: error: cannot find symbol
+      Item JIMSONWEED_LEAF = register("jimsonweed_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:101: error: cannot find symbol
+      Item DRIED_JIMSONWEED_LEAF = register("dried_jimsonweed_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:103: error: cannot find symbol
+      Item TOMATO_SEEDS = register("tomato_seeds", new BlockItem(PSBlocks.TOMATOES, new Settings().setId(itemKey("tomato_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:104: error: cannot find symbol
+      Item TOMATO = register("tomato", new Item(new Settings().setId(itemKey("tomato")).food(EdibleItem.TOMATO)));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:105: error: cannot find symbol
+      Item TOMATO_LEAF = register("tomato_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:107: error: cannot find symbol
+      Item BELLADONNA_SEEDS = register("belladonna_seeds", new BlockItem(PSBlocks.BELLADONNA, new Settings().setId(itemKey("belladonna_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:108: error: cannot find symbol
+      Item BELLADONNA_LEAF = register("belladonna_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:109: error: cannot find symbol
+      Item DRIED_BELLADONNA_LEAF = register("dried_belladonna_leaf");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:110: error: cannot find symbol
+      Item BELLADONNA_BERRIES = register("belladonna_berries", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:115: error: cannot find symbol
+      Item AGAVE_LEAF = register("agave_leaf", new BlockItem(PSBlocks.AGAVE_PLANT, new Settings().setId(itemKey("agave_leaf"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:118: error: cannot find symbol
+      Item DMT = register("dmt");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:119: error: cannot find symbol
+      Item AYAHUASCA = register("ayahuasca");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:120: error: cannot find symbol
+      Item SAN_PEDRO = register("san_pedro");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:121: error: cannot find symbol
+      Item SAN_PEDRO_SEEDS = register("san_pedro_seeds", new BlockItem(PSBlocks.SAN_PEDRO_BLOCK, new Settings().setId(itemKey("san_pedro_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:128: error: cannot find symbol
+      Item HASH_MUFFIN = register("hash_muffin", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:135: error: cannot find symbol
+      Item BROWN_MAGIC_MUSHROOMS = register("brown_magic_mushrooms", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:139: error: cannot find symbol
+      Item RED_MAGIC_MUSHROOMS = register("red_magic_mushrooms", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:146: error: cannot find symbol
+      Item TOBACCO_LEAVES = register("tobacco");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:147: error: cannot find symbol
+      Item TOBACCO_SEEDS = register("tobacco_seeds", new BlockItem(PSBlocks.TOBACCO, new Settings().setId(itemKey("tobacco_seeds"))));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:148: error: cannot find symbol
+      Item DRIED_TOBACCO = register("dried_tobacco");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:152: error: cannot find symbol
+      Item COCAINE_POWDER = register("cocaine_powder", new CocainePowderItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:156: error: cannot find symbol
+      Item COCAINE_ROCK = register("cocaine_rock");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:157: error: cannot find symbol
+      Item COCA_MULCH = register("coca_mulch");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:160: error: cannot find symbol
+      Item MDMA = register("mdma");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:161: error: cannot find symbol
+      Item MDA = register("mda");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:162: error: cannot find symbol
+      Item PMA = register("pma");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:165: error: cannot find symbol
+      Item CODEINE = register("codeine");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:166: error: cannot find symbol
+      Item MORPHINE_BOTTLE = register("morphine_bottle");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:167: error: cannot find symbol
+      Item OPIUM_BOTTLE_0 = register("opium_bottle_0");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:168: error: cannot find symbol
+      Item OPIUM_BOTTLE_1 = register("opium_bottle_1");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:169: error: cannot find symbol
+      Item OPIUM_BOTTLE_2 = register("opium_bottle_2");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:170: error: cannot find symbol
+      Item OPIUM_BOTTLE_3 = register("opium_bottle_3");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:174: error: cannot find symbol
+      Item LATTICE = register("lattice", PSBlocks.LATTICE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:175: error: cannot find symbol
+      Item WINE_GRAPE_LATTICE = register("wine_grape_lattice", PSBlocks.WINE_GRAPE_LATTICE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:176: error: cannot find symbol
+      Item MORNING_GLORY_LATTICE = register("morning_glory_lattice", PSBlocks.MORNING_GLORY_LATTICE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:180: error: cannot find symbol
+      Item BLOTTER = register("blotter");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:181: error: cannot find symbol
+      Item ROLLING_PAPER = register("rolling_paper");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:182: error: cannot find symbol
+      Item JOLLY_RANCHER = register("jolly_rancher", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:187: error: cannot find symbol
+      Item NALOXONE = register("naloxone", new DrugClearItem(new Settings().setId(itemKey("naloxone")).food(EdibleItem.NON_FILLING_EDIBLE), ItemUseAnimation.BOW, 1));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:192: error: cannot find symbol
+      Item LSA_BLOTTER = register("lsa_blotter", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:196: error: cannot find symbol
+      Item LSD_BLOTTER = register("lsd_blotter", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:200: error: cannot find symbol
+      Item ORANGESUNSINE_BLOTTER = register("orangesunshine_blotter", new EdibleItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:264: error: cannot find symbol
+      Item ERGOPEPTINE_CRYSTALS = register("ergopeptine_crystals");
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:303: error: cannot find symbol
+      Item JUNIPER_LEAVES = register("juniper_leaves", PSBlocks.JUNIPER_LEAVES);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:304: error: cannot find symbol
+      Item FRUITING_JUNIPER_LEAVES = register("fruiting_juniper_leaves", PSBlocks.FRUITING_JUNIPER_LEAVES);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:305: error: cannot find symbol
+      Item JUNIPER_LOG = register("juniper_log", PSBlocks.JUNIPER_LOG);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:306: error: cannot find symbol
+      Item JUNIPER_WOOD = register("juniper_wood", PSBlocks.JUNIPER_WOOD);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:307: error: cannot find symbol
+      Item STRIPPED_JUNIPER_LOG = register("stripped_juniper_log", PSBlocks.STRIPPED_JUNIPER_LOG);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:308: error: cannot find symbol
+      Item STRIPPED_JUNIPER_WOOD = register("stripped_juniper_wood", PSBlocks.STRIPPED_JUNIPER_WOOD);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:309: error: cannot find symbol
+      Item JUNIPER_BERRIES = register("juniper_berries", new SpecialFoodItem(
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:312: error: cannot find symbol
+      Item JUNIPER_SAPLING = register("juniper_sapling", PSBlocks.JUNIPER_SAPLING);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:313: error: cannot find symbol
+      Item JUNIPER_PLANKS = register("juniper_planks", PSBlocks.JUNIPER_PLANKS);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:314: error: cannot find symbol
+      Item JUNIPER_STAIRS = register("juniper_stairs", PSBlocks.JUNIPER_STAIRS);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:315: error: cannot find symbol
+      Item JUNIPER_SIGN = register("juniper_sign", new SignItem(PSBlocks.JUNIPER_SIGN, PSBlocks.JUNIPER_WALL_SIGN, new Settings().setId(itemKey("juniper_sign")).stacksTo(16)));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:316: error: cannot find symbol
+      Item JUNIPER_DOOR = register("juniper_door", PSBlocks.JUNIPER_DOOR);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:317: error: cannot find symbol
+      Item JUNIPER_HANGING_SIGN = register("juniper_hanging_sign", new HangingSignItem(PSBlocks.JUNIPER_HANGING_SIGN, PSBlocks.JUNIPER_WALL_HANGING_SIGN, new Settings().setId(itemKey("juniper_hanging_sign")).stacksTo(16)));
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:318: error: cannot find symbol
+      Item JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", PSBlocks.JUNIPER_PRESSURE_PLATE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:319: error: cannot find symbol
+      Item JUNIPER_FENCE = register("juniper_fence", PSBlocks.JUNIPER_FENCE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:320: error: cannot find symbol
+      Item JUNIPER_TRAPDOOR = register("juniper_trapdoor", PSBlocks.JUNIPER_TRAPDOOR);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:321: error: cannot find symbol
+      Item JUNIPER_FENCE_GATE = register("juniper_fence_gate", PSBlocks.JUNIPER_FENCE_GATE);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/item/PSItems.java:322: error: cannot find symbol
+      Item JUNIPER_BUTTON = register("juniper_button", PSBlocks.JUNIPER_BUTTON);
+      ^
+    symbol:   class Item
+    location: interface PSItems
+  100 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 11s
+1 actionable task: 1 executed

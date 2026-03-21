@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:orangesunshine_bottle"
+    },
+    {
+      "item": "orangesunshine:blotter"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:orangesunshine_blotter"
+  }
+}

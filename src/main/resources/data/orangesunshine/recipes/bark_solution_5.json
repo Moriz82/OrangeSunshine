@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:sodium_hydroxide"
+    },
+    {
+      "item": "orangesunshine:bark_solution_4"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:bark_solution_5"
+  }
+}

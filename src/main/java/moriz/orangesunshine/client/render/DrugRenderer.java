@@ -6,6 +6,9 @@
 package moriz.orangesunshine.client.render;
 
 import moriz.orangesunshine.OrangeSunshine;
+import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.render.effect.*;
+import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.hallucination.DriftingCamera;
@@ -14,10 +17,12 @@ import moriz.orangesunshine.entity.drug.hallucination.HallucinationManager;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.player.PlayerModel;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -26,6 +31,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import org.joml.Quaternionf;
 
+import java.util.Optional;
+
 /**
  * Handles client-side drug visual effects (screen distortion, hand tremor, model posing).
  * Heavier post-processing / overlay effects live in effect/ and shader/ and are wired
@@ -33,6 +40,48 @@ import org.joml.Quaternionf;
  */
 public class DrugRenderer {
     public static final DrugRenderer INSTANCE = new DrugRenderer();
+
+    private final EnvironmentalScreenEffect environmentalEffects = new EnvironmentalScreenEffect();
+    private final ScreenEffect screenEffects = CompoundScreenEffect.of(
+            new LensFlareScreenEffect(),
+            new WarmthOverlayScreenEffect(),
+            new AlcoholOverlayScreenEffect(),
+            new PowerOverlayScreenEffect(),
+            environmentalEffects,
+            new TirednessScreenEffect(),
+            new MotionBlurScreenEffect()
+    );
+
+    private final PostEffectRenderer postEffects = new PostEffectRenderer();
+
+    private float screenBackgroundBlur;
+
+    public ScreenEffect getScreenEffects() {
+        return screenEffects;
+    }
+
+    public PostEffectRenderer getPostEffects() {
+        return postEffects;
+    }
+
+    public EnvironmentalScreenEffect getEnvironmentalEffects() {
+        return environmentalEffects;
+    }
+
+    public float getMenuBlur() {
+        return OrangeSunshineClient.getConfig().visual.pauseMenuBlur * screenBackgroundBlur * screenBackgroundBlur * screenBackgroundBlur;
+    }
+
+    public void update(DrugProperties drugProperties, LivingEntity entity) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.isPaused()) {
+            screenBackgroundBlur = Math.min(1, screenBackgroundBlur + 0.25F);
+        } else {
+            screenBackgroundBlur = Math.max(0, screenBackgroundBlur - 0.25F);
+        }
+
+        screenEffects.update(mc.getDeltaTracker().getGameTimeDeltaTicks());
+    }
 
     // ── screen / camera distortion ────────────────────────────────────────────
 
@@ -141,6 +190,18 @@ public class DrugRenderer {
             pem.leftSleeve.loadPose(leftArm.storePose());
             pem.rightSleeve.loadPose(rightArm.storePose());
         }
+    }
+
+    public void onRenderOverlay(GuiGraphics context, float tickDelta) {
+        Minecraft mc = Minecraft.getInstance();
+        int width = mc.getWindow().getGuiScaledWidth();
+        int height = mc.getWindow().getGuiScaledHeight();
+
+        getScreenEffects().render(context,
+                mc.renderBuffers().bufferSource(),
+                width, height, tickDelta, null);
+
+        postEffects.render(tickDelta);
     }
 
     // ── hallucination rendering ───────────────────────────────────────────────

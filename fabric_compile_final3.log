@@ -1,0 +1,144 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources UP-TO-DATE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+
+> Task :fabric:compileJava FAILED
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:11: error: package moriz.orangesunshine.client.render.shader does not exist
+import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
+                                                ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+    private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                  ^
+  symbol:   class PostEffectRenderer
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:63: error: cannot find symbol
+    public PostEffectRenderer getPostEffects() {
+           ^
+  symbol:   class PostEffectRenderer
+  location: class DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:5: error: cannot find symbol
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  symbol:   class DrawContext
+  location: package net.minecraft.client.gui
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:16: error: cannot find symbol
+    private void onRenderHud(DrawContext context, DeltaTracker deltaTracker, CallbackInfo ci) {
+                             ^
+  symbol:   class DrawContext
+  location: class MixinInGameHud
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:32: error: cannot find symbol
+        TextureAtlasSprite sprite = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(Identifier.fromNamespaceAndPath("minecraft", "block/nether_portal"));
+                                      ^
+  symbol:   method getTextureAtlas(Identifier)
+  location: variable mc of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:34: error: cannot find symbol
+        RenderSystem.setShaderColor(1, 1, 1, alpha);
+                    ^
+  symbol:   method setShaderColor(int,int,int,float)
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:36: error: cannot find symbol
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+                    ^
+  symbol:   method setShaderColor(int,int,int,int)
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/WarmthOverlayScreenEffect.java:29: error: cannot find symbol
+        RenderSystem.setShaderColor(1, 1, 1, alpha);
+                    ^
+  symbol:   method setShaderColor(int,int,int,float)
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/WarmthOverlayScreenEffect.java:31: error: cannot find symbol
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+                    ^
+  symbol:   method setShaderColor(int,int,int,int)
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+    private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                                                       ^
+  symbol:   class PostEffectRenderer
+  location: class DrugRenderer
+Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+11 errors
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':fabric:compileJava'.
+> Compilation failed; see the compiler output below.
+  Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/DrugOverlayScreenEffect.java uses unchecked or unsafe operations.
+  Note: Recompile with -Xlint:unchecked for details.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:11: error: package moriz.orangesunshine.client.render.shader does not exist
+  import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
+                                                  ^
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java uses or overrides a deprecated API.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:32: error: cannot find symbol
+          TextureAtlasSprite sprite = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(Identifier.fromNamespaceAndPath("minecraft", "block/nether_portal"));
+                                        ^
+    symbol:   method getTextureAtlas(Identifier)
+    location: variable mc of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:34: error: cannot find symbol
+          RenderSystem.setShaderColor(1, 1, 1, alpha);
+                      ^
+    symbol:   method setShaderColor(int,int,int,float)
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/AlcoholOverlayScreenEffect.java:36: error: cannot find symbol
+          RenderSystem.setShaderColor(1, 1, 1, 1);
+                      ^
+    symbol:   method setShaderColor(int,int,int,int)
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/WarmthOverlayScreenEffect.java:29: error: cannot find symbol
+          RenderSystem.setShaderColor(1, 1, 1, alpha);
+                      ^
+    symbol:   method setShaderColor(int,int,int,float)
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/effect/WarmthOverlayScreenEffect.java:31: error: cannot find symbol
+          RenderSystem.setShaderColor(1, 1, 1, 1);
+                      ^
+    symbol:   method setShaderColor(int,int,int,int)
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+      private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                    ^
+    symbol:   class PostEffectRenderer
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:63: error: cannot find symbol
+      public PostEffectRenderer getPostEffects() {
+             ^
+    symbol:   class PostEffectRenderer
+    location: class DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:5: error: cannot find symbol
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    symbol:   class DrawContext
+    location: package net.minecraft.client.gui
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/mixin/client/MixinInGameHud.java:16: error: cannot find symbol
+      private void onRenderHud(DrawContext context, DeltaTracker deltaTracker, CallbackInfo ci) {
+                               ^
+    symbol:   class DrawContext
+    location: class MixinInGameHud
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/DrugRenderer.java:55: error: cannot find symbol
+      private final PostEffectRenderer postEffects = new PostEffectRenderer();
+                                                         ^
+    symbol:   class PostEffectRenderer
+    location: class DrugRenderer
+  11 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 10s
+4 actionable tasks: 1 executed, 3 up-to-date

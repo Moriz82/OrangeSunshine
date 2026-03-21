@@ -3,7 +3,7 @@ package moriz.orangesunshine.compat.modmenu;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.config.JsonConfig;
 import moriz.orangesunshine.config.PSConfig;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.text.*;
@@ -34,7 +34,7 @@ class SettingsScreen extends GameGui {
     private final ScrollContainer content = new ScrollContainer();
 
     public SettingsScreen(@Nullable Screen parent) {
-        super(Text.translatable("gui.orangesunshine.options.title"), parent);
+        super(Component.translatable("gui.orangesunshine.options.title"), parent);
 
         config = OrangeSunshineClient.getConfigLoader();
         serverConfig = OrangeSunshine.getConfigLoader();
@@ -100,7 +100,7 @@ class SettingsScreen extends GameGui {
                 nearDistance.setValue(defaultConfigValues.visual.dofFocalPointNear);
                 nearBlur.setValue(defaultConfigValues.visual.dofFocalBlurNear);
             })
-            .getStyle().setText(Text.translatable("button.reset"));
+            .getStyle().setText(Component.translatable("button.reset"));
         content.addButton(new Label(LEFT, row += 25)).getStyle().setText("gui.orangesunshine.option.focal_point.far");
         var farDistance = createFormattedSlider(LEFT, row += 25, 100, 400, "gui.orangesunshine.option.focal_point.distance", config.getData().visual.dofFocalPointFar, f -> visual.dofFocalPointFar = f);
         var farBlur = createFormattedSlider(LEFT, row += 25, 0, 8, "gui.orangesunshine.option.focal_point.blur", config.getData().visual.dofFocalBlurFar, f -> visual.dofFocalBlurFar = f);
@@ -109,7 +109,7 @@ class SettingsScreen extends GameGui {
                 farDistance.setValue(defaultConfigValues.visual.dofFocalPointFar);
                 farBlur.setValue(defaultConfigValues.visual.dofFocalBlurFar);
             })
-            .getStyle().setText(Text.translatable("button.reset"));
+            .getStyle().setText(Component.translatable("button.reset"));
 
 
         if (RIGHT != LEFT) {
@@ -182,7 +182,7 @@ class SettingsScreen extends GameGui {
     }
 
     private AbstractSlider<Float> createFormattedSlider(int x, int y, float min, float max, String key, float value, IChangeCallback<Float> valueSetter) {
-        Text label = Text.translatable(key);
+        Component label = Component.translatable(key);
         AbstractSlider<Float> slider = content.addButton(new Slider(x, y, min, max, value))
             .onChange(valueSetter)
             .setTextFormat(sender -> formatSliderValue(label, sender));
@@ -193,7 +193,7 @@ class SettingsScreen extends GameGui {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float tickDelta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float tickDelta) {
         renderBackground(context, mouseX, mouseY, tickDelta);
         super.render(context, mouseX, mouseY, tickDelta);
         content.render(context, mouseX, mouseY, tickDelta);
@@ -207,17 +207,17 @@ class SettingsScreen extends GameGui {
         }
     }
 
-    private Text formatSliderValue(Text label, AbstractSlider<Float> slider) {
+    private Component formatSliderValue(Component label, AbstractSlider<Float> slider) {
         float value = slider.getValue();
 
         if (value < 0.001F) {
-            return Text.translatable("gui.orangesunshine.slider.value.off", label);
+            return Component.translatable("gui.orangesunshine.slider.value.off", label);
         }
 
         value *= 100F;
         value = Math.round(value);
         value /= 100F;
 
-        return Text.translatable("gui.orangesunshine.slider.value", label, value);
+        return Component.translatable("gui.orangesunshine.slider.value", label, value);
     }
 }

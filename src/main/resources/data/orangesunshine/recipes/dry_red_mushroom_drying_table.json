@@ -1,0 +1,12 @@
+{
+  "type" : "orangesunshine:drying_table_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:red_shrooms"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:dried_red_shrooms"
+  }
+}

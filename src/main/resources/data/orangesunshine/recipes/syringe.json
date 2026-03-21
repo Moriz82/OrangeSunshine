@@ -1,11 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "I",
-    "#"
+    "igI"
   ],
   "key": {
-    "#": {
+    "i": {
+      "item": "minecraft:iron_nugget"
+    },
+    "g": {
       "item": "minecraft:glass"
     },
     "I": {

@@ -1,22 +1,20 @@
 {
-    "parent": "orangesunshine:item/smoking_pipe",
-    "textures": {
-        "layer0": "orangesunshine:item/bong_empty"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "orangesunshine:item/empty_bong"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0
+      },
+      "model": "orangesunshine:item/filled_bong"
     },
-    "overrides": [
-        {
-            "predicate": {
-                "orangesunshine:filled": 1,
-                "orangesunshine:using": 0
-            },
-            "model": "orangesunshine:item/bong_filled"
-        },
-        {
-            "predicate": {
-                "orangesunshine:filled": 1,
-                "orangesunshine:using": 1
-            },
-            "model": "orangesunshine:item/bong_filled_using"
-        }
-    ]
+    {
+      "predicate": {
+        "damage": 1
+      },
+      "model": "orangesunshine:item/empty_bong"
+    }
+  ]
 }

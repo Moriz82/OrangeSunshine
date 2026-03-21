@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "A A",
+    "   "
+  ],
+  "key": {
+    "A": {
+      "item": "orangesunshine:psych_ingot"
+    }
+  },
+  "result": {
+    "item": "orangesunshine:psych_helmet"
+  }
+}

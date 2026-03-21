@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:san_pedro"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:san_pedro_seeds",
+    "count": 4
+  }
+}

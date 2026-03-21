@@ -1,0 +1,35 @@
+{
+  "name": "orangesunshine-core-runtime",
+  "steps": [
+    {
+      "id": "server-list",
+      "command": "list",
+      "must_match": "There are .* of a max of .* players online"
+    },
+    {
+      "id": "registry-joint",
+      "command": "give @a orangesunshine:joint 1",
+      "acceptable": ["No player was found", "no players online", "was found", "given|gave"]
+    },
+    {
+      "id": "setblock-mortar",
+      "command": "setblock 0 64 0 orangesunshine:mortar_pestle",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-mixing",
+      "command": "setblock 1 64 0 orangesunshine:mixing_table",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "time-step",
+      "command": "time set day",
+      "acceptable": ["Set time to Day", "Set the time"]
+    },
+    {
+      "id": "weather",
+      "command": "weather clear",
+      "acceptable": ["Set the weather to clear", "Weather changed to clear"]
+    }
+  ]
+}

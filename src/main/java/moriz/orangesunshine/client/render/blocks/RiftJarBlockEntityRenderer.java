@@ -10,7 +10,7 @@ import moriz.orangesunshine.block.entity.RiftJarBlockEntity;
 import moriz.orangesunshine.client.render.bezier.Bezier;
 import moriz.orangesunshine.client.render.bezier.BezierLabelRenderer;
 import moriz.orangesunshine.client.render.ZeroScreen;
-import net.minecraft.world.level.block.HorizontalFacingBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
@@ -57,7 +57,7 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
 
     @Override
     public void extractRenderState(RiftJarBlockEntity entity, RiftJarRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
-        state.facing = entity.getBlockState().getValue(HorizontalFacingBlock.FACING);
+        state.facing = entity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         state.fractionOpen = entity.fractionOpen;
         state.fractionHandleUp = entity.fractionHandleUp;
         state.currentRiftFraction = entity.currentRiftFraction;

@@ -12,7 +12,7 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.recipe.EmiShapedRecipe;
 import moriz.orangesunshine.recipe.FillRecepticalRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class FluidCraftingEmiRecipe extends EmiCraftingRecipe implements PSRecipe {
     private final EmiIngredient output;

@@ -22,7 +22,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SignItem;
@@ -47,23 +46,23 @@ public interface PSItems {
     ////////////////////////////////////////////// PLANTS //////////////////////////////////////////////
 
     ////////////////////////// ALCOHOL /////////////////////////////
-    Item WINE_GRAPES = register("wine_grapes", new WineGrapesItem(new Properties().setId(itemKey("wine_grapes")).food(
+    Item WINE_GRAPES = register("wine_grapes", new WineGrapesItem(new Item.Properties().setId(itemKey("wine_grapes")).food(
             new FoodProperties.Builder().nutrition(1).saturationModifier(0.5F).build()
     ), 15));
 
     ////////////////////////// COFFEE /////////////////////////////
-    Item COFFEA_CHERRIES = register("coffea_cherries", new BlockItem(PSBlocks.COFFEA, new Properties().setId(itemKey("coffea_cherries"))));
+    Item COFFEA_CHERRIES = register("coffea_cherries", new BlockItem(PSBlocks.COFFEA, new Item.Properties().setId(itemKey("coffea_cherries"))));
     Item COFFEE_BEANS = register("coffee_beans");
 
     ////////////////////////// PEYOTE /////////////////////////////
     Item PEYOTE = register("peyote", PSBlocks.PEYOTE);
     Item DRIED_PEYOTE = register("dried_peyote", new EdibleItem(
-            new Properties().setId(itemKey("dried_peyote")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("dried_peyote")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.PEYOTE, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.5f)
     ));
 
     ////////////////////////// WEED /////////////////////////////
-    Item CANNABIS_SEEDS = register("cannabis_seeds", new BlockItem(PSBlocks.CANNABIS, new Properties().setId(itemKey("cannabis_seeds"))));
+    Item CANNABIS_SEEDS = register("cannabis_seeds", new BlockItem(PSBlocks.CANNABIS, new Item.Properties().setId(itemKey("cannabis_seeds"))));
     Item CANNABIS_LEAF = register("cannabis_leaf");
     Item CANNABIS_BUDS = register("cannabis_buds");
     Item DRIED_CANNABIS_LEAF = register("dried_cannabis_leaf");
@@ -73,36 +72,42 @@ public interface PSItems {
     Item MORNING_GLORY = register("morning_glory");
     Item ERGOT = register("ergot");
     Item ERGOT_POWDER = register("ergot_powder");
-    Item MORNING_GLORY_SEEDS = register("morning_glory_seeds", new BlockItem(PSBlocks.MORNING_GLORY, new Properties().setId(itemKey("morning_glory_seeds"))));
+    Item MORNING_GLORY_SEEDS = register("morning_glory_seeds", new BlockItem(PSBlocks.MORNING_GLORY, new Item.Properties().setId(itemKey("morning_glory_seeds"))));
 
     ////////////////////////// HOP /////////////////////////////
     Item HOP_CONES = register("hop_cones");
-    Item HOP_SEEDS = register("hop_seeds", new BlockItem(PSBlocks.HOP, new Properties().setId(itemKey("hop_seeds"))));
+    Item HOP_SEEDS = register("hop_seeds", new BlockItem(PSBlocks.HOP, new Item.Properties().setId(itemKey("hop_seeds"))));
 
     ////////////////////////// COKE /////////////////////////////
-    Item COCA_SEEDS = register("coca_seeds", new BlockItem(PSBlocks.COCA, new Properties().setId(itemKey("coca_seeds"))));
+    Item COCA_SEEDS = register("coca_seeds", new BlockItem(PSBlocks.COCA, new Item.Properties().setId(itemKey("coca_seeds"))));
     Item COCA_LEAVES = register("coca_leaves");
     Item DRIED_COCA_LEAVES = register("dried_coca_leaves");
 
     ////////////////////////// JIMSONWEED /////////////////////////////
-    Item JIMSONWEED_SEEDS = register("jimsonweed_seeds", new BlockItem(PSBlocks.JIMSONWEEED, new Properties().setId(itemKey("jimsonweed_seeds"))));
+    Item JIMSONWEED_SEEDS = register("jimsonweed_seeds", new BlockItem(PSBlocks.JIMSONWEEED, new Item.Properties().setId(itemKey("jimsonweed_seeds"))));
     Item JIMSONWEED_SEED_POD = register("jimsonweed_seed_pod");
     Item JIMSONWEED_LEAF = register("jimsonweed_leaf");
     Item DRIED_JIMSONWEED_LEAF = register("dried_jimsonweed_leaf");
     ////////////////////////// TOMATO /////////////////////////////
-    Item TOMATO_SEEDS = register("tomato_seeds", new BlockItem(PSBlocks.TOMATOES, new Properties().setId(itemKey("tomato_seeds"))));
-    Item TOMATO = register("tomato", new Item(new Properties().setId(itemKey("tomato")).food(EdibleItem.TOMATO)));
+    Item TOMATO_SEEDS = register("tomato_seeds", new BlockItem(PSBlocks.TOMATOES, new Item.Properties().setId(itemKey("tomato_seeds"))));
+    Item TOMATO = register("tomato", new Item(new Item.Properties().setId(itemKey("tomato")).food(EdibleItem.TOMATO)));
     Item TOMATO_LEAF = register("tomato_leaf");
     ////////////////////////// BELLADONNA /////////////////////////////
-    Item BELLADONNA_SEEDS = register("belladonna_seeds", new BlockItem(PSBlocks.BELLADONNA, new Properties().setId(itemKey("belladonna_seeds"))));
+    Item BELLADONNA_SEEDS = register("belladonna_seeds", new BlockItem(PSBlocks.BELLADONNA, new Item.Properties().setId(itemKey("belladonna_seeds"))));
     Item BELLADONNA_LEAF = register("belladonna_leaf");
     Item DRIED_BELLADONNA_LEAF = register("dried_belladonna_leaf");
     Item BELLADONNA_BERRIES = register("belladonna_berries", new EdibleItem(
-            new Properties().setId(itemKey("belladonna_berries")).food(new FoodProperties.Builder().nutrition(1).saturationModifier(1.5F).alwaysEdible().build()),
+            new Item.Properties().setId(itemKey("belladonna_berries")).food(new FoodProperties.Builder().nutrition(1).saturationModifier(1.5F).alwaysEdible().build()),
             new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.5f)
     ));
     ////////////////////////// AGAVE /////////////////////////////
-    Item AGAVE_LEAF = register("agave_leaf", new BlockItem(PSBlocks.AGAVE_PLANT, new Properties().setId(itemKey("agave_leaf"))));
+    Item AGAVE_LEAF = register("agave_leaf", new BlockItem(PSBlocks.AGAVE_PLANT, new Item.Properties().setId(itemKey("agave_leaf"))));
+
+    ////////////////////////// PSYCHEDELICS /////////////////////////////
+    Item DMT = register("dmt");
+    Item AYAHUASCA = register("ayahuasca");
+    Item SAN_PEDRO = register("san_pedro");
+    Item SAN_PEDRO_SEEDS = register("san_pedro_seeds", new BlockItem(PSBlocks.SAN_PEDRO_BLOCK, new Item.Properties().setId(itemKey("san_pedro_seeds"))));
     //</editor-fold>
     
     //<editor-fold desc="CRAFT-ABLE DRUGS">
@@ -110,33 +115,48 @@ public interface PSItems {
 
     ////////////////////////// WEED /////////////////////////////
     Item HASH_MUFFIN = register("hash_muffin", new EdibleItem(
-            new Properties().setId(itemKey("hash_muffin")).food(EdibleItem.HAS_MUFFIN),
+            new Item.Properties().setId(itemKey("hash_muffin")).food(EdibleItem.HAS_MUFFIN),
             new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.METABOLISED, 0.004, 0.002, 0.7f)
     ));
 
     ////////////////////////// MUSHROOMS /////////////////////////////
 
     Item BROWN_MAGIC_MUSHROOMS = register("brown_magic_mushrooms", new EdibleItem(
-            new Properties().setId(itemKey("brown_magic_mushrooms")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("brown_magic_mushrooms")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.BROWN_SHROOMS, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.5f)
     ));
     Item RED_MAGIC_MUSHROOMS = register("red_magic_mushrooms", new EdibleItem(
-            new Properties().setId(itemKey("red_magic_mushrooms")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("red_magic_mushrooms")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.RED_SHROOMS, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.5f)
     ));
 
     ////////////////////////// TOBACCO /////////////////////////////
 
     Item TOBACCO_LEAVES = register("tobacco");
-    Item TOBACCO_SEEDS = register("tobacco_seeds", new BlockItem(PSBlocks.TOBACCO, new Properties().setId(itemKey("tobacco_seeds"))));
+    Item TOBACCO_SEEDS = register("tobacco_seeds", new BlockItem(PSBlocks.TOBACCO, new Item.Properties().setId(itemKey("tobacco_seeds"))));
     Item DRIED_TOBACCO = register("dried_tobacco");
 
     ////////////////////////// COKE /////////////////////////////
 
     Item COCAINE_POWDER = register("cocaine_powder", new CocainePowderItem(
-            new Properties().setId(itemKey("cocaine_powder")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("cocaine_powder")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.COCAINE, DrugInfluence.DelayType.IMMEDIATE, 0.002, 0.003, 0.35f)
     ));
+    Item COCAINE_ROCK = register("cocaine_rock");
+    Item COCA_MULCH = register("coca_mulch");
+
+    ////////////////////////// AMPHETAMINES /////////////////////////////
+    Item MDMA = register("mdma");
+    Item MDA = register("mda");
+    Item PMA = register("pma");
+
+    ////////////////////////// OPIATES /////////////////////////////
+    Item CODEINE = register("codeine");
+    Item MORPHINE_BOTTLE = register("morphine_bottle");
+    Item OPIUM_BOTTLE_0 = register("opium_bottle_0");
+    Item OPIUM_BOTTLE_1 = register("opium_bottle_1");
+    Item OPIUM_BOTTLE_2 = register("opium_bottle_2");
+    Item OPIUM_BOTTLE_3 = register("opium_bottle_3");
 
     ////////////////////////// LATTICE /////////////////////////////
 
@@ -145,29 +165,29 @@ public interface PSItems {
     Item MORNING_GLORY_LATTICE = register("morning_glory_lattice", PSBlocks.MORNING_GLORY_LATTICE);
 
     ////////////////////////// OTHER /////////////////////////////
-    HarmoniumItem HARMONIUM = register("harmonium", new HarmoniumItem(new Properties().setId(itemKey("harmonium"))));
+    HarmoniumItem HARMONIUM = register("harmonium", new HarmoniumItem(new Item.Properties().setId(itemKey("harmonium"))));
     Item BLOTTER = register("blotter");
     Item ROLLING_PAPER = register("rolling_paper");
     Item JOLLY_RANCHER = register("jolly_rancher", new EdibleItem(
-            new Properties().setId(itemKey("jolly_rancher")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("jolly_rancher")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.SUGAR, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.05f)
     ));
 
-    Item NALOXONE = register("naloxone", new DrugClearItem(new Properties().setId(itemKey("naloxone")).food(EdibleItem.NON_FILLING_EDIBLE), ItemUseAnimation.BOW, 1));
+    Item NALOXONE = register("naloxone", new DrugClearItem(new Item.Properties().setId(itemKey("naloxone")).food(EdibleItem.NON_FILLING_EDIBLE), ItemUseAnimation.BOW, 1));
 
     //</editor-fold>
 
     //<editor-fold desc="LSD / LSA">
     Item LSA_BLOTTER = register("lsa_blotter", new EdibleItem(
-            new Properties().setId(itemKey("lsa_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("lsa_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.05, 0.003, 0.1F)
     ));
     Item LSD_BLOTTER = register("lsd_blotter", new EdibleItem(
-            new Properties().setId(itemKey("lsd_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("lsd_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.004, 0.25F)
     ));
     Item ORANGESUNSINE_BLOTTER = register("orangesunshine_blotter", new EdibleItem(
-            new Properties().setId(itemKey("orangesunshine_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("orangesunshine_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.006, 0.4F)
     ));
 
@@ -249,22 +269,22 @@ public interface PSItems {
     //<editor-fold desc="DRINKING CONTAINERS">
     ////////////////////////////////////////////// DRINKING CONTAINERS //////////////////////////////////////////////
 
-    DrinkableItem WOODEN_MUG = register("wooden_mug", new DrinkableItem(new Properties().setId(itemKey("wooden_mug")), FluidVolumes.MUG, DrinkableItem.FLUID_PER_DRINKING, 32, ConsumableFluid.ConsumptionType.DRINK));
-    DrinkableItem STONE_CUP = register("stone_cup", new DrinkableItem(new Properties().setId(itemKey("stone_cup")), FluidVolumes.CUP, DrinkableItem.FLUID_PER_DRINKING, 32, ConsumableFluid.ConsumptionType.DRINK));
-    DrinkableItem GLASS_CHALICE = register("glass_chalice", new DrinkableItem(new Properties().setId(itemKey("glass_chalice")), FluidVolumes.CHALLICE, DrinkableItem.FLUID_PER_DRINKING, 32, ConsumableFluid.ConsumptionType.DRINK));
-    DrinkableItem SHOT_GLASS = register("shot_glass", new DrinkableItem(new Properties().setId(itemKey("shot_glass")), FluidVolumes.SHOT, DrinkableItem.FLUID_PER_DRINKING, 8, ConsumableFluid.ConsumptionType.DRINK));
-    DrinkableItem BOTTLE = register("bottle", new BottleItem(new Properties().setId(itemKey("bottle")), FluidVolumes.BOTTLE, DrinkableItem.FLUID_PER_DRINKING, ConsumableFluid.ConsumptionType.DRINK));
+    DrinkableItem WOODEN_MUG = register("wooden_mug", new DrinkableItem(new Item.Properties().setId(itemKey("wooden_mug")), FluidVolumes.MUG, DrinkableItem.FLUID_PER_DRINKING, 32, ConsumableFluid.ConsumptionType.DRINK));
+    DrinkableItem STONE_CUP = register("stone_cup", new DrinkableItem(new Item.Properties().setId(itemKey("stone_cup")), FluidVolumes.CUP, DrinkableItem.FLUID_PER_DRINKING, 32, ConsumableFluid.ConsumptionType.DRINK));
+    DrinkableItem GLASS_CHALICE = register("glass_chalice", new DrinkableItem(new Item.Properties().setId(itemKey("glass_chalice")), FluidVolumes.CHALLICE, DrinkableItem.FLUID_PER_DRINKING, 32, ConsumableFluid.ConsumptionType.DRINK));
+    DrinkableItem SHOT_GLASS = register("shot_glass", new DrinkableItem(new Item.Properties().setId(itemKey("shot_glass")), FluidVolumes.SHOT, DrinkableItem.FLUID_PER_DRINKING, 8, ConsumableFluid.ConsumptionType.DRINK));
+    DrinkableItem BOTTLE = register("bottle", new BottleItem(new Item.Properties().setId(itemKey("bottle")), FluidVolumes.BOTTLE, DrinkableItem.FLUID_PER_DRINKING, ConsumableFluid.ConsumptionType.DRINK));
     //</editor-fold>
 
     //<editor-fold desc="ALC CONTAINERS">
     ////////////////////////////////////////////// ALCOHOL CONTAINERS //////////////////////////////////////////////
 
-    FlaskItem OAK_BARREL = register("oak_barrel", new FlaskItem(PSBlocks.OAK_BARREL, new Properties().setId(itemKey("oak_barrel")).stacksTo(16), FluidVolumes.BARREL));
-    FlaskItem SPRUCE_BARREL = register("spruce_barrel", new FlaskItem(PSBlocks.SPRUCE_BARREL, new Properties().setId(itemKey("spruce_barrel")).stacksTo(16), FluidVolumes.BARREL));
-    FlaskItem BIRCH_BARREL = register("birch_barrel", new FlaskItem(PSBlocks.BIRCH_BARREL, new Properties().setId(itemKey("birch_barrel")).stacksTo(16), FluidVolumes.BARREL));
-    FlaskItem JUNGLE_BARREL = register("jungle_barrel", new FlaskItem(PSBlocks.JUNGLE_BARREL, new Properties().setId(itemKey("jungle_barrel")).stacksTo(16), FluidVolumes.BARREL));
-    FlaskItem ACACIA_BARREL = register("acacia_barrel", new FlaskItem(PSBlocks.ACACIA_BARREL, new Properties().setId(itemKey("acacia_barrel")).stacksTo(16), FluidVolumes.BARREL));
-    FlaskItem DARK_OAK_BARREL = register("dark_oak_barrel", new FlaskItem(PSBlocks.DARK_OAK_BARREL, new Properties().setId(itemKey("dark_oak_barrel")).stacksTo(16), FluidVolumes.BARREL));
+    FlaskItem OAK_BARREL = register("oak_barrel", new FlaskItem(PSBlocks.OAK_BARREL, new Item.Properties().setId(itemKey("oak_barrel")).stacksTo(16), FluidVolumes.BARREL));
+    FlaskItem SPRUCE_BARREL = register("spruce_barrel", new FlaskItem(PSBlocks.SPRUCE_BARREL, new Item.Properties().setId(itemKey("spruce_barrel")).stacksTo(16), FluidVolumes.BARREL));
+    FlaskItem BIRCH_BARREL = register("birch_barrel", new FlaskItem(PSBlocks.BIRCH_BARREL, new Item.Properties().setId(itemKey("birch_barrel")).stacksTo(16), FluidVolumes.BARREL));
+    FlaskItem JUNGLE_BARREL = register("jungle_barrel", new FlaskItem(PSBlocks.JUNGLE_BARREL, new Item.Properties().setId(itemKey("jungle_barrel")).stacksTo(16), FluidVolumes.BARREL));
+    FlaskItem ACACIA_BARREL = register("acacia_barrel", new FlaskItem(PSBlocks.ACACIA_BARREL, new Item.Properties().setId(itemKey("acacia_barrel")).stacksTo(16), FluidVolumes.BARREL));
+    FlaskItem DARK_OAK_BARREL = register("dark_oak_barrel", new FlaskItem(PSBlocks.DARK_OAK_BARREL, new Item.Properties().setId(itemKey("dark_oak_barrel")).stacksTo(16), FluidVolumes.BARREL));
     //</editor-fold>
 
     //<editor-fold desc="WOOD ITEMS">
@@ -276,32 +296,32 @@ public interface PSItems {
     Item STRIPPED_JUNIPER_LOG = register("stripped_juniper_log", PSBlocks.STRIPPED_JUNIPER_LOG);
     Item STRIPPED_JUNIPER_WOOD = register("stripped_juniper_wood", PSBlocks.STRIPPED_JUNIPER_WOOD);
     Item JUNIPER_BERRIES = register("juniper_berries", new SpecialFoodItem(
-            new Properties().setId(itemKey("juniper_berries")).food(new FoodProperties.Builder().nutrition(1).saturationModifier(0.5F).build()), 15
+            new Item.Properties().setId(itemKey("juniper_berries")).food(new FoodProperties.Builder().nutrition(1).saturationModifier(0.5F).build()), 15
     ));
     Item JUNIPER_SAPLING = register("juniper_sapling", PSBlocks.JUNIPER_SAPLING);
     Item JUNIPER_PLANKS = register("juniper_planks", PSBlocks.JUNIPER_PLANKS);
     Item JUNIPER_STAIRS = register("juniper_stairs", PSBlocks.JUNIPER_STAIRS);
-    Item JUNIPER_SIGN = register("juniper_sign", new SignItem(PSBlocks.JUNIPER_SIGN, PSBlocks.JUNIPER_WALL_SIGN, new Properties().setId(itemKey("juniper_sign")).stacksTo(16)));
+    Item JUNIPER_SIGN = register("juniper_sign", new SignItem(PSBlocks.JUNIPER_SIGN, PSBlocks.JUNIPER_WALL_SIGN, new Item.Properties().setId(itemKey("juniper_sign")).stacksTo(16)));
     Item JUNIPER_DOOR = register("juniper_door", PSBlocks.JUNIPER_DOOR);
-    Item JUNIPER_HANGING_SIGN = register("juniper_hanging_sign", new HangingSignItem(PSBlocks.JUNIPER_HANGING_SIGN, PSBlocks.JUNIPER_WALL_HANGING_SIGN, new Properties().setId(itemKey("juniper_hanging_sign")).stacksTo(16)));
+    Item JUNIPER_HANGING_SIGN = register("juniper_hanging_sign", new HangingSignItem(PSBlocks.JUNIPER_HANGING_SIGN, PSBlocks.JUNIPER_WALL_HANGING_SIGN, new Item.Properties().setId(itemKey("juniper_hanging_sign")).stacksTo(16)));
     Item JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", PSBlocks.JUNIPER_PRESSURE_PLATE);
     Item JUNIPER_FENCE = register("juniper_fence", PSBlocks.JUNIPER_FENCE);
     Item JUNIPER_TRAPDOOR = register("juniper_trapdoor", PSBlocks.JUNIPER_TRAPDOOR);
     Item JUNIPER_FENCE_GATE = register("juniper_fence_gate", PSBlocks.JUNIPER_FENCE_GATE);
     Item JUNIPER_BUTTON = register("juniper_button", PSBlocks.JUNIPER_BUTTON);
     Item JUNIPER_SLAB = register("juniper_slab", PSBlocks.JUNIPER_SLAB);
-    Item JUNIPER_BOAT = register("juniper_boat", new Item(new Properties().setId(itemKey("juniper_boat")).stacksTo(1)));
-    Item JUNIPER_CHEST_BOAT = register("juniper_chest_boat", new Item(new Properties().setId(itemKey("juniper_chest_boat")).stacksTo(1)));
+    Item JUNIPER_BOAT = register("juniper_boat", new Item(new Item.Properties().setId(itemKey("juniper_boat")).stacksTo(1)));
+    Item JUNIPER_CHEST_BOAT = register("juniper_chest_boat", new Item(new Item.Properties().setId(itemKey("juniper_chest_boat")).stacksTo(1)));
     //</editor-fold>
 
     //<editor-fold desc="PROCESSING TABLES">
     ////////////////////////////////////////////// PROCESSING TABLES //////////////////////////////////////////////
 
     ////////////////////////// ALCOHOL /////////////////////////////
-    FlaskItem MASH_TUB = register("mash_tub", new MashTubItem(PSBlocks.MASH_TUB, new Properties().setId(itemKey("mash_tub")).stacksTo(16), FluidVolumes.VAT));
+    FlaskItem MASH_TUB = register("mash_tub", new MashTubItem(PSBlocks.MASH_TUB, new Item.Properties().setId(itemKey("mash_tub")).stacksTo(16), FluidVolumes.VAT));
     Item BOTTLE_RACK = register("bottle_rack", PSBlocks.BOTTLE_RACK);
-    FlaskItem FLASK = register("flask", new FlaskItem(PSBlocks.FLASK, new Properties().setId(itemKey("flask")).stacksTo(16), FlaskBlockEntity.FLASK_CAPACITY));
-    FlaskItem DISTILLERY = register("distillery", new FlaskItem(PSBlocks.DISTILLERY, new Properties().setId(itemKey("distillery")).stacksTo(16), DistilleryBlockEntity.DISTILLERY_CAPACITY));
+    FlaskItem FLASK = register("flask", new FlaskItem(PSBlocks.FLASK, new Item.Properties().setId(itemKey("flask")).stacksTo(16), FlaskBlockEntity.FLASK_CAPACITY));
+    FlaskItem DISTILLERY = register("distillery", new FlaskItem(PSBlocks.DISTILLERY, new Item.Properties().setId(itemKey("distillery")).stacksTo(16), DistilleryBlockEntity.DISTILLERY_CAPACITY));
 
     ////////////////////////// DRYING /////////////////////////////
     Item DRYING_TABLE = register("drying_table", PSBlocks.DRYING_TABLE);
@@ -310,9 +330,10 @@ public interface PSItems {
     ////////////////////////// MISC /////////////////////////////
     Item TRAY = register("tray", PSBlocks.TRAY);
     Item BUNSEN_BURNER = register("bunsen_burner", PSBlocks.BUNSEN_BURNER);
-    Item OBSIDIAN_BOTTLE = register("obsidian_bottle", new Item(new Properties().setId(itemKey("obsidian_bottle")).stacksTo(16)));
+
+    Item OBSIDIAN_BOTTLE = register("obsidian_bottle", new Item(new Item.Properties().setId(itemKey("obsidian_bottle")).stacksTo(16)));
     Item OBSIDIAN_DUST = register("obsidian_dust", new CocainePowderItem(
-            new Properties().setId(itemKey("obsidian_dust")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new Item.Properties().setId(itemKey("obsidian_dust")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.BATH_SALTS, DrugInfluence.DelayType.IMMEDIATE, 0.002, 0.003, 0.35f)
     ));
     //</editor-fold>
@@ -322,14 +343,14 @@ public interface PSItems {
 
     ////////////////////////// UNIVERSAL /////////////////////////////
 
-    BongItem SMOKING_PIPE = register("smoking_pipe", new BongItem(new Properties().setId(itemKey("smoking_pipe")).durability(50)))
+    BongItem SMOKING_PIPE = register("smoking_pipe", new BongItem(new Item.Properties().setId(itemKey("smoking_pipe")).durability(50)))
             .consumes(new BongItem.Consumable(DRIED_CANNABIS_BUDS.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.25F)))
             .consumes(new BongItem.Consumable(DRIED_TOBACCO.getDefaultInstance(), new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.INHALED, 0.1, 0.02, 0.8F)))
             .consumes(new BongItem.Consumable(DRIED_BELLADONNA_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.INHALED, 0.4, 0.1, 0.9F)))
             .consumes(new BongItem.Consumable(DRIED_JIMSONWEED_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.INHALED, 0.5, 0.1, 0.2F)))
             .consumes(new BongItem.Consumable(HARMONIUM.getDefaultInstance(), stack -> new HarmoniumDrugInfluence(DrugInfluence.DelayType.INHALED, 0.04, 0.01, 0.65F, MathUtils.unpackRgb(HARMONIUM.getColor(stack)))));
     // TODO: Play around with the bongs benefits
-    BongItem BONG = register("bong", new BongItem(new Properties().setId(itemKey("bong")).durability(128)))
+    BongItem BONG = register("bong", new BongItem(new Item.Properties().setId(itemKey("bong")).durability(128)))
             .consumes(new BongItem.Consumable(DRIED_CANNABIS_BUDS.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.IMMEDIATE, 0.002, 0.001, 0.2F)))
             .consumes(new BongItem.Consumable(DRIED_TOBACCO.getDefaultInstance(), new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.1, 0.02, 0.6F)))
             .consumes(new BongItem.Consumable(DRIED_BELLADONNA_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.IMMEDIATE, 0.4, 0.1, 0.4F)))
@@ -338,23 +359,23 @@ public interface PSItems {
 
     ////////////////////////// TOBACCO /////////////////////////////
     SmokeableItem CIGARETTE = register("cigarette", new SmokeableItem(
-            new Properties().setId(itemKey("cigarette")).durability(1), 2, SmokeableItem.WHITE,
+            new Item.Properties().setId(itemKey("cigarette")).durability(1), 2, SmokeableItem.WHITE,
             new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.1, 0.02, 0.7f)
     ));
     SmokeableItem CIGAR = register("cigar", new SmokeableItem(
-            new Properties().setId(itemKey("cigar")).durability(3), 4, new Vector3f(0.6F, 0.6F, 0.5F),
+            new Item.Properties().setId(itemKey("cigar")).durability(3), 4, new Vector3f(0.6F, 0.6F, 0.5F),
             new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.1, 0.02, 0.7f)
     ));
 
     ////////////////////////// WEED /////////////////////////////
     SmokeableItem JOINT = register("joint", new SmokeableItem(
-            new Properties().setId(itemKey("joint")).durability(2), 2, new Vector3f(0.9F, 0.9F, 0.9F),
+            new Item.Properties().setId(itemKey("joint")).durability(2), 2, new Vector3f(0.9F, 0.9F, 0.9F),
             new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.20f)
     ));
 
     ////////////////////////// PSYCHE MISC /////////////////////////////
     Item PEYOTE_JOINT = register("peyote_joint", new SmokeableItem(
-            new Properties().setId(itemKey("peyote_joint")).durability(2), 2, new Vector3f(0.5F, 0.9F, 0.4F),
+            new Item.Properties().setId(itemKey("peyote_joint")).durability(2), 2, new Vector3f(0.5F, 0.9F, 0.4F),
             new DrugInfluence(DrugType.PEYOTE, DrugInfluence.DelayType.INHALED, 0.003, 0.0015, 0.4f),
             new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.1, 0.02, 0.1f)
     ));
@@ -362,7 +383,7 @@ public interface PSItems {
 
     //<editor-fold desc="INJECTABLES">
     ////////////////////////////////////////////// INJECTABLES //////////////////////////////////////////////
-    InjectableItem SYRINGE = register("syringe", new InjectableItem(new Properties().setId(itemKey("syringe")), FluidVolumes.SYRINGE));
+    InjectableItem SYRINGE = register("syringe", new InjectableItem(new Item.Properties().setId(itemKey("syringe")), FluidVolumes.SYRINGE));
     //</editor-fold>
 
     //<editor-fold desc="MISC">
@@ -374,18 +395,23 @@ public interface PSItems {
     Item MANGANESE_DIOXIDE = register("manganese_dioxide");
     Item MANGANESE_DIOXIDE_POWDER = register("manganese_dioxide_powder");
     Item PHOSPHORUS = register("phosphorus");
-    RiftJarItem RIFT_JAR = register("rift_jar", new RiftJarItem(PSBlocks.RIFT_JAR, new Properties().setId(itemKey("rift_jar"))));
+    RiftJarItem RIFT_JAR = register("rift_jar", new RiftJarItem(PSBlocks.RIFT_JAR, new Item.Properties().setId(itemKey("rift_jar"))));
 
-    DrinkableItem FILLED_GLASS_BOTTLE = register("filled_glass_bottle", new ProxyDrinkableItem(Items.GLASS_BOTTLE, new Properties().setId(itemKey("filled_glass_bottle")), FluidVolumes.GLASS_BOTTLE, ConsumableFluid.ConsumptionType.DRINK));
-    FilledBucketItem FILLED_BUCKET = register("filled_bucket", new FilledBucketItem(new Properties().setId(itemKey("filled_bucket")).stacksTo(1)));
-    DrinkableItem FILLED_BOWL = register("filled_bowl", new ProxyDrinkableItem(Items.BOWL, new Properties().setId(itemKey("filled_bowl")), FluidVolumes.BOWL, ConsumableFluid.ConsumptionType.DRINK));
+    DrinkableItem FILLED_GLASS_BOTTLE = register("filled_glass_bottle", new ProxyDrinkableItem(Items.GLASS_BOTTLE, new Item.Properties().setId(itemKey("filled_glass_bottle")), FluidVolumes.GLASS_BOTTLE, ConsumableFluid.ConsumptionType.DRINK));
+    FilledBucketItem FILLED_BUCKET = register("filled_bucket", new FilledBucketItem(new Item.Properties().setId(itemKey("filled_bucket")).stacksTo(1)));
+    DrinkableItem FILLED_BOWL = register("filled_bowl", new ProxyDrinkableItem(Items.BOWL, new Item.Properties().setId(itemKey("filled_bowl")), FluidVolumes.BOWL, ConsumableFluid.ConsumptionType.DRINK));
 
-    MolotovCocktailItem MOLOTOV_COCKTAIL = register("molotov_cocktail", new MolotovCocktailItem(new Properties().setId(itemKey("molotov_cocktail")).stacksTo(16), FluidVolumes.BOTTLE));
-    Item VOMIT = register("vomit", new Item(new Properties().setId(itemKey("vomit"))));
-    Item PAPER_BAG = register("paper_bag", new PaperBagItem(new Properties().setId(itemKey("paper_bag"))));
-    Item BAG_O_VOMIT = register("bag_o_vomit", new SuspiciousItem(new Properties().setId(itemKey("bag_o_vomit"))
+    MolotovCocktailItem MOLOTOV_COCKTAIL = register("molotov_cocktail", new MolotovCocktailItem(new Item.Properties().setId(itemKey("molotov_cocktail")).stacksTo(16), FluidVolumes.BOTTLE));
+    Item VOMIT = register("vomit", new Item(new Item.Properties().setId(itemKey("vomit"))));
+    Item PAPER_BAG = register("paper_bag", new PaperBagItem(new Item.Properties().setId(itemKey("paper_bag"))));
+    Item BAG_O_VOMIT = register("bag_o_vomit", new SuspiciousItem(new Item.Properties().setId(itemKey("bag_o_vomit"))
             .food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.8f).alwaysEdible().build()
             ), SuspiciousItem.createForms(Items.COOKIE, Items.MUSHROOM_STEW, Items.GOLDEN_APPLE, Items.COOKED_BEEF, Items.COOKED_CHICKEN)));
+
+    ////////////////////////// OTHER /////////////////////////////
+    Item SOURIN_AIR = register("sourin_air");
+    Item COCAINE_SYRINGE = register("cocaine_syringe", new InjectableItem(new Item.Properties().setId(itemKey("cocaine_syringe")).stacksTo(1), FluidVolumes.SYRINGE));
+    Item MORPHINE_SYRINGE = register("morphine_syringe", new InjectableItem(new Item.Properties().setId(itemKey("morphine_syringe")).stacksTo(1), FluidVolumes.SYRINGE));
     //</editor-fold>
 
     static ResourceKey<Item> itemKey(String name) {
@@ -393,11 +419,11 @@ public interface PSItems {
     }
 
     static Item register(String name, Block block) {
-        return register(name, new BlockItem(block, new Properties().setId(itemKey(name))));
+        return register(name, new BlockItem(block, new Item.Properties().setId(itemKey(name))));
     }
 
     static Item register(String name) {
-        return register(name, new Item(new Properties().setId(itemKey(name))));
+        return register(name, new Item(new Item.Properties().setId(itemKey(name))));
     }
 
     static <T extends Item> T register(String name, T item) {

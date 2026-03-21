@@ -6,7 +6,7 @@
 package moriz.orangesunshine.client.render;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.Camera;
+import net.minecraft.client.Camera;
 import net.minecraft.util.Mth;
 
 import org.joml.*;
@@ -17,7 +17,7 @@ import org.joml.*;
  */
 public interface PsycheMatrixHelper {
     private static Matrix4f getProjectionMatrix(Camera camera) {
-        return new Matrix4f().rotate(new Quaternionf(camera.getRotation()).invert());
+        return new Matrix4f().rotate(new Quaternionf(camera.rotation()).invert());
     }
 
     private static Vector3f projectPointView(Camera camera, Vector3f point) {
@@ -25,7 +25,7 @@ public interface PsycheMatrixHelper {
     }
 
     static Vector3f projectPointCurrentView(Vector3f point) {
-        return projectPointView(MinecraftClient.getInstance().gameRenderer.getCamera(), point);
+        return projectPointView(Minecraft.getInstance().gameRenderer.getMainCamera(), point);
     }
 
     static Vector3f fromPolar(float angle, float distance) {

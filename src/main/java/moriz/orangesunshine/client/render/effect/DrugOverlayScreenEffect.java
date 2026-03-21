@@ -1,15 +1,11 @@
 package moriz.orangesunshine.client.render.effect;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import moriz.orangesunshine.entity.drug.*;
-import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.entity.Entity;
 
 public abstract class DrugOverlayScreenEffect<D extends Drug> implements ScreenEffect {
 
@@ -21,29 +17,24 @@ public abstract class DrugOverlayScreenEffect<D extends Drug> implements ScreenE
 
     @Override
     public boolean shouldApply(float tickDelta) {
-        return DrugProperties.of((Entity)MinecraftClient.getInstance().player).filter(properties -> properties.isDrugActive(type)).isPresent();
+        Minecraft mc = Minecraft.getInstance();
+        return mc.player != null && DrugProperties.of(mc.player).getDrug(type).getActiveValue() > 0;
     }
 
     @Override
     public void update(float tickDelta) {
-
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
-        DrugProperties properties = DrugProperties.of(MinecraftClient.getInstance().player);
-        matrices.push();
-        RenderSystem.enableBlend();
-        RenderSystem.disableDepthTest();
-        RenderSystem.depthMask(false);
-        RenderSystem.defaultBlendFunc();
-        render(matrices, vertices, screenWidth, screenHeight, ticks, properties, (D)properties.getDrug(type));
-        RenderSystem.enableDepthTest();
-        matrices.pop();
+    public final void render(GuiGraphics context, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+        Minecraft mc = Minecraft.getInstance();
+        DrugProperties properties = DrugProperties.of(mc.player);
+        D drug = (D)properties.getDrug(type);
+
+        render(context, vertices, screenWidth, screenHeight, ticks, properties, drug);
     }
 
-    protected abstract void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenheight, float ticks, DrugProperties properties, D drug);
+    protected abstract void render(GuiGraphics context, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, DrugProperties properties, D drug);
 
     @Override
     public void close() throws Exception {

@@ -1,0 +1,31 @@
+{
+  "name": "creative-singleplayer-visual-checklist",
+  "environment": "singleplayer",
+  "steps": [
+    {
+      "id": "01-creative-inventory",
+      "instruction": "Open creative inventory and verify OrangeSunshine item tab appears; screenshot item icons for key entries (leafs, raw materials, fluids, tools).",
+      "screenshot": "01-creative-inventory.png"
+    },
+    {
+      "id": "02-crop-blocks",
+      "instruction": "Spawn or place one of each plant seed and verify mature growth models on stage changes (Cannabis, Tobacco, Peyote, Coca, Coffea, Hops).",
+      "screenshot": "02-crop-blocks.png"
+    },
+    {
+      "id": "03-processing-machines",
+      "instruction": "Place Mortar & Pestle, Drying Table, Mixing Table, Distillery, and Mash Tub. Check block and entity renderers, particle effects, and collision bounds.",
+      "screenshot": "03-processing-machines.png"
+    },
+    {
+      "id": "04-fluid-content",
+      "instruction": "Fill glass bottles/chalices with a few fluids and open Distillery/Mixing screens to confirm texture/model correctness.",
+      "screenshot": "04-fluid-content.png"
+    },
+    {
+      "id": "05-effect-visuals",
+      "instruction": "Use /drug command to apply a known effect in creative test world and confirm overlay/visual warping behaves expectedly.",
+      "screenshot": "05-effect-visuals.png"
+    }
+  ]
+}

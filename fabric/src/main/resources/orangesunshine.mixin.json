@@ -3,7 +3,7 @@
     "minVersion": "0.7",
     "package": "moriz.orangesunshine.mixin",
     "refmap": "orangesunshine.mixin.refmap.json",
-    "compatibilityLevel": "JAVA_16",
+    "compatibilityLevel": "JAVA_21",
     "mixins": [
       "MixinAbstractFurnaceBlockEntity",
       "MixinEntity",
@@ -18,6 +18,7 @@
       "MixinBlockEntityType"
     ],
     "client": [
+      "client.MixinMinecraft",
       "client.MixinCamera",
       "client.MixinEntityRenderDispatcher",
       "client.MixinChatScreen",

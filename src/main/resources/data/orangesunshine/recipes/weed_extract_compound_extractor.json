@@ -1,0 +1,12 @@
+{
+  "type" : "orangesunshine:compound_extractor_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:dried_weed_bud"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:weed_extract"
+  }
+}

@@ -14,7 +14,7 @@ import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.recipe.DryingRecipe;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class DryingEmiRecipe implements EmiRecipe, PSRecipe {
 

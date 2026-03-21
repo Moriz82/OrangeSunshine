@@ -1,14 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "LLL",
-    "#X#",
-    "LLL"
+    "ABA",
+    "CCC"
   ],
   "key": {
-    "X": { "item": "minecraft:light_blue_dye" },
-    "#": { "item": "minecraft:wheat" },
-    "L": { "item": "orangesunshine:dried_cannabis_leaf" }
+    "A": {
+      "item": "minecraft:cocoa_beans"
+    },
+    "B": {
+      "item": "orangesunshine:dried_weed_bud"
+    },
+    "C": {
+      "item": "minecraft:wheat"
+    }
   },
   "result": {
     "item": "orangesunshine:hash_muffin"

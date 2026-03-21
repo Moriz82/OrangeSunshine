@@ -1,12 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "###",
-    "#R#"
+    "AAA",
+    "ABA",
+    "AAA"
   ],
   "key": {
-    "#": { "tag": "minecraft:planks" },
-    "R": { "item": "minecraft:redstone" }
+    "A": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "item": "minecraft:daylight_detector"
+    }
   },
   "result": {
     "item": "orangesunshine:drying_table"

@@ -1,0 +1,975 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/moriz/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/lib/native-platform-0.22-milestone-26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Architect Plugin: 3.4.162
+Architectury Loom: 1.13.467
+This version of Architectury Loom is in beta! Please report any issues you encounter: https://github.com/architectury/architectury-loom/issues
+
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources UP-TO-DATE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+
+> Task :fabric:compileJava
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:11: error: cannot find symbol
+import net.minecraft.client.renderer.ShaderInstance;
+                                    ^
+  symbol:   class ShaderInstance
+  location: package net.minecraft.client.renderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:12: error: cannot find symbol
+import net.minecraft.server.packs.resources.ResourceFactory;
+                                           ^
+  symbol:   class ResourceFactory
+  location: package net.minecraft.server.packs.resources
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+    void call(ResourceFactory factory, List<Pair<ShaderInstance, Consumer<ShaderInstance>>> shaderList) throws IOException;
+              ^
+  symbol:   class ResourceFactory
+  location: interface CoreShaderRegistrationCallback
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+    void call(ResourceFactory factory, List<Pair<ShaderInstance, Consumer<ShaderInstance>>> shaderList) throws IOException;
+                                                 ^
+  symbol:   class ShaderInstance
+  location: interface CoreShaderRegistrationCallback
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+    void call(ResourceFactory factory, List<Pair<ShaderInstance, Consumer<ShaderInstance>>> shaderList) throws IOException;
+                                                                          ^
+  symbol:   class ShaderInstance
+  location: interface CoreShaderRegistrationCallback
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:48: error: cannot find symbol
+    public void setup(ShaderType type, String name, InputStream stream, String domain, GlImportProcessor loader) {
+                                                                                       ^
+  symbol:   class GlImportProcessor
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:61: error: cannot find symbol
+    public void addUniforms(ShaderProgramSetupView program, Consumer<Uniform> register) {
+                            ^
+  symbol:   class ShaderProgramSetupView
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:61: error: cannot find symbol
+    public void addUniforms(ShaderProgramSetupView program, Consumer<Uniform> register) {
+                                                                     ^
+  symbol:   class Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:151: error: cannot find symbol
+    static class BoundUniform extends Uniform {
+                                      ^
+  symbol:   class Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:152: error: cannot find symbol
+        private final Consumer<Uniform> valueGetter;
+                               ^
+  symbol:   class Uniform
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:154: error: cannot find symbol
+        public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<Uniform> valueGetter) {
+                                                                  ^
+  symbol:   class ShaderProgramSetupView
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:154: error: cannot find symbol
+        public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<Uniform> valueGetter) {
+                                                                                                           ^
+  symbol:   class Uniform
+  location: class BoundUniform
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+    public PostPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                ^
+  symbol:   class Framebuffer
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+    public PostPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                                    ^
+  symbol:   class Framebuffer
+  location: class LoadedShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:12: error: cannot find symbol
+class ModdedResourceFactory implements ResourceFactory {
+                                       ^
+  symbol: class ResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:13: error: cannot find symbol
+    private final ResourceFactory parent;
+                  ^
+  symbol:   class ResourceFactory
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:18: error: cannot find symbol
+    public ModdedResourceFactory(ResourceFactory parent, String defaultNamespace) {
+                                 ^
+  symbol:   class ResourceFactory
+  location: class ModdedResourceFactory
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:51: error: cannot find symbol
+    public Stream<ResourcePack> streamResourcePacks() {
+                  ^
+  symbol:   class ResourcePack
+  location: class ModdedResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:7: error: cannot find symbol
+import net.minecraft.client.renderer.ShaderInstance;
+                                    ^
+  symbol:   class ShaderInstance
+  location: package net.minecraft.client.renderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:8: error: package net.minecraft.client.render does not exist
+import net.minecraft.client.render.VertexFormats;
+                                  ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:12: error: cannot find symbol
+    private static ShaderInstance renderTypeZeroMatterProgram;
+                   ^
+  symbol:   class ShaderInstance
+  location: class PSShaders
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:14: error: cannot find symbol
+    public static ShaderInstance getRenderTypeZeroMatterProgram() {
+                  ^
+  symbol:   class ShaderInstance
+  location: class PSShaders
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:19: error: cannot find symbol
+    static float drug(DrugShaderType type) {
+                      ^
+  symbol:   class DrugShaderType
+  location: interface ShaderContext
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:17: error: cannot find symbol
+import moriz.orangesunshine.client.render.GLStateProxy;
+                                         ^
+  symbol:   class GLStateProxy
+  location: package moriz.orangesunshine.client.render
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:43: error: cannot find symbol
+        map.put("PS_DepthSampler", () -> Minecraft.getInstance().getFramebuffer().getDepthAttachment());
+                                                                ^
+  symbol:   method getFramebuffer()
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:44: error: cannot find symbol
+        map.put("PS_SurfaceFractalSampler", () -> Minecraft.getInstance().getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS));
+                                                                                                                      ^
+  symbol:   variable BLOCK_ATLAS
+  location: class InventoryMenu
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:49: error: constructor Identifier in class Identifier cannot be applied to given types;
+        this.name = new Identifier(name);
+                    ^
+  required: String,String
+  found:    String
+  reason: actual and formal argument lists differ in length
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:54: error: cannot find symbol
+        return RenderPhase.current() != RenderPhase.NORMAL && client.world != null && client.player != null;
+                                                                    ^
+  symbol:   variable world
+  location: variable client of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:58: error: cannot find symbol
+        return (RenderPhase.current() == RenderPhase.WORLD || RenderPhase.current() == RenderPhase.CLOUDS) && client.world != null && client.player != null;
+                                                                                                                    ^
+  symbol:   variable world
+  location: variable client of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:62: error: cannot find symbol
+        register.accept(new BoundUniform("PS_SurfaceFractalStrength", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                      ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:65: error: cannot find symbol
+        register.accept(new BoundUniform("PS_Pulses", Uniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                      ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:68: error: cannot find symbol
+        register.accept(new BoundUniform("PS_SurfaceFractalCoords", Uniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                                    ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:70: error: cannot find symbol
+                TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                   ^
+  symbol:   method getBlockRenderManager()
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:70: error: cannot find symbol
+                TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                                                                                                   ^
+  symbol:   method getDefaultState()
+  location: variable NETHER_PORTAL of type Block
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                  ^
+  symbol:   method getMinU()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                                    ^
+  symbol:   method getMinV()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                                                      ^
+  symbol:   method getMaxU()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                                                                        ^
+  symbol:   method getMaxV()
+  location: variable sprite of type TextureAtlasSprite
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+        register.accept(new BoundUniform("PS_PlayerPosition", Uniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                              ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:76: error: cannot find symbol
+            uniform.set((float)pos.getX(), (float)pos.getY(), (float)pos.getZ());
+                                  ^
+  symbol:   method getX()
+  location: variable pos of type Vec3
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:76: error: cannot find symbol
+            uniform.set((float)pos.getX(), (float)pos.getY(), (float)pos.getZ());
+                                                     ^
+  symbol:   method getY()
+  location: variable pos of type Vec3
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:76: error: cannot find symbol
+            uniform.set((float)pos.getX(), (float)pos.getY(), (float)pos.getZ());
+                                                                        ^
+  symbol:   method getZ()
+  location: variable pos of type Vec3
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:78: error: cannot find symbol
+        register.accept(new BoundUniform("PS_WorldTicks", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                          ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:81: error: cannot find symbol
+        register.accept(new BoundUniform("PS_WavesMatrix", Uniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                           ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:93: error: cannot find symbol
+        register.accept(new BoundUniform("PS_DistantWorldDeformation", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                       ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:94: error: cannot find symbol
+            uniform.set(isWorld() ? ShaderContext.hallucinations().getDistantWorldDeformationStrength(Minecraft.getInstance().getTimer().getGameTimeDeltaTicks()) : 0);
+                                                                                                                             ^
+  symbol:   method getTimer()
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:96: error: cannot find symbol
+        register.accept(new BoundUniform("PS_FractalFractureStrength", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                       ^
+  symbol:   variable Uniform
+  location: class GeometryShader
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:97: error: cannot find symbol
+            uniform.set(isWorld() ? ShaderContext.hallucinations().getSurfaceShatteringStrength(Minecraft.getInstance().getTimer().getGameTimeDeltaTicks()) : 0F);
+                                                                                                                       ^
+  symbol:   method getTimer()
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:142: error: cannot find symbol
+                try (var stream = res.getInputStream()) {
+                                     ^
+  symbol:   method getInputStream()
+  location: variable res of type Resource
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:159: error: method does not override or implement a method from a supertype
+        @Override
+        ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:164: error: non-static variable super cannot be referenced from a static context
+            super.upload();
+            ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:164: error: cannot find symbol
+            super.upload();
+                 ^
+  symbol: method upload()
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:27: error: cannot find symbol
+        super(client.getTextureManager(), new ModdedResourceManager(client.getResourceManager(), id.getNamespace()), client.getFramebuffer(), id);
+                                                                                                                           ^
+  symbol:   method getFramebuffer()
+  location: variable client of type Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:33: error: cannot find symbol
+            client.getWindow().getFramebufferWidth(),
+                              ^
+  symbol:   method getFramebufferWidth()
+  location: class Window
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:34: error: cannot find symbol
+            client.getWindow().getFramebufferHeight()
+                              ^
+  symbol:   method getFramebufferHeight()
+  location: class Window
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:38: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:58: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:62: error: cannot find symbol
+        super.setupDimensions(targetsWidth, targetsHeight);
+             ^
+  symbol: method setupDimensions(int,int)
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:86: error: cannot find symbol
+            this.program = pass.getProgram();
+                               ^
+  symbol:   method getProgram()
+  location: variable pass of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:90: error: cannot find symbol
+            if (pass.getName().equals("blit")) {
+                    ^
+  symbol:   method getName()
+  location: variable pass of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:96: error: cannot find symbol
+                var programBindings = bindings.programBindings.getOrDefault(pass.getName(), UniformBinding.EMPTY);
+                                                                                ^
+  symbol:   method getName()
+  location: variable pass of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:115: error: cannot find symbol
+                throw new RuntimeException("Exception rendering shader " + pass.getName(), t);
+                                                                               ^
+  symbol:   method getName()
+  location: variable pass of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:121: error: cannot find symbol
+            pass.render(passRenderTime);
+                ^
+  symbol:   method render(float)
+  location: variable pass of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:122: error: cannot find symbol
+            passes.get(passes.size() - 1).pass.render(passRenderTime);
+                                              ^
+  symbol:   method render(float)
+  location: variable pass of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:128: error: cannot find symbol
+            var uniform = program.getUniformByName(name);
+                                 ^
+  symbol:   method getUniformByName(String)
+  location: variable program of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:136: error: cannot find symbol
+            var uniform = program.getUniformByName(name);
+                                 ^
+  symbol:   method getUniformByName(String)
+  location: variable program of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:145: error: cannot find symbol
+            var uniform = program.getUniformByName(name);
+                                 ^
+  symbol:   method getUniformByName(String)
+  location: variable program of type PostPass
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:23: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:25: error: Identifier(String,String) has private access in Identifier
+        final Identifier overrideId = new Identifier(defaultNamespace, id.getPath());
+                                      ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:47: error: invalid method reference
+            }, resource::getMetadata);
+               ^
+  cannot find symbol
+    symbol:   method getMetadata()
+    location: class Resource
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:34: error: cannot find symbol
+                try (var reader = resource.getReader()) {
+                                          ^
+  symbol:   method getReader()
+  location: variable resource of type Resource
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:32: error: cannot find symbol
+            return new Resource(resource.getPack(), () -> {
+                                        ^
+  symbol:   method getPack()
+  location: variable resource of type Resource
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:56: error: cannot find symbol
+                importPath = importPath.withPrefixedPath("shaders/include/");
+                                       ^
+  symbol:   method withPrefixedPath(String)
+  location: variable importPath of type Identifier
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:10: error: ModdedResourceManager is not abstract and does not override abstract method listPacks() in ResourceManager
+class ModdedResourceManager implements ResourceManager {
+^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:26: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:28: error: cannot find symbol
+        return parent.getAllNamespaces();
+                     ^
+  symbol:   method getAllNamespaces()
+  location: variable parent of type ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:31: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: Identifier(String,String) has private access in Identifier
+        List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+                                                          ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: cannot find symbol
+        List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+                                         ^
+  symbol:   method getAllResources(Identifier)
+  location: variable parent of type ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:35: error: cannot find symbol
+            return parent.getAllResources(id);
+                         ^
+  symbol:   method getAllResources(Identifier)
+  location: variable parent of type ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:40: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:42: error: cannot find symbol
+        return parent.findResources(path, filter);
+                     ^
+  symbol:   method findResources(String,Predicate<Identifier>)
+  location: variable parent of type ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:45: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:47: error: cannot find symbol
+        return parent.findAllResources(path, filter);
+                     ^
+  symbol:   method findAllResources(String,Predicate<Identifier>)
+  location: variable parent of type ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:50: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:52: error: cannot find symbol
+        return parent.streamResourcePacks();
+                     ^
+  symbol:   method streamResourcePacks()
+  location: variable parent of type ResourceManager
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:15: error: cannot find symbol
+            RenderSystem.disableBlend();
+                        ^
+  symbol:   method disableBlend()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:16: error: cannot find symbol
+            RenderSystem.disableDepthTest();
+                        ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:17: error: cannot find symbol
+            RenderSystem.resetTextureMatrix();
+                        ^
+  symbol:   method resetTextureMatrix()
+  location: class RenderSystem
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:20: error: cannot find symbol
+            shaderList.add(Pair.of(new ShaderInstance(new ModdedResourceFactory(manager, "orangesunshine"), "rendertype_zero_matter", VertexFormats.POSITION_COLOR), program -> {
+                                       ^
+  symbol:   class ShaderInstance
+  location: class PSShaders
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:20: error: cannot find symbol
+            shaderList.add(Pair.of(new ShaderInstance(new ModdedResourceFactory(manager, "orangesunshine"), "rendertype_zero_matter", VertexFormats.POSITION_COLOR), program -> {
+                                                                                                                                      ^
+  symbol:   variable VertexFormats
+  location: class PSShaders
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:28: error: cannot find symbol
+        return Minecraft.getInstance().player.age + tickDelta();
+                                             ^
+  symbol:   variable age
+  location: variable player of type LocalPlayer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:32: error: cannot find symbol
+        return Minecraft.getInstance().getTimer().getGameTimeDeltaTicks();
+                                      ^
+  symbol:   method getTimer()
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:36: error: cannot find symbol
+        return Minecraft.getInstance().world.getTime();
+                                      ^
+  symbol:   variable world
+  location: class Minecraft
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:40: error: cannot find symbol
+        return Minecraft.getInstance().options.getViewDistance().getValue() * 16;
+                                              ^
+  symbol:   method getViewDistance()
+  location: variable options of type Options
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:25: error: ShaderLoader is not abstract and does not override abstract method onResourceManagerReload(ResourceManager) in ResourceManagerReloadListener
+public class ShaderLoader implements ResourceManagerReloadListener, IdentifiableResourceReloadListener {
+       ^
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:28: error: cannot find symbol
+    public static final ShaderLoader POST_EFFECTS = new ShaderLoader(DrugRenderer.INSTANCE.getPostEffects())
+                                                                                          ^
+  symbol:   method getPostEffects()
+  location: variable INSTANCE of type DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:32: error: cannot find symbol
+                        float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getHeatDistortion();
+                                                              ^
+  symbol:   method getEnvironmentalEffects()
+  location: variable INSTANCE of type DrugRenderer
+/home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:45: error: cannot find symbol
+                        float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getWaterDistortion();
+                                                              ^
+  symbol:   method getEnvironmentalEffects()
+  location: variable INSTANCE of type DrugRenderer
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+100 errors
+
+> Task :fabric:compileJava FAILED
+[Incubating] Problems report is available at: file:///home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':fabric:compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:47: error: invalid method reference
+              }, resource::getMetadata);
+                 ^
+    cannot find symbol
+      symbol:   method getMetadata()
+      location: class Resource
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:159: error: method does not override or implement a method from a supertype
+          @Override
+          ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:38: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:58: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:65: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:23: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:26: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:31: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:40: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:45: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:50: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:10: error: ModdedResourceManager is not abstract and does not override abstract method listPacks() in ResourceManager
+  class ModdedResourceManager implements ResourceManager {
+  ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:25: error: ShaderLoader is not abstract and does not override abstract method onResourceManagerReload(ResourceManager) in ResourceManagerReloadListener
+  public class ShaderLoader implements ResourceManagerReloadListener, IdentifiableResourceReloadListener {
+         ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:164: error: cannot find symbol
+              super.upload();
+                   ^
+    symbol: method upload()
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:62: error: cannot find symbol
+          super.setupDimensions(targetsWidth, targetsHeight);
+               ^
+    symbol: method setupDimensions(int,int)
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:12: error: cannot find symbol
+  class ModdedResourceFactory implements ResourceFactory {
+                                         ^
+    symbol: class ResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:8: error: package net.minecraft.client.render does not exist
+  import net.minecraft.client.render.VertexFormats;
+                                    ^
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: Some input files use or override a deprecated API.
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:164: error: non-static variable super cannot be referenced from a static context
+              super.upload();
+              ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:49: error: constructor Identifier in class Identifier cannot be applied to given types;
+          this.name = new Identifier(name);
+                      ^
+    required: String,String
+    found:    String
+    reason: actual and formal argument lists differ in length
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:43: error: cannot find symbol
+          map.put("PS_DepthSampler", () -> Minecraft.getInstance().getFramebuffer().getDepthAttachment());
+                                                                  ^
+    symbol:   method getFramebuffer()
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:70: error: cannot find symbol
+                  TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                     ^
+    symbol:   method getBlockRenderManager()
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:70: error: cannot find symbol
+                  TextureAtlasSprite sprite = Minecraft.getInstance().getBlockRenderManager().getModels().getModelParticleSprite(Blocks.NETHER_PORTAL.getDefaultState());
+                                                                                                                                                     ^
+    symbol:   method getDefaultState()
+    location: variable NETHER_PORTAL of type Block
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                  uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                    ^
+    symbol:   method getMinU()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                  uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                                      ^
+    symbol:   method getMinV()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                  uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                                                        ^
+    symbol:   method getMaxU()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:71: error: cannot find symbol
+                  uniform.set(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV());
+                                                                                          ^
+    symbol:   method getMaxV()
+    location: variable sprite of type TextureAtlasSprite
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:76: error: cannot find symbol
+              uniform.set((float)pos.getX(), (float)pos.getY(), (float)pos.getZ());
+                                    ^
+    symbol:   method getX()
+    location: variable pos of type Vec3
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:76: error: cannot find symbol
+              uniform.set((float)pos.getX(), (float)pos.getY(), (float)pos.getZ());
+                                                       ^
+    symbol:   method getY()
+    location: variable pos of type Vec3
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:76: error: cannot find symbol
+              uniform.set((float)pos.getX(), (float)pos.getY(), (float)pos.getZ());
+                                                                          ^
+    symbol:   method getZ()
+    location: variable pos of type Vec3
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:94: error: cannot find symbol
+              uniform.set(isWorld() ? ShaderContext.hallucinations().getDistantWorldDeformationStrength(Minecraft.getInstance().getTimer().getGameTimeDeltaTicks()) : 0);
+                                                                                                                               ^
+    symbol:   method getTimer()
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:97: error: cannot find symbol
+              uniform.set(isWorld() ? ShaderContext.hallucinations().getSurfaceShatteringStrength(Minecraft.getInstance().getTimer().getGameTimeDeltaTicks()) : 0F);
+                                                                                                                         ^
+    symbol:   method getTimer()
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:142: error: cannot find symbol
+                  try (var stream = res.getInputStream()) {
+                                       ^
+    symbol:   method getInputStream()
+    location: variable res of type Resource
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:27: error: cannot find symbol
+          super(client.getTextureManager(), new ModdedResourceManager(client.getResourceManager(), id.getNamespace()), client.getFramebuffer(), id);
+                                                                                                                             ^
+    symbol:   method getFramebuffer()
+    location: variable client of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:33: error: cannot find symbol
+              client.getWindow().getFramebufferWidth(),
+                                ^
+    symbol:   method getFramebufferWidth()
+    location: class Window
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:34: error: cannot find symbol
+              client.getWindow().getFramebufferHeight()
+                                ^
+    symbol:   method getFramebufferHeight()
+    location: class Window
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:86: error: cannot find symbol
+              this.program = pass.getProgram();
+                                 ^
+    symbol:   method getProgram()
+    location: variable pass of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:90: error: cannot find symbol
+              if (pass.getName().equals("blit")) {
+                      ^
+    symbol:   method getName()
+    location: variable pass of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:96: error: cannot find symbol
+                  var programBindings = bindings.programBindings.getOrDefault(pass.getName(), UniformBinding.EMPTY);
+                                                                                  ^
+    symbol:   method getName()
+    location: variable pass of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:115: error: cannot find symbol
+                  throw new RuntimeException("Exception rendering shader " + pass.getName(), t);
+                                                                                 ^
+    symbol:   method getName()
+    location: variable pass of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:121: error: cannot find symbol
+              pass.render(passRenderTime);
+                  ^
+    symbol:   method render(float)
+    location: variable pass of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:122: error: cannot find symbol
+              passes.get(passes.size() - 1).pass.render(passRenderTime);
+                                                ^
+    symbol:   method render(float)
+    location: variable pass of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:128: error: cannot find symbol
+              var uniform = program.getUniformByName(name);
+                                   ^
+    symbol:   method getUniformByName(String)
+    location: variable program of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:136: error: cannot find symbol
+              var uniform = program.getUniformByName(name);
+                                   ^
+    symbol:   method getUniformByName(String)
+    location: variable program of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:145: error: cannot find symbol
+              var uniform = program.getUniformByName(name);
+                                   ^
+    symbol:   method getUniformByName(String)
+    location: variable program of type PostPass
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:34: error: cannot find symbol
+                  try (var reader = resource.getReader()) {
+                                            ^
+    symbol:   method getReader()
+    location: variable resource of type Resource
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:32: error: cannot find symbol
+              return new Resource(resource.getPack(), () -> {
+                                          ^
+    symbol:   method getPack()
+    location: variable resource of type Resource
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:56: error: cannot find symbol
+                  importPath = importPath.withPrefixedPath("shaders/include/");
+                                         ^
+    symbol:   method withPrefixedPath(String)
+    location: variable importPath of type Identifier
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:28: error: cannot find symbol
+          return parent.getAllNamespaces();
+                       ^
+    symbol:   method getAllNamespaces()
+    location: variable parent of type ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: cannot find symbol
+          List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+                                           ^
+    symbol:   method getAllResources(Identifier)
+    location: variable parent of type ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:35: error: cannot find symbol
+              return parent.getAllResources(id);
+                           ^
+    symbol:   method getAllResources(Identifier)
+    location: variable parent of type ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:42: error: cannot find symbol
+          return parent.findResources(path, filter);
+                       ^
+    symbol:   method findResources(String,Predicate<Identifier>)
+    location: variable parent of type ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:47: error: cannot find symbol
+          return parent.findAllResources(path, filter);
+                       ^
+    symbol:   method findAllResources(String,Predicate<Identifier>)
+    location: variable parent of type ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:52: error: cannot find symbol
+          return parent.streamResourcePacks();
+                       ^
+    symbol:   method streamResourcePacks()
+    location: variable parent of type ResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:15: error: cannot find symbol
+              RenderSystem.disableBlend();
+                          ^
+    symbol:   method disableBlend()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:16: error: cannot find symbol
+              RenderSystem.disableDepthTest();
+                          ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PostEffectRenderer.java:17: error: cannot find symbol
+              RenderSystem.resetTextureMatrix();
+                          ^
+    symbol:   method resetTextureMatrix()
+    location: class RenderSystem
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:32: error: cannot find symbol
+          return Minecraft.getInstance().getTimer().getGameTimeDeltaTicks();
+                                        ^
+    symbol:   method getTimer()
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:40: error: cannot find symbol
+          return Minecraft.getInstance().options.getViewDistance().getValue() * 16;
+                                                ^
+    symbol:   method getViewDistance()
+    location: variable options of type Options
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:28: error: cannot find symbol
+      public static final ShaderLoader POST_EFFECTS = new ShaderLoader(DrugRenderer.INSTANCE.getPostEffects())
+                                                                                            ^
+    symbol:   method getPostEffects()
+    location: variable INSTANCE of type DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:32: error: cannot find symbol
+                          float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getHeatDistortion();
+                                                                ^
+    symbol:   method getEnvironmentalEffects()
+    location: variable INSTANCE of type DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:45: error: cannot find symbol
+                          float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getWaterDistortion();
+                                                                ^
+    symbol:   method getEnvironmentalEffects()
+    location: variable INSTANCE of type DrugRenderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:11: error: cannot find symbol
+  import net.minecraft.client.renderer.ShaderInstance;
+                                      ^
+    symbol:   class ShaderInstance
+    location: package net.minecraft.client.renderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:12: error: cannot find symbol
+  import net.minecraft.server.packs.resources.ResourceFactory;
+                                             ^
+    symbol:   class ResourceFactory
+    location: package net.minecraft.server.packs.resources
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+      void call(ResourceFactory factory, List<Pair<ShaderInstance, Consumer<ShaderInstance>>> shaderList) throws IOException;
+                ^
+    symbol:   class ResourceFactory
+    location: interface CoreShaderRegistrationCallback
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+      void call(ResourceFactory factory, List<Pair<ShaderInstance, Consumer<ShaderInstance>>> shaderList) throws IOException;
+                                                   ^
+    symbol:   class ShaderInstance
+    location: interface CoreShaderRegistrationCallback
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/CoreShaderRegistrationCallback.java:23: error: cannot find symbol
+      void call(ResourceFactory factory, List<Pair<ShaderInstance, Consumer<ShaderInstance>>> shaderList) throws IOException;
+                                                                            ^
+    symbol:   class ShaderInstance
+    location: interface CoreShaderRegistrationCallback
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:48: error: cannot find symbol
+      public void setup(ShaderType type, String name, InputStream stream, String domain, GlImportProcessor loader) {
+                                                                                         ^
+    symbol:   class GlImportProcessor
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:61: error: cannot find symbol
+      public void addUniforms(ShaderProgramSetupView program, Consumer<Uniform> register) {
+                              ^
+    symbol:   class ShaderProgramSetupView
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:61: error: cannot find symbol
+      public void addUniforms(ShaderProgramSetupView program, Consumer<Uniform> register) {
+                                                                       ^
+    symbol:   class Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:151: error: cannot find symbol
+      static class BoundUniform extends Uniform {
+                                        ^
+    symbol:   class Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:152: error: cannot find symbol
+          private final Consumer<Uniform> valueGetter;
+                                 ^
+    symbol:   class Uniform
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:154: error: cannot find symbol
+          public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<Uniform> valueGetter) {
+                                                                    ^
+    symbol:   class ShaderProgramSetupView
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:154: error: cannot find symbol
+          public BoundUniform(String name, int dataType, int count, ShaderProgramSetupView program, Consumer<Uniform> valueGetter) {
+                                                                                                             ^
+    symbol:   class Uniform
+    location: class BoundUniform
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+      public PostPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                  ^
+    symbol:   class Framebuffer
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/LoadedShader.java:66: error: cannot find symbol
+      public PostPass addPass(String programName, Framebuffer source, Framebuffer dest) throws IOException {
+                                                                      ^
+    symbol:   class Framebuffer
+    location: class LoadedShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:13: error: cannot find symbol
+      private final ResourceFactory parent;
+                    ^
+    symbol:   class ResourceFactory
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:18: error: cannot find symbol
+      public ModdedResourceFactory(ResourceFactory parent, String defaultNamespace) {
+                                   ^
+    symbol:   class ResourceFactory
+    location: class ModdedResourceFactory
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:51: error: cannot find symbol
+      public Stream<ResourcePack> streamResourcePacks() {
+                    ^
+    symbol:   class ResourcePack
+    location: class ModdedResourceManager
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:7: error: cannot find symbol
+  import net.minecraft.client.renderer.ShaderInstance;
+                                      ^
+    symbol:   class ShaderInstance
+    location: package net.minecraft.client.renderer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:12: error: cannot find symbol
+      private static ShaderInstance renderTypeZeroMatterProgram;
+                     ^
+    symbol:   class ShaderInstance
+    location: class PSShaders
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:14: error: cannot find symbol
+      public static ShaderInstance getRenderTypeZeroMatterProgram() {
+                    ^
+    symbol:   class ShaderInstance
+    location: class PSShaders
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:19: error: cannot find symbol
+      static float drug(DrugShaderType type) {
+                        ^
+    symbol:   class DrugShaderType
+    location: interface ShaderContext
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderLoader.java:17: error: cannot find symbol
+  import moriz.orangesunshine.client.render.GLStateProxy;
+                                           ^
+    symbol:   class GLStateProxy
+    location: package moriz.orangesunshine.client.render
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:44: error: cannot find symbol
+          map.put("PS_SurfaceFractalSampler", () -> Minecraft.getInstance().getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS));
+                                                                                                                        ^
+    symbol:   variable BLOCK_ATLAS
+    location: class InventoryMenu
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:54: error: cannot find symbol
+          return RenderPhase.current() != RenderPhase.NORMAL && client.world != null && client.player != null;
+                                                                      ^
+    symbol:   variable world
+    location: variable client of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:58: error: cannot find symbol
+          return (RenderPhase.current() == RenderPhase.WORLD || RenderPhase.current() == RenderPhase.CLOUDS) && client.world != null && client.player != null;
+                                                                                                                      ^
+    symbol:   variable world
+    location: variable client of type Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:62: error: cannot find symbol
+          register.accept(new BoundUniform("PS_SurfaceFractalStrength", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                        ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:65: error: cannot find symbol
+          register.accept(new BoundUniform("PS_Pulses", Uniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                        ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:68: error: cannot find symbol
+          register.accept(new BoundUniform("PS_SurfaceFractalCoords", Uniform.getTypeIndex("float") + 3, 4, program, uniform -> {
+                                                                      ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:74: error: cannot find symbol
+          register.accept(new BoundUniform("PS_PlayerPosition", Uniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                                ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:78: error: cannot find symbol
+          register.accept(new BoundUniform("PS_WorldTicks", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                            ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:81: error: cannot find symbol
+          register.accept(new BoundUniform("PS_WavesMatrix", Uniform.getTypeIndex("float") + 2, 3, program, uniform -> {
+                                                             ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:93: error: cannot find symbol
+          register.accept(new BoundUniform("PS_DistantWorldDeformation", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                         ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/GeometryShader.java:96: error: cannot find symbol
+          register.accept(new BoundUniform("PS_FractalFractureStrength", Uniform.getTypeIndex("float"), 1, program, uniform -> {
+                                                                         ^
+    symbol:   variable Uniform
+    location: class GeometryShader
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:20: error: cannot find symbol
+              shaderList.add(Pair.of(new ShaderInstance(new ModdedResourceFactory(manager, "orangesunshine"), "rendertype_zero_matter", VertexFormats.POSITION_COLOR), program -> {
+                                         ^
+    symbol:   class ShaderInstance
+    location: class PSShaders
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/PSShaders.java:20: error: cannot find symbol
+              shaderList.add(Pair.of(new ShaderInstance(new ModdedResourceFactory(manager, "orangesunshine"), "rendertype_zero_matter", VertexFormats.POSITION_COLOR), program -> {
+                                                                                                                                        ^
+    symbol:   variable VertexFormats
+    location: class PSShaders
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:28: error: cannot find symbol
+          return Minecraft.getInstance().player.age + tickDelta();
+                                               ^
+    symbol:   variable age
+    location: variable player of type LocalPlayer
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ShaderContext.java:36: error: cannot find symbol
+          return Minecraft.getInstance().world.getTime();
+                                        ^
+    symbol:   variable world
+    location: class Minecraft
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceFactory.java:25: error: Identifier(String,String) has private access in Identifier
+          final Identifier overrideId = new Identifier(defaultNamespace, id.getPath());
+                                        ^
+  /home/moriz/Projects/OrangeSunshine-worktrees/1.21.11/src/main/java/moriz/orangesunshine/client/render/shader/ModdedResourceManager.java:33: error: Identifier(String,String) has private access in Identifier
+          List<Resource> resources = parent.getAllResources(new Identifier(defaultNamespace, id.getPath()));
+                                                            ^
+  100 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 9s
+4 actionable tasks: 1 executed, 3 up-to-date

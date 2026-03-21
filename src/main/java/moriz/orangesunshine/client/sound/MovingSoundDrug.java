@@ -6,20 +6,20 @@ import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.util.MathUtils;
-import net.minecraft.client.sound.MovingSoundInstance;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 
 /**
  * Created by lukas on 22.11.14.
  */
-public class MovingSoundDrug extends MovingSoundInstance {
+public class MovingSoundDrug extends AbstractTickableSoundInstance {
     private final DrugProperties properties;
     private final DrugType drugType;
 
-    public MovingSoundDrug(SoundEvent event, SoundCategory category, DrugProperties properties, DrugType drugType) {
+    public MovingSoundDrug(SoundEvent event, SoundSource category, DrugProperties properties, DrugType drugType) {
         super(event, category, Random.create());
         this.properties = properties;
         this.drugType = drugType;

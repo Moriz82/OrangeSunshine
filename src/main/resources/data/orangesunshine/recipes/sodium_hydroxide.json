@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:vinegar"
+  },
+  "result": "orangesunshine:sodium_hydroxide",
+  "experience": 0.3,
+  "cookingtime": 200
+}

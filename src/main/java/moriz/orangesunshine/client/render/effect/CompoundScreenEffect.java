@@ -3,15 +3,12 @@ package moriz.orangesunshine.client.render.effect;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 public class CompoundScreenEffect implements ScreenEffect {
 
     private final List<ScreenEffect> effects = new ArrayList<>();
-
-    private final MinecraftClient client = MinecraftClient.getInstance();
 
     public static ScreenEffect of(ScreenEffect... effects) {
         return new CompoundScreenEffect().add(effects);
@@ -41,21 +38,19 @@ public class CompoundScreenEffect implements ScreenEffect {
     }
 
     @Override
-    public void render(PoseStack matrices, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
-        effects.forEach(effect -> {
-            if (effect.shouldApply(client.getTickDelta())) {
-                effect.render(matrices, vertices, screenWidth, screenHeight, ticks, pingPong);
+    public void render(GuiGraphics context, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
+        for (ScreenEffect effect : effects) {
+            if (effect.shouldApply(ticks)) {
+                effect.render(context, vertices, screenWidth, screenHeight, ticks, pingPong);
             }
-        });
+        }
     }
 
     @Override
-    public void close() {
-        effects.forEach(e -> {
-            try {
-                e.close();
-            } catch (Exception ignored) {}
-        });
-        effects.clear();
+    public void close() throws Exception {
+        for (ScreenEffect effect : effects) {
+            effect.close();
+        }
     }
+
 }

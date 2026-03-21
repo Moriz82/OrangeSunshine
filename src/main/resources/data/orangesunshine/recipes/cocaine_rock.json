@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:cocaine_powder"
+  },
+  "result": "orangesunshine:cocaine_rock",
+  "experience": 0.35,
+  "cookingtime": 200
+}

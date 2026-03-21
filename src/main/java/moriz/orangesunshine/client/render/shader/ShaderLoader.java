@@ -17,12 +17,12 @@ import moriz.orangesunshine.client.render.DrugRenderer;
 import moriz.orangesunshine.client.render.GLStateProxy;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.SynchronousResourceReloader;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class ShaderLoader implements SynchronousResourceReloader, IdentifiableResourceReloadListener {
+public class ShaderLoader implements ResourceManagerReloadListener, IdentifiableResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final ShaderLoader POST_EFFECTS = new ShaderLoader(DrugRenderer.INSTANCE.getPostEffects())
@@ -246,7 +246,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
         ;
 
 
-    private final MinecraftClient client = MinecraftClient.getInstance();
+    private final Minecraft client = Minecraft.getInstance();
 
     private static final Identifier ID = OrangeSunshine.id("post_effect_shaders");
 
@@ -273,7 +273,7 @@ public class ShaderLoader implements SynchronousResourceReloader, IdentifiableRe
     }
 
     @Override
-    public void reload(ResourceManager manager) {
+    public void onResourceManagerReload(ResourceManager manager) {
         renderer.onShadersLoaded(List.of());
         renderer.onShadersLoaded(activeShaderIds.entrySet().stream().map(this::loadShader).filter(Objects::nonNull).toList());
     }

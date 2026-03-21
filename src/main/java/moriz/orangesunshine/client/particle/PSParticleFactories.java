@@ -1,12 +1,13 @@
 package moriz.orangesunshine.client.particle;
 
 import moriz.orangesunshine.particle.PSParticles;
+import net.fabricmc.fabric.api.client.particle.v1.FabricSpriteProvider;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry.PendingParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.util.RandomSource;
 
 /**
  * @author Sollace
@@ -18,11 +19,11 @@ public interface PSParticleFactories {
         ParticleFactoryRegistry.getInstance().register(PSParticles.BUBBLE, createFactory(BubbleParticle::new));
     }
 
-    private static <T extends ParticleEffect> PendingParticleFactory<T> createFactory(ParticleSupplier<T> supplier) {
-        return provider -> (effect, world, x, y, z, dx, dy, dz) -> supplier.get(effect, provider, world, x, y, z, dx, dy, dz);
+    private static <T extends ParticleOptions> PendingParticleFactory<T> createFactory(ParticleSupplier<T> supplier) {
+        return provider -> (effect, world, x, y, z, dx, dy, dz, random) -> supplier.get(effect, provider, world, x, y, z, dx, dy, dz, random);
     }
 
-    interface ParticleSupplier<T extends ParticleEffect> {
-        Particle get(T effect, SpriteProvider provider, ClientWorld world, double x, double y, double z, double dx, double dy, double dz);
+    interface ParticleSupplier<T extends ParticleOptions> {
+        Particle get(T effect, FabricSpriteProvider provider, ClientLevel world, double x, double y, double z, double dx, double dy, double dz, RandomSource random);
     }
 }

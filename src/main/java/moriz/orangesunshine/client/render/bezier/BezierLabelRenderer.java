@@ -6,18 +6,18 @@ import org.joml.Vector3d;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.font.TextRenderer.TextLayerType;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.resource.language.ReorderingUtil;
+import net.minecraft.client.resources.language.FormattedBidiReorder;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.text.*;
-import net.minecraft.util.math.RotationAxis;
+import net.minecraft.network.chat.*;
+import net.minecraft.util.FormattedCharSequence;
+import com.mojang.math.Axis;
 
 public class BezierLabelRenderer {
     public static final BezierLabelRenderer INSTANCE = new BezierLabelRenderer();
 
-    private final TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+    private final Font font = Minecraft.getInstance().font;
 
     private float length;
     private int i;
@@ -26,8 +26,8 @@ public class BezierLabelRenderer {
 
     private int activeIndex;
     private int activeCodePoint;
-    private net.minecraft.text.Style activeStyle;
-    private final OrderedText singleCharOrderedText = visitor -> {
+    private net.minecraft.network.chat.Style activeStyle;
+    private final FormattedCharSequence singleCharOrderedText = visitor -> {
         return visitor.accept(activeIndex, activeStyle, activeCodePoint);
     };
 
@@ -38,7 +38,7 @@ public class BezierLabelRenderer {
         length = text.getString().length();
         i = 0;
         Path path = bezier.getPath();
-        ReorderingUtil.reorder(text, !style.inwards).accept((charIndex, charStyle, character) -> {
+        FormattedBidiReorder.reorder(text, !style.inwards).accept((charIndex, charStyle, character) -> {
             if (character != ' ') {
                 double totalProgress = (style.spread ? (i / length) : (i * 0.5)) + style.shift;
                 double finalProgress = ((totalProgress % 1) + 1) % 1;
@@ -50,20 +50,20 @@ public class BezierLabelRenderer {
 
                     float textSize = scale * step.fontSize();
 
-                    matrices.push();
+                    matrices.pushPose();
                     matrices.translate(position.x, position.y, position.z);
                     matrices.scale(textSize, textSize, textSize);
-                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float)rotation.x + (style.inwards ? 0 : 180)));
-                    matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float)rotation.y));
+                    matrices.mulPose(Axis.YP.rotationDegrees((float)rotation.x + (style.inwards ? 0 : 180)));
+                    matrices.mulPose(Axis.XP.rotationDegrees((float)rotation.y));
 
                     activeIndex = charIndex;
                     activeStyle = charStyle;
                     activeCodePoint = character;
 
                     @Nullable TextColor color = charStyle.getColor();
-                    Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-                    textRenderer.draw(singleCharOrderedText, 0, 0, color == null ? 0xFFFFFFFF : color.getRgb(), false, positionMatrix, vertices, TextLayerType.NORMAL, 0, light);
-                    matrices.pop();
+                    Matrix4f positionMatrix = matrices.last().pose();
+                    font.drawInBatch(singleCharOrderedText, 0, 0, color == null ? 0xFFFFFFFF : color.getValue(), false, positionMatrix, vertices, Font.DisplayMode.NORMAL, 0, light);
+                    matrices.popPose();
                 }
             }
             i++;

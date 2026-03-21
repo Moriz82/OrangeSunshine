@@ -100,10 +100,10 @@ public interface PSBlocks {
     Block JUNIPER_BUTTON = register("juniper_button", BlockConstructionUtils.woodenButton(PSWoodTypes.JUNIPER.setType(), blockKey("juniper_button")));
     Block JUNIPER_SLAB = register("juniper_slab", new SlabBlock(Properties.ofFullCopy(JUNIPER_PLANKS).setId(blockKey("juniper_slab"))));
 
-    CannabisPlantBlock CANNABIS = register("cannabis", new CannabisPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("cannabis"))));
+    DrugCropBlock CANNABIS = register("cannabis", new DrugCropBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("cannabis"))));
     HopPlantBlock HOP = register("hop", new HopPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("hop"))));
     TobaccoPlantBlock TOBACCO = register("tobacco", new TobaccoPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("tobacco"))));
-    CocaPlantBlock COCA = register("coca", new CocaPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("coca"))));
+    DrugCropBlock COCA = register("coca", new DrugCropBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("coca"))));
     CoffeaPlantBlock COFFEA = register("coffea", new CoffeaPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("coffea"))));
     PeyoteBlock PEYOTE = register("peyote", new PeyoteBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("peyote"))));
     AgavePlantBlock AGAVE_PLANT = register("agave_plant", new AgavePlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("agave_plant"))));
@@ -156,6 +156,14 @@ public interface PSBlocks {
 
     Block TRAY = register("tray", new TrayBlock(Properties.of().setId(blockKey("tray")).mapColor(MapColor.METAL).strength(0.7F).sound(SoundType.METAL).noOcclusion()));
     Block BUNSEN_BURNER = register("bunsen_burner", new BurnerBlock(Properties.of().setId(blockKey("bunsen_burner")).mapColor(MapColor.METAL).strength(0.7F).sound(SoundType.METAL).noOcclusion()));
+
+    Block SAN_PEDRO_BLOCK = registerBlock("san_pedro_plant", new SanPedroPlantBlock(Properties.of().setId(blockKey("san_pedro_plant")).mapColor(MapColor.PLANT).sound(SoundType.WOOL)));
+    Block COKE_CAKE_BLOCK = registerBlock("coke_cake", new CokeCakeBlock(Properties.of().setId(blockKey("coke_cake")).mapColor(MapColor.SNOW).sound(SoundType.WOOL)));
+    Block CUT_POPPY_BLOCK = registerBlock("cut_poppy", new DrugCropBlock(Properties.of().setId(blockKey("cut_poppy")).mapColor(MapColor.PLANT).sound(SoundType.GRASS).noOcclusion().instabreak()));
+    Block AYAHUASCA_BLOCK = registerBlock("ayahuasca_block", new DrugCropBlock(Properties.of().setId(blockKey("ayahuasca_block")).mapColor(MapColor.PLANT).sound(SoundType.GRASS).noOcclusion().instabreak()));
+    Block FRIDGE = registerBlock("fridge", new Block(Properties.of().setId(blockKey("fridge")).strength(3.5F).sound(SoundType.METAL)));
+    Block COMPOUND_EXTRACTOR = registerBlock("compound_extractor", new Block(Properties.of().setId(blockKey("compound_extractor")).strength(3.5F).sound(SoundType.METAL)));
+    Block COMPOUND_COMPRESSOR = registerBlock("compound_compressor", new Block(Properties.of().setId(blockKey("compound_compressor")).strength(3.5F).sound(SoundType.METAL)));
 
     static ResourceKey<Block> blockKey(String name) {
         return ResourceKey.create(Registries.BLOCK, OrangeSunshine.id(name));

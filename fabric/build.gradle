@@ -7,20 +7,46 @@ def fabricOwnedSources = [
         'moriz/orangesunshine/fabric/**',
 
         // Client sources (from ../src/main/java)
+        'moriz/orangesunshine/compat/**',
+        'moriz/orangesunshine/datagen/**',
+
         'moriz/orangesunshine/client/OrangeSunshineClient.java',
         'moriz/orangesunshine/client/PSClientConfig.java',
         'moriz/orangesunshine/client/item/**',
+        'moriz/orangesunshine/client/particle/**',
         'moriz/orangesunshine/client/screen/**',
+        'moriz/orangesunshine/client/sound/**',
 
         'moriz/orangesunshine/client/render/DrugEffectInterpreter.java',
         'moriz/orangesunshine/client/render/DrugRenderer.java',
         'moriz/orangesunshine/client/render/FluidBoxRenderer.java',
+        'moriz/orangesunshine/client/render/GLStateProxy.java',
+        'moriz/orangesunshine/client/render/MeteorlogicalUtil.java',
+        'moriz/orangesunshine/client/render/PassThroughVertexConsumer.java',
+        'moriz/orangesunshine/client/render/PlacedDrinksModelProvider.java',
         'moriz/orangesunshine/client/render/PSRenderers.java',
+        'moriz/orangesunshine/client/render/PsycheMatrixHelper.java',
+        'moriz/orangesunshine/client/render/RastaHeadModel.java',
+        'moriz/orangesunshine/client/render/RealityRiftEntityRenderer.java',
+        'moriz/orangesunshine/client/render/RenderLayerUtil.java',
         'moriz/orangesunshine/client/render/RenderUtil.java',
+        'moriz/orangesunshine/client/render/SmoothCameraHelper.java',
+        'moriz/orangesunshine/client/render/ZeroScreen.java',
+        'moriz/orangesunshine/client/render/effect/**',
+        'moriz/orangesunshine/client/render/shader/**',
+        'moriz/orangesunshine/client/render/bezier/BezierLabelRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/Barrel*.java',
+        'moriz/orangesunshine/client/render/blocks/BottleRackBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/DrinksBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/DryingTableBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/FlaskBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/MashTubBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/MixingTableEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/Peyote*.java',
+        'moriz/orangesunshine/client/render/blocks/RiftJar*.java',
 
         // Client mixins
         'moriz/orangesunshine/mixin/client/**',
-
 ]
 
 architectury {
