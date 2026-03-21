@@ -3,6 +3,7 @@ package com.BrotherHoodOfDiethylamide.OrangeSunshine.client;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.OrangeSunshine;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.Drug;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.drugs.DrugEffects;
+import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugEffectInterpreter;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.DrugProperties;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.EffectWrapper;
 import com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.PSRenderStates;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -167,6 +169,40 @@ public class DrugRenderPipeline {
 
         if (alpha > 0.005f) {
             drawColoredRect(sw, sh, r, g, b, alpha);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Camera distortion: BUMPY wobble and CAMERA_TREMBLE shake via yaw/pitch/roll
+    // -------------------------------------------------------------------------
+
+    @SubscribeEvent
+    public static void onCameraSetup(EntityViewRenderEvent.CameraSetup event) {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.world == null || mc.player == null) return;
+
+        DrugProperties dp = DrugProperties.getDrugProperties(mc.player);
+        if (dp == null) return;
+
+        float t = mc.player.ticksExisted + (float) event.getRenderPartialTicks();
+
+        float wobblyness = 0.0f;
+        for (com.BrotherHoodOfDiethylamide.OrangeSunshine.portedpsych.Drug drug : dp.getAllDrugs())
+            wobblyness += drug.viewWobblyness();
+        wobblyness = Math.min(wobblyness, 1.0f);
+
+        if (wobblyness > 0.0f) {
+            float rollDelta  = (float)(Math.sin(t / 15.0) * 3.0 * wobblyness);
+            float pitchDelta = (float)(Math.sin(t / 17.0) * 1.5 * wobblyness);
+            event.setRoll(event.getRoll()   + rollDelta);
+            event.setPitch(event.getPitch() + pitchDelta);
+        }
+
+        float shiftX = DrugEffectInterpreter.getCameraShiftX(dp, t);
+        float shiftY = DrugEffectInterpreter.getCameraShiftY(dp, t);
+        if (Math.abs(shiftX) > 0.001f || Math.abs(shiftY) > 0.001f) {
+            event.setYaw(event.getYaw()     + shiftX * 20.0f);
+            event.setPitch(event.getPitch() + shiftY * 15.0f);
         }
     }
 
