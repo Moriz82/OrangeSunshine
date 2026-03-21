@@ -207,6 +207,8 @@ public class PSRenderStates
         effectWrappers.add(new WrapperUnderwaterDistortion(utils));
         effectWrappers.add(new WrapperWaterOverlay(utils));
         effectWrappers.add(new WrapperSimpleEffects(utils));
+        effectWrappers.add(new WrapperKaleidoscope(utils));
+        effectWrappers.add(new WrapperRecursion(utils));
         effectWrappers.add(new WrapperMotionBlur());
         effectWrappers.add(new WrapperBlur(utils));
         effectWrappers.add(new WrapperDoF(utils));
