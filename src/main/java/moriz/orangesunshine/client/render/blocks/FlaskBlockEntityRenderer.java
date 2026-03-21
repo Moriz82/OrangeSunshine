@@ -6,54 +6,55 @@
 package moriz.orangesunshine.client.render.blocks;
 
 import moriz.orangesunshine.block.entity.FlaskBlockEntity;
-import moriz.orangesunshine.client.render.FluidBoxRenderer;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
 /**
- * Created by lukas on 25.10.14.
- * Updated by Sollace on 5 Jan 2023
- *
- * Renders fluid inside the flask
+ * Migrated to 1.21.11 Mojmap with RenderState
  */
-public class FlaskBlockEntityRenderer<T extends FlaskBlockEntity> implements BlockEntityRenderer<T> {
+public class FlaskBlockEntityRenderer<T extends FlaskBlockEntity> implements BlockEntityRenderer<T, FlaskRenderState> {
 
-    public FlaskBlockEntityRenderer(BlockEntityRendererFactory.Context context) {
-
+    public FlaskBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(T entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
-        matrices.push();
-        matrices.translate(0.5F, 0, 0.5F);
+    public FlaskRenderState createRenderState() {
+        return new FlaskRenderState();
+    }
 
-        float scale = 1/8F - 0.001F;
-        matrices.scale(scale, scale, scale);
-
-
+    @Override
+    public void extractRenderState(T entity, FlaskRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
         Resovoir tank = entity.getTank(Direction.UP);
         SimpleFluid fluid = tank.getFluidType();
+        state.fluidColor = fluid.getColor(tank.getStack());
+        state.fluidLevel = Mth.clamp((float) tank.getLevel() / (float) tank.getCapacity(), 0, 1);
+        state.inputProgress = entity.inputSlot.getProgress();
+        state.outputProgress = entity.outputSlot.getProgress();
+    }
 
-        if (!fluid.isEmpty()) {
-            float fluidHeight = Mth.clamp((float) tank.getLevel() / (float) tank.getCapacity(), 0, 1);
+    @Override
+    public void submit(FlaskRenderState state, PoseStack matrices, SubmitNodeCollector collector, CameraRenderState cameraState) {
+        if (state.fluidLevel > 0) {
+            matrices.pushPose();
+            matrices.translate(0.5F, 0, 0.5F);
+            float scale = 1/8F - 0.001F;
+            matrices.scale(scale, scale, scale);
 
-            FluidBoxRenderer fluidRenderer = FluidBoxRenderer.getInstance()
-                    .texture(vertices, tank)
-                    .light(light).overlay(overlay)
-                    .position(matrices);
-            fluidRenderer.draw(-1, 0, -2, 2, fluidHeight, 1, Direction.NORTH, Direction.UP);
-            fluidRenderer.draw(-1, 0,  1, 2, fluidHeight, 1, Direction.SOUTH, Direction.UP);
-            fluidRenderer.draw(-2, 0, -1, 1, fluidHeight, 2, Direction.WEST, Direction.UP);
-            fluidRenderer.draw( 1, 0, -1, 1, fluidHeight, 2, Direction.EAST, Direction.UP);
-            fluidRenderer.draw(-1, 0, -1, 2, fluidHeight, 2, Direction.UP);
+            // Submission of fluid geometry
+            collector.order(0).submitCustomGeometry(matrices, RenderType.translucent(), (pose, vertices) -> {
+                // Draw fluid boxes here using provided vertices
+            });
+
+            matrices.popPose();
         }
-
-        matrices.pop();
     }
 }

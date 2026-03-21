@@ -1,187 +1,134 @@
 package moriz.orangesunshine.client.render;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import moriz.orangesunshine.OrangeSunshine;
-import moriz.orangesunshine.fluid.container.FluidContainer;
-import moriz.orangesunshine.util.MathUtils;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.Context;
-import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
-import net.minecraft.block.StainedGlassPaneBlock;
-import net.minecraft.block.TransparentBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypes;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.util.ModelIdentifier;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeableItem;
+import net.minecraft.client.renderer.item.ItemDisplayContext;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Items;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 
-public class PlacedDrinksModelProvider
-        implements PreparableModelLoadingPlugin<Map<Identifier, PlacedDrinksModelProvider.Entry>>,
-        PreparableModelLoadingPlugin.DataLoader<Map<Identifier, PlacedDrinksModelProvider.Entry>> {
-    private static final Identifier CONFIG_LOCATION = OrangeSunshine.id("placeable_drinks.json");
-    private static final Gson GSON = new Gson();
-    private static final Random RNG = Random.create();
-    private static final long SEED = 42L;
-
+public class PlacedDrinksModelProvider {
     public static final PlacedDrinksModelProvider INSTANCE = new PlacedDrinksModelProvider();
 
-    private Map<Identifier, Entry> entries = Map.of();
+    public static final Entry DEFAULT = new Entry(
+            new ItemStack(Items.IRON_AXE),
+            new ItemTransform(ItemTransform.Type.FIXED, new Vector(0, 0, 0), new Vector(0, 0, 0), new Vector(1, 1, 1)),
+            0.8F
+    );
 
-    @Override
-    public CompletableFuture<Map<Identifier, PlacedDrinksModelProvider.Entry>> load(ResourceManager resourceManager, Executor executor) {
-        return CompletableFuture.supplyAsync(() -> {
-            return resourceManager.getResource(CONFIG_LOCATION).map(resource -> {
-                try (BufferedReader reader = resource.getReader()) {
-                    return JsonHelper.getArray(JsonHelper.asObject(JsonHelper.deserialize(GSON, reader, JsonElement.class), "root"), "values")
-                        .asList()
-                        .stream()
-                        .map(element -> {
-                            try {
-                                return JsonHelper.asObject(element, "root.values[i]");
-                            } catch (Exception e) {
-                                OrangeSunshine.LOGGER.error(e);
-                            }
-                            return null;
-                        })
-                        .filter(Objects::nonNull)
-                        .map(element -> {
-                            if (!element.has("id") || !element.get("id").isJsonPrimitive()) {
-                                return null;
-                            }
-                            Identifier id = Identifier.tryParse(JsonHelper.getString(element, "id"));
-                            if (id == null) {
-                                OrangeSunshine.LOGGER.warn("Invalid identifier: " + element);
-                                return null;
-                            }
-                            return Map.entry(id, new Entry(element));
-                        })
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-                } catch (IOException e) {
-                    OrangeSunshine.LOGGER.error("Could not load client drinks file", e);
-                }
-                return null;
-            }).orElseGet(Map::of);
-        }, executor);
+    private final Map<Item, Entry> entries = new HashMap<>();
+
+    public PlacedDrinksModelProvider addEntry(Item item, ItemStack stack, ItemTransform.Type type, Vector scale, Vector translation, Vector rotation) {
+        entries.put(item, new Entry(stack, new ItemTransform(type, translation, rotation, scale), 1F));
+        return this;
     }
 
-    @Override
-    public void onInitializeModelLoader(Map<Identifier, PlacedDrinksModelProvider.Entry> data, Context context) {
-        entries = data;
-        data.keySet().forEach(id -> {
-            context.addModels(getGroundModelId(id));
-            context.addModels(getGroundModelFluidId(id));
-        });
+    public PlacedDrinksModelProvider addEntry(Item item, ItemStack stack, ItemTransform context, float height) {
+        entries.put(item, new Entry(stack, context, height));
+        return this;
     }
 
     public Optional<Entry> get(Item item) {
-        return Optional.ofNullable(entries.get(Registries.ITEM.getId(item)));
+        return Optional.ofNullable(entries.get(item));
     }
 
-    public void renderDrink(ItemStack stack, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
+    public static class Entry {
+        private final ItemStack stack;
+        private final ItemTransform context;
+        private final float height;
 
-        int dyeColor = stack.getItem() instanceof DyeableItem dyeable ? dyeable.getColor(stack) : 0xFFFFFF;
+        public Entry(ItemStack stack, ItemTransform context, float height) {
+            this.stack = stack;
+            this.context = context;
+            this.height = height;
+        }
 
-        renderDrinkModel(stack, matrices, vertices, light, overlay, dyeColor, getGroundModelId(stack.getItem()));
+        public ItemStack getStack() {
+            return stack;
+        }
 
-        FluidContainer container = FluidContainer.of(stack);
-        float fillPercentage = container.getFillPercentage(stack);
-        if (fillPercentage > 0.01) {
-            float origin = get(stack.getItem()).orElse(Entry.DEFAULT).fluidOrigin() / 16F;
-            matrices.translate(0, origin, 0);
-            matrices.scale(1, fillPercentage, 1);
-            matrices.translate(0, -origin, 0);
-            int color = FluidBoxRenderer.FluidAppearance.getItemColor(container.getFluid(stack), stack);
-            renderDrinkModel(stack, matrices, vertices, light, overlay, color, getGroundModelFluidId(stack.getItem()));
+        public ItemTransform getContext() {
+            return context;
+        }
+
+        public float height() {
+            return height;
         }
     }
 
-    public void renderDrinkModel(ItemStack stack, PoseStack matrices, MultiBufferSource vertices, int light, int overlay, int color, ModelIdentifier modelId) {
-        ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
+    public static class ItemTransform {
+        public enum Type {
+            GUI(ItemDisplayContext.GUI),
+            FIXED(ItemDisplayContext.FIXED),
+            GROUND(ItemDisplayContext.GROUND),
+            NONE(ItemDisplayContext.NONE),
+            THIRD_PERSON_LEFT_HAND(ItemDisplayContext.THIRD_PERSON_LEFT_HAND),
+            THIRD_PERSON_RIGHT_HAND(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND),
+            FIRST_PERSON_LEFT_HAND(ItemDisplayContext.FIRST_PERSON_LEFT_HAND),
+            FIRST_PERSON_RIGHT_HAND(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND),
+            FIXED_ITEM_FRAME(ItemDisplayContext.FIXED),
+            GUI_RARE(ItemDisplayContext.GUI);
 
-        BakedModel model = renderer.getModels().getModelManager().getModel(modelId);
+            private final ItemDisplayContext renderContext;
 
-        boolean solid = !(stack.getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof TransparentBlock) && !(bi.getBlock() instanceof StainedGlassPaneBlock);
-        RenderLayer renderLayer = RenderLayers.getItemLayer(stack, solid);
+            Type(ItemDisplayContext renderContext) {
+                this.renderContext = renderContext;
+            }
 
-        renderBakedItemModel(model, matrices, vertices.getBuffer(renderLayer), light, overlay, color);
-    }
-
-    private void renderBakedItemModel(BakedModel model, PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-        for (Direction direction : Direction.values()) {
-            RNG.setSeed(SEED);
-            renderBakedItemQuads(matrices, vertices, model.getQuads(null, direction, RNG), light, overlay, color);
-        }
-        RNG.setSeed(SEED);
-        renderBakedItemQuads(matrices, vertices, model.getQuads(null, null, RNG), light, overlay, color);
-    }
-
-    private void renderBakedItemQuads(PoseStack matrices, VertexConsumer vertices, List<BakedQuad> quads, int light, int overlay, int color) {
-        PoseStack.Entry entry = matrices.peek();
-        for (BakedQuad bakedQuad : quads) {
-            vertices.quad(entry, bakedQuad, MathUtils.r(color), MathUtils.g(color), MathUtils.b(color), light, overlay);
-        }
-    }
-
-    public static ModelIdentifier getGroundModelId(Item item) {
-        return getGroundModelId(Registries.ITEM.getId(item));
-    }
-
-    public static ModelIdentifier getGroundModelFluidId(Item item) {
-        return getGroundModelFluidId(Registries.ITEM.getId(item));
-    }
-
-    public static ModelIdentifier getGroundModelId(Identifier item) {
-        return new ModelIdentifier(item.withPath(p -> p + "_on_ground"), "inventory");
-    }
-
-    public static ModelIdentifier getGroundModelFluidId(Identifier item) {
-        return new ModelIdentifier(item.withPath(p -> p + "_on_ground_fluid"), "inventory");
-    }
-
-    public record Entry(float height, float fluidOrigin) {
-        public static final Entry DEFAULT = new Entry(0.5F, 0F);
-        Entry(JsonObject json) {
-            this(JsonHelper.getFloat(json, "height"), JsonHelper.getFloat(json, "fluid_origin"));
+            public ItemDisplayContext getDisplayContext() {
+                return renderContext;
+            }
         }
 
-        public Entry(NbtCompound compound) {
-            this(compound.getFloat("height"), compound.getFloat("fluidOrigin"));
+        private final Type type;
+        private final Vector translation;
+        private final Vector rotation;
+        private final Vector scale;
+
+        public ItemTransform(Type type, Vector translation, Vector rotation, Vector scale) {
+            this.type = type;
+            this.translation = translation;
+            this.rotation = rotation;
+            this.scale = scale;
         }
 
-
-        public NbtCompound toNbt(NbtCompound compound) {
-            compound.putFloat("height", height);
-            compound.putFloat("fluidOrigin", fluidOrigin);
-            return compound;
+        public Type getType() {
+            return type;
         }
+
+        public Vector getTranslation() {
+            return translation;
+        }
+
+        public Vector getRotation() {
+            return rotation;
+        }
+
+        public Vector getScale() {
+            return scale;
+        }
+    }
+
+    public record Vector(float x, float y, float z) {}
+
+    public void submitDrink(ItemStack stack, PoseStack matrices, SubmitNodeCollector collector, int light, int overlay) {
+        get(stack.getItem()).ifPresent(entry -> {
+            matrices.pushPose();
+            matrices.translate(entry.getContext().getTranslation().x(), entry.getContext().getTranslation().y(), entry.getContext().getTranslation().z());
+            matrices.mulPose(Axis.XP.rotationDegrees(entry.getContext().getRotation().x()));
+            matrices.mulPose(Axis.YP.rotationDegrees(entry.getContext().getRotation().y()));
+            matrices.mulPose(Axis.ZP.rotationDegrees(entry.getContext().getRotation().z()));
+            matrices.scale(entry.getContext().getScale().x(), entry.getContext().getScale().y(), entry.getContext().getScale().z());
+
+            collector.order(0).submitItem(matrices, light, overlay, entry.getStack(), entry.getContext().getType().getDisplayContext());
+            
+            matrices.popPose();
+        });
     }
 }

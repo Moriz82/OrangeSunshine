@@ -1,35 +1,42 @@
-/*
- *  Copyright (c) 2014, Lukas Tenbrink.
- *  * http://lukas.axxim.net
- */
-
 package moriz.orangesunshine.client.render.blocks;
 
-import moriz.orangesunshine.block.entity.FlaskBlockEntity;
 import moriz.orangesunshine.block.entity.MixingTableBlockEntity;
-import moriz.orangesunshine.client.render.FluidBoxRenderer;
-import moriz.orangesunshine.fluid.SimpleFluid;
-import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-public class MixingTableEntityRenderer<T extends MixingTableBlockEntity> implements BlockEntityRenderer<T> {
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Axis;
 
-    public MixingTableEntityRenderer(BlockEntityRendererFactory.Context context) {
+/**
+ * Migrated to 1.21.11 Mojmap with RenderState
+ */
+public class MixingTableEntityRenderer implements BlockEntityRenderer<MixingTableBlockEntity, MixingTableRenderState> {
 
+    public MixingTableEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(T entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
-        matrices.push();
-        matrices.translate(0.5F, 0, 0.5F);
+    public MixingTableRenderState createRenderState() {
+        return new MixingTableRenderState();
+    }
 
-        float scale = 1/8F - 0.001F;
-        matrices.scale(scale, scale, scale);
+    @Override
+    public void extractRenderState(MixingTableBlockEntity entity, MixingTableRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
+        state.item = entity.getRenderStack().copy();
+    }
 
-        matrices.pop();
+    @Override
+    public void submit(MixingTableRenderState state, PoseStack matrices, SubmitNodeCollector collector, CameraRenderState cameraState) {
+        if (!state.item.isEmpty()) {
+            matrices.pushPose();
+            matrices.translate(0.5f, 1.0f, 0.5f);
+            matrices.scale(0.5f, 0.5f, 0.5f);
+            matrices.mulPose(Axis.XP.rotationDegrees(90));
+            collector.order(0).submitItem(matrices, state.lightCoords, state.overlayCoords, state.item, ItemDisplayContext.FIXED);
+            matrices.popPose();
+        }
     }
 }

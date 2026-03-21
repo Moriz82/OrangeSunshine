@@ -1,63 +1,72 @@
-package moriz.orangesunshine.client.render.blocks;
+/*
+ *  Copyright (c) 2014, Lukas Tenbrink.
+ *  * http://lukas.axxim.net
+ */
 
-import java.util.Random;
+package moriz.orangesunshine.client.render.blocks;
 
 import moriz.orangesunshine.block.BottleRackBlock;
 import moriz.orangesunshine.block.entity.BottleRackBlockEntity;
-import moriz.orangesunshine.client.render.PlacedDrinksModelProvider;
-import moriz.orangesunshine.client.render.RenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererFactory;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Direction.Axis;
-import net.minecraft.util.math.RotationAxis;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Axis;
+import java.util.ArrayList;
 
 /**
- * Created by lukas on 16.11.14.
- * Updated by Sollace on 6 Jan 2023
+ * Migrated to 1.21.11 Mojmap with RenderState
  */
-public class BottleRackBlockEntityRenderer implements BlockEntityRenderer<BottleRackBlockEntity> {
-    public BottleRackBlockEntityRenderer(BlockEntityRendererFactory.Context context) {
+public class BottleRackBlockEntityRenderer implements BlockEntityRenderer<BottleRackBlockEntity, BottleRackRenderState> {
 
+    public BottleRackBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(BottleRackBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertices, int light, int overlay) {
-        matrices.push();
-        matrices.translate(0.5F, 0.5F, 0.5F);
-        Direction direction = entity.getCachedState().get(BottleRackBlock.FACING);
-        if (direction.getAxis() == Axis.X) {
-            direction = direction.getOpposite();
+    public BottleRackRenderState createRenderState() {
+        return new BottleRackRenderState();
+    }
+
+    @Override
+    public void extractRenderState(BottleRackBlockEntity entity, BottleRackRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
+        state.facing = entity.getBlockState().getValue(BottleRackBlock.FACING);
+        state.items.clear();
+        for (int i = 0; i < entity.getContainerSize(); i++) {
+            state.items.add(entity.getItem(i).copy());
         }
-        float facing = direction.asRotation() + 90;
+    }
 
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(facing));
-        matrices.translate(0.14F, -0.55F, -0.8F);
-        matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(-90));
+    @Override
+    public void submit(BottleRackRenderState state, PoseStack matrices, SubmitNodeCollector collector, CameraRenderState cameraState) {
+        matrices.pushPose();
+        matrices.translate(0.5F, 0.5F, 0.5F);
+        matrices.mulPose(Axis.YP.rotationDegrees(180 - state.facing.toYRot()));
+        matrices.translate(-0.5F, -0.5F, -0.5F);
 
-        Random rng = RenderUtil.random(entity.getPos().asLong());
+        for (int i = 0; i < state.items.size(); i++) {
+            ItemStack stack = state.items.get(i);
+            if (!stack.isEmpty()) {
+                int x = i % 3;
+                int y = i / 3;
 
-        final float spacing = 0.3F;
-
-        for (int i = 0; i < entity.size(); i++) {
-            ItemStack bottle = entity.getStack(i);
-            float rot = rng.nextFloat() - 0.5F;
-            if (!bottle.isEmpty()) {
-                matrices.push();
-                matrices.translate((1 - (i / 3)) * spacing, 0, (i % 3) * spacing);
-                float rotPoint = 1F;
-                matrices.translate(0, rotPoint, rotPoint * -1.2F);
-                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rot * 4));
-                matrices.translate(0, -rotPoint, -rotPoint * -1.2F);
-
-                PlacedDrinksModelProvider.INSTANCE.renderDrink(bottle, matrices, vertices, light, overlay);
-
-                matrices.pop();
+                matrices.pushPose();
+                matrices.translate(
+                        0.5F - (x - 1) * 5F / 16F,
+                        0.5F - (y - 1) * 5F / 16F,
+                        0.5F
+                );
+                matrices.scale(0.4F, 0.4F, 0.4F);
+                matrices.mulPose(Axis.XP.rotationDegrees(90));
+                
+                collector.order(0).submitItem(matrices, state.lightCoords, state.overlayCoords, stack, ItemDisplayContext.FIXED);
+                matrices.popPose();
             }
         }
-        matrices.pop();
+
+        matrices.popPose();
     }
 }
