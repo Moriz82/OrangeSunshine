@@ -9,7 +9,7 @@ public class WrapperKaleidoscope extends ShaderWrapper<ShaderKaleidoscope>
 {
     public WrapperKaleidoscope(String utils)
     {
-        super(new ShaderKaleidoscope(OrangeSunshine.logger), getRL("shaderBasic.vert"), getRL("shaderKaleidoscope.frag"), utils);
+        super(new ShaderKaleidoscope(OrangeSunshine.logger), getRL("shaderBasic.vert"), getRL("shaderkaleidoscope.frag"), utils);
     }
 
     @Override

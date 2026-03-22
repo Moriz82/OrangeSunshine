@@ -9,7 +9,7 @@ public class WrapperRecursion extends ShaderWrapper<ShaderRecursion>
 {
     public WrapperRecursion(String utils)
     {
-        super(new ShaderRecursion(OrangeSunshine.logger), getRL("shaderBasic.vert"), getRL("shaderRecursion.frag"), utils);
+        super(new ShaderRecursion(OrangeSunshine.logger), getRL("shaderBasic.vert"), getRL("shaderrecursion.frag"), utils);
     }
 
     @Override
