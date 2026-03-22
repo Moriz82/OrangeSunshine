@@ -77,9 +77,13 @@ public final class DrugDebugHud {
         y += 2;
 
         // ── SECTION 3: SHADER STATUS ─────────────────────────────────────
-        gui.drawString(mc.font, "§c=== SHADER STATUS ===", x, y, 0xFFFFFF); y += LINE;
-        gui.drawString(mc.font, "§cSTUB §7- no GL effects run", x, y, 0xFF4444); y += LINE;
-        gui.drawString(mc.font, "§7PostChain needs 1.21.11 port", x, y, 0x888888); y += LINE;
+        gui.drawString(mc.font, "§b=== SHADER STATUS ===", x, y, 0xFFFFFF); y += LINE;
+        int shaderCount = DrugRenderer.INSTANCE.getPostEffects().getShaderCount();
+        if (shaderCount > 0) {
+            gui.drawString(mc.font, String.format("§a%d PostChain(s) loaded", shaderCount), x, y, 0x55FF55); y += LINE;
+        } else {
+            gui.drawString(mc.font, "§cNo shaders loaded", x, y, 0xFF4444); y += LINE;
+        }
         y += 2;
         gui.drawString(mc.font, "§7[F7] hide", x, y, 0x555555);
     }

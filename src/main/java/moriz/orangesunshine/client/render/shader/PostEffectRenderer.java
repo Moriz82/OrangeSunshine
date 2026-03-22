@@ -17,6 +17,10 @@ public class PostEffectRenderer {
         }
     }
 
+    public int getShaderCount() {
+        return shaders.size();
+    }
+
     public void setupDimensions(int width, int height) {
         shaders.forEach(shader -> shader.setupDimensions(width, height));
     }
