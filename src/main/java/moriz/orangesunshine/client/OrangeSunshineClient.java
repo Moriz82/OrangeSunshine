@@ -38,10 +38,14 @@ public class OrangeSunshineClient implements ClientModInitializer {
         OrangeSunshine.globalDrugProperties = () -> DrugProperties.of((Entity) Minecraft.getInstance().player);
         OrangeSunshine.crossHairTarget = () -> Optional.ofNullable(Minecraft.getInstance().hitResult);
         PSRenderers.bootstrap();
+        OrangeSunshine.LOGGER.info("[OrangeSunshine] RENDERERS_OK");
         PSParticleFactories.bootstrap();
+        OrangeSunshine.LOGGER.info("[OrangeSunshine] PARTICLES_OK");
         PSModelPredicates.bootstrap();
         PSScreens.bootstrap();
         PSShaders.bootstrap();
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(ShaderLoader.POST_EFFECTS);
+        OrangeSunshine.LOGGER.info("[OrangeSunshine] SHADERS_OK");
+        OrangeSunshine.LOGGER.info("[OrangeSunshine] CLIENT_SMOKE_OK — client bootstrap finished (rendering, particles, shaders registered)");
     }
 }

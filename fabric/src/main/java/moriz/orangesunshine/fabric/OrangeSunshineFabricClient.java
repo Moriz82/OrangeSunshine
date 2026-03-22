@@ -1,11 +1,15 @@
 package moriz.orangesunshine.fabric;
 
+import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.fabric.network.FabricS2CNetworking;
 import net.fabricmc.api.ClientModInitializer;
 
 public final class OrangeSunshineFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        FabricS2CNetworking.registerClientReceivers();
+        OrangeSunshine.LOGGER.info("[OrangeSunshine] S2C_RECEIVERS_REGISTERED");
         new OrangeSunshineClient().onInitializeClient();
 
         // TODO: Item tint sources (CompoundItem/MixtureItem colors) are now data-driven
