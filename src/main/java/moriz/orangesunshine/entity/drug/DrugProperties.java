@@ -145,6 +145,11 @@ public class DrugProperties implements NbtSerialisable {
         getDrug(type).addToDesiredValue(effect);
         PSCriteria.DRUG_EFFECTS_CHANGED.trigger(this);
         markDirty();
+        OrangeSunshine.LOGGER.info("[OrangeSunshine] addToDrug {} +{} → desiredNow={} side={}",
+                type.id().getPath(),
+                String.format("%.4f", effect),
+                String.format("%.4f", getDrugValue(type)),
+                entity.level().isClientSide() ? "CLIENT" : "SERVER");
     }
 
     public void setDrugValue(DrugType type, double effect) {
@@ -250,6 +255,27 @@ public class DrugProperties implements NbtSerialisable {
         changeDrugModifierMultiply(entity, Attributes.MOVEMENT_SPEED, getModifier(Drug.SPEED));
         changeDrugModifierMultiply(entity, Attributes.ATTACK_SPEED, getModifier(Drug.SPEED));
 
+        // Verbose periodic log: every 100 ticks (5 s) log non-zero drugs + pending influence count
+        if (entity.tickCount % 100 == 0) {
+            long nonZero = drugs.values().stream().filter(d -> d.getActiveValue() > 0.001).count();
+            if (nonZero > 0 || !influences.isEmpty()) {
+                OrangeSunshine.LOGGER.info("[OrangeSunshine] tick={} side={} activeDrugs={} pendingInfluences={}",
+                        entity.tickCount,
+                        entity.level().isClientSide() ? "CLIENT" : "SERVER",
+                        nonZero, influences.size());
+                drugs.forEach((type, drug) -> {
+                    if (drug.getActiveValue() > 0.001) {
+                        OrangeSunshine.LOGGER.info("[OrangeSunshine]   {} act={}", type.id().getPath(),
+                                String.format("%.4f", drug.getActiveValue()));
+                    }
+                });
+                influences.forEach(inf -> OrangeSunshine.LOGGER.info("[OrangeSunshine]   influence {} delay={} remaining={}",
+                        inf.getDrugType() != null ? inf.getDrugType().id().getPath() : "null",
+                        inf.getDelay(),
+                        String.format("%.4f", inf.getMaxInfluence())));
+            }
+        }
+
         if (dirty) {
             dirty = false;
             sendCapabilities();
@@ -264,6 +290,16 @@ public class DrugProperties implements NbtSerialisable {
 
     public void sendCapabilities() {
         if (!entity.level().isClientSide() && entity instanceof ServerPlayer serverPlayer) {
+            // log non-zero drug values being synced
+            drugs.forEach((type, drug) -> {
+                if (drug.getActiveValue() > 0.001 || ((drug instanceof moriz.orangesunshine.entity.drug.type.SimpleDrug sd) && sd.getDesiredValue() > 0.001)) {
+                    OrangeSunshine.LOGGER.info("[OrangeSunshine] S2C sync {} act={} des={}",
+                            type.id().getPath(),
+                            String.format("%.3f", drug.getActiveValue()),
+                            (drug instanceof moriz.orangesunshine.entity.drug.type.SimpleDrug sd2)
+                                    ? String.format("%.3f", sd2.getDesiredValue()) : "?");
+                }
+            });
             Channel.UPDATE_DRUG_PROPERTIES.sendToSurroundingPlayers(new MsgDrugProperties(this), entity);
             Channel.UPDATE_DRUG_PROPERTIES.sendToPlayer(new MsgDrugProperties(this), serverPlayer);
         }

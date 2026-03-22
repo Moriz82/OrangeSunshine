@@ -7,6 +7,7 @@ package moriz.orangesunshine.client.render;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.client.render.effect.*;
 import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
 import moriz.orangesunshine.entity.drug.Drug;
@@ -20,7 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -81,6 +82,32 @@ public class DrugRenderer {
         }
 
         screenEffects.update(mc.getDeltaTracker().getGameTimeDeltaTicks());
+
+        if (OrangeSunshineClient.getConfig().visual.visualDebugLogging
+                && entity.tickCount % 40 == 0
+                && entity.level().isClientSide()) {
+            float max = 0;
+            DrugType maxType = DrugType.ALCOHOL;
+            java.util.StringJoiner allDrugs = new java.util.StringJoiner(", ");
+            for (DrugType t : DrugType.REGISTRY) {
+                float v = drugProperties.getDrugValue(t);
+                if (v > 0.001f) {
+                    allDrugs.add(t.id().getPath() + "=" + String.format("%.3f", v));
+                }
+                if (v > max) {
+                    max = v;
+                    maxType = t;
+                }
+            }
+            OrangeSunshine.LOGGER.info(
+                    "[OrangeSunshine] drug client tick — max={} ({}) wobble={} tremble={} | all=[{}]",
+                    String.format("%.3f", max),
+                    maxType.id().getPath(),
+                    String.format("%.3f", drugProperties.getModifier(Drug.VIEW_WOBBLYNESS)),
+                    String.format("%.3f", drugProperties.getModifier(Drug.VIEW_TREMBLE_STRENGTH)),
+                    allDrugs
+            );
+        }
     }
 
     // ── screen / camera distortion ────────────────────────────────────────────
