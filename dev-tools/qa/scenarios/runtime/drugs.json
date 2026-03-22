@@ -1,0 +1,86 @@
+{
+  "name": "orangesunshine-drugs-runtime",
+  "steps": [
+    {
+      "id": "server-list",
+      "command": "list",
+      "must_match": "There are .* of a max of .* players online"
+    },
+    {
+      "id": "registry-joint",
+      "command": "give @a orangesunshine:joint 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-cannabis-leaf",
+      "command": "give @a orangesunshine:cannabis_leaf 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-dried-cannabis",
+      "command": "give @a orangesunshine:dried_cannabis_leaf 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-flask",
+      "command": "give @a orangesunshine:flask 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-wine-grapes",
+      "command": "give @a orangesunshine:wine_grapes 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-peyote-cactus",
+      "command": "give @a orangesunshine:peyote_cactus 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "setblock-mixing-table",
+      "command": "setblock 0 64 0 orangesunshine:mixing_table",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-mash-tub",
+      "command": "setblock 1 64 0 orangesunshine:mash_tub",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-mortar",
+      "command": "setblock 2 64 0 orangesunshine:mortar_pestle",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-drying-table",
+      "command": "setblock 3 64 0 orangesunshine:drying_table",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-barrel",
+      "command": "setblock 4 64 0 orangesunshine:barrel[facing=north]",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-flask-block",
+      "command": "setblock 5 64 0 orangesunshine:flask_block",
+      "acceptable": ["Set the block", "Updated", "No such block"]
+    },
+    {
+      "id": "time-day",
+      "command": "time set day",
+      "acceptable": ["Set time to Day", "Set the time"]
+    },
+    {
+      "id": "weather-clear",
+      "command": "weather clear",
+      "acceptable": ["Weather changed", "Set the weather"]
+    }
+  ]
+}
