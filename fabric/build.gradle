@@ -7,8 +7,8 @@ def fabricOwnedSources = [
         'moriz/orangesunshine/fabric/**',
 
         // Client sources (from ../src/main/java)
-        'moriz/orangesunshine/compat/**',
-        'moriz/orangesunshine/datagen/**',
+        // 'moriz/orangesunshine/compat/**',
+        // 'moriz/orangesunshine/datagen/**',
 
         'moriz/orangesunshine/client/OrangeSunshineClient.java',
         'moriz/orangesunshine/client/PSClientConfig.java',
@@ -18,6 +18,7 @@ def fabricOwnedSources = [
         'moriz/orangesunshine/client/sound/**',
 
         'moriz/orangesunshine/client/render/DrugEffectInterpreter.java',
+        'moriz/orangesunshine/client/render/ItemSubmitHelper.java',
         'moriz/orangesunshine/client/render/DrugRenderer.java',
         'moriz/orangesunshine/client/render/FluidBoxRenderer.java',
         'moriz/orangesunshine/client/render/GLStateProxy.java',
@@ -119,4 +120,29 @@ remapJar {
 
 jar {
     archiveClassifier.set('dev')
+}
+
+tasks.register('smokeClient', Exec) {
+    group = 'verification'
+    description = 'Runs :fabric:runClient with a timeout and checks logs for CLIENT_SMOKE_OK (needs xvfb-run on headless Linux).'
+    workingDir = rootProject.projectDir
+    commandLine 'bash', new File(rootProject.projectDir, 'dev-tools/run_client_smoke.sh').absolutePath
+}
+
+tasks.register('visualSmokeCompile', Exec) {
+    group = 'verification'
+    description = 'Fast compile-only check: runs :fabric:compileJava via the visual test orchestrator. Exit 0 = pass.'
+    workingDir = rootProject.projectDir
+    commandLine 'python3',
+        new File(rootProject.projectDir, 'dev-tools/visual_test/run_visual_tests.py').absolutePath,
+        '--tier', 'compile'
+}
+
+tasks.register('visualSmokeTest', Exec) {
+    group = 'verification'
+    description = 'Compile + headless client bootstrap smoke test. Requires xvfb-run on Linux CI. Exit 0 = pass.'
+    workingDir = rootProject.projectDir
+    commandLine 'python3',
+        new File(rootProject.projectDir, 'dev-tools/visual_test/run_visual_tests.py').absolutePath,
+        '--tier', 'smoke'
 }
