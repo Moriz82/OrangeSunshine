@@ -1,0 +1,3 @@
+# Optional: only needed for screenshot_gate.py --compare
+# Uncomment to install:
+# Pillow>=10.0.0
