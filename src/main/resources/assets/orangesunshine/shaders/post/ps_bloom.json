@@ -1,22 +1,31 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "ps_bloom",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "uniforms": [
-                { "name": "pixelSize", "values": [ 1.0, 1.0 ] },
-                { "name": "vertical", "values": [ 1.0 ] },
-                { "name": "totalAlpha", "values": [ 1.0 ] }
-            ]
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/ps_bloom",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"}
+            ],
+            "output": "swap",
+            "uniforms": {
+                "PsBloomConfig": [
+                    {"name": "PixelSize", "type": "vec2", "value": [0.001, 0.001]},
+                    {"name": "Vertical", "type": "float", "value": 0.0},
+                    {"name": "TotalAlpha", "type": "float", "value": 1.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

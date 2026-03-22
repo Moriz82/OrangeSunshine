@@ -1,29 +1,39 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "depth_of_field",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "auxtargets": [
-                { "name": "DepthSampler", "id": "minecraft:main:depth" }
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/depth_of_field",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"},
+                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true}
             ],
-            "uniforms": [
-              { "name": "pixelSize", "values": [ 1.0, 1.0 ] },
-              { "name": "focalPointNear", "values": [ 0.0 ] },
-              { "name": "focalPointFar", "values": [ 0.0 ] },
-              { "name": "focalBlurNear", "values": [ 0.0 ] },
-              { "name": "focalBlurFar", "values": [ 0.0 ] },
-              { "name": "vertical", "values": [ 1.0 ] },
-              { "name": "depthRange", "values": [ 0.0, 1.0 ] }
-            ]
+            "output": "swap",
+            "uniforms": {
+                "DepthOfFieldConfig": [
+                    {"name": "PixelSize", "type": "vec2", "value": [0.001, 0.001]},
+                    {"name": "Vertical", "type": "float", "value": 0.0},
+                    {"name": "FocalPointNear", "type": "float", "value": 0.0},
+                    {"name": "FocalPointFar", "type": "float", "value": 0.0},
+                    {"name": "FocalBlurNear", "type": "float", "value": 0.0},
+                    {"name": "FocalBlurFar", "type": "float", "value": 0.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0},
+                    {"name": "DepthRange", "type": "vec2", "value": [0.05, 256.0]},
+                    {"name": "_pad1", "type": "float", "value": 0.0},
+                    {"name": "_pad2", "type": "float", "value": 0.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

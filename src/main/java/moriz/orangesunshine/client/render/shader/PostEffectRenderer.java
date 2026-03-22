@@ -2,8 +2,6 @@ package moriz.orangesunshine.client.render.shader;
 
 import java.util.*;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import moriz.orangesunshine.client.OrangeSunshineClient;
 
 public class PostEffectRenderer {
@@ -11,10 +9,6 @@ public class PostEffectRenderer {
 
     public void render(float tickDelta) {
         if (OrangeSunshineClient.getConfig().visual.shader2DEnabled) {
-            RenderSystem.disableBlend();
-            RenderSystem.disableDepthTest();
-            RenderSystem.resetTextureMatrix();
-
             if (shaders.size() == 1) {
                 shaders.get(0).render(tickDelta);
             } else {

@@ -1,23 +1,35 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "ps_blur_noise",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "uniforms": [
-                { "name": "pixelSize", "values": [ 1.0, 1.0 ] },
-                { "name": "strength", "values": [ 0.0 ] },
-                { "name": "seed", "values": [ 0.0 ] },
-                { "name": "totalAlpha", "values": [ 1.0 ] }
-            ]
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/ps_blur_noise",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"}
+            ],
+            "output": "swap",
+            "uniforms": {
+                "PsBlurNoiseConfig": [
+                    {"name": "PixelSize", "type": "vec2", "value": [0.001, 0.001]},
+                    {"name": "TotalAlpha", "type": "float", "value": 1.0},
+                    {"name": "Seed", "type": "float", "value": 0.0},
+                    {"name": "Strength", "type": "float", "value": 0.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0},
+                    {"name": "_pad1", "type": "float", "value": 0.0},
+                    {"name": "_pad2", "type": "float", "value": 0.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

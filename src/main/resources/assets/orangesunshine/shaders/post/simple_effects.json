@@ -1,39 +1,53 @@
 {
-    "targets": [
-        "temp",
-        "swap"
-    ],
+    "targets": {
+        "temp": {},
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "simple_effects",
-            "intarget": "minecraft:main",
-            "outtarget": "temp",
-            "uniforms": [
-                { "name": "ticks", "values": [ 1.0 ] },
-                { "name": "slowColorRotation", "values": [ 0.0 ] },
-                { "name": "quickColorRotation", "values": [ 0.0 ] },
-                { "name": "colorIntensification", "values": [ 0.0 ] },
-                { "name": "desaturation", "values": [ 0.0 ] },
-                { "name": "inversion", "values": [ 0.0 ] }
-            ]
-        },
-        {
-            "name": "simple_effects_depth",
-            "intarget": "temp",
-            "outtarget": "swap",
-            "auxTargets": [
-                { "name": "DepthSampler", "id": "minecraft:main:depth" }
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/simple_effects",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"}
             ],
-            "uniforms": [
-              { "name": "ticks", "values": [ 0.0 ] },
-              { "name": "colorSafeMode", "values": [ 0.0 ] },
-              { "name": "worldColorization", "values": [ 0.0, 0.0, 0.0, 0.0 ] }
-            ]
+            "output": "temp",
+            "uniforms": {
+                "SimpleEffectsConfig": [
+                    {"name": "Ticks", "type": "float", "value": 0.0},
+                    {"name": "SlowColorRotation", "type": "float", "value": 0.0},
+                    {"name": "QuickColorRotation", "type": "float", "value": 0.0},
+                    {"name": "ColorIntensification", "type": "float", "value": 0.0},
+                    {"name": "Desaturation", "type": "float", "value": 0.0},
+                    {"name": "Inversion", "type": "float", "value": 0.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/simple_effects_depth",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "temp"},
+                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true}
+            ],
+            "output": "swap",
+            "uniforms": {
+                "SimpleEffectsDepthConfig": [
+                    {"name": "Ticks", "type": "float", "value": 0.0},
+                    {"name": "ColorSafeMode", "type": "float", "value": 0.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0},
+                    {"name": "_pad1", "type": "float", "value": 0.0},
+                    {"name": "WorldColorization", "type": "vec4", "value": [0.0, 0.0, 0.0, 0.0]}
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

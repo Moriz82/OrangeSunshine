@@ -1,26 +1,33 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "heat_distortion",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "auxtargets": [
-                { "name": "DepthSampler", "id": "minecraft:main:depth" },
-                { "name": "NoiseSampler", "id": "orangesunshine/heat_distortion_noise", "width": 128, "height": 128, "bilinear": false }
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/heat_distortion",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"},
+                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true},
+                {"sampler_name": "NoiseSampler", "id": "minecraft:textures/effect/orangesunshine/heat_distortion_noise.png", "width": 128, "height": 128, "bilinear": false}
             ],
-            "uniforms": [
-              { "name": "totalAlpha", "values": [ 1.0 ] },
-              { "name": "ticks", "values": [ 1.0 ] },
-              { "name": "strength", "values": [ 1.0 ] }
-            ]
+            "output": "swap",
+            "uniforms": {
+                "HeatDistortionConfig": [
+                    {"name": "PixelSize", "type": "vec2", "value": [0.001, 0.001]},
+                    {"name": "Strength", "type": "float", "value": 0.0},
+                    {"name": "Ticks", "type": "float", "value": 0.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

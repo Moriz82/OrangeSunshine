@@ -1,28 +1,36 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "distortion_map",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "auxtargets": [
-                { "name": "DepthSampler", "id": "minecraft:main:depth" },
-                { "name": "OverlaySampler1", "id": "orangesunshine/water_distortion", "width": 800, "height": 600, "bilinear": false },
-                { "name": "OverlaySampler2", "id": "orangesunshine/water_distortion", "width": 800, "height": 600, "bilinear": false }
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/distortion_map",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"},
+                {"sampler_name": "OverlaySampler1", "id": "minecraft:textures/effect/orangesunshine/water_distortion.png", "width": 800, "height": 600, "bilinear": false},
+                {"sampler_name": "OverlaySampler2", "id": "minecraft:textures/effect/orangesunshine/water_distortion.png", "width": 800, "height": 600, "bilinear": false}
             ],
-            "uniforms": [
-              { "name": "totalAlpha", "values": [ 1.0 ] },
-              { "name": "strength", "values": [ 0.0 ] },
-              { "name": "texTranslation0", "values": [ 0.0, 0.0 ] },
-              { "name": "texTranslation1", "values": [ 0.0, 0.0 ] }
-            ]
+            "output": "swap",
+            "uniforms": {
+                "DistortionMapConfig": [
+                    {"name": "TotalAlpha", "type": "float", "value": 1.0},
+                    {"name": "Strength", "type": "float", "value": 0.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0},
+                    {"name": "_pad1", "type": "float", "value": 0.0},
+                    {"name": "TexTranslation0", "type": "vec2", "value": [0.0, 0.0]},
+                    {"name": "TexTranslation1", "type": "vec2", "value": [0.0, 0.0]}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

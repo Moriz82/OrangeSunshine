@@ -1,22 +1,32 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "double_vision",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "uniforms": [
-              { "name": "totalAlpha", "values": [ 1.0 ] },
-              { "name": "distance", "values": [ 0.0 ] },
-              { "name": "stretch", "values": [ 0.0 ] }
-            ]
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/double_vision",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"}
+            ],
+            "output": "swap",
+            "uniforms": {
+                "DoubleVisionConfig": [
+                    {"name": "TotalAlpha", "type": "float", "value": 1.0},
+                    {"name": "Distance", "type": "float", "value": 0.0},
+                    {"name": "Stretch", "type": "float", "value": 1.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }

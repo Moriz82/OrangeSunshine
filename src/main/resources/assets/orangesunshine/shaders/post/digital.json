@@ -1,29 +1,40 @@
 {
-    "targets": [
-        "swap"
-    ],
+    "targets": {
+        "swap": {}
+    },
     "passes": [
         {
-            "name": "digital_depth",
-            "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "auxtargets": [
-                { "name": "DepthSampler", "id": "minecraft:main:depth" },
-                { "name": "AsciiSampler", "id": "orangesunshine/bits", "width": 128, "height": 128, "bilinear": false }
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/digital_depth",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "minecraft:main"},
+                {"sampler_name": "AsciiSampler", "id": "minecraft:textures/effect/orangesunshine/bits.png", "width": 128, "height": 128, "bilinear": false},
+                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true}
             ],
-            "uniforms": [
-              { "name": "newResolution", "values": [ 1.0, 1.0 ] },
-              { "name": "textProgress", "values": [ 0.0 ] },
-              { "name": "maxColors", "values": [ 0.0 ] },
-              { "name": "saturation", "values": [ 0.0 ] },
-              { "name": "totalAlpha", "values": [ 0.0 ] },
-              { "name": "depthRange", "values": [ 0.0, 1.0 ] }
-            ]
+            "output": "swap",
+            "uniforms": {
+                "DigitalConfig": [
+                    {"name": "NewResolution", "type": "vec2", "value": [1.0, 1.0]},
+                    {"name": "TextProgress", "type": "float", "value": 0.0},
+                    {"name": "MaxColors", "type": "float", "value": -1.0},
+                    {"name": "Saturation", "type": "float", "value": 1.0},
+                    {"name": "TotalAlpha", "type": "float", "value": 0.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0},
+                    {"name": "_pad1", "type": "float", "value": 0.0},
+                    {"name": "DepthRange", "type": "vec2", "value": [0.05, 256.0]},
+                    {"name": "_pad2", "type": "float", "value": 0.0},
+                    {"name": "_pad3", "type": "float", "value": 0.0}
+                ]
+            }
         },
         {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "minecraft:main"
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "InSampler", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {}
         }
     ]
 }
