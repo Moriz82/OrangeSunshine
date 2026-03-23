@@ -59,8 +59,15 @@ public class DebugOverlay {
         PostEffectRenderer post = DrugRenderer.INSTANCE.getPostEffects();
         lines.add(" Loaded chains: " + post.getShaderCount());
         lines.add(" 2D shaders: " + (OrangeSunshineClient.getConfig().visual.shader2DEnabled ? "ON" : "OFF"));
+        lines.add(" debug disable underwater: " + (OrangeSunshineClient.getConfig().visual.debugDisableUnderwaterDistortion ? "ON" : "OFF"));
+        lines.add(" debug disable simple_depth: " + (OrangeSunshineClient.getConfig().visual.debugDisableSimpleEffectsDepth ? "ON" : "OFF"));
         lines.add(" Heat dist: " + String.format("%.3f", DrugRenderer.INSTANCE.getEnvironmentalEffects().getHeatDistortion()));
         lines.add(" Water dist: " + String.format("%.3f", DrugRenderer.INSTANCE.getEnvironmentalEffects().getWaterDistortion()));
+        if (OrangeSunshineClient.getConfig().visual.visualDebugLogging) {
+            for (String shaderState : post.getDebugSnapshots()) {
+                lines.add(" " + shaderState);
+            }
+        }
 
         int y = 10;
         for (String line : lines) {

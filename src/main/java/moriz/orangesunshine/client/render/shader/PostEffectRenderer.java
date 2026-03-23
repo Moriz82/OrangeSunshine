@@ -32,6 +32,10 @@ public class PostEffectRenderer {
         return shaders.size();
     }
 
+    public List<String> getDebugSnapshots() {
+        return shaders.stream().map(LoadedShader::getDebugSnapshot).toList();
+    }
+
     public void setupDimensions(int width, int height) {
         shaders.forEach(shader -> shader.setupDimensions(width, height));
     }

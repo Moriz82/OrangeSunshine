@@ -7,7 +7,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/distortion_map",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "minecraft:main"},
+                {"sampler_name": "In", "target": "minecraft:main"},
                 {"sampler_name": "OverlaySampler1", "location": "orangesunshine:water_distortion", "width": 800, "height": 600, "bilinear": false},
                 {"sampler_name": "OverlaySampler2", "location": "orangesunshine:water_distortion", "width": 800, "height": 600, "bilinear": false}
             ],
@@ -25,7 +25,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "minecraft:post/blit",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "swap"}
+                {"sampler_name": "In", "target": "swap"}
             ],
             "output": "minecraft:main",
             "uniforms": {

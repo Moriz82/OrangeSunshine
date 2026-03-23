@@ -48,6 +48,9 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("Ticks", FLOAT))))
             .addShader("underwater_distortion", UniformBinding.start()
                     .program("heat_distortion", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
+                        if (OrangeSunshineClient.getConfig().visual.debugDisableUnderwaterDistortion) {
+                            return;
+                        }
                         float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getWaterDistortion();
                         float peyote = ShaderContext.drug(DrugType.PEYOTE) + ShaderContext.drug(DrugType.LSD);
 
@@ -72,9 +75,7 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                          | setter.setIfNonZero("SlowColorRotation", h.getSlowColorRotation(tickDelta))
                          | setter.setIfNonZero("Desaturation", h.getDesaturation(tickDelta))
                          | setter.setIfNonZero("ColorIntensification", h.getColorIntensification(tickDelta))
-                         | setter.setIfNonZero("Inversion", ShaderContext.modifier(Drug.INVERSION_HALLUCINATION_STRENGTH))
-                         | h.getPulseColor(tickDelta)[3] > 0
-                         | h.getContrastColorization(tickDelta)[3] > 0) {
+                         | setter.setIfNonZero("Inversion", ShaderContext.modifier(Drug.INVERSION_HALLUCINATION_STRENGTH))) {
                             setter.set("Ticks", ShaderContext.ticks());
                             pass.run();
                         }
@@ -87,8 +88,24 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("Desaturation", FLOAT),
                             new UboField("Inversion", FLOAT)))
                     .program("simple_effects_depth", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
+                        if (OrangeSunshineClient.getConfig().visual.debugDisableSimpleEffectsDepth) {
+                            return;
+                        }
                         var h = ShaderContext.hallucinations();
-                        var worldColorization = h.getContrastColorization(tickDelta);
+                        float[] worldColorization = h.getContrastColorization(tickDelta);
+                        float lsd = ShaderContext.drug(DrugType.LSD);
+                        float contrastAlpha = Mth.clamp(worldColorization[3], 0, 1);
+                        if (lsd > 0) {
+                            // 1.16.5 did not apply a strong full-screen color tint for LSD;
+                            // keep contrast colorization subtle so it doesn't black/red-breathe.
+                            contrastAlpha *= Mth.clamp(1.0F - lsd * 0.85F, 0.08F, 0.35F);
+                        }
+                        worldColorization = new float[] {
+                                Mth.clamp(worldColorization[0], 0, 1),
+                                Mth.clamp(worldColorization[1], 0, 1),
+                                Mth.clamp(worldColorization[2], 0, 1),
+                                contrastAlpha
+                        };
                         if (h.getQuickColorRotation(tickDelta) > 0
                          | h.getSlowColorRotation(tickDelta) > 0
                          | h.getDesaturation(tickDelta) > 0

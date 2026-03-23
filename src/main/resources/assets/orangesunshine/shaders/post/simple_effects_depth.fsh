@@ -19,9 +19,9 @@ void main() {
     float depth = texture(DepthSampler, texCoord).r;
 
     if (WorldColorization.a > 0.0) {
-        float mix_val = WorldColorization.a;
+        float mix_val = clamp(WorldColorization.a * 0.45, 0.0, 0.35);
         if (ColorSafeMode == 1.0) {
-            mix_val *= clamp((depth - 0.5) * 5.0, 0.0, 1.0);
+            mix_val *= clamp((depth - 0.6) * 3.0, 0.0, 1.0);
         }
         outcolor = mix(outcolor, WorldColorization.rgb, mix_val);
     }

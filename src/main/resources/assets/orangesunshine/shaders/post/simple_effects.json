@@ -8,7 +8,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/simple_effects",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "minecraft:main"}
+                {"sampler_name": "In", "target": "minecraft:main"}
             ],
             "output": "temp",
             "uniforms": {
@@ -26,8 +26,8 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/simple_effects_depth",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "temp"},
-                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true}
+                {"sampler_name": "In", "target": "temp"},
+                {"sampler_name": "Depth", "target": "minecraft:main", "use_depth_buffer": true}
             ],
             "output": "swap",
             "uniforms": {
@@ -42,7 +42,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/blit",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "swap"}
+                {"sampler_name": "In", "target": "swap"}
             ],
             "output": "minecraft:main",
             "uniforms": {

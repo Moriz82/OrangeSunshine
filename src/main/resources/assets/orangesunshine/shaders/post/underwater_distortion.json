@@ -7,9 +7,9 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/heat_distortion",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "minecraft:main"},
-                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true},
-                {"sampler_name": "NoiseSampler", "location": "orangesunshine:heat_distortion_noise", "width": 128, "height": 128, "bilinear": false}
+                {"sampler_name": "In", "target": "minecraft:main"},
+                {"sampler_name": "Depth", "target": "minecraft:main", "use_depth_buffer": true},
+                {"sampler_name": "Noise", "location": "orangesunshine:heat_distortion_noise", "width": 128, "height": 128, "bilinear": false}
             ],
             "output": "swap",
             "uniforms": {
@@ -24,7 +24,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/blit",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "swap"}
+                {"sampler_name": "In", "target": "swap"}
             ],
             "output": "minecraft:main",
             "uniforms": {

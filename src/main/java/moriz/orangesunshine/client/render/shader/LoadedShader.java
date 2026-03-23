@@ -15,7 +15,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import moriz.orangesunshine.client.OrangeSunshineClient;
 import org.joml.Vector3f;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.CachedOrthoProjectionMatrixBuffer;
@@ -31,6 +34,7 @@ import net.minecraft.server.packs.resources.Resource;
 class LoadedShader implements AutoCloseable {
     private static final Gson GSON = new Gson();
     private static final int UBO_DESTINATION_USAGE = GpuBuffer.USAGE_UNIFORM | GpuBuffer.USAGE_COPY_DST | GpuBuffer.USAGE_MAP_WRITE;
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoadedShader.class);
 
     private final UniformBinding.Set bindings;
     /** Resource id of the post JSON; used for GPU buffer debug labels. */
@@ -52,6 +56,7 @@ class LoadedShader implements AutoCloseable {
     private int height;
     private float time;
     private float lastTickDelta;
+    private String lastDebugSnapshot = "idle";
 
     LoadedShader(Minecraft client, Identifier id, UniformBinding.Set bindings) throws IOException {
         this.bindings = bindings;
@@ -163,6 +168,8 @@ class LoadedShader implements AutoCloseable {
         bindings.global.bindUniforms(globalSetter, tickDelta, screenWidth, screenHeight, globalSetter.passRunnable);
 
         CommandEncoder encoder = null;
+        List<String> activePasses = new ArrayList<>();
+        String firstUniformSnapshot = "";
 
         for (int i = 0; i < passes.size() && i < passKeys.size(); i++) {
             PostPass postPass = passes.get(i);
@@ -178,6 +185,12 @@ class LoadedShader implements AutoCloseable {
             }
 
             shouldRender |= setter.shouldRender;
+            if (setter.shouldRender) {
+                activePasses.add(passKey);
+                if (firstUniformSnapshot.isEmpty() && !setter.values.isEmpty()) {
+                    firstUniformSnapshot = buildUniformSnapshot(setter.values);
+                }
+            }
 
             Map<String, GpuBuffer> customUniforms = ((AccessorPostPass) (Object) postPass).orangesunshine$getCustomUniforms();
             if (customUniforms != null
@@ -204,6 +217,21 @@ class LoadedShader implements AutoCloseable {
                 GraphicsResourceAllocator.UNPOOLED
             );
         }
+
+        lastDebugSnapshot = shouldRender
+                ? ("active passes=" + activePasses + (firstUniformSnapshot.isEmpty() ? "" : " ubo=" + firstUniformSnapshot))
+                : "inactive";
+
+        if (OrangeSunshineClient.getConfig().visual.visualDebugLogging) {
+            long tick = ShaderContext.time();
+            if (tick % 40 == 0) {
+                LOGGER.info(
+                        "[OrangeSunshine] shader {} -> {}",
+                        resourceId,
+                        lastDebugSnapshot
+                );
+            }
+        }
     }
 
     public void setupDimensions(int targetsWidth, int targetsHeight) {
@@ -213,6 +241,10 @@ class LoadedShader implements AutoCloseable {
 
     public int getPassCount() {
         return passes.size();
+    }
+
+    public String getDebugSnapshot() {
+        return resourceId.getPath() + ": " + lastDebugSnapshot;
     }
 
     @Override
@@ -274,6 +306,36 @@ class LoadedShader implements AutoCloseable {
                 vals.length > 2 ? vals[2] : 0f,
                 vals.length > 3 ? vals[3] : 0f);
         }
+    }
+
+    private static String buildUniformSnapshot(Map<String, float[]> values) {
+        StringBuilder out = new StringBuilder("{");
+        int written = 0;
+        for (Map.Entry<String, float[]> entry : values.entrySet()) {
+            if (written >= 3) {
+                out.append(", …");
+                break;
+            }
+            if (written > 0) {
+                out.append(", ");
+            }
+            out.append(entry.getKey()).append("=");
+            float[] v = entry.getValue();
+            if (v.length == 1) {
+                out.append(String.format(java.util.Locale.ROOT, "%.3f", v[0]));
+            } else {
+                out.append("[");
+                for (int i = 0; i < Math.min(3, v.length); i++) {
+                    if (i > 0) out.append(",");
+                    out.append(String.format(java.util.Locale.ROOT, "%.3f", v[i]));
+                }
+                if (v.length > 3) out.append(",…");
+                out.append("]");
+            }
+            written++;
+        }
+        out.append("}");
+        return out.toString();
     }
 
     // -------------------------------------------------------------------------

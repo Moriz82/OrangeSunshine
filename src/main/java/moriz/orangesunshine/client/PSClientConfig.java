@@ -69,6 +69,10 @@ public class PSClientConfig {
         public float visualEffectIntensity = 1.0F;
         /** Logs drug sync packets and periodic client drug strength to the game log (for QA). */
         public boolean visualDebugLogging = false;
+        /** Debug: disable the underwater_distortion post chain while isolating blackout issues. */
+        public boolean debugDisableUnderwaterDistortion = false;
+        /** Debug: disable the simple_effects_depth pass while isolating blackout issues. */
+        public boolean debugDisableSimpleEffectsDepth = false;
         /** Master multiplier for drug background music (0–1). */
         public float drugMusicVolume = 1.0F;
         public Vec2 digitalEffectPixelRescale = new Vec2(0.05F, 0.05F);

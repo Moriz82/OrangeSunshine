@@ -1,0 +1,28 @@
+{
+  "name": "visual-drug-effects",
+  "steps": [
+    {
+      "id": "server-list",
+      "command": "list",
+      "must_match": "There are .* of a max of .* players online"
+    },
+    {
+      "id": "drug-set-lsd-max",
+      "command": "drug @a set orangesunshine:lsd 1.0",
+      "acceptable": ["No player was found", "no players online", "success", "set", "lsd"],
+      "must_not_match": "Unknown command|unrecognized"
+    },
+    {
+      "id": "drug-set-peyote",
+      "command": "drug @a set orangesunshine:peyote 0.8",
+      "acceptable": ["No player was found", "no players online", "success", "set", "peyote"],
+      "must_not_match": "Unknown command|unrecognized"
+    },
+    {
+      "id": "drug-get-check",
+      "command": "drug @a get",
+      "acceptable": ["No player was found", "no players online", "lsd", "peyote", "sober"],
+      "must_not_match": "Unknown command|unrecognized"
+    }
+  ]
+}

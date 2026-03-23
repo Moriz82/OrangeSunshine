@@ -7,7 +7,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/double_vision",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "minecraft:main"}
+                {"sampler_name": "In", "target": "minecraft:main"}
             ],
             "output": "swap",
             "uniforms": {
@@ -23,7 +23,7 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/blit",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "swap"}
+                {"sampler_name": "In", "target": "swap"}
             ],
             "output": "minecraft:main",
             "uniforms": {}

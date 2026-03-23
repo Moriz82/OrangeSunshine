@@ -9,7 +9,7 @@
             "inputs": [
                 {"sampler_name": "DiffuseSampler", "target": "minecraft:main"},
                 {"sampler_name": "Ascii", "location": "orangesunshine:bits", "width": 128, "height": 128, "bilinear": false},
-                {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true}
+                {"sampler_name": "Depth", "target": "minecraft:main", "use_depth_buffer": true}
             ],
             "output": "swap",
             "uniforms": {
