@@ -7,8 +7,8 @@
             "vertex_shader": "minecraft:core/screenquad",
             "fragment_shader": "orangesunshine:post/digital_depth",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "minecraft:main"},
-                {"sampler_name": "AsciiSampler", "id": "minecraft:textures/effect/orangesunshine/bits.png", "width": 128, "height": 128, "bilinear": false},
+                {"sampler_name": "DiffuseSampler", "target": "minecraft:main"},
+                {"sampler_name": "Ascii", "location": "orangesunshine:bits", "width": 128, "height": 128, "bilinear": false},
                 {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true}
             ],
             "output": "swap",
@@ -19,22 +19,22 @@
                     {"name": "MaxColors", "type": "float", "value": -1.0},
                     {"name": "Saturation", "type": "float", "value": 1.0},
                     {"name": "TotalAlpha", "type": "float", "value": 0.0},
-                    {"name": "_pad0", "type": "float", "value": 0.0},
-                    {"name": "_pad1", "type": "float", "value": 0.0},
-                    {"name": "DepthRange", "type": "vec2", "value": [0.05, 256.0]},
-                    {"name": "_pad2", "type": "float", "value": 0.0},
-                    {"name": "_pad3", "type": "float", "value": 0.0}
+                    {"name": "DepthRange", "type": "vec2", "value": [0.05, 256.0]}
                 ]
             }
         },
         {
             "vertex_shader": "minecraft:core/screenquad",
-            "fragment_shader": "orangesunshine:post/blit",
+            "fragment_shader": "minecraft:post/blit",
             "inputs": [
-                {"sampler_name": "InSampler", "target": "swap"}
+                {"sampler_name": "DiffuseSampler", "target": "swap"}
             ],
             "output": "minecraft:main",
-            "uniforms": {}
+            "uniforms": {
+                "BlitConfig": [
+                    {"name": "ColorModulate", "type": "vec4", "value": [1.0, 1.0, 1.0, 1.0]}
+                ]
+            }
         }
     ]
 }

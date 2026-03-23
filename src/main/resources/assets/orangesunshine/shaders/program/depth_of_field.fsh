@@ -30,13 +30,13 @@ void main() {
   float focalDepth = 0.0;
   if (depth < focalPointNear) {
     focalDepth = (focalPointNear - depth) / focalPointNear * focalBlurNear;
-  } else if (depth > focalPointFar) {
+  } else if (depth> focalPointFar) {
     focalDepth = (depth - focalPointFar) / focalPointFar * focalBlurFar;
   }
 
   focalDepth = min(focalDepth, 1.0);
 
-  if (focalDepth > 0.0) {
+  if (focalDepth> 0.0) {
     float xMul = (vertical == 0) ? pixelSize.x : 0.0;
     float yMul = (vertical == 1) ? pixelSize.y : 0.0;
 

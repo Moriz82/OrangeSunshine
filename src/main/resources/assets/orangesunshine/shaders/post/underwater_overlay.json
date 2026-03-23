@@ -8,16 +8,14 @@
             "fragment_shader": "orangesunshine:post/distortion_map",
             "inputs": [
                 {"sampler_name": "InSampler", "target": "minecraft:main"},
-                {"sampler_name": "OverlaySampler1", "id": "minecraft:textures/effect/orangesunshine/water_distortion.png", "width": 800, "height": 600, "bilinear": false},
-                {"sampler_name": "OverlaySampler2", "id": "minecraft:textures/effect/orangesunshine/water_distortion.png", "width": 800, "height": 600, "bilinear": false}
+                {"sampler_name": "OverlaySampler1", "location": "orangesunshine:water_distortion", "width": 800, "height": 600, "bilinear": false},
+                {"sampler_name": "OverlaySampler2", "location": "orangesunshine:water_distortion", "width": 800, "height": 600, "bilinear": false}
             ],
             "output": "swap",
             "uniforms": {
                 "DistortionMapConfig": [
                     {"name": "TotalAlpha", "type": "float", "value": 1.0},
                     {"name": "Strength", "type": "float", "value": 0.0},
-                    {"name": "_pad0", "type": "float", "value": 0.0},
-                    {"name": "_pad1", "type": "float", "value": 0.0},
                     {"name": "TexTranslation0", "type": "vec2", "value": [0.0, 0.0]},
                     {"name": "TexTranslation1", "type": "vec2", "value": [0.0, 0.0]}
                 ]
@@ -25,12 +23,16 @@
         },
         {
             "vertex_shader": "minecraft:core/screenquad",
-            "fragment_shader": "orangesunshine:post/blit",
+            "fragment_shader": "minecraft:post/blit",
             "inputs": [
                 {"sampler_name": "InSampler", "target": "swap"}
             ],
             "output": "minecraft:main",
-            "uniforms": {}
+            "uniforms": {
+                "BlitConfig": [
+                    {"name": "ColorModulate", "type": "vec4", "value": [1.0, 1.0, 1.0, 1.0]}
+                ]
+            }
         }
     ]
 }

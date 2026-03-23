@@ -1,8 +1,196 @@
 {
   "variants": {
-    "age=0": { "model": "orangesunshine:block/weed_stage0" },
-    "age=1": { "model": "orangesunshine:block/weed_stage1" },
-    "age=2": { "model": "orangesunshine:block/weed_stage2" },
-    "age=3": { "model": "orangesunshine:block/weed_stage3" }
+    "age=0,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage0"
+    },
+    "age=0,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage0"
+    },
+    "age=0,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage0"
+    },
+    "age=0,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage0"
+    },
+    "age=1,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage1"
+    },
+    "age=1,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage1"
+    },
+    "age=1,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage1"
+    },
+    "age=1,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage1"
+    },
+    "age=2,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage2"
+    },
+    "age=2,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage2"
+    },
+    "age=2,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage2"
+    },
+    "age=2,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage2"
+    },
+    "age=3,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=3,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=3,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=3,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=4,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=4,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=4,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=4,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=5,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=5,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=5,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=5,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=6,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=6,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=6,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=6,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=7,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=7,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=7,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=7,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=8,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=8,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=8,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=8,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=9,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=9,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=9,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=9,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=10,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=10,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=10,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=10,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=11,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=11,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=11,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=11,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=12,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=12,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=12,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=12,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=13,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=13,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=13,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=13,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=14,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=14,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=14,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=14,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=15,growing=false,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=15,growing=false,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=15,growing=true,natural=false": {
+      "model": "orangesunshine:block/weed_stage3"
+    },
+    "age=15,growing=true,natural=true": {
+      "model": "orangesunshine:block/weed_stage3"
+    }
   }
 }

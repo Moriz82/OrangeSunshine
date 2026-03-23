@@ -19,10 +19,7 @@
                     {"name": "FocalPointFar", "type": "float", "value": 0.0},
                     {"name": "FocalBlurNear", "type": "float", "value": 0.0},
                     {"name": "FocalBlurFar", "type": "float", "value": 0.0},
-                    {"name": "_pad0", "type": "float", "value": 0.0},
-                    {"name": "DepthRange", "type": "vec2", "value": [0.05, 256.0]},
-                    {"name": "_pad1", "type": "float", "value": 0.0},
-                    {"name": "_pad2", "type": "float", "value": 0.0}
+                    {"name": "DepthRange", "type": "vec2", "value": [0.05, 256.0]}
                 ]
             }
         },
@@ -33,7 +30,11 @@
                 {"sampler_name": "InSampler", "target": "swap"}
             ],
             "output": "minecraft:main",
-            "uniforms": {}
+            "uniforms": {
+                "BlitConfig": [
+                    {"name": "ColorModulate", "type": "vec4", "value": [1.0, 1.0, 1.0, 1.0]}
+                ]
+            }
         }
     ]
 }

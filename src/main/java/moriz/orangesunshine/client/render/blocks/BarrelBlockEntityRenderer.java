@@ -23,13 +23,14 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import com.mojang.math.Axis;
 import net.minecraft.util.Mth;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBlockEntity, BarrelRenderState> {
     private final BarrelModel model;
 
     public BarrelBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
-        model = new BarrelModel(BarrelModel.getTexturedModelData().bakeRoot());
+        model = new BarrelModel(BarrelModel.getTexturedMeshDefinition().bakeRoot());
     }
 
     @Override
@@ -66,7 +67,7 @@ public class BarrelBlockEntityRenderer implements BlockEntityRenderer<BarrelBloc
 
         model.setRotationAngles(state);
         
-        collector.order(0).submitModel(model, state, matrices, model.renderType(state.texture), state.lightCoords, state.overlayCoords, 0xFFFFFFFF, state.breakProgress);
+        collector.order(0).submitModel(model, state, matrices, model.renderType(state.texture), state.lightCoords, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0xFFFFFFFF, state.breakProgress);
 
         matrices.popPose();
     }

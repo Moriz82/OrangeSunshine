@@ -1,6 +1,12 @@
 #version 330
-#moj_import <orangesunshine:include/random_from_vec.glsl>
-#moj_import <orangesunshine:include/random_from_seed.glsl>
+
+float randomFromVec(vec2 aVec) {
+    return fract(sin(dot(aVec.xy, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+float randomFromSeed(float aSeed) {
+    return fract(mod(aSeed * 12374.123814, 18034.805912));
+}
 
 uniform sampler2D InSampler;
 

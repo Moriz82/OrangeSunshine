@@ -5,8 +5,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -119,6 +120,13 @@ public class PlacedDrinksModelProvider {
 
     public void submitDrink(ItemStack stack, PoseStack matrices, SubmitNodeCollector collector, int light, int overlay) {
         get(stack.getItem()).ifPresent(entry -> {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.level == null) {
+                return;
+            }
+            ItemStackRenderState itemState = new ItemStackRenderState();
+            ItemSubmitHelper.updateForBlock(mc.getItemModelResolver(), itemState, entry.getStack(), entry.getContext().getType().getDisplayContext(), mc.level, stack.hashCode());
+
             matrices.pushPose();
             matrices.translate(entry.getContext().getTranslation().x(), entry.getContext().getTranslation().y(), entry.getContext().getTranslation().z());
             matrices.mulPose(Axis.XP.rotationDegrees(entry.getContext().getRotation().x()));
@@ -126,8 +134,7 @@ public class PlacedDrinksModelProvider {
             matrices.mulPose(Axis.ZP.rotationDegrees(entry.getContext().getRotation().z()));
             matrices.scale(entry.getContext().getScale().x(), entry.getContext().getScale().y(), entry.getContext().getScale().z());
 
-            collector.order(0).submitItem(matrices, light, overlay, entry.getStack(), entry.getContext().getType().getDisplayContext());
-            
+            itemState.submit(matrices, collector, light, overlay, 0);
             matrices.popPose();
         });
     }

@@ -122,17 +122,30 @@ Raw materials, dried plants, chemical compounds, smoked/consumed items, containe
 ./gradlew :fabric:runClient
 ```
 
-### Automated smoke test
+### Automated smoke tests (“full stack” quick path)
+
+Run these before pushing anything that touches rendering or shaders:
+
 ```bash
-# Full build + server start + RCON checks + log analysis
+# 1) Fast — Java only
+./gradlew :fabric:compileJava
+
+# 2) Client bootstrap + post-shader pipeline (DISPLAY or xvfb-run on Linux)
+./gradlew :fabric:smokeClient
+# same as: bash dev-tools/run_client_smoke.sh
+
+# 3) Orchestrator: compile + client smoke + optional server RCON scenarios
+python3 dev-tools/visual_test/run_visual_tests.py --tier smoke   # compile + client
+python3 dev-tools/visual_test/run_visual_tests.py --tier full    # + server + capture hooks
+
+# Legacy: full build + server + RCON
 bash dev-tools/smoke-test.sh
-
-# Skip rebuild
 bash dev-tools/smoke-test.sh --skip-build
-
-# Client mode (requires DISPLAY)
-bash dev-tools/smoke-test.sh --client
 ```
+
+`smokeClient` checks the log for `CLIENT_SMOKE_OK`, **all 6 post shaders** (`Post-effect shader pipeline:`), and fails on known regressions (e.g. `USAGE_COPY_DST` UBO crashes). It does **not** prove pixels are correct—after changes, still open a world and confirm the screen is not black.
+
+**Rendering note:** 2D post chains must run in `GameRenderer` **before** the GUI depth clear (same phase as vanilla’s `postEffectId`). Running them from the HUD mixin or at `render` tail caused double processing and black screens.
 
 ---
 

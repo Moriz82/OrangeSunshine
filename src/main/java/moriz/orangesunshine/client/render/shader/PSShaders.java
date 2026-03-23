@@ -1,17 +1,8 @@
 package moriz.orangesunshine.client.render.shader;
 
-import org.jetbrains.annotations.Nullable;
-import net.minecraft.client.renderer.ShaderInstance;
-
 public class PSShaders {
-    @Nullable
-    private static ShaderInstance renderTypeZeroMatterProgram;
-
-    public static ShaderInstance getRenderTypeZeroMatterProgram() {
-        return renderTypeZeroMatterProgram;
-    }
-
     public static void bootstrap() {
-        renderTypeZeroMatterProgram = null;
+        // Core shader registration is handled differently in 1.21.11's RenderPipeline system.
+        // The zero matter render type shader will be re-registered once the pipeline API is ported.
     }
 }

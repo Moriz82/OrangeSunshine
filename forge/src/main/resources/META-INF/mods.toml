@@ -4,7 +4,7 @@ license = "${mod_license}"
 issueTrackerURL = "${mod_issues}"
 
 [[mods]]
-modId = "${mod_id}"
+modId = "orangesunshine"
 version = "${version}"
 displayName = "${mod_name}"
 displayURL = "${mod_homepage}"
@@ -13,14 +13,14 @@ description = '''
 ${mod_description}
 '''
 
-[[dependencies.${mod_id}]]
+[[dependencies.orangesunshine]]
 modId = "forge"
 mandatory = true
 versionRange = "${forge_loader_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.orangesunshine]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[${minecraft_version},)"

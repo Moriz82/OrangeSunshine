@@ -30,6 +30,8 @@
       "client.MixinHeldItemRenderer",
       "client.MixinInGameHud",
       "client.MixinItemModels",
-      "client.MixinLivingEntityRenderer"
+      "client.MixinLivingEntityRenderer",
+      "client.AccessorPostChain",
+      "client.AccessorPostPass"
     ]
 }

@@ -1,4 +1,3 @@
-#version 150
 
 vec3 getIntensifiedColor(vec3 color) {
     float s = 2.0;

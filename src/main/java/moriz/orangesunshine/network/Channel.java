@@ -1,18 +1,33 @@
 package moriz.orangesunshine.network;
 
+import com.sollace.fabwork.api.packets.HandledPacket;
 import com.sollace.fabwork.api.packets.S2CPacketType;
-import com.sollace.fabwork.api.packets.SimpleNetworking;
 
-import moriz.orangesunshine.OrangeSunshine;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 /**
- * @author Sollace
- * @since 1 Jan 2023
+ * Server-to-client packets. On Fabric, {@code fabric/.../FabricS2CNetworking} replaces
+ * the no-op implementations with real networking during mod initialization.
  */
-public interface Channel {
-    S2CPacketType<MsgDrugProperties> UPDATE_DRUG_PROPERTIES = SimpleNetworking.serverToClient(OrangeSunshine.id("update_drug_properties"), MsgDrugProperties::new);
-    S2CPacketType<MsgHallucinate> HALLUCINATE = SimpleNetworking.serverToClient(OrangeSunshine.id("hallucinate"), MsgHallucinate::new);
+public final class Channel {
+    public static S2CPacketType<MsgDrugProperties> UPDATE_DRUG_PROPERTIES = new NoopS2CPackets<>();
+    public static S2CPacketType<MsgHallucinate> HALLUCINATE = new NoopS2CPackets<>();
 
-    static void bootstrap() { }
+    private Channel() {
+    }
 
+    public static void bootstrap() {
+    }
+
+    private static final class NoopS2CPackets<T extends HandledPacket<? super Player>> implements S2CPacketType<T> {
+        @Override
+        public void sendToPlayer(T packet, ServerPlayer player) {
+        }
+
+        @Override
+        public void sendToSurroundingPlayers(T packet, Entity entity) {
+        }
+    }
 }

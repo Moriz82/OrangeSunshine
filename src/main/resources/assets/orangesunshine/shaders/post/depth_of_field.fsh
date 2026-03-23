@@ -1,5 +1,4 @@
 #version 330
-#moj_import <orangesunshine:include/linear.glsl>
 
 uniform sampler2D InSampler;
 uniform sampler2D DepthSampler;
@@ -20,6 +19,10 @@ layout(std140) uniform DepthOfFieldConfig {
 in vec2 texCoord;
 
 out vec4 fragColor;
+
+float linearize(float value, float zNear, float zFar) {
+    return (2.0 * zNear) / (zFar + zNear - value * (zFar - zNear));
+}
 
 float getLinearDepth(vec2 newUV) {
     float depth = texture(DepthSampler, newUV).r;

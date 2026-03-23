@@ -1,7 +1,6 @@
 package moriz.orangesunshine.client.render.shader;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.*;
@@ -17,8 +16,6 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import org.joml.Vector3f;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.CachedOrthoProjectionMatrixBuffer;
@@ -26,28 +23,18 @@ import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostChainConfig;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.client.renderer.ShaderManager;
+import moriz.orangesunshine.mixin.client.AccessorPostChain;
+import moriz.orangesunshine.mixin.client.AccessorPostPass;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 
 class LoadedShader implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoadedShader.class);
     private static final Gson GSON = new Gson();
-
-    private static final Field FIELD_POSTCHAIN_PASSES;
-    private static final Field FIELD_POSTPASS_CUSTOM_UNIFORMS;
-
-    static {
-        try {
-            FIELD_POSTCHAIN_PASSES = PostChain.class.getDeclaredField("passes");
-            FIELD_POSTCHAIN_PASSES.setAccessible(true);
-            FIELD_POSTPASS_CUSTOM_UNIFORMS = PostPass.class.getDeclaredField("customUniforms");
-            FIELD_POSTPASS_CUSTOM_UNIFORMS.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+    private static final int UBO_DESTINATION_USAGE = GpuBuffer.USAGE_UNIFORM | GpuBuffer.USAGE_COPY_DST | GpuBuffer.USAGE_MAP_WRITE;
 
     private final UniformBinding.Set bindings;
+    /** Resource id of the post JSON; used for GPU buffer debug labels. */
+    private final Identifier resourceId;
     private final PostChain chain;
     private final List<PostPass> passes;
     private final CachedOrthoProjectionMatrixBuffer projMatrix;
@@ -68,6 +55,7 @@ class LoadedShader implements AutoCloseable {
 
     LoadedShader(Minecraft client, Identifier id, UniformBinding.Set bindings) throws IOException {
         this.bindings = bindings;
+        this.resourceId = id;
 
         Optional<Resource> resource = client.getResourceManager().getResource(id);
         if (resource.isEmpty()) {
@@ -102,7 +90,7 @@ class LoadedShader implements AutoCloseable {
             throw new IOException("Failed to compile PostChain for " + id + ": " + e.getMessage(), e);
         }
 
-        this.passes = getPassesViaReflection(chain);
+        this.passes = ((AccessorPostChain) (Object) chain).orangesunshine$getPasses();
 
         this.passKeys = new ArrayList<>(config.passes().size());
         for (PostChainConfig.Pass p : config.passes()) {
@@ -115,6 +103,40 @@ class LoadedShader implements AutoCloseable {
         for (Map.Entry<String, List<UniformBinding.UboField>> entry : bindings.uboLayouts.entrySet()) {
             int size = computeUboSize(entry.getValue());
             uboBuffers.put(entry.getKey(), ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()));
+        }
+
+        // PostPass allocates UBO GpuBuffers with USAGE_UNIFORM only; writeToBuffer needs USAGE_COPY_DST.
+        upgradeCustomUniformBuffersForCpuUpload();
+    }
+
+    /**
+     * Replace vanilla post-pass UBO buffers so {@link CommandEncoder#writeToBuffer} can upload each frame.
+     * Vanilla uses {@link GpuBuffer#USAGE_UNIFORM} (128) without {@link GpuBuffer#USAGE_COPY_DST}.
+     */
+    private void upgradeCustomUniformBuffersForCpuUpload() {
+        var device = RenderSystem.getDevice();
+        for (PostPass postPass : passes) {
+            Map<String, GpuBuffer> customUniforms =
+                    ((AccessorPostPass) (Object) postPass).orangesunshine$getCustomUniforms();
+            if (customUniforms == null || customUniforms.isEmpty()) {
+                continue;
+            }
+            for (Map.Entry<String, GpuBuffer> entry : customUniforms.entrySet()) {
+                GpuBuffer previous = entry.getValue();
+                if (previous == null) {
+                    continue;
+                }
+                if ((previous.usage() & UBO_DESTINATION_USAGE) == UBO_DESTINATION_USAGE) {
+                    continue;
+                }
+                String blockName = entry.getKey();
+                GpuBuffer upgraded = device.createBuffer(
+                        () -> resourceId + " dynamic UBO / " + blockName,
+                        UBO_DESTINATION_USAGE,
+                        previous.size());
+                entry.setValue(upgraded);
+                previous.close();
+            }
         }
     }
 
@@ -157,8 +179,10 @@ class LoadedShader implements AutoCloseable {
 
             shouldRender |= setter.shouldRender;
 
-            Map<String, GpuBuffer> customUniforms = getCustomUniformsViaReflection(postPass);
-            if (customUniforms != null && !customUniforms.isEmpty()) {
+            Map<String, GpuBuffer> customUniforms = ((AccessorPostPass) (Object) postPass).orangesunshine$getCustomUniforms();
+            if (customUniforms != null
+                    && !customUniforms.isEmpty()
+                    && setter.shouldRender) {
                 if (encoder == null) {
                     encoder = RenderSystem.getDevice().createCommandEncoder();
                 }
@@ -187,34 +211,14 @@ class LoadedShader implements AutoCloseable {
         this.height = targetsHeight;
     }
 
+    public int getPassCount() {
+        return passes.size();
+    }
+
     @Override
     public void close() {
         chain.close();
         projMatrix.close();
-    }
-
-    // -------------------------------------------------------------------------
-    // Reflection helpers (fields cached statically)
-    // -------------------------------------------------------------------------
-
-    @SuppressWarnings("unchecked")
-    private static List<PostPass> getPassesViaReflection(PostChain chain) {
-        try {
-            return (List<PostPass>) FIELD_POSTCHAIN_PASSES.get(chain);
-        } catch (IllegalAccessException e) {
-            LOGGER.error("Failed to access PostChain.passes via reflection", e);
-            return List.of();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static Map<String, GpuBuffer> getCustomUniformsViaReflection(PostPass pass) {
-        try {
-            return (Map<String, GpuBuffer>) FIELD_POSTPASS_CUSTOM_UNIFORMS.get(pass);
-        } catch (IllegalAccessException e) {
-            LOGGER.error("Failed to access PostPass.customUniforms via reflection", e);
-            return null;
-        }
     }
 
     // -------------------------------------------------------------------------

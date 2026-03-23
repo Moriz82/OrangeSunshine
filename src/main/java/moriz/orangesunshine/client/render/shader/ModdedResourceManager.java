@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourcePack;
+import net.minecraft.server.packs.PackResources;
 import net.minecraft.resources.Identifier;
 
 class ModdedResourceManager implements ResourceManager {
@@ -50,7 +50,7 @@ class ModdedResourceManager implements ResourceManager {
     }
 
     @Override
-    public Stream<ResourcePack> listPacks() {
+    public Stream<PackResources> listPacks() {
         return parent.listPacks();
     }
 }

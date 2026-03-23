@@ -14,6 +14,7 @@ def fabricOwnedSources = [
         'moriz/orangesunshine/client/screen/**',
         'moriz/orangesunshine/client/sound/**',
 
+        'moriz/orangesunshine/client/render/DebugOverlay.java',
         'moriz/orangesunshine/client/render/DrugEffectInterpreter.java',
         'moriz/orangesunshine/client/render/DrugRenderer.java',
         'moriz/orangesunshine/client/render/FluidBoxRenderer.java',

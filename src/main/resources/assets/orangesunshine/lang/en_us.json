@@ -14,6 +14,8 @@
   "gui.orangesunshine.option.shaders_3d": "Use 3D Shaders",
   "gui.orangesunshine.option.water_overlay": "Water Overlay",
   "gui.orangesunshine.option.hurt_overlay": "Damage Overlay",
+  "gui.orangesunshine.option.visual_effect_intensity": "Drug overlay strength",
+  "gui.orangesunshine.option.visual_debug_logging": "Log drug visuals (debug)",
   "gui.orangesunshine.option.heat_distortion": "Heat Distortion",
   "gui.orangesunshine.option.water_distortion": "Water Distortion",
   "gui.orangesunshine.option.motion_blur": "Motion Blur",

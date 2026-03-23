@@ -9,7 +9,7 @@
             "inputs": [
                 {"sampler_name": "InSampler", "target": "minecraft:main"},
                 {"sampler_name": "DepthSampler", "target": "minecraft:main", "use_depth_buffer": true},
-                {"sampler_name": "NoiseSampler", "id": "minecraft:textures/effect/orangesunshine/heat_distortion_noise.png", "width": 128, "height": 128, "bilinear": false}
+                {"sampler_name": "NoiseSampler", "location": "orangesunshine:heat_distortion_noise", "width": 128, "height": 128, "bilinear": false}
             ],
             "output": "swap",
             "uniforms": {
@@ -27,7 +27,11 @@
                 {"sampler_name": "InSampler", "target": "swap"}
             ],
             "output": "minecraft:main",
-            "uniforms": {}
+            "uniforms": {
+                "BlitConfig": [
+                    {"name": "ColorModulate", "type": "vec4", "value": [1.0, 1.0, 1.0, 1.0]}
+                ]
+            }
         }
     ]
 }

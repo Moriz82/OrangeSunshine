@@ -6,10 +6,10 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
  * @author Sollace
  */
 public class PassThroughVertexConsumer implements VertexConsumer {
-    private static final ColorFix COLOR = VertexConsumer::color;
-    private static final FUvFix TEXTURE = VertexConsumer::texture;
-    private static final IUvFix OVERLAY = VertexConsumer::overlay;
-    private static final IUvFix LIGHT = VertexConsumer::light;
+    private static final ColorFix COLOR = VertexConsumer::setColor;
+    private static final FUvFix TEXTURE = VertexConsumer::setUv;
+    private static final IUvFix OVERLAY = VertexConsumer::setOverlay;
+    private static final IUvFix LIGHT = VertexConsumer::setLight;
 
     private final VertexConsumer parent;
 
@@ -31,54 +31,51 @@ public class PassThroughVertexConsumer implements VertexConsumer {
     }
 
     @Override
-    public VertexConsumer vertex(double x, double y, double z) {
-        parent.vertex(x, y, z);
+    public VertexConsumer addVertex(float x, float y, float z) {
+        parent.addVertex(x, y, z);
         return this;
     }
 
     @Override
-    public VertexConsumer color(int r, int g, int b, int a) {
+    public VertexConsumer setColor(int r, int g, int b, int a) {
         colorFix.apply(parent, r, g, b, a);
         return this;
     }
 
     @Override
-    public VertexConsumer texture(float u, float v) {
+    public VertexConsumer setColor(int argb) {
+        parent.setColor(argb);
+        return this;
+    }
+
+    @Override
+    public VertexConsumer setUv(float u, float v) {
         textureFix.apply(parent, u, v);
         return this;
     }
 
     @Override
-    public VertexConsumer overlay(int u, int v) {
+    public VertexConsumer setUv1(int u, int v) {
         overlayFix.apply(parent, u, v);
         return this;
     }
 
     @Override
-    public VertexConsumer light(int u, int v) {
+    public VertexConsumer setUv2(int u, int v) {
         lightFix.apply(parent, u, v);
         return this;
     }
 
     @Override
-    public VertexConsumer normal(float x, float y, float z) {
-        parent.normal(x, y, z);
+    public VertexConsumer setNormal(float x, float y, float z) {
+        parent.setNormal(x, y, z);
         return this;
     }
 
     @Override
-    public void next() {
-        parent.next();
-    }
-
-    @Override
-    public void fixedColor(int r, int g, int b, int a) {
-        parent.fixedColor(r, g, b, a);
-    }
-
-    @Override
-    public void unfixColor() {
-        parent.unfixColor();
+    public VertexConsumer setLineWidth(float lineWidth) {
+        parent.setLineWidth(lineWidth);
+        return this;
     }
 
     public static class Parameters {
@@ -118,6 +115,10 @@ public class PassThroughVertexConsumer implements VertexConsumer {
         void apply(VertexConsumer consumer, float u, float v);
     }
     public interface IUvFix {
-        void apply(VertexConsumer consumer, int u, int v);
+        default void apply(VertexConsumer consumer, int u, int v) {
+            apply(consumer, u | (v << 16));
+        }
+
+        void apply(VertexConsumer consumer, int uv);
     }
 }

@@ -7,8 +7,7 @@ package moriz.orangesunshine.client.render;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.entity.RealityRiftEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -19,8 +18,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.state.CameraRenderState;
 
 import org.joml.*;
-
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import java.util.Random;
 
@@ -68,55 +65,28 @@ public class RealityRiftEntityRenderer extends EntityRenderer<RealityRiftEntity,
             });
         });
 
-        collector.order(0).submitCustomGeometry(matrices, RenderType.entityTranslucentEmissive(CENTER_TEXTURE), (pose, vertices) -> {
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            
+        collector.order(0).submitCustomGeometry(matrices, RenderTypes.entityTranslucentEmissive(CENTER_TEXTURE), (pose, vertices) -> {
             matrices.pushPose();
             matrices.scale(5F, 5F, 5F);
-            Matrix4f positionMatrix = matrices.last().pose();
-
+            matrices.mulPose(cameraState.orientation);
             float size = 1;
-            int light = 0xF000F0;
-
-            Quaternionf cameraRotation = cameraState.orientation;
-            matrices.mulPose(cameraRotation);
             matrices.translate(-size * 0.5F, -size * 0.5F, 0);
-
-            Vector4f vector = new Vector4f(0, 0, 0, 1);
-            Vector4f pos = positionMatrix.transform(vector);
-            vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 1, 0, 0, 0, light, 0, 1, 1);
-
-            vector.set(size, 0, 0, 1);
-            pos = positionMatrix.transform(vector);
-            vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 1, 1, 0, 0, light, 0, 1, 1);
-
-            vector.set(size, size, 0, 1);
-            pos = positionMatrix.transform(vector);
-            vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 1, 1, 1, 0, light, 0, 1, 1);
-
-            vector.set(0, size, 0, 1);
-            pos = positionMatrix.transform(vector);
-            vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 1, 0, 1, 0, light, 0, 1, 1);
-
+            Matrix4f positionMatrix = matrices.last().pose();
+            int light = 0xF000F0;
+            Vector4f vector = new Vector4f();
+            emitQuad(vertices, positionMatrix, vector, light, 0, 0, size, size);
             matrices.popPose();
-            RenderSystem.disableBlend();
         });
 
         matrices.popPose();
     }
 
-    public static void renderLightsScreen(PoseStack matrices, VertexConsumer vertices, float u, float v, float ticks, float alpha, int color, int number) {
+    public static void renderLightsScreen(PoseStack.Pose pose, VertexConsumer vertices, float u, float v, float ticks, float alpha, int color, int number) {
         RANDOM.setSeed(432L);
-        matrices.pushPose();
-
         float width = 2.5F;
         float rotation = ticks / 200F;
-
-        Matrix4f positionMatrix = matrices.last().pose();
         int light = 0xF000F0;
-
-        Vector4f vector = new Vector4f(0, 0, 0, 1);
+        Vector4f vector = new Vector4f();
 
         for (int i = 0; i < number; ++i) {
             float xLogFunc = (((float) i / number * 28493.0f + ticks) / 10F) % 20F;
@@ -124,47 +94,62 @@ public class RealityRiftEntityRenderer extends EntityRenderer<RealityRiftEntity,
                 xLogFunc = 20 - xLogFunc;
             }
 
-            float lightAlpha = 1F / (1 + (float) Math.pow(2.71828f, -0.8F * xLogFunc) * ((1F / 0.01F) - 1));
+            float lightAlpha = 1F / (1 + (float) java.lang.Math.pow(2.71828f, -0.8F * xLogFunc) * ((1F / 0.01F) - 1));
 
             if (lightAlpha > 0.01F) {
-                matrices.mulPose(new Quaternionf().rotateXYZ(
-                        RANDOM.nextFloat() * Mth.TAU,
-                        RANDOM.nextFloat() * Mth.TAU,
-                        RANDOM.nextFloat() * Mth.TAU
+                Matrix4f m = new Matrix4f(pose.pose());
+                m.rotate(new Quaternionf().rotateXYZ(
+                        RANDOM.nextFloat() * Mth.TWO_PI,
+                        RANDOM.nextFloat() * Mth.TWO_PI,
+                        RANDOM.nextFloat() * Mth.TWO_PI
                 ));
-                matrices.mulPose(new Quaternionf().rotateXYZ(
-                        RANDOM.nextFloat() * Mth.TAU,
-                        RANDOM.nextFloat() * Mth.TAU,
-                        RANDOM.nextFloat() * Mth.TAU + rotation * Mth.HALF_PI * 0.5F
+                m.rotate(new Quaternionf().rotateXYZ(
+                        RANDOM.nextFloat() * Mth.TWO_PI,
+                        RANDOM.nextFloat() * Mth.TWO_PI,
+                        RANDOM.nextFloat() * Mth.TWO_PI + rotation * Mth.HALF_PI * 0.5F
                 ));
 
                 float var8 = RANDOM.nextFloat() * 20 + 5;
                 float var9 = RANDOM.nextFloat() * 2 + 1;
+                int a = Mth.clamp((int) (alpha * lightAlpha * 255), 0, 255);
 
                 vector.set(0, 0, 0, 1);
-                Vector4f pos = positionMatrix.transform(vector);
-                float centerAlpha = alpha * lightAlpha;
-
-                vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, centerAlpha, 0, 0, 0, light, 0, 1, 1);
+                m.transform(vector);
+                putVertex(vertices, vector, 255, 255, 255, a, 0, 0, light);
 
                 vector.set(-width * var9, var8, -0.5F * var9, 1);
-                pos = positionMatrix.transform(vector);
-                vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 0, 1, 0, 0, light, 0, 1, 1);
+                m.transform(vector);
+                putVertex(vertices, vector, 255, 255, 255, 255, 1, 0, light);
 
                 vector.set(width * var9, var8, -0.5F * var9, 1);
-                pos = positionMatrix.transform(vector);
-                vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 0, 0, 1, 0, light, 0, 1, 1);
+                m.transform(vector);
+                putVertex(vertices, vector, 255, 255, 255, 255, 0, 1, light);
 
                 vector.set(0, var8, var9, 1);
-                pos = positionMatrix.transform(vector);
-                vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 0, 1, 1, 0, light, 0, 1, 1);
+                m.transform(vector);
+                putVertex(vertices, vector, 255, 255, 255, 255, 1, 1, light);
 
                 vector.set(-width * var9, var8, -0.5F * var9, 1);
-                pos = positionMatrix.transform(vector);
-                vertices.vertex(pos.x, pos.y, pos.z, 1, 1, 1, 0, 1, 1, 0, light, 0, 1, 1);
+                m.transform(vector);
+                putVertex(vertices, vector, 255, 255, 255, 255, 1, 1, light);
             }
         }
+    }
 
-        matrices.popPose();
+    private static void emitQuad(VertexConsumer vertices, Matrix4f matrix, Vector4f scratch, int light, float x0, float y0, float x1, float y1) {
+        putVertex(vertices, matrix, scratch, x0, y0, 0, 255, 255, 255, 255, 0, 0, light);
+        putVertex(vertices, matrix, scratch, x1, y0, 0, 255, 255, 255, 255, 1, 0, light);
+        putVertex(vertices, matrix, scratch, x1, y1, 0, 255, 255, 255, 255, 1, 1, light);
+        putVertex(vertices, matrix, scratch, x0, y1, 0, 255, 255, 255, 255, 0, 1, light);
+    }
+
+    private static void putVertex(VertexConsumer vertices, Matrix4f matrix, Vector4f scratch, float lx, float ly, float lz, int r, int g, int b, int a, float u, float v, int light) {
+        scratch.set(lx, ly, lz, 1);
+        matrix.transform(scratch);
+        vertices.addVertex(scratch.x, scratch.y, scratch.z).setColor(r, g, b, a).setUv(u, v).setLight(light);
+    }
+
+    private static void putVertex(VertexConsumer vertices, Vector4f pos, int r, int g, int b, int a, float u, float v, int light) {
+        vertices.addVertex(pos.x, pos.y, pos.z).setColor(r, g, b, a).setUv(u, v).setLight(light);
     }
 }

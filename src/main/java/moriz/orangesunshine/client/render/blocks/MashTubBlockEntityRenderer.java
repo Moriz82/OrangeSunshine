@@ -31,7 +31,8 @@ public class MashTubBlockEntityRenderer implements BlockEntityRenderer<MashTubBl
     public void extractRenderState(MashTubBlockEntity entity, MashTubRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
         var tank = entity.getTank(Direction.UP);
         state.fluidColor = tank.getFluidType().getColor(tank.getStack());
-        state.fluidLevel = tank.getFluidHeight();
+        int cap = tank.getCapacity();
+        state.fluidLevel = cap <= 0 ? 0 : (float) tank.getLevel() / cap;
         state.solidContents = entity.solidContents.copy();
         state.suppliedIngredients.clear();
         state.suppliedIngredients.putAll(entity.getSuppliedIngredients());

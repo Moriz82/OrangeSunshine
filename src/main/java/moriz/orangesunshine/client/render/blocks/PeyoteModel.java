@@ -10,7 +10,11 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
+
+import java.util.function.Function;
 
 /**
  * Migrated to 1.21.11 Mojmap
@@ -19,12 +23,11 @@ public class PeyoteModel extends Model {
     private final ModelPart root;
 
     public PeyoteModel(ModelPart root) {
-        super(RenderType::entityCutout);
+        super(root, (Function<Identifier, RenderType>) RenderTypes::entityCutout);
         this.root = root;
     }
 
-    @Override
-    public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+    public void render(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         root.render(matrices, vertices, light, overlay, color);
     }
 

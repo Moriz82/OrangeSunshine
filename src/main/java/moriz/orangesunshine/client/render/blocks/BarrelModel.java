@@ -9,7 +9,11 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
+
+import java.util.function.Function;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.util.Mth;
@@ -27,7 +31,7 @@ public class BarrelModel extends Model {
     private final ModelPart tapHandle;
 
     public BarrelModel(ModelPart tree) {
-        super(RenderType::entityCutout);
+        super(tree, (Function<Identifier, RenderType>) RenderTypes::entityCutout);
         this.tree = tree;
         this.barrel = tree.getChild("barrel");
         this.legs = tree.getChild("rack");
@@ -35,32 +39,32 @@ public class BarrelModel extends Model {
         this.tapHandle = tap.getChild("handle");
     }
 
-    public static LayerDefinition getTexturedModelData() {
+    public static LayerDefinition getTexturedMeshDefinition() {
         MeshDefinition modelData = new MeshDefinition();
         PartDefinition root = modelData.getRoot();
         PartDefinition barrel = root.addOrReplaceChild("barrel", CubeListBuilder.create(), PartPose.offset(0, 9, 0));
 
-        barrel.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 30).addBox(-4, 5, -8, 1, 1, 16, Dilation.NONE)
-                .texOffs(0, 28).addBox(3, 5, -8, 1, 1, 16, Dilation.NONE)
-                .texOffs(0, 26).addBox(-4, 12, -8, 1, 1, 16, Dilation.NONE)
-                .texOffs(0, 23).addBox(3, 12, -8, 1, 1, 16, Dilation.NONE)
-                .texOffs(45, 38).addBox(4, 5, -8, 2, 8, 16, Dilation.NONE)
-                .texOffs(82, 38).addBox(-6, 5, -8, 2, 8, 16, Dilation.NONE)
-                .texOffs(0, 0).addBox(-4, 5, -7, 8, 8, 14, Dilation.NONE)
-                .texOffs(45, 19).addBox(-4, 3, -8, 8, 2, 16, Dilation.NONE)
-                .texOffs(45, 0).addBox(-4, 13, -8, 8, 2, 16, Dilation.NONE), PartPose.offset(0, -9, 0));
+        barrel.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 30).addBox(-4, 5, -8, 1, 1, 16, CubeDeformation.NONE)
+                .texOffs(0, 28).addBox(3, 5, -8, 1, 1, 16, CubeDeformation.NONE)
+                .texOffs(0, 26).addBox(-4, 12, -8, 1, 1, 16, CubeDeformation.NONE)
+                .texOffs(0, 23).addBox(3, 12, -8, 1, 1, 16, CubeDeformation.NONE)
+                .texOffs(45, 38).addBox(4, 5, -8, 2, 8, 16, CubeDeformation.NONE)
+                .texOffs(82, 38).addBox(-6, 5, -8, 2, 8, 16, CubeDeformation.NONE)
+                .texOffs(0, 0).addBox(-4, 5, -7, 8, 8, 14, CubeDeformation.NONE)
+                .texOffs(45, 19).addBox(-4, 3, -8, 8, 2, 16, CubeDeformation.NONE)
+                .texOffs(45, 0).addBox(-4, 13, -8, 8, 2, 16, CubeDeformation.NONE), PartPose.offset(0, -9, 0));
 
         PartDefinition tap = barrel.addOrReplaceChild("tap", CubeListBuilder.create(), PartPose.offset(0, -2.5F, -7));
         tap.addOrReplaceChild("handle", CubeListBuilder.create()
-                .texOffs(12, 50).addBox(-1.5F, 0, -0.5F, 3, 0, 1, Dilation.NONE), PartPose.offset(0, 0.71F, -2));
+                .texOffs(12, 50).addBox(-1.5F, 0, -0.5F, 3, 0, 1, CubeDeformation.NONE), PartPose.offset(0, 0.71F, -2));
         tap.addOrReplaceChild("base", CubeListBuilder.create()
-                .texOffs(7, 50).addBox(-0.5F, 5.2F, -9.5F, 1, 2, 1, Dilation.NONE)
-                .texOffs(0, 50).addBox(-0.5F, 6, -8.5F, 1, 1, 2, Dilation.NONE), PartPose.offset(0, -6.5F, 7));
+                .texOffs(7, 50).addBox(-0.5F, 5.2F, -9.5F, 1, 2, 1, CubeDeformation.NONE)
+                .texOffs(0, 50).addBox(-0.5F, 6, -8.5F, 1, 1, 2, CubeDeformation.NONE), PartPose.offset(0, -6.5F, 7));
 
         PartDefinition legs = root.addOrReplaceChild("rack", CubeListBuilder.create(), PartPose.offsetAndRotation(0, 3F, 0, 0, 0, Mth.PI));
-        legs.addOrReplaceChild("back_legs", CubeListBuilder.create().texOffs(94, 19).addBox(-5, -2, -1, 10, 4, 2, Dilation.NONE), PartPose.offsetAndRotation(0, 1.5969F, 5.9183F, 0.1487F, 0, 0));
-        legs.addOrReplaceChild("crossbeam", CubeListBuilder.create().texOffs(94, 0).addBox(-1, 1, -5, 2, 1, 10, Dilation.NONE), PartPose.ZERO);
-        legs.addOrReplaceChild("front_legs", CubeListBuilder.create().texOffs(94, 12).addBox(-5, -2, -1, 10, 4, 2, Dilation.NONE), PartPose.offsetAndRotation(0, 1.7332F, -5.7591F, -0.1487F, 0, 0));
+        legs.addOrReplaceChild("back_legs", CubeListBuilder.create().texOffs(94, 19).addBox(-5, -2, -1, 10, 4, 2, CubeDeformation.NONE), PartPose.offsetAndRotation(0, 1.5969F, 5.9183F, 0.1487F, 0, 0));
+        legs.addOrReplaceChild("crossbeam", CubeListBuilder.create().texOffs(94, 0).addBox(-1, 1, -5, 2, 1, 10, CubeDeformation.NONE), PartPose.ZERO);
+        legs.addOrReplaceChild("front_legs", CubeListBuilder.create().texOffs(94, 12).addBox(-5, -2, -1, 10, 4, 2, CubeDeformation.NONE), PartPose.offsetAndRotation(0, 1.7332F, -5.7591F, -0.1487F, 0, 0));
         return LayerDefinition.create(modelData, 128, 64);
     }
 
@@ -74,8 +78,7 @@ public class BarrelModel extends Model {
         tree.y = state.treeY;
     }
 
-    @Override
-    public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+    public void render(PoseStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         tree.render(matrices, vertices, light, overlay, color);
     }
 }

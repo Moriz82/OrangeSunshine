@@ -16,7 +16,7 @@ public interface ShaderContext {
         return DrugProperties.of(Minecraft.getInstance().player);
     }
 
-    static float drug(DrugShaderType type) {
+    static float drug(DrugType type) {
         return properties().getDrugValue(type);
     }
 

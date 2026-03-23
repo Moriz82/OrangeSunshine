@@ -3,17 +3,28 @@ package moriz.orangesunshine.client.render.shader;
 import java.util.*;
 
 import moriz.orangesunshine.client.OrangeSunshineClient;
+import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.opengl.GlStateManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PostEffectRenderer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostEffectRenderer.class);
     private List<LoadedShader> shaders = new ArrayList<>();
 
     public void render(float tickDelta) {
-        if (OrangeSunshineClient.getConfig().visual.shader2DEnabled) {
-            if (shaders.size() == 1) {
-                shaders.get(0).render(tickDelta);
-            } else {
-                shaders.forEach(shader -> shader.render(tickDelta));
-            }
+        if (Minecraft.getInstance().player == null) {
+            return;
+        }
+        if (!OrangeSunshineClient.getConfig().visual.shader2DEnabled) {
+            return;
+        }
+
+        GlStateManager._disableBlend();
+        GlStateManager._disableDepthTest();
+
+        for (LoadedShader shader : shaders) {
+            shader.render(tickDelta);
         }
     }
 

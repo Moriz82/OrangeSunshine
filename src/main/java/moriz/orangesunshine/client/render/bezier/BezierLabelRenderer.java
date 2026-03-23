@@ -32,8 +32,7 @@ public class BezierLabelRenderer {
     };
 
     public void render(PoseStack matrices, MultiBufferSource vertices, int light, Bezier bezier, Style style, Component text) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+
 
         length = text.getString().length();
         i = 0;
@@ -70,7 +69,7 @@ public class BezierLabelRenderer {
             return true;
         });
 
-        RenderSystem.disableBlend();
+
     }
 
     public static class Style {

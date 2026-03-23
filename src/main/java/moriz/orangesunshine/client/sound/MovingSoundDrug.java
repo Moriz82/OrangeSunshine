@@ -20,14 +20,14 @@ public class MovingSoundDrug extends AbstractTickableSoundInstance {
     private final DrugType drugType;
 
     public MovingSoundDrug(SoundEvent event, SoundSource category, DrugProperties properties, DrugType drugType) {
-        super(event, category, Random.create());
+        super(event, category, RandomSource.create());
         this.properties = properties;
         this.drugType = drugType;
-        this.repeat = true;
+        this.looping = true;
     }
 
     public void markCompleted() {
-        setDone();
+        stop();
     }
 
     public DrugType getType() {
@@ -38,8 +38,8 @@ public class MovingSoundDrug extends AbstractTickableSoundInstance {
     public void tick() {
         volume = getTargetVolume();
 
-        if (Mth.approximatelyEquals(volume, 0) || properties.asEntity().isRemoved()) {
-            setDone();
+        if (Mth.equal(volume, 0) || properties.asEntity().isRemoved()) {
+            stop();
             return;
         }
 

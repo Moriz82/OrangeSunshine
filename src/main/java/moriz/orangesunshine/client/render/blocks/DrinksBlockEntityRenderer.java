@@ -9,8 +9,9 @@ import moriz.orangesunshine.block.PlacedDrinksBlock;
 import moriz.orangesunshine.client.render.PlacedDrinksModelProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.ShapeRenderer;
 import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -40,7 +41,7 @@ public class DrinksBlockEntityRenderer implements BlockEntityRenderer<PlacedDrin
     public void extractRenderState(PlacedDrinksBlock.Data entity, DrinksRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
         state.drinks.clear();
         entity.forEachDrink((y, drink) -> {
-            float height = PlacedDrinksModelProvider.INSTANCE.get(drink.stack().getItem()).orElse(PlacedDrinksModelProvider.Entry.DEFAULT).height();
+            float height = PlacedDrinksModelProvider.INSTANCE.get(drink.stack().getItem()).orElse(PlacedDrinksModelProvider.DEFAULT).height();
             state.drinks.add(new DrinksRenderState.DrinkRenderEntry(drink.x(), y, drink.z(), drink.rotation(), drink.stack().copy(), height));
             return height;
         });
@@ -66,13 +67,22 @@ public class DrinksBlockEntityRenderer implements BlockEntityRenderer<PlacedDrin
             matrices.translate(0.5F, 0, 0.5F);
             matrices.mulPose(Axis.YP.rotationDegrees(drink.rotation()));
             matrices.translate(-0.5F, 0, -0.5F);
-            PlacedDrinksModelProvider.INSTANCE.submitDrink(drink.stack(), matrices, collector, state.lightCoords, state.overlayCoords);
+            PlacedDrinksModelProvider.INSTANCE.submitDrink(drink.stack(), matrices, collector, state.lightCoords, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
 
         if (state.hitPos != null) {
-            collector.order(0).submitCustomGeometry(matrices, RenderType.lines(), (pose, vertices) -> {
-                LevelRenderer.renderShape(pose, vertices, state.hasDrinkAtHitPos ? FILLED_SLOT_RAY_TRACE_SHAPE : EMPTY_SLOT_RAY_TRACE_SHAPE, state.hitPos.getX() / 16F, 0, state.hitPos.getZ() / 16F, 0, 0, 0, 0.4F);
+            collector.order(0).submitCustomGeometry(matrices, net.minecraft.client.renderer.rendertype.RenderTypes.lines(), (pose, vertices) -> {
+                ShapeRenderer.renderShape(
+                        matrices,
+                        vertices,
+                        state.hasDrinkAtHitPos ? FILLED_SLOT_RAY_TRACE_SHAPE : EMPTY_SLOT_RAY_TRACE_SHAPE,
+                        state.hitPos.getX() / 16.0,
+                        0.0,
+                        state.hitPos.getZ() / 16.0,
+                        0xFFFFFFFF,
+                        0.4F
+                );
             });
         }
     }

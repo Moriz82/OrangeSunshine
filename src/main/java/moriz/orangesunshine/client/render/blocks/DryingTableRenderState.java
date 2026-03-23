@@ -1,7 +1,8 @@
 package moriz.orangesunshine.client.render.blocks;
 
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class DryingTableRenderState extends BlockEntityRenderState {
     public long seed;
 
     public static class ItemState {
-        public ItemStack stack;
+        public ItemStackRenderState itemLayer = new ItemStackRenderState();
         public float x;
         public float z;
         public float rotation;

@@ -5,7 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import moriz.orangesunshine.entity.drug.DrugType;
-import org.joml.Vec2;
+import org.joml.Vector2f;
+import net.minecraft.world.phys.Vec2;
 
 import net.minecraft.resources.Identifier;
 
@@ -64,6 +65,12 @@ public class PSClientConfig {
 
         public boolean waterOverlayEnabled = true;
         public boolean hurtOverlayEnabled = true;
+        /** Scales alcohol/warmth/power overlays (0.5–3). */
+        public float visualEffectIntensity = 1.0F;
+        /** Logs drug sync packets and periodic client drug strength to the game log (for QA). */
+        public boolean visualDebugLogging = false;
+        /** Master multiplier for drug background music (0–1). */
+        public float drugMusicVolume = 1.0F;
         public Vec2 digitalEffectPixelRescale = new Vec2(0.05F, 0.05F);
 
         private transient float[] digitalEffectPixelRescaleF;

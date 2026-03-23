@@ -409,7 +409,11 @@ public interface PSItems {
             ), SuspiciousItem.createForms(Items.COOKIE, Items.MUSHROOM_STEW, Items.GOLDEN_APPLE, Items.COOKED_BEEF, Items.COOKED_CHICKEN)));
 
     ////////////////////////// OTHER /////////////////////////////
-    Item SOURIN_AIR = register("sourin_air");
+    SmokeableItem SOURIN_AIR = register("sourin_air", new SmokeableItem(
+            new Item.Properties().setId(itemKey("sourin_air")).durability(20), 1, new Vector3f(0.9F, 0.9F, 1.0F),
+            new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.15, 0.03, 0.5f),
+            new DrugInfluence(DrugType.CAFFEINE, DrugInfluence.DelayType.IMMEDIATE, 0.05, 0.01, 0.15f)
+    ));
     Item COCAINE_SYRINGE = register("cocaine_syringe", new InjectableItem(new Item.Properties().setId(itemKey("cocaine_syringe")).stacksTo(1), FluidVolumes.SYRINGE));
     Item MORPHINE_SYRINGE = register("morphine_syringe", new InjectableItem(new Item.Properties().setId(itemKey("morphine_syringe")).stacksTo(1), FluidVolumes.SYRINGE));
     //</editor-fold>

@@ -38,15 +38,25 @@ public class LsdDrug extends SimpleDrug {
         super.update(drugProperties);
     }
 
-    /*@Override
+    @Override
     public float handTrembleStrength() {
         return MathUtils.inverseLerp((float) getActiveValue(), 0.6F, 1);
     }
 
     @Override
     public float viewTrembleStrength() {
-        return MathUtils.inverseLerp((float) getActiveValue(), 0.8F, 1);
-    }*/
+        return MathUtils.inverseLerp((float) getActiveValue(), 0.5F, 1);
+    }
+
+    @Override
+    public float viewWobblyness() {
+        return (float) getActiveValue() * 0.15F;
+    }
+
+    @Override
+    public float doubleVision() {
+        return MathUtils.inverseLerp((float) getActiveValue(), 0.7F, 1) * 0.4F;
+    }
 
     @Override
     public float speedModifier() {

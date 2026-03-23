@@ -2,6 +2,7 @@ package moriz.orangesunshine.client.render.effect;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import moriz.orangesunshine.OrangeSunshine;
+import moriz.orangesunshine.client.OrangeSunshineClient;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.entity.drug.type.WarmthDrug;
@@ -22,7 +23,8 @@ public class WarmthOverlayScreenEffect extends DrugOverlayScreenEffect<WarmthDru
     protected void render(GuiGraphics context, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, DrugProperties properties, WarmthDrug drug) {
         float warmth = (float) drug.getActiveValue();
         if (warmth > 0) {
-            renderWarmthOverlay(context, warmth * 0.5f, screenWidth, screenHeight);
+            float boost = OrangeSunshineClient.getConfig().visual.visualEffectIntensity;
+            renderWarmthOverlay(context, warmth * 0.5f * boost, screenWidth, screenHeight);
         }
     }
 

@@ -1,7 +1,8 @@
 {
   "ambientocclusion": false,
 	"textures": {
-		"connection": "orangesunshine:block/morning_glory_connection"
+		"connection": "orangesunshine:block/morning_glory_connection",
+		"particle": "orangesunshine:block/morning_glory_connection"
 	},
 	"elements": [
 		{

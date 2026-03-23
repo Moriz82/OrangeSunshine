@@ -18,7 +18,7 @@ public class BubbleParticle extends SingleQuadParticle {
         super(world, x, y, z, spriteProvider.first());
         this.sprites = spriteProvider;
         setSpriteFromAge(spriteProvider);
-        setBoundingBoxSpacing(0.02F, 0.02F);
+        setSize(0.02F, 0.02F);
         quadSize *= this.random.nextFloat() * 0.6F + 0.2F;
         xd = vX * 0.2F + (Math.random() * 2 - 1) * 0.02F;
         yd = vY * 0.2F + (Math.random() * 2 - 1) * 0.02F;

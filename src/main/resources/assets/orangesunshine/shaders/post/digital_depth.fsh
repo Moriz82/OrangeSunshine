@@ -1,9 +1,32 @@
 #version 330
-#moj_import <orangesunshine:include/random_from_vec.glsl>
-#moj_import <orangesunshine:include/get_desaturated_color.glsl>
-#moj_import <orangesunshine:include/reduce_pallete.glsl>
-#moj_import <orangesunshine:include/pixelate.glsl>
-#moj_import <orangesunshine:include/linear.glsl>
+
+float randomFromVec(vec2 aVec) {
+    return fract(sin(dot(aVec.xy, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+float getBrightness(vec3 color) {
+    float cR = 0.3086;
+    float cG = 0.6084;
+    float cB = 0.0820;
+    return (color.r * cR + color.g * cG + color.b * cB);
+}
+
+vec3 getDesaturatedColor(vec3 color) {
+    return vec3(getBrightness(color));
+}
+
+vec4 reducePalette(vec4 color, float maxCol) {
+    return ceil(color * maxCol - 0.5) / maxCol;
+}
+
+vec2 pixelate(vec2 uv, vec2 newRes) {
+    vec2 coord = vec2(ceil(uv.x * newRes.x) / newRes.x, ceil(uv.y * newRes.y) / newRes.y);
+    return coord;
+}
+
+float linearize(float value, float zNear, float zFar) {
+    return (2.0 * zNear) / (zFar + zNear - value * (zFar - zNear));
+}
 
 uniform sampler2D InSampler;
 uniform sampler2D AsciiSampler;

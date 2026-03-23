@@ -121,6 +121,12 @@ def run_smoke(results: Results, log_path: pathlib.Path, color: bool) -> None:
             else:
                 _info(f"optional marker missing (not a failure): {m}", color)
 
+        results.record(
+            "Post-effect shader pipeline:" in text,
+            "Post-effect shader pipeline loaded (ShaderLoader)",
+            color,
+        )
+
         drug_lines = [
             line for line in text.splitlines()
             if "[OrangeSunshine] drug client tick" in line

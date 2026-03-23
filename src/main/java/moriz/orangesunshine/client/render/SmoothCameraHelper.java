@@ -1,14 +1,12 @@
 package moriz.orangesunshine.client.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import moriz.orangesunshine.entity.drug.Drug;
+import moriz.orangesunshine.entity.drug.DrugProperties;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public class SmoothCameraHelper {
-    private static final Identifier SMOOTH_CAM_SHADER = OrangeSunshine.id("shaders/post/smooth_cam.json");
-
     private static float shakeX;
     private static float shakeY;
     private static float shakeZ;

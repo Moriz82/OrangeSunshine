@@ -26,7 +26,7 @@ void main() {
 		if (f != 0.0) {
       vec2 bTexCoords = vec2(newTexCoords.s, newTexCoords.t + f * pixelSize.y);
 
-			if (bTexCoords.t > 0.0 && bTexCoords.t < 1.0) {
+			if (bTexCoords.t> 0.0 && bTexCoords.t < 1.0) {
 				float randomOne = randomFromVec(vec2(bTexCoords.s, bTexCoords.t + seed));
 
 				if (randomOne < blurChance) {

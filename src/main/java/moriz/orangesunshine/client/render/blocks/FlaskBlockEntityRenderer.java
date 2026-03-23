@@ -8,7 +8,8 @@ package moriz.orangesunshine.client.render.blocks;
 import moriz.orangesunshine.block.entity.FlaskBlockEntity;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.fluid.container.Resovoir;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -50,7 +51,7 @@ public class FlaskBlockEntityRenderer<T extends FlaskBlockEntity> implements Blo
             matrices.scale(scale, scale, scale);
 
             // Submission of fluid geometry
-            collector.order(0).submitCustomGeometry(matrices, RenderType.translucent(), (pose, vertices) -> {
+            collector.order(0).submitCustomGeometry(matrices, net.minecraft.client.renderer.rendertype.RenderTypes.translucentMovingBlock(), (pose, vertices) -> {
                 // Draw fluid boxes here using provided vertices
             });
 

@@ -6,7 +6,7 @@ import moriz.orangesunshine.config.PSConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.text.*;
+import net.minecraft.network.chat.*;
 import com.minelittlepony.common.client.gui.GameGui;
 import com.minelittlepony.common.client.gui.IField.IChangeCallback;
 import com.minelittlepony.common.client.gui.ScrollContainer;
@@ -89,6 +89,8 @@ class SettingsScreen extends GameGui {
         content.addButton(new Label(LEFT - 5, row += 25)).getStyle().setText("gui.orangesunshine.options.overlays");
         createToggle(LEFT, row += 25, "gui.orangesunshine.option.water_overlay", visual.waterOverlayEnabled, z -> visual.waterOverlayEnabled = z);
         createToggle(LEFT, row += 25, "gui.orangesunshine.option.hurt_overlay", visual.hurtOverlayEnabled, z -> visual.hurtOverlayEnabled = z);
+        createFormattedSlider(LEFT, row += 25, 0.5F, 3F, "gui.orangesunshine.option.visual_effect_intensity", visual.visualEffectIntensity, f -> visual.visualEffectIntensity = f);
+        createToggle(LEFT, row += 25, "gui.orangesunshine.option.visual_debug_logging", visual.visualDebugLogging, z -> visual.visualDebugLogging = z);
         createFormattedSlider(LEFT, row += 25, "gui.orangesunshine.option.sun_glare_intensity", config.getData().visual.sunFlareIntensity, f -> visual.sunFlareIntensity = f);
 
         content.addButton(new Label(LEFT - 5, row += 25)).getStyle().setText("gui.orangesunshine.options.dof");

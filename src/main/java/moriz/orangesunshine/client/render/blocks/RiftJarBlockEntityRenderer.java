@@ -11,7 +11,8 @@ import moriz.orangesunshine.client.render.bezier.Bezier;
 import moriz.orangesunshine.client.render.bezier.BezierLabelRenderer;
 import moriz.orangesunshine.client.render.ZeroScreen;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -42,12 +43,13 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
     private static final Bezier OUTGOING_PATH = Bezier.spiral(0.06, 6, 6, 1, 0.2, 0);
 
     private static final BezierLabelRenderer.Style LABEL_STYLE = new BezierLabelRenderer.Style().spread(true);
-    private static final Component SMALL_SPIRAL_TEXT = Component.literal("This is a small spiral.").styled(s -> s.withFont(FONT));
+    private static final Component SMALL_SPIRAL_TEXT = Component.literal("This is a small spiral.")
+            .withStyle(net.minecraft.network.chat.Style.EMPTY.withFont(new net.minecraft.network.chat.FontDescription.Resource(FONT)));
 
     private final RiftJarModel model;
 
     public RiftJarBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
-        model = new RiftJarModel(RiftJarModel.getTexturedModelData().bakeRoot());
+        model = new RiftJarModel(RiftJarModel.getTexturedMeshDefinition().bakeRoot());
     }
 
     @Override
@@ -79,12 +81,12 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
         matrices.translate(0, 1.001F, 0);
         matrices.mulPose(Axis.XP.rotationDegrees(180));
 
-        collector.order(0).submitModel(model, state, matrices, RenderType.entityTranslucent(TEXTURE), state.lightCoords, state.overlayCoords, 0xFFFFFFFF, state.breakProgress);
+        collector.order(0).submitModel(model, state, matrices, net.minecraft.client.renderer.rendertype.RenderTypes.entityTranslucent(TEXTURE), state.lightCoords, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0xFFFFFFFF, state.breakProgress);
 
         float crackedVisibility = state.jarBroken ? 1 : Math.min((state.currentRiftFraction - 0.5F) * 2, 1);
 
         if (crackedVisibility > 0) {
-            collector.order(0).submitModel(model, state, matrices, model.renderType(CRACKED_TEXTURE), state.lightCoords, state.overlayCoords, ((int)(crackedVisibility * 255) << 24) | 0xFFFFFF, state.breakProgress);
+            collector.order(0).submitModel(model, state, matrices, model.renderType(CRACKED_TEXTURE), state.lightCoords, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, ((int)(crackedVisibility * 255) << 24) | 0xFFFFFF, state.breakProgress);
         }
 
         if (state.currentRiftFraction > 0) {
@@ -94,7 +96,7 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
             matrices.scale(0.9F, 1, 0.9F);
             ZeroScreen.render(state.ticks, (layer, u, v) -> {
                 collector.order(0).submitCustomGeometry(matrices, layer, (pose, vertices) -> {
-                    model.renderInterior(pose, vertices, state.lightCoords, state.overlayCoords, (int)(Math.min(state.currentRiftFraction * 2, 1) * 255) << 24 | 0xFFFFFF);
+                    model.renderInterior(matrices, vertices, state.lightCoords, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, (int)(Math.min(state.currentRiftFraction * 2, 1) * 255) << 24 | 0xFFFFFF);
                 });
             });
             matrices.popPose();
@@ -107,8 +109,8 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
         matrices.translate(0.5F, 0.5f, 0.5F);
         
         // For custom geometry like Bezier, we use submitCustomGeometry
-        collector.order(0).submitCustomGeometry(matrices, RenderType.translucent(), (pose, vertices) -> {
-             RenderSystem.disableCull();
+        collector.order(0).submitCustomGeometry(matrices, net.minecraft.client.renderer.rendertype.RenderTypes.translucentMovingBlock(), (pose, vertices) -> {
+
 
             for (RiftJarBlockEntity.JarRiftConnection connection : state.connections) {
                 Vector3d connectionPoint = new Vector3d(
@@ -127,7 +129,7 @@ public class RiftJarBlockEntityRenderer implements BlockEntityRenderer<RiftJarBl
                 // Temporary simplification: BezierLabelRenderer needs MultiBufferSource.
                 // We'll wrap the current collector as a MultiBufferSource if possible.
             }
-            RenderSystem.enableCull();
+
         });
 
         matrices.popPose();

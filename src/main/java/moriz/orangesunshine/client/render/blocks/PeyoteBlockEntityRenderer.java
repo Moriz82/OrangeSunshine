@@ -19,7 +19,8 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -51,8 +52,8 @@ public class PeyoteBlockEntityRenderer implements BlockEntityRenderer<PeyoteBloc
     @Override
     public void extractRenderState(PeyoteBlockEntity entity, PeyoteRenderState state, float tickDelta, Vec3 offset, CrumblingOverlay crumbling) {
         state.age = entity.getBlockState().getValue(PeyoteBlock.AGE) % 4;
-        state.seed = entity.getBlockState().getSeed(entity.getPos());
-        state.offset = entity.getBlockState().getOffset(entity.getLevel(), entity.getPos());
+        state.seed = entity.getBlockState().getSeed(entity.getBlockPos());
+        state.offset = entity.getBlockState().getOffset(entity.getBlockPos());
         state.texture = TEXTURES[state.age];
     }
 
@@ -68,7 +69,7 @@ public class PeyoteBlockEntityRenderer implements BlockEntityRenderer<PeyoteBloc
         matrices.mulPose(Axis.XP.rotationDegrees(180));
 
         PeyoteModel model = models[state.age];
-        collector.order(0).submitModel(model, state, matrices, model.renderType(state.texture), state.lightCoords, state.overlayCoords, 0xFFFFFFFF, state.breakProgress);
+        collector.order(0).submitModel(model, state, matrices, model.renderType(state.texture), state.lightCoords, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0xFFFFFFFF, state.breakProgress);
 
         matrices.popPose();
     }

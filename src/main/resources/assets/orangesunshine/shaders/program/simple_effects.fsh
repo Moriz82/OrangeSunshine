@@ -22,11 +22,11 @@ void main() {
   vec4 texel = texture(DiffuseSampler, texCoord);
   vec3 outcolor = texel.rgb;
 
-  if (slowColorRotation > 0.0) {
+  if (slowColorRotation> 0.0) {
     outcolor = mix(outcolor, getRotatedColor(outcolor, mod(ticks, 300.0) / 300.0), slowColorRotation / 2.0);
   }
 
-  if (quickColorRotation > 0.0) {
+  if (quickColorRotation> 0.0) {
      outcolor = mix(outcolor, getRotatedColor(outcolor, mod(ticks/* + fogFragCoord[0]*/, 50.0) / 50.0), clamp(quickColorRotation * 1.5, 0.0, 1.0));
   }
 
@@ -38,7 +38,7 @@ void main() {
     outcolor = mix(outcolor, getDesaturatedColor(outcolor), desaturation);
   }
 
-  if (inversion > 0) {
+  if (inversion> 0) {
     outcolor = mix(outcolor, getInvertedColor(outcolor), inversion);
   }
 

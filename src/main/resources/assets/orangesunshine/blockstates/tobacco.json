@@ -1,8 +1,196 @@
 {
   "variants": {
-    "age=0": { "model": "orangesunshine:block/tobacco_stage0" },
-    "age=1": { "model": "orangesunshine:block/tobacco_stage1" },
-    "age=2": { "model": "orangesunshine:block/tobacco_stage2" },
-    "age=3": { "model": "orangesunshine:block/tobacco_stage3" }
+    "age=0,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage0"
+    },
+    "age=0,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage0"
+    },
+    "age=0,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage0"
+    },
+    "age=0,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage0"
+    },
+    "age=0,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage0"
+    },
+    "age=0,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage0"
+    },
+    "age=0,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage0"
+    },
+    "age=0,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage0"
+    },
+    "age=1,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage1"
+    },
+    "age=1,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage1"
+    },
+    "age=1,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage1"
+    },
+    "age=1,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage1"
+    },
+    "age=1,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage1"
+    },
+    "age=1,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage1"
+    },
+    "age=1,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage1"
+    },
+    "age=1,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage1"
+    },
+    "age=2,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage2"
+    },
+    "age=2,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage2"
+    },
+    "age=2,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage2"
+    },
+    "age=2,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage2"
+    },
+    "age=2,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage2"
+    },
+    "age=2,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage2"
+    },
+    "age=2,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage2"
+    },
+    "age=2,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage2"
+    },
+    "age=3,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=3,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=3,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=3,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=3,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=3,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=3,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=3,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=4,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=4,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=4,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=4,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=4,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=4,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=4,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=4,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=5,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=5,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=5,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=5,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=5,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=5,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=5,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=5,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=6,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=6,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=6,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=6,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=6,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=6,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=6,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=6,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=7,growing=false,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=7,growing=false,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=7,growing=false,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=7,growing=false,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=7,growing=true,natural=false,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=7,growing=true,natural=false,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    },
+    "age=7,growing=true,natural=true,top=false": {
+      "model": "orangesunshine:block/tobacco_stage3"
+    },
+    "age=7,growing=true,natural=true,top=true": {
+      "model": "orangesunshine:block/tobacco_top_stage3"
+    }
   }
 }

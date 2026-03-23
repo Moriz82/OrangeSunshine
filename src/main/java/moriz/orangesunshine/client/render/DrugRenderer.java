@@ -44,6 +44,7 @@ public class DrugRenderer {
 
     private final EnvironmentalScreenEffect environmentalEffects = new EnvironmentalScreenEffect();
     private final ScreenEffect screenEffects = CompoundScreenEffect.of(
+            new DrugVisualOverlay(),
             new LensFlareScreenEffect(),
             new WarmthOverlayScreenEffect(),
             new AlcoholOverlayScreenEffect(),
@@ -228,7 +229,9 @@ public class DrugRenderer {
                 mc.renderBuffers().bufferSource(),
                 width, height, tickDelta, null);
 
-        postEffects.render(tickDelta);
+        // Post chains touch minecraft:main — must run from GameRenderer only (see MixinGameRenderer).
+
+        DebugOverlay.render(context, tickDelta);
     }
 
     // ── hallucination rendering ───────────────────────────────────────────────

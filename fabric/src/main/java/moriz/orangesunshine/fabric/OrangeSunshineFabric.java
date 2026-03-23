@@ -7,6 +7,7 @@ import moriz.orangesunshine.command.PSCommands;
 import moriz.orangesunshine.entity.PSTradeOffers;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.item.PSItems;
+import moriz.orangesunshine.fabric.network.FabricS2CNetworking;
 import moriz.orangesunshine.world.gen.PSWorldGen;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
@@ -22,6 +23,9 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 public final class OrangeSunshineFabric implements ModInitializer {
     @Override
     public void onInitialize() {
+        FabricS2CNetworking.registerPayloadTypes();
+        FabricS2CNetworking.bindChannelPackets();
+
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) ->
                 DrugProperties.of(player).sendCapabilities());
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) ->

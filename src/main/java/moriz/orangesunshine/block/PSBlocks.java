@@ -100,10 +100,10 @@ public interface PSBlocks {
     Block JUNIPER_BUTTON = register("juniper_button", BlockConstructionUtils.woodenButton(PSWoodTypes.JUNIPER.setType(), blockKey("juniper_button")));
     Block JUNIPER_SLAB = register("juniper_slab", new SlabBlock(Properties.ofFullCopy(JUNIPER_PLANKS).setId(blockKey("juniper_slab"))));
 
-    DrugCropBlock CANNABIS = register("cannabis", new DrugCropBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("cannabis"))));
+    CannabisPlantBlock CANNABIS = register("cannabis", new CannabisPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("cannabis"))));
     HopPlantBlock HOP = register("hop", new HopPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("hop"))));
     TobaccoPlantBlock TOBACCO = register("tobacco", new TobaccoPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("tobacco"))));
-    DrugCropBlock COCA = register("coca", new DrugCropBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("coca"))));
+    CocaPlantBlock COCA = register("coca", new CocaPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("coca"))));
     CoffeaPlantBlock COFFEA = register("coffea", new CoffeaPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("coffea"))));
     PeyoteBlock PEYOTE = register("peyote", new PeyoteBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("peyote"))));
     AgavePlantBlock AGAVE_PLANT = register("agave_plant", new AgavePlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("agave_plant"))));

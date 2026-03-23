@@ -1,4 +1,3 @@
-#version 150
 
 vec3 getRotatedColor(vec3 color, float rot) {
 	vec3 returnColor = vec3(0);

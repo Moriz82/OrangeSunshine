@@ -1,4 +1,3 @@
-#version 150
 
 float getBrightness(vec3 color) {
     float cR = 0.3086;

@@ -11,44 +11,45 @@
 
 package moriz.orangesunshine.client.render;
 
-import net.minecraft.client.model.geom.*;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.*;
-import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 
-public class RastaHeadModel extends SinglePartEntityModel<Pig> {
+import java.util.function.Function;
+
+public class RastaHeadModel extends Model {
     private final ModelPart root;
 
     public RastaHeadModel() {
-        super(RenderType::getEntityTranslucent);
-        this.root = TexturedModelData.of(getModelData(Dilation.NONE), 128, 64).createModel();
+        super(LayerDefinition.create(getMeshDefinition(CubeDeformation.NONE), 128, 64).bakeRoot(), (Function<Identifier, RenderType>) RenderTypes::entityTranslucent);
+        this.root = this.root();
     }
 
-    public static MeshDefinition getModelData(Dilation dilation) {
+    public static MeshDefinition getMeshDefinition(CubeDeformation dilation) {
         MeshDefinition data = new MeshDefinition();
         PartDefinition root = data.getRoot();
-        PartDefinition head = root.addChild(EntityModelPartNames.HEAD, CubeListBuilder.create()
-                .uv(0, 0).cuboid(-4, -8, -4, 8, 8, 8, dilation).mirrored(), ModelTransform.NONE);
-        head.addChild("nose", CubeListBuilder.create()
-                .uv(33, 0).cuboid(-0.5F, -4.8F, -5F, 1, 2, 1, dilation).mirrored(), ModelTransform.rotation(-0.0743572F, 0, 0));
-        head.addChild("nostrils", CubeListBuilder.create()
-                .uv(38, 0).cuboid(-1F, -4.2F, -4.5F, 2, 1, 1, dilation).mirrored(), ModelTransform.NONE);
-        head.addChild("hair", CubeListBuilder.create()
-                .uv(0, 17).cuboid(-4.5F, -7.5F, -4.5F, 9, 11, 9, dilation).mirrored(), ModelTransform.NONE);
-        root.addChild(EntityModelPartNames.HAT, CubeListBuilder.create()
-                .uv(0, 38).cuboid(-5F, -10F, -8.5F, 10, 7, 12, dilation).mirrored(), ModelTransform.rotation(-0.669215F, 0, 0));
-        root.addChild("joint", CubeListBuilder.create()
-                .uv(0, 0).cuboid(-0.5F, -3.5F, -5F, 1, 1, 2, dilation).mirrored(), ModelTransform.rotation(0.4089647F, -0.2602503F, 0));
+        PartDefinition head = root.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create()
+                .texOffs(0, 0).addBox(-4, -8, -4, 8, 8, 8, dilation).mirror(), PartPose.ZERO);
+        head.addOrReplaceChild("nose", CubeListBuilder.create()
+                .texOffs(33, 0).addBox(-0.5F, -4.8F, -5F, 1, 2, 1, dilation).mirror(), PartPose.offsetAndRotation(0, 0, 0, -0.0743572F, 0, 0));
+        head.addOrReplaceChild("nostrils", CubeListBuilder.create()
+                .texOffs(38, 0).addBox(-1F, -4.2F, -4.5F, 2, 1, 1, dilation).mirror(), PartPose.ZERO);
+        head.addOrReplaceChild("hair", CubeListBuilder.create()
+                .texOffs(0, 17).addBox(-4.5F, -7.5F, -4.5F, 9, 11, 9, dilation).mirror(), PartPose.ZERO);
+        root.addOrReplaceChild(PartNames.HAT, CubeListBuilder.create()
+                .texOffs(0, 38).addBox(-5F, -10F, -8.5F, 10, 7, 12, dilation).mirror(), PartPose.offsetAndRotation(0, 0, 0, -0.669215F, 0, 0));
+        root.addOrReplaceChild("joint", CubeListBuilder.create()
+                .texOffs(0, 0).addBox(-0.5F, -3.5F, -5F, 1, 1, 2, dilation).mirror(), PartPose.offsetAndRotation(0, 0, 0, 0.4089647F, -0.2602503F, 0));
         return data;
     }
 
-    @Override
-    public void setAngles(Pig var1, float var2, float var3, float var4, float var5, float var6) {
-
-    }
-
-    @Override
-    public ModelPart getPart() {
-        return root;
-    }
 }

@@ -5,7 +5,8 @@ import java.util.*;
 import org.joml.Vector3f;
 
 public interface UniformBinding {
-    UniformBinding EMPTY = (uniforms, tickDelta, screenWidth, screenHeight, pass) -> pass.run();
+    UniformBinding EMPTY = (uniforms, tickDelta, screenWidth, screenHeight, pass) -> {
+    };
 
     void bindUniforms(UniformSetter uniforms, float tickDelta, int screenWidth, int screenHeight, Runnable pass);
 
