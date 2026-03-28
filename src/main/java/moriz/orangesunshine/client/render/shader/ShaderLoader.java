@@ -226,6 +226,42 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("Ticks", FLOAT),
                             new UboField("_pad0", FLOAT),
                             new UboField("_pad1", FLOAT))))
+            .addShader("ps_bloom", UniformBinding.start()
+                    .program("ps_bloom", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
+                        float bloom = ShaderContext.modifier(Drug.BLOOM_HALLUCINATION_STRENGTH);
+                        if (bloom <= 0) {
+                            return;
+                        }
+                        setter.set("PixelSize", 1F / screenWidth, 1F / screenHeight);
+                        setter.set("Vertical", 0);
+                        setter.set("TotalAlpha", Mth.clamp(bloom, 0, 1));
+                        pass.run();
+                    })
+                    .ubo("ps_bloom", "PsBloomConfig", List.of(
+                            new UboField("PixelSize", VEC2),
+                            new UboField("Vertical", FLOAT),
+                            new UboField("TotalAlpha", FLOAT))))
+            .addShader("ps_colored_bloom", UniformBinding.start()
+                    .program("ps_colored_bloom", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
+                        float bloom = ShaderContext.modifier(Drug.BLOOM_HALLUCINATION_STRENGTH);
+                        if (bloom <= 0) {
+                            return;
+                        }
+                        float[] bloomColor = Drug.BLOOM.apply(ShaderContext.properties());
+                        if (bloomColor[3] <= 0) {
+                            return;
+                        }
+                        setter.set("PixelSize", 1F / screenWidth, 1F / screenHeight);
+                        setter.set("Vertical", 0);
+                        setter.set("TotalAlpha", Mth.clamp(bloom * bloomColor[3], 0, 1));
+                        setter.set("BloomColor", bloomColor[0], bloomColor[1], bloomColor[2], bloomColor[3]);
+                        pass.run();
+                    })
+                    .ubo("ps_colored_bloom", "PsColoredBloomConfig", List.of(
+                            new UboField("PixelSize", VEC2),
+                            new UboField("Vertical", FLOAT),
+                            new UboField("TotalAlpha", FLOAT),
+                            new UboField("BloomColor", VEC4))))
         ;
 
 
