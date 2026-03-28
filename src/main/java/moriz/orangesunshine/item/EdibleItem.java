@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 
 public class EdibleItem extends Item {
@@ -20,10 +21,21 @@ public class EdibleItem extends Item {
     public static final FoodProperties TOMATO = new FoodProperties.Builder().nutrition(1).saturationModifier(1.9F).alwaysEdible().build();
 
     private final DrugInfluence influence;
+    private final ItemUseAnimation useAnimation;
 
     public EdibleItem(Item.Properties settings, DrugInfluence influence) {
+        this(settings, null, influence);
+    }
+
+    public EdibleItem(Item.Properties settings, ItemUseAnimation useAnimation, DrugInfluence influence) {
         super(settings);
         this.influence = influence;
+        this.useAnimation = useAnimation;
+    }
+
+    @Override
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return useAnimation != null ? useAnimation : super.getUseAnimation(stack);
     }
 
     @Override

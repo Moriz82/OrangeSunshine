@@ -426,6 +426,7 @@ public interface PSItems {
             .consumes(new BongItem.Consumable(DMT.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.INHALED, 0.012, 0.006, 0.9F)))
             .consumes(new BongItem.Consumable(DMT_5_MEO.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.INHALED, 0.016, 0.007, 1.0F)))
             .consumes(new BongItem.Consumable(AYAHUASCA.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.INHALED, 0.01, 0.006, 0.8F)))
+            .consumes(new BongItem.Consumable(DRIED_SALVIA.getDefaultInstance(), new DrugInfluence(DrugType.SALVIA, DrugInfluence.DelayType.INHALED, 0.02, 0.001, 0.8F)))
             .consumes(new BongItem.Consumable(HARMONIUM.getDefaultInstance(), stack -> new HarmoniumDrugInfluence(DrugInfluence.DelayType.INHALED, 0.04, 0.01, 0.65F, MathUtils.unpackRgb(HARMONIUM.getColor(stack)))));
     // TODO: Play around with the bongs benefits
     BongItem BONG = register("bong", new BongItem(new Item.Properties().setId(itemKey("bong")).durability(128)))
@@ -436,6 +437,7 @@ public interface PSItems {
             .consumes(new BongItem.Consumable(DMT.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.012, 0.006, 1.0F)))
             .consumes(new BongItem.Consumable(DMT_5_MEO.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.016, 0.007, 1.15F)))
             .consumes(new BongItem.Consumable(AYAHUASCA.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.01, 0.006, 0.9F)))
+            .consumes(new BongItem.Consumable(DRIED_SALVIA.getDefaultInstance(), new DrugInfluence(DrugType.SALVIA, DrugInfluence.DelayType.IMMEDIATE, 0.02, 0.001, 0.9F)))
             .consumes(new BongItem.Consumable(HARMONIUM.getDefaultInstance(), stack -> new HarmoniumDrugInfluence(DrugInfluence.DelayType.IMMEDIATE, 0.04, 0.01, 0.9F, MathUtils.unpackRgb(HARMONIUM.getColor(stack)))));
     BongItem RIG = register("rig", new BongItem(new Item.Properties().setId(itemKey("rig")).durability(128)))
             .consumes(new BongItem.Consumable(WEED_EXTRACT.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.IMMEDIATE, 0.01, 0.002, 0.9F)))
@@ -467,6 +469,12 @@ public interface PSItems {
             new Item.Properties().setId(itemKey("peyote_joint")).durability(2), 2, new Vector3f(0.5F, 0.9F, 0.4F),
             new DrugInfluence(DrugType.PEYOTE, DrugInfluence.DelayType.INHALED, 0.003, 0.0015, 0.4f),
             new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.1, 0.02, 0.1f)
+    ));
+
+    ////////////////////////// OPIUM /////////////////////////////
+    SmokeableItem OPIUM_PIPE = register("opium_pipe", new SmokeableItem(
+            new Item.Properties().setId(itemKey("opium_pipe")).durability(4), 4, new Vector3f(0.3f, 0.25f, 0.15f),
+            new DrugInfluence(DrugType.OPIUM, DrugInfluence.DelayType.INHALED, 0.006, 0.002, 0.7f)
     ));
     //</editor-fold>
 
@@ -522,7 +530,17 @@ public interface PSItems {
     Item BARK_SOLUTION_3 = register("bark_solution_3");
     Item BARK_SOLUTION_4 = register("bark_solution_4");
     Item BARK_SOLUTION_5 = register("bark_solution_5");
-    Item MESCALINE = register("mescaline");
+    Item MESCALINE = register("mescaline", new EdibleItem(
+            new Item.Properties().setId(itemKey("mescaline")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.MESCALINE, DrugInfluence.DelayType.METABOLISED, 0.004, 0.001, 0.5f)
+    ));
+    Item MESCALINE_TEA = register("mescaline_tea", new EdibleItem(
+            new Item.Properties().setId(itemKey("mescaline_tea")).food(
+                    new FoodProperties.Builder().alwaysEdible().nutrition(0).saturationModifier(0).build()
+            ).craftRemainder(Items.GLASS_BOTTLE),
+            ItemUseAnimation.DRINK,
+            new DrugInfluence(DrugType.MESCALINE, DrugInfluence.DelayType.INGESTED, 0.003, 0.001, 0.6f)
+    ));
     Item NIC = register("nic");
     //</editor-fold>
 

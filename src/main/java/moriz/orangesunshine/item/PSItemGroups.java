@@ -109,6 +109,9 @@ public interface PSItemGroups {
                 entries.accept(PSItems.OPIUM_BOTTLE_1);
                 entries.accept(PSItems.OPIUM_BOTTLE_2);
                 entries.accept(PSItems.OPIUM_BOTTLE_3);
+                entries.accept(PSItems.OPIUM_PIPE);
+                entries.accept(PSItems.MESCALINE);
+                entries.accept(PSItems.MESCALINE_TEA);
 
                // entries.accept(PSItems.KAVA_SEEDS);
                // entries.accept(PSItems.KAVA_ROOT);

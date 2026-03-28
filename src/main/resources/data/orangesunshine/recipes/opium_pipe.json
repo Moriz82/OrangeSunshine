@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:opium_bottle_3"
+    },
+    {
+      "item": "orangesunshine:smoking_pipe"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:opium_pipe"
+  }
+}
