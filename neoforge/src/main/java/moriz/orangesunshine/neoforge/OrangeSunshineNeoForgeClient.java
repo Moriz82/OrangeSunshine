@@ -3,8 +3,17 @@ package moriz.orangesunshine.neoforge;
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.OrangeSunshinePlatform;
 import moriz.orangesunshine.block.PSBlocks;
+import moriz.orangesunshine.block.entity.FlaskBlockEntity;
+import moriz.orangesunshine.client.screen.BarrelScreen;
+import moriz.orangesunshine.client.screen.DistilleryScreen;
+import moriz.orangesunshine.client.screen.DryingTableScreen;
+import moriz.orangesunshine.client.screen.FlaskScreen;
+import moriz.orangesunshine.client.screen.MixingTableScreen;
+import moriz.orangesunshine.client.screen.MortarPestleScreen;
+import moriz.orangesunshine.client.screen.MushTubScreen;
 import moriz.orangesunshine.entity.PSEntities;
 import moriz.orangesunshine.entity.drug.DrugProperties;
+import moriz.orangesunshine.screen.PSScreenHandlers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
@@ -14,6 +23,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import java.util.Optional;
 
@@ -22,6 +32,7 @@ public final class OrangeSunshineNeoForgeClient {
     public OrangeSunshineNeoForgeClient(IEventBus modEventBus) {
         modEventBus.addListener(this::onClientSetup);
         modEventBus.addListener(this::onRegisterRenderers);
+        modEventBus.addListener(this::onRegisterMenuScreens);
     }
 
     private void onClientSetup(FMLClientSetupEvent event) {
@@ -59,20 +70,17 @@ public final class OrangeSunshineNeoForgeClient {
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POTTED_TOBACCO, ChunkSectionLayer.CUTOUT);
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POTTED_COCA, ChunkSectionLayer.CUTOUT);
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POTTED_COFFEA, ChunkSectionLayer.CUTOUT);
-
-            // TODO: MenuScreens.register calls require the client screen classes, which are
-            // currently excluded from the common module for NeoForge (see fabricOwnedSources
-            // in common/build.gradle). Port screen classes to neoforge/src or remove them
-            // from fabricOwnedSources to enable this:
-            //
-            // MenuScreens.register(PSScreenHandlers.DRYING_TABLE, DryingTableScreen::new);
-            // MenuScreens.register(PSScreenHandlers.BARREL, BarrelScreen::new);
-            // MenuScreens.register(PSScreenHandlers.DISTILLERY, DistilleryScreen::new);
-            // MenuScreens.register(PSScreenHandlers.FLASK, FlaskScreen::new);
-            // MenuScreens.register(PSScreenHandlers.MASH_TUB, MushTubScreen::new);
-            // MenuScreens.register(PSScreenHandlers.MORTAR_PESTLE, MortarPestleScreen::new);
-            // MenuScreens.register(PSScreenHandlers.MIXING_TABLE, MixingTableScreen::new);
         });
+    }
+
+    private void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(PSScreenHandlers.DRYING_TABLE, DryingTableScreen::new);
+        event.register(PSScreenHandlers.BARREL, BarrelScreen::new);
+        event.register(PSScreenHandlers.DISTILLERY, DistilleryScreen::new);
+        event.register(PSScreenHandlers.FLASK, FlaskScreen<FlaskBlockEntity>::new);
+        event.register(PSScreenHandlers.MASH_TUB, MushTubScreen::new);
+        event.register(PSScreenHandlers.MORTAR_PESTLE, MortarPestleScreen::new);
+        event.register(PSScreenHandlers.MIXING_TABLE, MixingTableScreen::new);
     }
 
     private void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {

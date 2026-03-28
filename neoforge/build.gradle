@@ -7,6 +7,20 @@ architectury {
     neoForge()
 }
 
+// Screen classes and render helpers from shared sources (excluded from :common by fabricOwnedSources).
+// PSScreens.java excluded: uses MenuScreens.register() which is private on NeoForge.
+sourceSets {
+    main {
+        java {
+            srcDir '../src/main/java'
+            include 'moriz/orangesunshine/client/screen/**'
+            exclude 'moriz/orangesunshine/client/screen/PSScreens.java'
+            include 'moriz/orangesunshine/client/render/FluidBoxRenderer.java'
+            include 'moriz/orangesunshine/client/render/RenderUtil.java'
+        }
+    }
+}
+
 configurations {
     common
     shadowCommon
