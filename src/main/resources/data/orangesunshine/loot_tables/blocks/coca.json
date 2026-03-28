@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf",
+          "name": "orangesunshine:coca_leaves",
           "functions": [
             {
               "function": "minecraft:apply_bonus",
@@ -35,7 +35,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf"
+          "name": "orangesunshine:coca_leaves"
         }
       ],
       "conditions": [
@@ -53,11 +53,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf"
+          "name": "orangesunshine:coca_leaves"
         },
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf"
+          "name": "orangesunshine:coca_leaves"
         }
       ],
       "conditions": [
@@ -75,15 +75,15 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf"
+          "name": "orangesunshine:coca_leaves"
         },
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf"
+          "name": "orangesunshine:coca_leaves"
         },
         {
           "type": "minecraft:item",
-          "name": "orangesunshine:coca_leaf"
+          "name": "orangesunshine:coca_leaves"
         }
       ],
       "conditions": [

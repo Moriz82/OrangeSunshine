@@ -61,13 +61,16 @@ public interface PSItemGroups {
                 entries.accept(PSItems.BUNSEN_BURNER);
 
                 entries.accept(PSItems.SMOKING_PIPE);
+                entries.accept(PSItems.RIG);
                 entries.accept(PSItems.CIGARETTE);
                 entries.accept(PSItems.CIGAR);
                 entries.accept(PSItems.JOINT);
+                entries.accept(PSItems.CAKE_BAR);
                 entries.accept(PSItems.BLOTTER);
                 entries.accept(PSItems.ROLLING_PAPER);
                 entries.accept(PSItems.JOLLY_RANCHER);
                 entries.accept(PSItems.NALOXONE);
+                entries.accept(PSItems.FUROSEMIDE);
 
                 entries.accept(PSItems.BONG);
                 entries.accept(PSItems.SYRINGE);
@@ -87,6 +90,7 @@ public interface PSItemGroups {
                 entries.accept(PSItems.OBSIDIAN_DUST);
 
                 entries.accept(PSItems.DMT);
+                entries.accept(PSItems.DMT_5_MEO);
                 entries.accept(PSItems.AYAHUASCA);
                 entries.accept(PSItems.SAN_PEDRO);
                 entries.accept(PSItems.SAN_PEDRO_SEEDS);
@@ -121,7 +125,6 @@ public interface PSItemGroups {
                 entries.accept(PSItems.LSA_BLOTTER);
                 entries.accept(PSItems.LSD_BLOTTER);
                 entries.accept(PSItems.ORANGESUNSINE_BLOTTER);
-
                 entries.accept(PSItems.ETH_HCL);
                 entries.accept(PSBlocks.MORTAR_PESTLE);
                 entries.accept(PSBlocks.MIXING_TABLE);
@@ -157,6 +160,7 @@ public interface PSItemGroups {
                 entries.accept(PSItems.COCA_LEAVES);
                 entries.accept(PSItems.DRIED_COCA_LEAVES);
                 entries.accept(PSItems.COCAINE_POWDER);
+                entries.accept(PSItems.COCAINE_DUST);
                 entries.accept(PSItems.COCAINE_ROCK);
                 entries.accept(PSItems.COCA_MULCH);
 
@@ -177,11 +181,14 @@ public interface PSItemGroups {
                 entries.accept(PSItems.DRIED_CANNABIS_LEAF);
                 entries.accept(PSItems.CANNABIS_BUDS);
                 entries.accept(PSItems.DRIED_CANNABIS_BUDS);
+                entries.accept(PSItems.WEED_EXTRACT);
 
                 entries.accept(PSItems.HASH_MUFFIN);
 
                 entries.accept(PSItems.BROWN_MAGIC_MUSHROOMS);
                 entries.accept(PSItems.RED_MAGIC_MUSHROOMS);
+                entries.accept(PSItems.DRIED_BROWN_SHROOMS);
+                entries.accept(PSItems.DRIED_RED_SHROOMS);
 
                 entries.accept(PSItems.LATTICE);
                 entries.accept(PSItems.WINE_GRAPES);

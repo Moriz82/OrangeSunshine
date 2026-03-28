@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "orangesunshine:weed_joint"
+    "orangesunshine:joint",
+    "orangesunshine:cake_bar"
   ]
 }

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "orangesunshine:coca_leaf"
+      "item": "orangesunshine:coca_leaves"
     }
   ],
   "result": {
