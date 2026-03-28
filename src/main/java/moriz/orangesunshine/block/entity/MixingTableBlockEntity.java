@@ -1,6 +1,7 @@
 package moriz.orangesunshine.block.entity;
 
 import moriz.orangesunshine.recipe.MixingTableRecipe;
+import moriz.orangesunshine.recipe.PSRecipes;
 import moriz.orangesunshine.screen.MixingTableScreenHandler;
 import moriz.orangesunshine.screen.PSScreenHandlers;
 import net.minecraft.core.BlockPos;
@@ -173,7 +174,7 @@ public class MixingTableBlockEntity extends SyncedBlockEntity
     }
 
     private Optional<RecipeHolder<MixingTableRecipe>> getCurrentRecipe(Level level) {
-        return level.getServer().getRecipeManager().getRecipeFor(MixingTableRecipe.Type.INSTANCE,
+        return level.getServer().getRecipeManager().getRecipeFor(PSRecipes.MIXING_TABLE_TYPE,
                 new SingleRecipeInput(getItem(INPUT_SLOT)), level);
     }
 

@@ -41,12 +41,12 @@ public class MixingTableRecipe implements Recipe<SingleRecipeInput> {
 
     @Override
     public RecipeSerializer<MixingTableRecipe> getSerializer() {
-        return Serializer.INSTANCE;
+        return PSRecipes.MIXING_TABLE;
     }
 
     @Override
     public RecipeType<MixingTableRecipe> getType() {
-        return Type.INSTANCE;
+        return PSRecipes.MIXING_TABLE_TYPE;
     }
 
     @Override
@@ -65,10 +65,6 @@ public class MixingTableRecipe implements Recipe<SingleRecipeInput> {
 
     public ItemStack getResult() {
         return output;
-    }
-
-    public static class Type implements RecipeType<MixingTableRecipe> {
-        public static final Type INSTANCE = new Type();
     }
 
     public static class Serializer implements RecipeSerializer<MixingTableRecipe> {
