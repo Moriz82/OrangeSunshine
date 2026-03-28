@@ -1,0 +1,10 @@
+{
+  "type": "orangesunshine:mixing",
+  "ingredients": [
+    { "item": "orangesunshine:ergot_powder" },
+    { "item": "orangesunshine:eth_hcl" }
+  ],
+  "output": {
+    "item": "orangesunshine:defat_ergot"
+  }
+}

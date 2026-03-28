@@ -1,0 +1,10 @@
+{
+  "type": "orangesunshine:mixing",
+  "ingredients": [
+    { "item": "orangesunshine:ergopeptines" },
+    { "item": "orangesunshine:de_ionized_water" }
+  ],
+  "output": {
+    "item": "orangesunshine:dissolved_ergopeptines"
+  }
+}

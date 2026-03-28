@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PBP",
+    "PIP",
+    "PPP"
+  ],
+  "key": {
+    "P": { "tag": "minecraft:planks" },
+    "B": { "item": "minecraft:glass_bottle" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "result": {
+    "item": "orangesunshine:mixing_table"
+  }
+}

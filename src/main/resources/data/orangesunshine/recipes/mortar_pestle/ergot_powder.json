@@ -1,0 +1,9 @@
+{
+  "type": "orangesunshine:mortar_pestle_recipe",
+  "ingredients": [
+    { "item": "orangesunshine:ergot" }
+  ],
+  "output": {
+    "item": "orangesunshine:ergot_powder"
+  }
+}

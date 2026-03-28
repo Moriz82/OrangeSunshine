@@ -1,0 +1,10 @@
+{
+  "type": "orangesunshine:mixing",
+  "ingredients": [
+    { "item": "orangesunshine:ergot_alkaloids" },
+    { "item": "orangesunshine:sodium_hydroxide" }
+  ],
+  "output": {
+    "item": "orangesunshine:neutral_ergot_alkaloids"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "orangesunshine:mixing",
+  "ingredients": [
+    { "item": "orangesunshine:de_ionized_water" },
+    { "item": "orangesunshine:vinegar" }
+  ],
+  "output": {
+    "item": "orangesunshine:eth_hcl"
+  }
+}

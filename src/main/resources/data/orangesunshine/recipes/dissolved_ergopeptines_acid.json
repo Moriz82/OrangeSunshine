@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "orangesunshine:dissolved_ergopeptines"
+  },
+  "result": "orangesunshine:dissolved_ergopeptines_acid",
+  "experience": 0.3,
+  "cookingtime": 200
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSC",
+    "C C",
+    " C "
+  ],
+  "key": {
+    "C": { "item": "minecraft:cobblestone" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "orangesunshine:mortar_pestle"
+  }
+}

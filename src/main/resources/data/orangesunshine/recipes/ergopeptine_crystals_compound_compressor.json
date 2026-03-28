@@ -1,0 +1,10 @@
+{
+  "type": "orangesunshine:compound_compressor_crafting",
+  "size": 1,
+  "ingredients": [
+    { "item": "orangesunshine:dissolved_ergopeptines" }
+  ],
+  "output": {
+    "item": "orangesunshine:ergopeptine_crystals"
+  }
+}

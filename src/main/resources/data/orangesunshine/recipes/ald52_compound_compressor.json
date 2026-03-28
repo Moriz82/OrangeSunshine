@@ -1,0 +1,11 @@
+{
+  "type": "orangesunshine:compound_compressor_crafting",
+  "size": 1,
+  "ingredients": [
+    { "item": "orangesunshine:lsd25" },
+    { "item": "orangesunshine:diethylamine" }
+  ],
+  "output": {
+    "item": "orangesunshine:ald52"
+  }
+}

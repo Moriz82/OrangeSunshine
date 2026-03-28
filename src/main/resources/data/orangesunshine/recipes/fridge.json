@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " A ",
-    " A ",
-    " A "
+    "IRI",
+    "ISI",
+    "III"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:iron_block"
-    }
+    "I": { "item": "minecraft:iron_ingot" },
+    "R": { "item": "minecraft:redstone" },
+    "S": { "item": "minecraft:snow_block" }
   },
   "result": {
     "item": "orangesunshine:fridge"
