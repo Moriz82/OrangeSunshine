@@ -2,6 +2,7 @@ package moriz.orangesunshine.screen;
 
 import moriz.orangesunshine.block.entity.MixingTableBlockEntity;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -10,10 +11,12 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class MixingTableScreenHandler extends AbstractContainerMenu {
     private final Container inventory;
     private final ContainerData propertyDelegate;
+    @Nullable
     public final MixingTableBlockEntity blockEntity;
 
     public MixingTableScreenHandler(int syncId, Inventory inventory, PSScreenHandlers.BlockPosData data) {
@@ -24,11 +27,12 @@ public class MixingTableScreenHandler extends AbstractContainerMenu {
     public MixingTableScreenHandler(int syncId, Inventory playerInventory,
                                     BlockEntity blockEntity, ContainerData arrayPropertyDelegate) {
         super(PSScreenHandlers.MIXING_TABLE, syncId);
-        checkContainerSize(((Container) blockEntity), 2);
-        this.inventory = ((Container) blockEntity);
+        Container container = blockEntity instanceof Container c ? c : new SimpleContainer(2);
+        checkContainerSize(container, 2);
+        this.inventory = container;
         this.inventory.startOpen(playerInventory.player);
         this.propertyDelegate = arrayPropertyDelegate;
-        this.blockEntity = ((MixingTableBlockEntity) blockEntity);
+        this.blockEntity = blockEntity instanceof MixingTableBlockEntity mixingTable ? mixingTable : null;
 
         this.addSlot(new Slot(inventory, 0, 80, 11));
         this.addSlot(new Slot(inventory, 1, 80, 59));

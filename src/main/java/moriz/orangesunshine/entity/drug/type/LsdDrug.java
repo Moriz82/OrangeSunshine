@@ -50,7 +50,7 @@ public class LsdDrug extends SimpleDrug {
 
     @Override
     public float viewWobblyness() {
-        return (float) getActiveValue() * 0.15F;
+        return (float)getActiveValue() * 0.25F;
     }
 
     @Override
@@ -77,12 +77,12 @@ public class LsdDrug extends SimpleDrug {
 
     @Override
     public float colorHallucinationStrength() {
-        return (float) getActiveValue() * 0.2F;
+        return (float)getActiveValue() * 0.55F;
     }
 
     @Override
     public float movementHallucinationStrength() {
-        return (float) Math.max(0, getActiveValue() - 0.6F) * 1.9F;
+        return (float)getActiveValue() * 1.35F;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class LsdDrug extends SimpleDrug {
 
     @Override
     public float superSaturationHallucinationStrength() {
-        return (float)getActiveValue() * 0.125F;
+        return (float)getActiveValue() * 0.35F;
     }
 
     @Override

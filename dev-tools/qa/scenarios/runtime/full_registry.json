@@ -1,0 +1,190 @@
+{
+  "name": "orangesunshine-full-registry",
+  "steps": [
+    {
+      "id": "server-list",
+      "command": "list",
+      "must_match": "There are .* of a max of .* players online"
+    },
+
+    {"id": "drug-joint", "command": "give @a orangesunshine:joint 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-lsd-blotter", "command": "give @a orangesunshine:lsd_blotter 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-orangesunshine-blotter", "command": "give @a orangesunshine:orangesunshine_blotter 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-lsa-blotter", "command": "give @a orangesunshine:lsa_blotter 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-cocaine-powder", "command": "give @a orangesunshine:cocaine_powder 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-brown-shrooms", "command": "give @a orangesunshine:brown_magic_mushrooms 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-red-shrooms", "command": "give @a orangesunshine:red_magic_mushrooms 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-dried-peyote", "command": "give @a orangesunshine:dried_peyote 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-hash-muffin", "command": "give @a orangesunshine:hash_muffin 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-cigarette", "command": "give @a orangesunshine:cigarette 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-cigar", "command": "give @a orangesunshine:cigar 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "drug-peyote-joint", "command": "give @a orangesunshine:peyote_joint 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-mixing-table", "command": "give @a orangesunshine:mixing_table 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-mortar-pestle", "command": "give @a orangesunshine:mortar_pestle 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-drying-table", "command": "give @a orangesunshine:drying_table 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-mash-tub", "command": "give @a orangesunshine:mash_tub 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-flask", "command": "give @a orangesunshine:flask 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-distillery", "command": "give @a orangesunshine:distillery 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-oak-barrel", "command": "give @a orangesunshine:oak_barrel 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-bottle-rack", "command": "give @a orangesunshine:bottle_rack 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-tray", "command": "give @a orangesunshine:tray 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "block-bunsen-burner", "command": "give @a orangesunshine:bunsen_burner 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "craft-blotter", "command": "give @a orangesunshine:blotter 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "craft-rolling-paper", "command": "give @a orangesunshine:rolling_paper 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "craft-syringe", "command": "give @a orangesunshine:syringe 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "craft-harmonium", "command": "give @a orangesunshine:harmonium 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "craft-naloxone", "command": "give @a orangesunshine:naloxone 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "mineral-sulfur", "command": "give @a orangesunshine:sulfur 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "mineral-salt", "command": "give @a orangesunshine:salt 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "mineral-phosphorus", "command": "give @a orangesunshine:phosphorus 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "plant-cannabis-seeds", "command": "give @a orangesunshine:cannabis_seeds 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "plant-coca-seeds", "command": "give @a orangesunshine:coca_seeds 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "plant-tobacco-seeds", "command": "give @a orangesunshine:tobacco_seeds 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "plant-morning-glory-seeds", "command": "give @a orangesunshine:morning_glory_seeds 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "plant-hop-seeds", "command": "give @a orangesunshine:hop_seeds 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "plant-jimsonweed-seeds", "command": "give @a orangesunshine:jimsonweed_seeds 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "container-wine-grapes", "command": "give @a orangesunshine:wine_grapes 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "container-coffee-beans", "command": "give @a orangesunshine:coffee_beans 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "container-wooden-mug", "command": "give @a orangesunshine:wooden_mug 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "container-glass-chalice", "command": "give @a orangesunshine:glass_chalice 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "tool-smoking-pipe", "command": "give @a orangesunshine:smoking_pipe 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "tool-bong", "command": "give @a orangesunshine:bong 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "chemistry-lsd25", "command": "give @a orangesunshine:lsd25 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "chemistry-lysergic-acid", "command": "give @a orangesunshine:lysergic_acid 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"},
+
+    {"id": "wood-juniper-planks", "command": "give @a orangesunshine:juniper_planks 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"}
+  ]
+}

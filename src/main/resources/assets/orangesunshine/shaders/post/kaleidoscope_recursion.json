@@ -1,0 +1,40 @@
+{
+    "targets": {
+        "swap": {}
+    },
+    "passes": [
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/kaleidoscope_recursion",
+            "inputs": [
+                {"sampler_name": "In", "target": "minecraft:main"}
+            ],
+            "output": "swap",
+            "uniforms": {
+                "KaleidoscopeRecursionConfig": [
+                    {"name": "TotalAlpha", "type": "float", "value": 0.0},
+                    {"name": "SegmentCount", "type": "float", "value": 6.0},
+                    {"name": "Zoom", "type": "float", "value": 1.0},
+                    {"name": "Spin", "type": "float", "value": 0.0},
+                    {"name": "Recursion", "type": "float", "value": 0.0},
+                    {"name": "Ticks", "type": "float", "value": 0.0},
+                    {"name": "_pad0", "type": "float", "value": 0.0},
+                    {"name": "_pad1", "type": "float", "value": 0.0}
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "orangesunshine:post/blit",
+            "inputs": [
+                {"sampler_name": "In", "target": "swap"}
+            ],
+            "output": "minecraft:main",
+            "uniforms": {
+                "BlitConfig": [
+                    {"name": "ColorModulate", "type": "vec4", "value": [1.0, 1.0, 1.0, 1.0]}
+                ]
+            }
+        }
+    ]
+}

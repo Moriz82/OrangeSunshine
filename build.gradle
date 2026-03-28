@@ -60,6 +60,13 @@ subprojects {
                     sourceSet project(':common').sourceSets.main
                 }
             }
+            afterEvaluate {
+                tasks.matching { it.name == 'runClient' }.configureEach {
+                    if (rootProject.hasProperty('quickPlayWorld')) {
+                        args '--quickPlaySingleplayer', rootProject.property('quickPlayWorld')
+                    }
+                }
+            }
         }
     }
 

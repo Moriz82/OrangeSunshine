@@ -5,7 +5,10 @@ import net.minecraft.world.level.gamerules.GameRuleCategory;
 import net.minecraft.world.level.gamerules.GameRules;
 
 public interface PSGameRules {
-    GameRule<Boolean> DO_SLEEP_DEPRIVATION = registerBoolean("orangesunshine:do_sleep_deprivation", GameRuleCategory.SPAWNING, false);
+    String DO_SLEEP_DEPRIVATION_NAME = "orangesunshine:do_sleep_deprivation";
+    GameRuleCategory DO_SLEEP_DEPRIVATION_CATEGORY = GameRuleCategory.SPAWNING;
+    boolean DO_SLEEP_DEPRIVATION_DEFAULT = false;
+    Holder<GameRule<Boolean>> DO_SLEEP_DEPRIVATION = new Holder<>();
 
     @SuppressWarnings("unchecked")
     private static GameRule<Boolean> registerBoolean(String name, GameRuleCategory category, boolean defaultValue) {
@@ -18,5 +21,24 @@ public interface PSGameRules {
         }
     }
 
-    static void bootstrap() { }
+    static void bootstrap() {
+        if (DO_SLEEP_DEPRIVATION.value == null) {
+            DO_SLEEP_DEPRIVATION.value = registerBoolean(
+                    DO_SLEEP_DEPRIVATION_NAME,
+                    DO_SLEEP_DEPRIVATION_CATEGORY,
+                    DO_SLEEP_DEPRIVATION_DEFAULT
+            );
+        }
+    }
+
+    static GameRule<Boolean> sleepDeprivationRule() {
+        if (DO_SLEEP_DEPRIVATION.value == null) {
+            throw new IllegalStateException("Game rule not initialized: " + DO_SLEEP_DEPRIVATION_NAME);
+        }
+        return DO_SLEEP_DEPRIVATION.value;
+    }
+
+    final class Holder<T> {
+        private T value;
+    }
 }

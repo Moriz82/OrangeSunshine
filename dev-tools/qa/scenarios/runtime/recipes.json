@@ -1,0 +1,87 @@
+{
+  "name": "orangesunshine-recipes-runtime",
+  "steps": [
+    {
+      "id": "server-list",
+      "command": "list",
+      "must_match": "There are .* of a max of .* players online"
+    },
+    {
+      "id": "setblock-mixing-table",
+      "command": "setblock 0 64 0 orangesunshine:mixing_table",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-mortar-pestle",
+      "command": "setblock 1 64 0 orangesunshine:mortar_pestle",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-drying-table",
+      "command": "setblock 2 64 0 orangesunshine:drying_table",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-mash-tub",
+      "command": "setblock 3 64 0 orangesunshine:mash_tub",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-barrel",
+      "command": "setblock 4 64 0 orangesunshine:oak_barrel[facing=north]",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-distillery",
+      "command": "setblock 5 64 0 orangesunshine:distillery",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "setblock-flask",
+      "command": "setblock 6 64 0 orangesunshine:flask",
+      "must_match": "Set the block at|Set the block|Updated"
+    },
+    {
+      "id": "registry-joint",
+      "command": "give @a orangesunshine:joint 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-dried-cannabis-leaf",
+      "command": "give @a orangesunshine:dried_cannabis_leaf 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-cocaine-powder",
+      "command": "give @a orangesunshine:cocaine_powder 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-lsd-blotter",
+      "command": "give @a orangesunshine:lsd_blotter 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-salt",
+      "command": "give @a orangesunshine:salt 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-flask-item",
+      "command": "give @a orangesunshine:flask 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    },
+    {
+      "id": "registry-wine-grapes",
+      "command": "give @a orangesunshine:wine_grapes 1",
+      "acceptable": ["No player was found", "no players online", "given|gave"],
+      "must_not_match": "Unknown or invalid|No such item|unrecognized"
+    }
+  ]
+}

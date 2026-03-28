@@ -39,7 +39,7 @@ public class SleepDeprivationDrug extends SimpleDrug {
             setDesiredValue(0);
         } else {
             if (drugProperties.asEntity().level() instanceof ServerLevel serverLevel
-                    && serverLevel.getGameRules().get(PSGameRules.DO_SLEEP_DEPRIVATION)) {
+                    && serverLevel.getGameRules().get(PSGameRules.sleepDeprivationRule())) {
                 setDesiredValue(getDesiredValue() + (INCREASE_PER_TICKS / 3));
             }
         }

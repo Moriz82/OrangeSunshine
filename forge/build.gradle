@@ -109,7 +109,7 @@ tasks.matching { it.name in ['runClient', 'runServer'] }.configureEach {
 }
 
 tasks.named('runClient').configure {
-    jvmArgs '-Dfml.earlyWindowControl=true'
+    jvmArgs '-Dfml.earlyWindowControl=false'
     javaLauncher = javaToolchains.launcherFor {
         languageVersion = JavaLanguageVersion.of(rootProject.java_version as int)
     }

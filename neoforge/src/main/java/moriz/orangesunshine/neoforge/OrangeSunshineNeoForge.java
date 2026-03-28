@@ -2,14 +2,23 @@ package moriz.orangesunshine.neoforge;
 
 import moriz.orangesunshine.OrangeSunshine;
 import moriz.orangesunshine.OrangeSunshinePlatform;
+import moriz.orangesunshine.PSGameRules;
+import moriz.orangesunshine.PSTags;
+import moriz.orangesunshine.advancement.PSCriteria;
 import moriz.orangesunshine.block.PSBlocks;
+import moriz.orangesunshine.entity.PSEntities;
+import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import moriz.orangesunshine.item.PSItemGroups;
 import moriz.orangesunshine.item.PSItems;
 import moriz.orangesunshine.item.RiftJarItem;
 import moriz.orangesunshine.fluid.ChemicalExtractFluid;
-import moriz.orangesunshine.fluid.PSFluids;
 import moriz.orangesunshine.fluid.container.FluidContainer;
+import moriz.orangesunshine.network.Channel;
+import moriz.orangesunshine.particle.PSParticles;
+import moriz.orangesunshine.recipe.PSRecipes;
+import moriz.orangesunshine.screen.PSScreenHandlers;
+import moriz.orangesunshine.PSSounds;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
@@ -22,12 +31,16 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 @Mod(OrangeSunshinePlatform.MOD_ID)
 public final class OrangeSunshineNeoForge {
     public OrangeSunshineNeoForge(IEventBus modEventBus) {
+        // Registration happens via @EventBusSubscriber in EarlyRegistration class
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::onBuildCreativeTab);
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
-        OrangeSunshinePlatform.init("NeoForge");
+        OrangeSunshinePlatform.LOGGER.info("Initializing {} on NeoForge", OrangeSunshinePlatform.MOD_NAME);
+        PSTags.bootstrap();
+        Channel.bootstrap();
+        PSCriteria.bootstrap();
     }
 
     private void onBuildCreativeTab(BuildCreativeModeTabContentsEvent event) {

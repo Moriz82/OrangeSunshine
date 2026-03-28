@@ -2,6 +2,7 @@ package moriz.orangesunshine.screen;
 
 import moriz.orangesunshine.block.entity.MortarPestleBlockEntity;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -10,25 +11,27 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class MortarPestleScreenHandler extends AbstractContainerMenu {
     private final Container inventory;
     private final ContainerData propertyDelegate;
+    @Nullable
     public final MortarPestleBlockEntity blockEntity;
 
     public MortarPestleScreenHandler(int syncId, Inventory inventory, PSScreenHandlers.BlockPosData data) {
-        this(syncId, inventory, inventory.player.level().getBlockEntity(data.pos()),
-                new SimpleContainerData(2));
+        this(syncId, inventory, inventory.player.level().getBlockEntity(data.pos()), new SimpleContainerData(2));
     }
 
     public MortarPestleScreenHandler(int syncId, Inventory playerInventory,
                                      BlockEntity blockEntity, ContainerData arrayPropertyDelegate) {
         super(PSScreenHandlers.MORTAR_PESTLE, syncId);
-        checkContainerSize(((Container) blockEntity), 2);
-        this.inventory = ((Container) blockEntity);
+        Container container = blockEntity instanceof Container c ? c : new SimpleContainer(2);
+        checkContainerSize(container, 2);
+        this.inventory = container;
         this.inventory.startOpen(playerInventory.player);
         this.propertyDelegate = arrayPropertyDelegate;
-        this.blockEntity = ((MortarPestleBlockEntity) blockEntity);
+        this.blockEntity = blockEntity instanceof MortarPestleBlockEntity mortarPestle ? mortarPestle : null;
 
         this.addSlot(new Slot(inventory, 0, 80, 11));
         this.addSlot(new Slot(inventory, 1, 80, 59));
@@ -101,4 +104,5 @@ public class MortarPestleScreenHandler extends AbstractContainerMenu {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
+
 }

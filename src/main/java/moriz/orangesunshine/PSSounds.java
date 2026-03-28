@@ -25,6 +25,34 @@ public interface PSSounds {
 
     SoundEvent DRUG_GENERIC = register("drug.generic");
 
+    // Drug-specific sound events (one per DrugType)
+    SoundEvent DRUG_ALCOHOL = register("drug.alcohol");
+    SoundEvent DRUG_CANNABIS = register("drug.cannabis");
+    SoundEvent DRUG_BROWN_SHROOMS = register("drug.brown_shrooms");
+    SoundEvent DRUG_RED_SHROOMS = register("drug.red_shrooms");
+    SoundEvent DRUG_TOBACCO = register("drug.tobacco");
+    SoundEvent DRUG_COCCAINE = register("drug.coccaine");
+    SoundEvent DRUG_CAFFEINE = register("drug.caffeine");
+    SoundEvent DRUG_SUGAR = register("drug.sugar");
+    SoundEvent DRUG_BATH_SALTS = register("drug.bath_salts");
+    SoundEvent DRUG_SLEEP_DEPRIVATION = register("drug.sleep_deprivation");
+    SoundEvent DRUG_LSD = register("drug.lsd");
+    SoundEvent DRUG_ATROPINE = register("drug.atropine");
+    SoundEvent DRUG_KAVA = register("drug.kava");
+    SoundEvent DRUG_WARMTH = register("drug.warmth");
+    SoundEvent DRUG_PEYOTE = register("drug.peyote");
+    SoundEvent DRUG_DMT = register("drug.dmt");
+    SoundEvent DRUG_MDA = register("drug.mda");
+    SoundEvent DRUG_MDMA = register("drug.mdma");
+    SoundEvent DRUG_PMA = register("drug.pma");
+    SoundEvent DRUG_CODEINE = register("drug.codeine");
+    SoundEvent DRUG_MORPHINE = register("drug.morphine");
+    SoundEvent DRUG_OPIUM = register("drug.opium");
+    SoundEvent DRUG_MESCALINE = register("drug.mescaline");
+    SoundEvent DRUG_ZERO = register("drug.zero");
+    SoundEvent DRUG_POWER = register("drug.power");
+    SoundEvent DRUG_HARMONIUM = register("drug.harmonium");
+
     static SoundEvent register(String name) {
         Identifier id = OrangeSunshine.id(name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));

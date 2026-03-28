@@ -40,7 +40,7 @@ public record DrugType (Identifier id, Function<DrugType, Drug> constructor) {
     public static final DrugType WARMTH = register("warmth", type -> new WarmthDrug(1, 0.004d));
 
     public static final DrugType PEYOTE = register("peyote", type -> new PeyoteDrug(1, 0.0002d));
-    public static final DrugType DMT = register("dmt", type -> new SimpleDrug(type, 1, 0.0002d));
+    public static final DrugType DMT = register("dmt", type -> new DmtDrug(1, 0.0002d));
     public static final DrugType MDA = register("mda", type -> new SimpleDrug(type, 1, 0.0002d));
     public static final DrugType MDMA = register("mdma", type -> new SimpleDrug(type, 1, 0.0002d));
     public static final DrugType PMA = register("pma", type -> new SimpleDrug(type, 1, 0.0002d));
@@ -59,7 +59,6 @@ public record DrugType (Identifier id, Function<DrugType, Drug> constructor) {
 
     static DrugType register(String name, Function<DrugType, Drug> constructor) {
         DrugType type = new DrugType(OrangeSunshine.id(name), constructor);
-        PSSounds.register("drug." + name);
         return Registry.register(REGISTRY, type.id(), type);
     }
 }

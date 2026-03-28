@@ -35,6 +35,10 @@ public interface PSEntities {
     }
 
     static void bootstrap() {
+        // Force eager entity type initialization during common bootstrap so
+        // loader-specific client events don't trigger late registry writes.
+        EntityType<?> ignoredMolotov = MOLOTOV_COCKTAIL;
+        EntityType<?> ignoredRift = REALITY_RIFT;
         PSTradeOffers.bootstrap();
     }
 }
