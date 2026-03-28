@@ -200,6 +200,9 @@ public class PSWorldGen {
             .or(BiomeSelector.DRY)
         ), genConf.agave);
 
+        registerTilledPatch("salvia", PSBlocks.SALVIA, false, genConf.salvia);
+        registerTilledPatch("kratom", PSBlocks.KRATOM, false, genConf.kratom);
+
         ModOreGeneration.generateOres();
 
         MutableStructurePool.bootstrap();

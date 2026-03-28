@@ -117,6 +117,9 @@ public interface PSBlocks {
             () -> PSItems.TOMATO,
             () -> PSItems.TOMATO_LEAF, BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("tomatoes"))));
 
+    SalviaPlantBlock SALVIA = register("salvia", new SalviaPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("salvia"))));
+    KratomPlantBlock KRATOM = register("kratom", new KratomPlantBlock(BlockConstructionUtils.plant(SoundType.GRASS).setId(blockKey("kratom"))));
+
     Block LATTICE = register("lattice", new LatticeBlock(Properties.of().setId(blockKey("lattice")).mapColor(MapColor.WOOD)
             .sound(SoundType.WOOD).strength(0.3F).noOcclusion().ignitedByLava()));
     Block WINE_GRAPE_LATTICE = register("wine_grape_lattice", new BurdenedLatticeBlock(true, null, 1, Properties.of().setId(blockKey("wine_grape_lattice")).mapColor(MapColor.WOOD)

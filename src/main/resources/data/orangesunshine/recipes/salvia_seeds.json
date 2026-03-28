@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:salvia_leaves"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:salvia_seeds",
+    "count": 2
+  }
+}

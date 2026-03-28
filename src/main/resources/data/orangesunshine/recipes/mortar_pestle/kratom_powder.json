@@ -1,0 +1,11 @@
+{
+  "type": "orangesunshine:mortar_pestle_recipe",
+  "ingredients": [
+    {
+      "item": "orangesunshine:dried_kratom"
+    }
+  ],
+  "output": {
+    "item": "orangesunshine:kratom_powder"
+  }
+}

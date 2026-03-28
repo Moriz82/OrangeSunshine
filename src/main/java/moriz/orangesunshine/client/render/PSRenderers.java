@@ -50,6 +50,8 @@ public interface PSRenderers {
         BlockRenderLayerMap.putBlock(PSBlocks.JIMSONWEEED, ChunkSectionLayer.CUTOUT);
         BlockRenderLayerMap.putBlock(PSBlocks.BELLADONNA, ChunkSectionLayer.CUTOUT);
         BlockRenderLayerMap.putBlock(PSBlocks.TOMATOES, ChunkSectionLayer.CUTOUT);
+        BlockRenderLayerMap.putBlock(PSBlocks.SALVIA, ChunkSectionLayer.CUTOUT);
+        BlockRenderLayerMap.putBlock(PSBlocks.KRATOM, ChunkSectionLayer.CUTOUT);
         BlockRenderLayerMap.putBlock(PSBlocks.MASH_TUB, ChunkSectionLayer.CUTOUT);
         BlockRenderLayerMap.putBlock(PSBlocks.JUNIPER_DOOR, ChunkSectionLayer.CUTOUT);
         BlockRenderLayerMap.putBlock(PSBlocks.JUNIPER_TRAPDOOR, ChunkSectionLayer.CUTOUT);

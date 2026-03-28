@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "orangesunshine:kratom_leaves"
+    }
+  ],
+  "result": {
+    "item": "orangesunshine:kratom_seeds",
+    "count": 2
+  }
+}

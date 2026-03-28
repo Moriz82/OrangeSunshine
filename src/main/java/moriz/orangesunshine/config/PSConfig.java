@@ -77,6 +77,8 @@ public class PSConfig {
             public FeatureConfig coca = new FeatureConfig();
             public FeatureConfig peyote = new FeatureConfig();
             public FeatureConfig agave = new FeatureConfig();
+            public FeatureConfig salvia = new FeatureConfig();
+            public FeatureConfig kratom = new FeatureConfig();
 
             public boolean farmerDrugDeals = true;
             public boolean dungeonChests = true;

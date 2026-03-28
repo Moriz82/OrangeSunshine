@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "age=0,growing=false,natural=false": { "model": "orangesunshine:block/salvia_stage0" },
+    "age=0,growing=false,natural=true": { "model": "orangesunshine:block/salvia_stage0" },
+    "age=0,growing=true,natural=false": { "model": "orangesunshine:block/salvia_stage0" },
+    "age=0,growing=true,natural=true": { "model": "orangesunshine:block/salvia_stage0" },
+    "age=1,growing=false,natural=false": { "model": "orangesunshine:block/salvia_stage1" },
+    "age=1,growing=false,natural=true": { "model": "orangesunshine:block/salvia_stage1" },
+    "age=1,growing=true,natural=false": { "model": "orangesunshine:block/salvia_stage1" },
+    "age=1,growing=true,natural=true": { "model": "orangesunshine:block/salvia_stage1" },
+    "age=2,growing=false,natural=false": { "model": "orangesunshine:block/salvia_stage2" },
+    "age=2,growing=false,natural=true": { "model": "orangesunshine:block/salvia_stage2" },
+    "age=2,growing=true,natural=false": { "model": "orangesunshine:block/salvia_stage2" },
+    "age=2,growing=true,natural=true": { "model": "orangesunshine:block/salvia_stage2" },
+    "age=3,growing=false,natural=false": { "model": "orangesunshine:block/salvia_stage3" },
+    "age=3,growing=false,natural=true": { "model": "orangesunshine:block/salvia_stage3" },
+    "age=3,growing=true,natural=false": { "model": "orangesunshine:block/salvia_stage3" },
+    "age=3,growing=true,natural=true": { "model": "orangesunshine:block/salvia_stage3" }
+  }
+}
