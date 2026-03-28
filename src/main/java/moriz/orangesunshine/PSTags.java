@@ -28,6 +28,13 @@ public interface PSTags {
         TagKey<Item> SUITABLE_ALCOHOLIC_DRINK_RECEPTICALS = of("suitable_alcoholic_drink_recepticals");
         TagKey<Item> CAN_GO_INTO_PAPER_BAG = of("can_go_into_paper_bag");
         TagKey<Item> DRUG_CROP_SEEDS = of("drug_crop_seeds");
+        TagKey<Item> CHEMISTRY = of("chemistry");
+        TagKey<Item> COMPOUNDS = of("chemistry/compounds");
+        TagKey<Item> MIXTURES = of("chemistry/mixtures");
+        TagKey<Item> BEAKERS = of("chemistry/beakers");
+        TagKey<Item> VIALS = of("chemistry/vials");
+        TagKey<Item> REAGENTS = of("chemistry/reagents");
+        TagKey<Item> CHEMISTRY_TOOLS = of("chemistry/tools");
 
         static TagKey<Item> of(String name) {
             return TagKey.create(Registries.ITEM, OrangeSunshine.id(name));

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#orangesunshine:chemistry/compounds",
+    "#orangesunshine:chemistry/mixtures",
+    "#orangesunshine:chemistry/reagents",
+    "#orangesunshine:chemistry/tools"
+  ]
+}
