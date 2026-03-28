@@ -2,9 +2,92 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
+// Client sources from the shared source tree that NeoForge needs to compile.
+// This mirrors fabric/build.gradle's fabricOwnedSources but EXCLUDES files that
+// import Fabric API types (intermediary mappings won't resolve against NeoForge's
+// official mappings). The excluded files' functionality is replicated in
+// OrangeSunshineNeoForgeClient using NeoForge-native events.
+//
+// Excluded Fabric-dependent files:
+//   - OrangeSunshineClient.java        (ClientModInitializer, Fabric callbacks)
+//   - PSRenderers.java                 (BlockEntityRendererRegistry, BlockRenderLayerMap, etc.)
+//   - PSParticleFactories.java         (ParticleFactoryRegistry, FabricSpriteProvider)
+//   - ShaderLoader.java                (IdentifiableResourceReloadListener)
+//   - CoreShaderRegistrationCallback.java (Fabric Event/EventFactory)
+def neoforgeClientSources = [
+        // Client sources (from ../src/main/java)
+        'moriz/orangesunshine/client/PSClientConfig.java',
+        'moriz/orangesunshine/client/item/**',
+        // Exclude PSParticleFactories.java (Fabric API), include individual particle classes
+        'moriz/orangesunshine/client/particle/ExhaledSmokeParticle.java',
+        'moriz/orangesunshine/client/particle/BubbleParticle.java',
+        // PSScreens.java is excluded: MenuScreens.register() is Fabric-widened; NeoForge
+        // uses RegisterMenuScreensEvent instead (handled in OrangeSunshineNeoForgeClient).
+        'moriz/orangesunshine/client/screen/AbstractFluidContraptionScreen.java',
+        'moriz/orangesunshine/client/screen/BarrelScreen.java',
+        'moriz/orangesunshine/client/screen/DistilleryScreen.java',
+        'moriz/orangesunshine/client/screen/DryingTableScreen.java',
+        'moriz/orangesunshine/client/screen/FlaskScreen.java',
+        'moriz/orangesunshine/client/screen/FluidProcessingContraptionScreen.java',
+        'moriz/orangesunshine/client/screen/MixingTableScreen.java',
+        'moriz/orangesunshine/client/screen/MortarPestleScreen.java',
+        'moriz/orangesunshine/client/screen/MushTubScreen.java',
+        'moriz/orangesunshine/client/sound/**',
+
+        'moriz/orangesunshine/client/render/DebugOverlay.java',
+        'moriz/orangesunshine/client/render/DrugEffectInterpreter.java',
+        'moriz/orangesunshine/client/render/ItemSubmitHelper.java',
+        'moriz/orangesunshine/client/render/DrugRenderer.java',
+        'moriz/orangesunshine/client/render/FluidBoxRenderer.java',
+        'moriz/orangesunshine/client/render/GLStateProxy.java',
+        'moriz/orangesunshine/client/render/MeteorlogicalUtil.java',
+        'moriz/orangesunshine/client/render/PassThroughVertexConsumer.java',
+        'moriz/orangesunshine/client/render/PlacedDrinksModelProvider.java',
+        // PSRenderers.java excluded (Fabric API)
+        'moriz/orangesunshine/client/render/PsycheMatrixHelper.java',
+        'moriz/orangesunshine/client/render/RastaHeadModel.java',
+        'moriz/orangesunshine/client/render/RealityRiftEntityRenderer.java',
+        'moriz/orangesunshine/client/render/RenderLayerUtil.java',
+        'moriz/orangesunshine/client/render/RenderUtil.java',
+        'moriz/orangesunshine/client/render/SmoothCameraHelper.java',
+        'moriz/orangesunshine/client/render/ZeroScreen.java',
+        'moriz/orangesunshine/client/render/effect/**',
+        // Shader: exclude ShaderLoader.java and CoreShaderRegistrationCallback.java (Fabric API)
+        'moriz/orangesunshine/client/render/shader/GeometryShader.java',
+        'moriz/orangesunshine/client/render/shader/LoadedShader.java',
+        'moriz/orangesunshine/client/render/shader/ModdedResourceManager.java',
+        'moriz/orangesunshine/client/render/shader/ModdedResourceProvider.java',
+        'moriz/orangesunshine/client/render/shader/PostEffectRenderer.java',
+        'moriz/orangesunshine/client/render/shader/PSShaders.java',
+        'moriz/orangesunshine/client/render/shader/ShaderContext.java',
+        'moriz/orangesunshine/client/render/shader/UniformBinding.java',
+        'moriz/orangesunshine/client/render/bezier/BezierLabelRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/Barrel*.java',
+        'moriz/orangesunshine/client/render/blocks/BottleRackBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/DrinksBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/DryingTableBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/FlaskBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/MashTubBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/MixingTableEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/Peyote*.java',
+        'moriz/orangesunshine/client/render/blocks/RiftJar*.java',
+
+        // Client mixins
+        'moriz/orangesunshine/mixin/client/**',
+]
+
 architectury {
     platformSetupLoomIde()
     neoForge()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '../src/main/java'
+            include neoforgeClientSources
+        }
+    }
 }
 
 configurations {

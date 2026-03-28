@@ -11,7 +11,7 @@ import net.minecraft.util.RandomSource;
 public class BubbleParticle extends SingleQuadParticle {
     private final SpriteSet sprites;
 
-    BubbleParticle(BubbleParticleEffect effect, SpriteSet spriteProvider, ClientLevel world,
+    public BubbleParticle(BubbleParticleEffect effect, SpriteSet spriteProvider, ClientLevel world,
                    double x, double y, double z,
                    double vX, double vY, double vZ,
                    RandomSource random) {
