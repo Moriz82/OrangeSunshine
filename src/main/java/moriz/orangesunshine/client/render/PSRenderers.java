@@ -1,10 +1,13 @@
 package moriz.orangesunshine.client.render;
 
 import moriz.orangesunshine.block.PSBlocks;
+import moriz.orangesunshine.block.entity.PSBlockEntities;
+import moriz.orangesunshine.client.render.blocks.*;
 import moriz.orangesunshine.entity.PSEntities;
 import moriz.orangesunshine.fluid.SimpleFluid;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
@@ -17,6 +20,17 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 public interface PSRenderers {
     static void bootstrap() {
         EntityRendererRegistry.register(PSEntities.MOLOTOV_COCKTAIL, ThrownItemRenderer::new);
+
+        // Block entity renderers
+        BlockEntityRendererRegistry.register(PSBlockEntities.BARREL, BarrelBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.MASH_TUB, MashTubBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.MIXING_TABLE_BLOCK_ENTITY, MixingTableEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.DRYING_TABLE, DryingTableBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.FLASK, FlaskBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.PEYOTE, PeyoteBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.RIFT_JAR, RiftJarBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.BOTTLE_RACK, BottleRackBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PSBlockEntities.PLACED_DRINK, DrinksBlockEntityRenderer::new);
 
         BlockRenderLayerMap.putBlock(PSBlocks.DISTILLERY, ChunkSectionLayer.TRANSLUCENT);
         BlockRenderLayerMap.putBlock(PSBlocks.FLASK, ChunkSectionLayer.TRANSLUCENT);
