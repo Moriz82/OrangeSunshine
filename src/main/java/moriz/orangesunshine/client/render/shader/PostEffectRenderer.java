@@ -2,7 +2,7 @@ package moriz.orangesunshine.client.render.shader;
 
 import java.util.*;
 
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.opengl.GlStateManager;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class PostEffectRenderer {
         if (Minecraft.getInstance().player == null) {
             return;
         }
-        if (!OrangeSunshineClient.getConfig().visual.shader2DEnabled) {
+        if (!PSClientConfig.getConfig().visual.shader2DEnabled) {
             return;
         }
 

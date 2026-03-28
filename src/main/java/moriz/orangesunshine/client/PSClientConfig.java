@@ -2,6 +2,7 @@ package moriz.orangesunshine.client;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import moriz.orangesunshine.entity.drug.DrugType;
@@ -11,6 +12,19 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.resources.Identifier;
 
 public class PSClientConfig {
+    private static Supplier<PSClientConfig> configSupplier = PSClientConfig::new;
+
+    /**
+     * Sets the config supplier. Called by each platform's client initializer.
+     */
+    public static void setConfigSupplier(Supplier<PSClientConfig> supplier) {
+        configSupplier = supplier;
+    }
+
+    public static PSClientConfig getConfig() {
+        return configSupplier.get();
+    }
+
     public PSClientConfig.Audio audio = new Audio();
     public PSClientConfig.Visual visual = new Visual();
 

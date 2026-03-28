@@ -15,7 +15,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import org.joml.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -222,7 +222,7 @@ class LoadedShader implements AutoCloseable {
                 ? ("active passes=" + activePasses + (firstUniformSnapshot.isEmpty() ? "" : " ubo=" + firstUniformSnapshot))
                 : "inactive";
 
-        if (OrangeSunshineClient.getConfig().visual.visualDebugLogging) {
+        if (PSClientConfig.getConfig().visual.visualDebugLogging) {
             long tick = ShaderContext.time();
             if (tick % 40 == 0) {
                 LOGGER.info(

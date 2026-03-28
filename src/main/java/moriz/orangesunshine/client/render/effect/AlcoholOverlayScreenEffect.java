@@ -1,6 +1,6 @@
 package moriz.orangesunshine.client.render.effect;
 
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.entity.drug.type.AlcoholDrug;
@@ -23,7 +23,7 @@ public class AlcoholOverlayScreenEffect extends DrugOverlayScreenEffect<AlcoholD
         float alcohol = (float) drug.getActiveValue();
 
         if (alcohol > 0) {
-            float boost = OrangeSunshineClient.getConfig().visual.visualEffectIntensity;
+            float boost = PSClientConfig.getConfig().visual.visualEffectIntensity;
             renderAlcoholOverlay(context, alcohol * 0.5f * boost, screenWidth, screenHeight);
         }
     }

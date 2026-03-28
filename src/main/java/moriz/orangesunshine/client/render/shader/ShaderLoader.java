@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import moriz.orangesunshine.client.render.DrugRenderer;
 import moriz.orangesunshine.client.render.GLStateProxy;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -33,7 +33,7 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                     .program("heat_distortion", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
                         float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getHeatDistortion();
 
-                        if (strength <= 0 || !OrangeSunshineClient.getConfig().visual.doHeatDistortion) {
+                        if (strength <= 0 || !PSClientConfig.getConfig().visual.doHeatDistortion) {
                             return;
                         }
 
@@ -48,13 +48,13 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("Ticks", FLOAT))))
             .addShader("underwater_distortion", UniformBinding.start()
                     .program("heat_distortion", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
-                        if (OrangeSunshineClient.getConfig().visual.debugDisableUnderwaterDistortion) {
+                        if (PSClientConfig.getConfig().visual.debugDisableUnderwaterDistortion) {
                             return;
                         }
                         float strength = DrugRenderer.INSTANCE.getEnvironmentalEffects().getWaterDistortion();
                         float peyote = ShaderContext.drug(DrugType.PEYOTE) + ShaderContext.drug(DrugType.LSD);
 
-                        if (peyote <= 0 && (strength <= 0 || !OrangeSunshineClient.getConfig().visual.doWaterDistortion)) {
+                        if (peyote <= 0 && (strength <= 0 || !PSClientConfig.getConfig().visual.doWaterDistortion)) {
                             return;
                         }
 
@@ -88,7 +88,7 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("Desaturation", FLOAT),
                             new UboField("Inversion", FLOAT)))
                     .program("simple_effects_depth", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
-                        if (OrangeSunshineClient.getConfig().visual.debugDisableSimpleEffectsDepth) {
+                        if (PSClientConfig.getConfig().visual.debugDisableSimpleEffectsDepth) {
                             return;
                         }
                         var h = ShaderContext.hallucinations();
@@ -151,7 +151,7 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("_pad2", FLOAT))))
             .addShader("depth_of_field", UniformBinding.start()
                     .program("depth_of_field", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
-                        var config = OrangeSunshineClient.getConfig().visual;
+                        var config = PSClientConfig.getConfig().visual;
 
                         if ((config.dofFocalBlurFar <= 0 && config.dofFocalBlurNear <= 0)
                          || (config.dofFocalPointNear <= 0 && config.dofFocalPointFar >= ShaderContext.viewDistace())) {
@@ -195,6 +195,37 @@ public class ShaderLoader implements ResourceManagerReloadListener, Identifiable
                             new UboField("Distance", FLOAT),
                             new UboField("Stretch", FLOAT),
                             new UboField("_pad0", FLOAT))))
+            .addShader("kaleidoscope_recursion", UniformBinding.start()
+                    .program("kaleidoscope_recursion", (setter, tickDelta, screenWidth, screenHeight, pass) -> {
+                        float dmt = ShaderContext.drug(DrugType.DMT);
+                        float lsd = ShaderContext.drug(DrugType.LSD);
+                        float lsdPeak = Mth.clamp((lsd - 0.82F) / 0.18F, 0, 1);
+                        float dmtAlpha = Mth.clamp(dmt * 1.35F - 0.08F, 0, 1);
+                        float lsdAlpha = lsdPeak * 0.18F;
+                        float alpha = Math.max(dmtAlpha, lsdAlpha);
+                        if (alpha <= 0) {
+                            return;
+                        }
+                        float tick = ShaderContext.ticks();
+                        setter.set("TotalAlpha", alpha);
+                        setter.set("SegmentCount", Mth.clamp(5F + dmt * 9F + lsdPeak * 1.5F + (float)Math.sin(tick / 80F) * 2F, 4F, 20F));
+                        setter.set("Zoom", 1F + dmt * 0.85F + lsdPeak * 0.08F);
+                        setter.set("Spin", tick * (0.002F + dmt * 0.003F + lsdPeak * 0.0005F));
+                        setter.set("Recursion", Mth.clamp(dmt * 1.2F + lsdPeak * 0.12F, 0, 1));
+                        setter.set("Ticks", tick);
+                        setter.set("_pad0", 0F);
+                        setter.set("_pad1", 0F);
+                        pass.run();
+                    })
+                    .ubo("kaleidoscope_recursion", "KaleidoscopeRecursionConfig", List.of(
+                            new UboField("TotalAlpha", FLOAT),
+                            new UboField("SegmentCount", FLOAT),
+                            new UboField("Zoom", FLOAT),
+                            new UboField("Spin", FLOAT),
+                            new UboField("Recursion", FLOAT),
+                            new UboField("Ticks", FLOAT),
+                            new UboField("_pad0", FLOAT),
+                            new UboField("_pad1", FLOAT))))
         ;
 
 

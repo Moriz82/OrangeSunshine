@@ -6,7 +6,7 @@
 package moriz.orangesunshine.client.render;
 
 import moriz.orangesunshine.OrangeSunshine;
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.client.render.effect.*;
 import moriz.orangesunshine.client.render.shader.PostEffectRenderer;
@@ -71,7 +71,7 @@ public class DrugRenderer {
     }
 
     public float getMenuBlur() {
-        return OrangeSunshineClient.getConfig().visual.pauseMenuBlur * screenBackgroundBlur * screenBackgroundBlur * screenBackgroundBlur;
+        return PSClientConfig.getConfig().visual.pauseMenuBlur * screenBackgroundBlur * screenBackgroundBlur * screenBackgroundBlur;
     }
 
     public void update(DrugProperties drugProperties, LivingEntity entity) {
@@ -84,7 +84,7 @@ public class DrugRenderer {
 
         screenEffects.update(mc.getDeltaTracker().getGameTimeDeltaTicks());
 
-        if (OrangeSunshineClient.getConfig().visual.visualDebugLogging
+        if (PSClientConfig.getConfig().visual.visualDebugLogging
                 && entity.tickCount % 40 == 0
                 && entity.level().isClientSide()) {
             float max = 0;

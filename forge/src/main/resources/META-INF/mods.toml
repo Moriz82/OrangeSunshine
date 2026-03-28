@@ -13,6 +13,9 @@ description = '''
 ${mod_description}
 '''
 
+[[mixins]]
+config = "orangesunshine.mixin.json"
+
 [[dependencies.orangesunshine]]
 modId = "forge"
 mandatory = true

@@ -1,0 +1,37 @@
+{
+    "required": true,
+    "minVersion": "0.7",
+    "package": "moriz.orangesunshine.mixin",
+    "refmap": "orangesunshine.mixin.refmap.json",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+      "MixinAbstractFurnaceBlockEntity",
+      "MixinEntity",
+      "MixinLivingEntity",
+      "MixinLoseJobOnSiteLossTask",
+      "MixinPlayerEntity",
+      "MixinStructurePool",
+      "MixinVillagerEntity",
+      "MixinVillagerTaskListProvider",
+      "MixinVoxelShape",
+      "MixinHungerManager",
+      "MixinBlockEntityType"
+    ],
+    "client": [
+      "client.MixinMinecraft",
+      "client.MixinCamera",
+      "client.MixinEntityRenderDispatcher",
+      "client.MixinChatScreen",
+      "client.MixinMouse",
+      "client.MixinShaderProgram",
+      "client.MixinSoundSystem",
+      "client.MixinGameRenderer",
+      "client.MixinWorldRenderer",
+      "client.MixinHeldItemRenderer",
+      "client.MixinInGameHud",
+      "client.MixinItemModels",
+      "client.MixinLivingEntityRenderer",
+      "client.AccessorPostChain",
+      "client.AccessorPostPass"
+    ]
+}

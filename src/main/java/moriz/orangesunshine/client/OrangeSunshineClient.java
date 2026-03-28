@@ -9,7 +9,6 @@ import moriz.orangesunshine.client.particle.PSParticleFactories;
 import moriz.orangesunshine.client.screen.PSScreens;
 import moriz.orangesunshine.client.render.shader.PSShaders;
 import moriz.orangesunshine.client.render.shader.ShaderLoader;
-import moriz.orangesunshine.config.JsonConfig;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.client.render.DebugOverlay;
 import moriz.orangesunshine.client.render.PSRenderers;
@@ -31,11 +30,12 @@ import org.lwjgl.glfw.GLFW;
  * @since 1 Jan 2023
  */
 public class OrangeSunshineClient implements ClientModInitializer {
-    private static final Supplier<JsonConfig.Loader<PSClientConfig>> CONFIG_LOADER = JsonConfig.create("orangesunshine_client.json", PSClientConfig::new);
+    private static final Supplier<moriz.orangesunshine.config.JsonConfig.Loader<PSClientConfig>> CONFIG_LOADER =
+            moriz.orangesunshine.config.JsonConfig.create("orangesunshine_client.json", PSClientConfig::new);
 
     private static KeyMapping debugMenuKey;
 
-    public static JsonConfig.Loader<PSClientConfig> getConfigLoader() {
+    public static moriz.orangesunshine.config.JsonConfig.Loader<PSClientConfig> getConfigLoader() {
         return CONFIG_LOADER.get();
     }
 
@@ -45,6 +45,8 @@ public class OrangeSunshineClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        // Wire the platform-agnostic config accessor to the Fabric config loader
+        PSClientConfig.setConfigSupplier(OrangeSunshineClient::getConfig);
         OrangeSunshine.globalDrugProperties = () -> DrugProperties.of((Entity) Minecraft.getInstance().player);
         OrangeSunshine.crossHairTarget = () -> Optional.ofNullable(Minecraft.getInstance().hitResult);
         PSRenderers.bootstrap();

@@ -1,6 +1,6 @@
 package moriz.orangesunshine.client.render.effect;
 
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
 import moriz.orangesunshine.entity.drug.type.PowerDrug;
@@ -22,7 +22,7 @@ public class PowerOverlayScreenEffect extends DrugOverlayScreenEffect<PowerDrug>
         if (power <= 0) {
             return;
         }
-        float boost = OrangeSunshineClient.getConfig().visual.visualEffectIntensity;
+        float boost = PSClientConfig.getConfig().visual.visualEffectIntensity;
         float alpha = Mth.clamp(power * 0.35f * boost, 0f, 0.75f);
         context.fill(RenderPipelines.GUI, 0, 0, screenWidth, screenHeight, ARGB.colorFromFloat(alpha, 0.4f, 0.05f, 0.9f));
     }

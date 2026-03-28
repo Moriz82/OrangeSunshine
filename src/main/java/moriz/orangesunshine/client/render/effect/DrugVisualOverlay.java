@@ -1,6 +1,6 @@
 package moriz.orangesunshine.client.render.effect;
 
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import moriz.orangesunshine.entity.drug.Drug;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
@@ -32,7 +32,7 @@ public class DrugVisualOverlay implements ScreenEffect {
     public void render(GuiGraphics context, MultiBufferSource vertices, int screenWidth, int screenHeight, float ticks, PingPong pingPong) {
         // This overlay was a fallback for a previously broken post-shader pipeline.
         // When post shaders are enabled, avoid stacking fullscreen fills on top.
-        if (OrangeSunshineClient.getConfig().visual.shader2DEnabled) {
+        if (PSClientConfig.getConfig().visual.shader2DEnabled) {
             return;
         }
 

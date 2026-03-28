@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import moriz.orangesunshine.OrangeSunshine;
-import moriz.orangesunshine.client.OrangeSunshineClient;
+import moriz.orangesunshine.client.PSClientConfig;
 import moriz.orangesunshine.client.render.shader.ShaderContext;
 import moriz.orangesunshine.entity.drug.DrugProperties;
 import moriz.orangesunshine.entity.drug.DrugType;
@@ -34,7 +34,7 @@ public final class ClientDrugMusicManager {
             return;
         }
 
-        float master = OrangeSunshineClient.getConfig().visual.drugMusicVolume;
+        float master = PSClientConfig.getConfig().visual.drugMusicVolume;
 
         tickDrug(DrugType.SLEEP_DEPRIVATION, 0.00001F, "sleep_deprivation", OrangeSunshine.id("music.sleep_deprivation"), master);
         tickDrug(DrugType.POWER, 0.00002F, "power", OrangeSunshine.id("music.power"), master);

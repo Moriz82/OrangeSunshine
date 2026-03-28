@@ -2,9 +2,66 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
+def forgeClientSources = [
+        // Client core (excluding Fabric-specific entrypoints & registries)
+        'moriz/orangesunshine/client/PSClientConfig.java',
+        'moriz/orangesunshine/client/item/**',
+        'moriz/orangesunshine/client/screen/**',
+        'moriz/orangesunshine/client/sound/**',
+
+        // Client render classes (excluding PSRenderers.java which uses Fabric API)
+        'moriz/orangesunshine/client/render/DebugOverlay.java',
+        'moriz/orangesunshine/client/render/DrugEffectInterpreter.java',
+        'moriz/orangesunshine/client/render/ItemSubmitHelper.java',
+        'moriz/orangesunshine/client/render/DrugRenderer.java',
+        'moriz/orangesunshine/client/render/FluidBoxRenderer.java',
+        'moriz/orangesunshine/client/render/GLStateProxy.java',
+        'moriz/orangesunshine/client/render/MeteorlogicalUtil.java',
+        'moriz/orangesunshine/client/render/PassThroughVertexConsumer.java',
+        'moriz/orangesunshine/client/render/PlacedDrinksModelProvider.java',
+        'moriz/orangesunshine/client/render/PsycheMatrixHelper.java',
+        'moriz/orangesunshine/client/render/RastaHeadModel.java',
+        'moriz/orangesunshine/client/render/RealityRiftEntityRenderer.java',
+        'moriz/orangesunshine/client/render/RenderLayerUtil.java',
+        'moriz/orangesunshine/client/render/RenderUtil.java',
+        'moriz/orangesunshine/client/render/SmoothCameraHelper.java',
+        'moriz/orangesunshine/client/render/ZeroScreen.java',
+        'moriz/orangesunshine/client/render/effect/**',
+        'moriz/orangesunshine/client/render/shader/PSShaders.java',
+        'moriz/orangesunshine/client/render/shader/LoadedShader.java',
+        'moriz/orangesunshine/client/render/shader/PostEffectRenderer.java',
+        'moriz/orangesunshine/client/render/shader/ShaderContext.java',
+        'moriz/orangesunshine/client/render/shader/UniformBinding.java',
+        'moriz/orangesunshine/client/render/shader/GeometryShader.java',
+        'moriz/orangesunshine/client/render/shader/ModdedResourceProvider.java',
+        'moriz/orangesunshine/client/render/shader/ModdedResourceManager.java',
+        'moriz/orangesunshine/client/render/bezier/BezierLabelRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/Barrel*.java',
+        'moriz/orangesunshine/client/render/blocks/BottleRackBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/DrinksBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/DryingTableBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/FlaskBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/MashTubBlockEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/MixingTableEntityRenderer.java',
+        'moriz/orangesunshine/client/render/blocks/Peyote*.java',
+        'moriz/orangesunshine/client/render/blocks/RiftJar*.java',
+
+        // Client mixins
+        'moriz/orangesunshine/mixin/client/**',
+]
+
 architectury {
     platformSetupLoomIde()
     forge()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '../src/main/java'
+            include forgeClientSources
+        }
+    }
 }
 
 configurations {
@@ -14,30 +71,16 @@ configurations {
 }
 
 configurations.configureEach {
-    if (name in ['forgeRuntimeLibrary', 'runtimeClasspath', 'developmentForge']) {
+    if (name in ['runtimeClasspath', 'developmentForge']) {
         exclude group: 'net.fabricmc', module: 'fabric-log4j-util'
     }
 }
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-freetype:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-glfw:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-jemalloc:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-openal:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-opengl:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-stb:3.3.3"
-    forgeRuntimeLibrary "org.lwjgl:lwjgl-tinyfd:3.3.3"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowCommon(project(path: ':common', configuration: 'transformProductionForge')) { transitive = false }
-}
-
-def forgeBaseLwjglJars = providers.provider {
-    configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.findAll {
-        it.moduleVersion.id.group == 'org.lwjgl' && !it.file.name.contains('-natives-')
-    }.collect { it.file }
 }
 
 // Strip sections unknown to dev-launch-injector 0.2.1 (clientdataArgs, dataArgs)
@@ -45,7 +88,7 @@ tasks.matching { it.name == 'configureLaunch' }.configureEach {
     doLast {
         def cfg = new File(project.file('.gradle/loom-cache'), 'launch.cfg')
         if (cfg.exists()) {
-            def lines = cfg.readLines()
+                        def lines = cfg.readLines()
             def out = []
             def skip = false
             for (def line : lines) {
@@ -60,12 +103,16 @@ tasks.matching { it.name == 'configureLaunch' }.configureEach {
 }
 
 tasks.matching { it.name in ['runClient', 'runServer'] }.configureEach {
-    classpath = classpath.filter { it.name != 'fabric-log4j-util-1.0.2.jar' }
-    classpath += files(forgeBaseLwjglJars)
+    classpath = classpath.filter { f ->
+        f.name != 'fabric-log4j-util-1.0.2.jar'
+    }
 }
 
 tasks.named('runClient').configure {
-    jvmArgs '-Dfml.earlyWindowControl=0'
+    jvmArgs '-Dfml.earlyWindowControl=true'
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(rootProject.java_version as int)
+    }
 }
 
 processResources {
