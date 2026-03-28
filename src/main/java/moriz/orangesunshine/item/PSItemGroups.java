@@ -98,6 +98,10 @@ public interface PSItemGroups {
                 entries.accept(PSItems.MDMA);
                 entries.accept(PSItems.MDA);
                 entries.accept(PSItems.PMA);
+                entries.accept(PSItems.KETAMINE_POWDER);
+                entries.accept(PSItems.KETAMINE_VIAL);
+                entries.accept(PSItems.TWO_CB);
+
                 entries.accept(PSItems.CODEINE);
 
                 entries.accept(PSItems.MORPHINE_BOTTLE);
@@ -172,6 +176,16 @@ public interface PSItemGroups {
                 entries.accept(PSItems.PEYOTE);
                 entries.accept(PSItems.DRIED_PEYOTE);
                 entries.accept(PSItems.PEYOTE_JOINT);
+
+                entries.accept(PSItems.SALVIA_SEEDS);
+                entries.accept(PSItems.SALVIA_LEAVES);
+                entries.accept(PSItems.DRIED_SALVIA);
+                entries.accept(PSItems.SALVIA_EXTRACT);
+
+                entries.accept(PSItems.KRATOM_SEEDS);
+                entries.accept(PSItems.KRATOM_LEAVES);
+                entries.accept(PSItems.DRIED_KRATOM);
+                entries.accept(PSItems.KRATOM_POWDER);
 
                 entries.accept(PSItems.HOP_SEEDS);
                 entries.accept(PSItems.HOP_CONES);

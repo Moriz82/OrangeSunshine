@@ -1,0 +1,15 @@
+{
+  "type" : "orangesunshine:compound_compressor_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:mescaline"
+    },
+    {
+      "item" : "orangesunshine:phosphorus"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:two_cb"
+  }
+}

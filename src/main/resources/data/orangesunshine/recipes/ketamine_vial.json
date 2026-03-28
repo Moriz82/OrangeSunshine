@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "orangesunshine:ketamine_powder" },
+    { "item": "minecraft:glass_bottle" }
+  ],
+  "result": {
+    "item": "orangesunshine:ketamine_vial"
+  }
+}

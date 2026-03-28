@@ -49,6 +49,10 @@ public interface PSSounds {
     SoundEvent DRUG_MORPHINE = register("drug.morphine");
     SoundEvent DRUG_OPIUM = register("drug.opium");
     SoundEvent DRUG_MESCALINE = register("drug.mescaline");
+    SoundEvent DRUG_SALVIA = register("drug.salvia");
+    SoundEvent DRUG_KRATOM = register("drug.kratom");
+    SoundEvent DRUG_KETAMINE = register("drug.ketamine");
+    SoundEvent DRUG_TWO_CB = register("drug.two_cb");
     SoundEvent DRUG_ZERO = register("drug.zero");
     SoundEvent DRUG_POWER = register("drug.power");
     SoundEvent DRUG_HARMONIUM = register("drug.harmonium");

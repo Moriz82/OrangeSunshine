@@ -114,6 +114,24 @@ public interface PSItems {
             new DrugInfluence(DrugType.PEYOTE, DrugInfluence.DelayType.INGESTED, 0.004, 0.002, 0.5f)
     ));
     Item SAN_PEDRO_SEEDS = register("san_pedro_seeds", new BlockItem(PSBlocks.SAN_PEDRO_BLOCK, new Item.Properties().setId(itemKey("san_pedro_seeds"))));
+
+    ////////////////////////// SALVIA /////////////////////////////
+    Item SALVIA_SEEDS = register("salvia_seeds", new BlockItem(PSBlocks.SALVIA, new Item.Properties().setId(itemKey("salvia_seeds"))));
+    Item SALVIA_LEAVES = register("salvia_leaves");
+    Item DRIED_SALVIA = register("dried_salvia");
+    Item SALVIA_EXTRACT = register("salvia_extract", new SmokeableItem(
+            new Item.Properties().setId(itemKey("salvia_extract")), 2, new Vector3f(0.4F, 0.7F, 0.3F),
+            new DrugInfluence(DrugType.SALVIA, DrugInfluence.DelayType.INHALED, 0.02, 0.001, 0.9f)
+    ));
+
+    ////////////////////////// KRATOM /////////////////////////////
+    Item KRATOM_SEEDS = register("kratom_seeds", new BlockItem(PSBlocks.KRATOM, new Item.Properties().setId(itemKey("kratom_seeds"))));
+    Item KRATOM_LEAVES = register("kratom_leaves");
+    Item DRIED_KRATOM = register("dried_kratom");
+    Item KRATOM_POWDER = register("kratom_powder", new EdibleItem(
+            new Item.Properties().setId(itemKey("kratom_powder")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.KRATOM, DrugInfluence.DelayType.INGESTED, 0.003, 0.002, 0.3f)
+    ));
     //</editor-fold>
     
     //<editor-fold desc="CRAFT-ABLE DRUGS">
@@ -169,16 +187,40 @@ public interface PSItems {
             new DrugInfluence(DrugType.PMA, DrugInfluence.DelayType.METABOLISED, 0.007, 0.004, 0.8f)
     ));
 
+    ////////////////////////// DISSOCIATIVES /////////////////////////////
+    Item KETAMINE_POWDER = register("ketamine_powder", new CocainePowderItem(
+            new Item.Properties().setId(itemKey("ketamine_powder")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.KETAMINE, DrugInfluence.DelayType.INHALED, 0.008, 0.003, 0.6f)
+    ));
+    Item KETAMINE_VIAL = register("ketamine_vial", new EdibleItem(
+            new Item.Properties().setId(itemKey("ketamine_vial")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.KETAMINE, DrugInfluence.DelayType.IMMEDIATE, 0.01, 0.004, 0.8f)
+    ));
+
+    ////////////////////////// PHENETHYLAMINES /////////////////////////////
+    Item TWO_CB = register("two_cb", new EdibleItem(
+            new Item.Properties().setId(itemKey("two_cb")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.TWO_CB, DrugInfluence.DelayType.METABOLISED, 0.004, 0.002, 0.5f)
+    ));
+
     ////////////////////////// OPIATES /////////////////////////////
     Item CODEINE = register("codeine", new EdibleItem(
             new Item.Properties().setId(itemKey("codeine")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.CODEINE, DrugInfluence.DelayType.METABOLISED, 0.004, 0.002, 0.45f)
     ));
-    Item MORPHINE_BOTTLE = register("morphine_bottle");
+    Item MORPHINE_BOTTLE = register("morphine_bottle", new EdibleItem(
+            new Item.Properties().setId(itemKey("morphine_bottle")).food(EdibleItem.NON_FILLING_EDIBLE),
+            ItemUseAnimation.DRINK,
+            new DrugInfluence(DrugType.MORPHINE, DrugInfluence.DelayType.INGESTED, 0.005, 0.003, 0.6f)
+    ));
     Item OPIUM_BOTTLE_0 = register("opium_bottle_0");
     Item OPIUM_BOTTLE_1 = register("opium_bottle_1");
     Item OPIUM_BOTTLE_2 = register("opium_bottle_2");
-    Item OPIUM_BOTTLE_3 = register("opium_bottle_3");
+    Item OPIUM_BOTTLE_3 = register("opium_bottle_3", new EdibleItem(
+            new Item.Properties().setId(itemKey("opium_bottle_3")).food(EdibleItem.NON_FILLING_EDIBLE),
+            ItemUseAnimation.DRINK,
+            new DrugInfluence(DrugType.OPIUM, DrugInfluence.DelayType.INGESTED, 0.004, 0.002, 0.5f)
+    ));
 
     ////////////////////////// LATTICE /////////////////////////////
 

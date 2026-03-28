@@ -1,0 +1,15 @@
+{
+  "type" : "orangesunshine:compound_compressor_crafting",
+  "size" : 1,
+  "ingredients" : [
+    {
+      "item" : "orangesunshine:ammonia"
+    },
+    {
+      "item" : "orangesunshine:de_ionized_water"
+    }
+  ],
+  "output" : {
+    "item" : "orangesunshine:ketamine_powder"
+  }
+}
