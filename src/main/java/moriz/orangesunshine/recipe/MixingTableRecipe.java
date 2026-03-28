@@ -64,11 +64,7 @@ public class MixingTableRecipe implements Recipe<SimpleInventory> {
 
     @Override
     public RecipeType<?> getType() {
-        return Type.INSTANCE;
-    }
-
-    public static class Type implements RecipeType<MixingTableRecipe> {
-        public static final Type INSTANCE = new Type();
+        return PSRecipes.MIXING_TABLE_TYPE;
     }
 
     public static class Serializer implements RecipeSerializer<MixingTableRecipe> {

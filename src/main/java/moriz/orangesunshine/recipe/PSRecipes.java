@@ -27,8 +27,8 @@ public interface PSRecipes {
     RecipeType<MortarPestleRecipe> MORTAR_PESTLE_TYPE = RecipeType.register("orangesunshine:mortar_pestle_recipe");
     RecipeSerializer<MortarPestleRecipe> MORTAR_PESTLE = RecipeSerializer.register("orangesunshine:mortar_pestle_recipe", new MortarPestleRecipe.Serializer());
 
-    RecipeType<MortarPestleRecipe> MIXING_TABLE_TYPE = RecipeType.register("orangesunshine:mixing");
-    RecipeSerializer<MortarPestleRecipe> MIXING_TABLE = RecipeSerializer.register("orangesunshine:mixing", new MortarPestleRecipe.Serializer());
+    RecipeType<MixingTableRecipe> MIXING_TABLE_TYPE = RecipeType.register("orangesunshine:mixing");
+    RecipeSerializer<MixingTableRecipe> MIXING_TABLE = RecipeSerializer.register("orangesunshine:mixing", new MixingTableRecipe.Serializer());
 
     static void bootstrap() {
         LootTableEvents.MODIFY.register((res, manager, id, supplier, setter) -> {

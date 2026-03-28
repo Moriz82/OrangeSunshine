@@ -1,6 +1,7 @@
 package moriz.orangesunshine.block.entity;
 
 import moriz.orangesunshine.recipe.MixingTableRecipe;
+import moriz.orangesunshine.recipe.PSRecipes;
 import moriz.orangesunshine.screen.MixingTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -172,7 +173,7 @@ public class MixingTableBlockEntity extends BlockEntity implements ExtendedScree
             inv.setStack(i, this.getStack(i));
         }
 
-        return getWorld().getRecipeManager().getFirstMatch(MixingTableRecipe.Type.INSTANCE, inv, getWorld());
+        return getWorld().getRecipeManager().getFirstMatch(PSRecipes.MIXING_TABLE_TYPE, inv, getWorld());
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
