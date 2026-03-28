@@ -164,6 +164,7 @@ public interface PSBlocks {
     Block FRIDGE = registerBlock("fridge", new Block(Properties.of().setId(blockKey("fridge")).strength(3.5F).sound(SoundType.METAL)));
     Block COMPOUND_EXTRACTOR = registerBlock("compound_extractor", new Block(Properties.of().setId(blockKey("compound_extractor")).strength(3.5F).sound(SoundType.METAL)));
     Block COMPOUND_COMPRESSOR = registerBlock("compound_compressor", new Block(Properties.of().setId(blockKey("compound_compressor")).strength(3.5F).sound(SoundType.METAL)));
+    Block PSYCH_ORE = registerBlock("psych_ore", new Block(Properties.ofFullCopy(Blocks.IRON_ORE).setId(blockKey("psych_ore"))));
 
     static ResourceKey<Block> blockKey(String name) {
         return ResourceKey.create(Registries.BLOCK, OrangeSunshine.id(name));

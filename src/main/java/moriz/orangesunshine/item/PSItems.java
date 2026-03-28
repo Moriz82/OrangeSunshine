@@ -63,10 +63,16 @@ public interface PSItems {
 
     ////////////////////////// WEED /////////////////////////////
     Item CANNABIS_SEEDS = register("cannabis_seeds", new BlockItem(PSBlocks.CANNABIS, new Item.Properties().setId(itemKey("cannabis_seeds"))));
+    Item WEED_SEEDS = register("weed_seeds", new BlockItem(PSBlocks.CANNABIS, new Item.Properties().setId(itemKey("weed_seeds"))));
     Item CANNABIS_LEAF = register("cannabis_leaf");
+    Item WEED_LEAF = register("weed_leaf");
     Item CANNABIS_BUDS = register("cannabis_buds");
+    Item WEED_BUD = register("weed_bud");
     Item DRIED_CANNABIS_LEAF = register("dried_cannabis_leaf");
+    Item DRIED_WEED_LEAF = register("dried_weed_leaf");
     Item DRIED_CANNABIS_BUDS = register("dried_cannabis_buds");
+    Item DRIED_WEED_BUD = register("dried_weed_bud");
+    Item WEED_EXTRACT = register("weed_extract");
 
     ////////////////////////// LSD / LSA /////////////////////////////
     Item MORNING_GLORY = register("morning_glory");
@@ -80,6 +86,7 @@ public interface PSItems {
 
     ////////////////////////// COKE /////////////////////////////
     Item COCA_SEEDS = register("coca_seeds", new BlockItem(PSBlocks.COCA, new Item.Properties().setId(itemKey("coca_seeds"))));
+    Item COCA_LEAF = register("coca_leaf");
     Item COCA_LEAVES = register("coca_leaves");
     Item DRIED_COCA_LEAVES = register("dried_coca_leaves");
 
@@ -105,8 +112,12 @@ public interface PSItems {
 
     ////////////////////////// PSYCHEDELICS /////////////////////////////
     Item DMT = register("dmt");
+    Item DMT_5_MEO = register("dmt_5_meo");
     Item AYAHUASCA = register("ayahuasca");
-    Item SAN_PEDRO = register("san_pedro");
+    Item SAN_PEDRO = register("san_pedro", new EdibleItem(
+            new Item.Properties().setId(itemKey("san_pedro")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.PEYOTE, DrugInfluence.DelayType.INGESTED, 0.004, 0.002, 0.5f)
+    ));
     Item SAN_PEDRO_SEEDS = register("san_pedro_seeds", new BlockItem(PSBlocks.SAN_PEDRO_BLOCK, new Item.Properties().setId(itemKey("san_pedro_seeds"))));
     //</editor-fold>
     
@@ -142,16 +153,32 @@ public interface PSItems {
             new Item.Properties().setId(itemKey("cocaine_powder")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.COCAINE, DrugInfluence.DelayType.IMMEDIATE, 0.002, 0.003, 0.35f)
     ));
+    Item COCAINE_DUST = register("cocaine_dust", new CocainePowderItem(
+            new Item.Properties().setId(itemKey("cocaine_dust")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.COCAINE, DrugInfluence.DelayType.IMMEDIATE, 0.0015, 0.0025, 0.25f)
+    ));
     Item COCAINE_ROCK = register("cocaine_rock");
     Item COCA_MULCH = register("coca_mulch");
 
     ////////////////////////// AMPHETAMINES /////////////////////////////
-    Item MDMA = register("mdma");
-    Item MDA = register("mda");
-    Item PMA = register("pma");
+    Item MDMA = register("mdma", new EdibleItem(
+            new Item.Properties().setId(itemKey("mdma")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.MDMA, DrugInfluence.DelayType.METABOLISED, 0.006, 0.003, 0.7f)
+    ));
+    Item MDA = register("mda", new EdibleItem(
+            new Item.Properties().setId(itemKey("mda")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.MDA, DrugInfluence.DelayType.METABOLISED, 0.005, 0.003, 0.6f)
+    ));
+    Item PMA = register("pma", new EdibleItem(
+            new Item.Properties().setId(itemKey("pma")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.PMA, DrugInfluence.DelayType.METABOLISED, 0.007, 0.004, 0.8f)
+    ));
 
     ////////////////////////// OPIATES /////////////////////////////
-    Item CODEINE = register("codeine");
+    Item CODEINE = register("codeine", new EdibleItem(
+            new Item.Properties().setId(itemKey("codeine")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.CODEINE, DrugInfluence.DelayType.METABOLISED, 0.004, 0.002, 0.45f)
+    ));
     Item MORPHINE_BOTTLE = register("morphine_bottle");
     Item OPIUM_BOTTLE_0 = register("opium_bottle_0");
     Item OPIUM_BOTTLE_1 = register("opium_bottle_1");
@@ -174,6 +201,7 @@ public interface PSItems {
     ));
 
     Item NALOXONE = register("naloxone", new DrugClearItem(new Item.Properties().setId(itemKey("naloxone")).food(EdibleItem.NON_FILLING_EDIBLE), ItemUseAnimation.BOW, 1));
+    Item FUROSEMIDE = register("furosemide", new DrugClearItem(new Item.Properties().setId(itemKey("furosemide")).food(EdibleItem.NON_FILLING_EDIBLE), ItemUseAnimation.BOW, 1));
 
     //</editor-fold>
 
@@ -189,6 +217,22 @@ public interface PSItems {
     Item ORANGESUNSINE_BLOTTER = register("orangesunshine_blotter", new EdibleItem(
             new Item.Properties().setId(itemKey("orangesunshine_blotter")).food(EdibleItem.NON_FILLING_EDIBLE),
             new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.CONTACT, 0.06, 0.006, 0.4F)
+    ));
+    Item LSD_BOTTLE = register("lsd_bottle", new EdibleItem(
+            new Item.Properties().setId(itemKey("lsd_bottle")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.INGESTED, 0.008, 0.003, 0.75F)
+    ));
+    Item ORANGESUNSHINE_BOTTLE = register("orangesunshine_bottle", new EdibleItem(
+            new Item.Properties().setId(itemKey("orangesunshine_bottle")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.LSD, DrugInfluence.DelayType.INGESTED, 0.009, 0.004, 0.9F)
+    ));
+    Item DRIED_BROWN_SHROOMS = register("dried_brown_shrooms", new EdibleItem(
+            new Item.Properties().setId(itemKey("dried_brown_shrooms")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.BROWN_SHROOMS, DrugInfluence.DelayType.INGESTED, 0.004, 0.0025, 0.5F)
+    ));
+    Item DRIED_RED_SHROOMS = register("dried_red_shrooms", new EdibleItem(
+            new Item.Properties().setId(itemKey("dried_red_shrooms")).food(EdibleItem.NON_FILLING_EDIBLE),
+            new DrugInfluence(DrugType.RED_SHROOMS, DrugInfluence.DelayType.INGESTED, 0.004, 0.0025, 0.5F)
     ));
 
     //</editor-fold>
@@ -345,17 +389,29 @@ public interface PSItems {
 
     BongItem SMOKING_PIPE = register("smoking_pipe", new BongItem(new Item.Properties().setId(itemKey("smoking_pipe")).durability(50)))
             .consumes(new BongItem.Consumable(DRIED_CANNABIS_BUDS.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.25F)))
+            .consumes(new BongItem.Consumable(DRIED_WEED_BUD.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.25F)))
             .consumes(new BongItem.Consumable(DRIED_TOBACCO.getDefaultInstance(), new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.INHALED, 0.1, 0.02, 0.8F)))
             .consumes(new BongItem.Consumable(DRIED_BELLADONNA_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.INHALED, 0.4, 0.1, 0.9F)))
             .consumes(new BongItem.Consumable(DRIED_JIMSONWEED_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.INHALED, 0.5, 0.1, 0.2F)))
+            .consumes(new BongItem.Consumable(DMT.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.INHALED, 0.012, 0.006, 0.9F)))
+            .consumes(new BongItem.Consumable(DMT_5_MEO.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.INHALED, 0.016, 0.007, 1.0F)))
+            .consumes(new BongItem.Consumable(AYAHUASCA.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.INHALED, 0.01, 0.006, 0.8F)))
             .consumes(new BongItem.Consumable(HARMONIUM.getDefaultInstance(), stack -> new HarmoniumDrugInfluence(DrugInfluence.DelayType.INHALED, 0.04, 0.01, 0.65F, MathUtils.unpackRgb(HARMONIUM.getColor(stack)))));
     // TODO: Play around with the bongs benefits
     BongItem BONG = register("bong", new BongItem(new Item.Properties().setId(itemKey("bong")).durability(128)))
             .consumes(new BongItem.Consumable(DRIED_CANNABIS_BUDS.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.IMMEDIATE, 0.002, 0.001, 0.2F)))
+            .consumes(new BongItem.Consumable(DRIED_WEED_BUD.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.IMMEDIATE, 0.002, 0.001, 0.2F)))
             .consumes(new BongItem.Consumable(DRIED_TOBACCO.getDefaultInstance(), new DrugInfluence(DrugType.TOBACCO, DrugInfluence.DelayType.IMMEDIATE, 0.1, 0.02, 0.6F)))
             .consumes(new BongItem.Consumable(DRIED_BELLADONNA_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.IMMEDIATE, 0.4, 0.1, 0.4F)))
             .consumes(new BongItem.Consumable(DRIED_JIMSONWEED_LEAF.getDefaultInstance(), new DrugInfluence(DrugType.ATROPINE, DrugInfluence.DelayType.IMMEDIATE, 0.5, 0.1, 0.1F)))
+            .consumes(new BongItem.Consumable(DMT.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.012, 0.006, 1.0F)))
+            .consumes(new BongItem.Consumable(DMT_5_MEO.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.016, 0.007, 1.15F)))
+            .consumes(new BongItem.Consumable(AYAHUASCA.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.01, 0.006, 0.9F)))
             .consumes(new BongItem.Consumable(HARMONIUM.getDefaultInstance(), stack -> new HarmoniumDrugInfluence(DrugInfluence.DelayType.IMMEDIATE, 0.04, 0.01, 0.9F, MathUtils.unpackRgb(HARMONIUM.getColor(stack)))));
+    BongItem RIG = register("rig", new BongItem(new Item.Properties().setId(itemKey("rig")).durability(128)))
+            .consumes(new BongItem.Consumable(WEED_EXTRACT.getDefaultInstance(), new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.IMMEDIATE, 0.01, 0.002, 0.9F)))
+            .consumes(new BongItem.Consumable(DMT.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.014, 0.007, 1.1F)))
+            .consumes(new BongItem.Consumable(DMT_5_MEO.getDefaultInstance(), new DrugInfluence(DrugType.DMT, DrugInfluence.DelayType.IMMEDIATE, 0.018, 0.008, 1.25F)));
 
     ////////////////////////// TOBACCO /////////////////////////////
     SmokeableItem CIGARETTE = register("cigarette", new SmokeableItem(
@@ -371,6 +427,14 @@ public interface PSItems {
     SmokeableItem JOINT = register("joint", new SmokeableItem(
             new Item.Properties().setId(itemKey("joint")).durability(2), 2, new Vector3f(0.9F, 0.9F, 0.9F),
             new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.20f)
+    ));
+    SmokeableItem WEED_JOINT = register("weed_joint", new SmokeableItem(
+            new Item.Properties().setId(itemKey("weed_joint")).durability(2), 2, new Vector3f(0.9F, 0.9F, 0.9F),
+            new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.20f)
+    ));
+    SmokeableItem CAKE_BAR = register("cake_bar", new SmokeableItem(
+            new Item.Properties().setId(itemKey("cake_bar")).durability(3), 3, new Vector3f(0.7F, 0.6F, 0.45F),
+            new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.01, 0.002, 0.9f)
     ));
 
     ////////////////////////// PSYCHE MISC /////////////////////////////
@@ -416,6 +480,41 @@ public interface PSItems {
     ));
     Item COCAINE_SYRINGE = register("cocaine_syringe", new InjectableItem(new Item.Properties().setId(itemKey("cocaine_syringe")).stacksTo(1), FluidVolumes.SYRINGE));
     Item MORPHINE_SYRINGE = register("morphine_syringe", new InjectableItem(new Item.Properties().setId(itemKey("morphine_syringe")).stacksTo(1), FluidVolumes.SYRINGE));
+    //</editor-fold>
+
+    //<editor-fold desc="CHEMICAL INTERMEDIATES">
+    ////////////////////////////////////////////// CHEMICAL INTERMEDIATES //////////////////////////////////////////////
+    Item DE_IONIZED_WATER = register("de_ionized_water");
+    Item VINEGAR = register("vinegar");
+    Item SODIUM_HYDROXIDE = register("sodium_hydroxide");
+    Item AMMONIA = register("ammonia");
+    Item DIETHYLAMINE = register("diethylamine");
+    Item ERGOTAMINE = register("ergotamine");
+    Item STRAINER = register("strainer");
+    Item ROOT_BARK = register("root_bark");
+    Item BARK_SOLUTION_1 = register("bark_solution_1");
+    Item BARK_SOLUTION_2 = register("bark_solution_2");
+    Item BARK_SOLUTION_3 = register("bark_solution_3");
+    Item BARK_SOLUTION_4 = register("bark_solution_4");
+    Item BARK_SOLUTION_5 = register("bark_solution_5");
+    Item MESCALINE = register("mescaline");
+    Item NIC = register("nic");
+    //</editor-fold>
+
+    //<editor-fold desc="PSYCH MATERIALS">
+    ////////////////////////////////////////////// PSYCH MATERIALS //////////////////////////////////////////////
+    Item PSYCH_INGOT = register("psych_ingot");
+    // TODO: Register psych tools (psych_sword, psych_pic, psych_axe, psych_shovel, psych_hoe) once ToolMaterial system is set up for 1.21.11
+    Item PSYCH_SWORD = register("psych_sword");
+    Item PSYCH_PIC = register("psych_pic");
+    Item PSYCH_AXE = register("psych_axe");
+    Item PSYCH_SHOVEL = register("psych_shovel");
+    Item PSYCH_HOE = register("psych_hoe");
+    // TODO: Register psych armor (psych_helmet, psych_chest, psych_leggings, psych_boots) once ArmorMaterial system is set up for 1.21.11
+    Item PSYCH_HELMET = register("psych_helmet");
+    Item PSYCH_CHEST = register("psych_chest");
+    Item PSYCH_LEGGINGS = register("psych_leggings");
+    Item PSYCH_BOOTS = register("psych_boots");
     //</editor-fold>
 
     static ResourceKey<Item> itemKey(String name) {
